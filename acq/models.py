@@ -146,7 +146,6 @@ class Tag(models.Model):
   TipoDato = models.CharField(choices =TIPODATO_CHOICES, max_length=1, default = 'A')
   id_Tk= models.ForeignKey(Tk, on_delete=models.CASCADE)
   Habilitar= models.BooleanField(default = True)
-  Timestamp = models.DateTimeField(auto_now = False, auto_now_add = False)
   TipoVariable = models.CharField(choices = TIPOVARIABLE_CHOICES,max_length=1, default = 'B')
   direccion = models.CharField(max_length=5, default= '4:0')
    
