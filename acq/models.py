@@ -132,9 +132,7 @@ class Tct(models.Model):
 
 
 class Tag(models.Model):
-  TIPODATO_CHOICES = [
-  ('A', 'Analogico'),
-  ('D', 'Digital')]
+  
 
   TIPOVARIABLE_CHOICES= [
   ('O', 'Origen'),
@@ -143,21 +141,37 @@ class Tag(models.Model):
     
   Nombre = models.CharField(max_length=42)
   Descriptor = models.CharField(max_length=120)
-  TipoDato = models.CharField(choices =TIPODATO_CHOICES, max_length=1, default = 'A')
   id_Tk= models.ForeignKey(Tk, on_delete=models.CASCADE)
   Habilitar= models.BooleanField(default = True)
   TipoVariable = models.CharField(choices = TIPOVARIABLE_CHOICES,max_length=1, default = 'B')
   direccion = models.CharField(max_length=5, default= '4:0')
-   
   
   def __str__(self):
     
-       return '%s' % (self.Nombre,)
+       return '%d' % (self.id,) 
+  
     
+class Meta:
+  abstract = True  
 
 
-class Analogico(models.Model):
-  Id_Tag= models.ForeignKey(Tag, on_delete=models.CASCADE)
+class Digital(Tag):
+  EstadoInicial= models.BooleanField(default = True)
+  SOA_Habilitar= models.BooleanField(default = True)
+  S1A_Habilitar = models.BooleanField(default = True)
+  S0A = models.BooleanField(default = True)
+  S1A= models.BooleanField(default = True)
+
+
+
+  def __str__(self):
+    
+      return '%s' % (self.Nombre)
+  
+  abstract = True  
+
+
+class Analogico(Tag):
   ValorMinimo = models.FloatField(default= 1.0)
   ValorMaximo = models.FloatField(default= 2.0)
   Unidad = models.CharField(max_length= 5)
@@ -178,20 +192,7 @@ class Analogico(models.Model):
   Histeresis= models.FloatField(default=1.0)
   ROC= models.FloatField(default=1.0)
 
-  def __str__(self):
-    
-       return '%d' % (Tag.id,)
-
-class Digital(models.Model):
-  Id_Tag= models.ForeignKey(Tag, on_delete=models.CASCADE)
-  EstadoInicial= models.BooleanField(default = True)
-  SO_Habilitar= models.BooleanField(default = True)
-  S1_Habilitar = models.BooleanField(default = True)
-  S0A = models.BooleanField(default = True)
-  S1A= models.BooleanField(default = True)
-
-
 
   def __str__(self):
     
-       return '%d' % (Tag.id,)
+     return '%s' % (self.Nombre)
