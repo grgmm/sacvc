@@ -218,9 +218,12 @@ class Hs_Analogico_0(models.Model):
 
 y = Hs_Analogico_0.objects.first()
 
+
+
 #y.save()
 i=0
-while i<=10:
+#Hs_Analogico_0.objects.all().delete()
+while i<=5:
   p=Hs_Analogico_0(
       Vp = random.randint(0,1000)*3.395,
       Timestamp =  datetime.now(),
