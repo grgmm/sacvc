@@ -14,6 +14,8 @@ def aleatorio():
 			
 			lista[i] = random.randint(0,1000)*3.395
 			dateTimeObj[i] = datetime.now()
+
+			
 			#print (lista[i]*3.956 , dateTimeObj[j])
 			
 		#	time.sleep(1)

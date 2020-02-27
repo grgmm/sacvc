@@ -3,8 +3,11 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _ 
-import datetime
 import time
+from datetime import datetime
+import random 
+
+
 
 
 # Create your models here.
@@ -203,7 +206,27 @@ class Analogico(Tag):
      return '%s' % (self.Nombre)
 
 #HISTORICOS
+class Hs_Analogico_0(models.Model):
+  Vp = models.FloatField(default = 1.0)
+  Timestamp = models.DateField()
+  id_Tag = models.ForeignKey(Tag, on_delete = models.CASCADE)  
+
+  def __str__(self):
+    
+     return '%s' % (id_Tag)
 
 
+y = Hs_Analogico_0.objects.first()
 
+#y.save()
+i=0
+while i<=10:
+  p=Hs_Analogico_0(
+      Vp = random.randint(0,1000)*3.395,
+      Timestamp =  datetime.now(),
+      id_Tag = y.id_Tag
+      )#Filtro por llave foránea
+  i+=1
+    
+  p.save()
 
