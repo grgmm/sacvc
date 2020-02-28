@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 import time
 from datetime import datetime
 import random 
+from django.contrib.postgres.fields import JSONField
 
 
 
@@ -209,7 +210,8 @@ class Analogico(Tag):
 class Hs_Analogico_0(models.Model):
   Vp = models.FloatField(default = 1.0)
   Timestamp = models.DateField()
-  id_Tag = models.ForeignKey(Tag, on_delete = models.CASCADE)  
+  id_Tag = models.ForeignKey(Tag, on_delete = models.CASCADE)
+
 
   def __str__(self):
     
@@ -233,3 +235,11 @@ while i<=5:
     
   p.save()
 
+class Analogico_Hs0(models.Model):
+ 
+  data = JSONField()
+   
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
