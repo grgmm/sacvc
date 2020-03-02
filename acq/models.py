@@ -214,7 +214,6 @@ class Analogico(Tag):
 class Analogico_Hs0(models.Model):
  
   data = JSONField()
-   
 
   def __str__(self):
     
