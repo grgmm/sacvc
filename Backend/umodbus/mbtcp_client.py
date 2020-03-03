@@ -9,13 +9,15 @@ from umodbus.client import tcp
 conf.SIGNED_VALUES = True
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(('192.168.43.214', 1502)) #DIRECCION IP DEL ESCLAVO Y PUERTO
+#sock.connect(('192.168.43.214', 1502)) #DIRECCION IP DEL ESCLAVO Y PUERTO
+sock.connect(('192.168.43.143', 1503))
 
 # Returns a message or Application Data Unit (ADU) specific for doing
 # Modbus TCP/IP.
 
 #message = tcp.write_multiple_coils(slave_id=1, starting_address=1, values=[1, 0, 1, 1])
-message = tcp.write_single_register(slave_id = 1, address = 1, value = 200)
+#message = tcp.write_single_register(slave_id = 1, address = 1, value = 666)
+message = tcp.write_single_register(slave_id = 2, address = 2, value = 400)
 
 # Response depends on Modbus function code. This particular returns the
 # amount of coils written, in this case it is 4.

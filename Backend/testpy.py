@@ -9,10 +9,10 @@ def aleatorio():
 	#dateTimeObj= [0]*n ##No entiendo esto?
 
 	i=0
-	with open ('datos.json','w') as file:
+	with open ('datos.json','w') as file: #abre un archivo json para escrtitura
 		
 		while i<n:
-			
+			#Escribe fecha actual (timestamp) y un numero aleatorio en una fila junto con un indice fijo, 10 iteraciones para estea prueba
 			file.write(json.dumps({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": random.randint(0,1000)*3.95,}) + "\n")
 			i+=1
         	
