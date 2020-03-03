@@ -3,8 +3,12 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _ 
-import datetime
 import time
+from datetime import datetime
+import random 
+from django.contrib.postgres.fields import JSONField
+
+
 
 
 # Create your models here.
@@ -207,3 +211,10 @@ class Analogico(Tag):
 
 
 
+class Analogico_Hs0(models.Model):
+ 
+  data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
