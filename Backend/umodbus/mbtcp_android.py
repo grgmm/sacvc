@@ -7,7 +7,7 @@ from umodbus.client import tcp
 
 # Enable values to be signed (default is False).
 conf.SIGNED_VALUES = True
-print('\n' '\n' '\n' "                        PRUEBA DEL PROTOCOLO MODBUS DESARROLLADA POR ING MIGUEL MORENO")
+print('\n' '\n'  "         PRUEBA MODBUS DESARROLLADA POR" '\n' "         ING MIGUEL MORENO")
 slave_ip = str(input('\n' '\n' "Dirección IP del Esclavo Modbus: "))
 slave_puerto = int(input('\n' '\n' "Puerto del Esclavo Modbus: "))
 slaveid = int(input('\n' '\n' "Id del Esclavo Modbus "))
