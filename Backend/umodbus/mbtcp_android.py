@@ -7,11 +7,12 @@ from umodbus.client import tcp
 
 # Enable values to be signed (default is False).
 conf.SIGNED_VALUES = True
-slave_ip = str(input("Dirección IP del Esclavo Modbus: "))
-slave_puerto = int(input("Puerto del Esclavo Modbus: "))
-slaveid = int(input("Id del Esclavo Modbus "))
-slave_address = int(input("Dirección del registro en el Esclavo Modbus "))
-Requeired_Value = int(input("Valor Requerido "))
+print('\n' '\n' '\n' "                        PRUEBA DEL PROTOCOLO MODBUS DESARROLLADA POR ING MIGUEL MORENO")
+slave_ip = str(input('\n' '\n' "Dirección IP del Esclavo Modbus: "))
+slave_puerto = int(input('\n' '\n' "Puerto del Esclavo Modbus: "))
+slaveid = int(input('\n' '\n' "Id del Esclavo Modbus "))
+slave_address = int(input('\n' '\n' "Dirección del registro en el Esclavo Modbus "))
+Requeired_Value = int(input('\n' '\n' "Valor Requerido "))
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #sock.connect(('192.168.43.214', 1502)) #DIRECCION IP DEL ESCLAVO Y PUERTO
