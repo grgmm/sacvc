@@ -218,3 +218,43 @@ class Analogico_Hs0(models.Model):
   def __str__(self):
     
      return '%s' % (self.id)
+
+  class Analogico_Hs1(models.Model):
+ 
+   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+  class Analogico_Hs2(models.Model):
+ 
+   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+  class Analogico_Hs3(models.Model):
+ 
+   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+  class Analogico_Hs4(models.Model):
+ 
+   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+  class Analogico_Hs5(models.Model):
+ 
+   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
