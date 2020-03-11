@@ -13,6 +13,8 @@ from django.contrib.postgres.fields import JSONField
 
 # Create your models here.
 
+#MODELOS DE TANQUES
+
 class PatioTanque(models.Model):
     
     Nombre = models.CharField(max_length=30)
@@ -56,6 +58,27 @@ class Factor(models.Model):
        return '%d' % (self.id,)
 
 
+
+
+
+class Tct(models.Model):
+    id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)    
+    Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3)
+    Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3)
+    Lt2 = models.DecimalField(max_digits= 3, decimal_places = 3)
+    Tov = models.FloatField(default = 1.0)
+    
+      
+    def __str__(self):
+    
+       return '%d' % (self.id,)
+
+       
+
+
+       #MODELOS DE COMUNICACION
+
+
 class MbMaestro(models.Model):
  
   Vel_CHOICES = [    
@@ -87,9 +110,6 @@ class MbMaestro(models.Model):
        return '%d' % (self.id,)
 
 
-
-
-
 class MbEsclavo(models.Model):
    
   Vel_CHOICES = [    
@@ -119,24 +139,7 @@ class MbEsclavo(models.Model):
 
 
     
-
-
-class Tct(models.Model):
-  id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)    
-  Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3)
-  Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3)
-  Lt2 = models.DecimalField(max_digits= 3, decimal_places = 3)
-  Tov = models.FloatField(default = 1.0)
-
-
-    
-      
-  def __str__(self):
-    
-       return '%d' % (self.id,)
-
-    
-
+#MODELOS DE TAG
 
 class Tag(models.Model):
   
@@ -206,8 +209,9 @@ class Analogico(Tag):
     
      return '%s' % (self.Nombre)
 
-#HISTORICOS
 
+
+#HISTORICOS
 
 
 

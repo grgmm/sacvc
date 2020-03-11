@@ -19,16 +19,17 @@ def aleatorio():
   #sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   #sock.connect(('192.168.43.214', 5002))
   i=0
+  sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  sock.connect(('192.168.43.143', 5002))
   while i<n:
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(('192.168.43.143', 5002))
+    
     Current_Value=random.randint(0,1000)
     message = tcp.write_single_register(slave_id = 11, address = 101, value = Current_Value)
     response = tcp.send_message(message, sock)
     print(response)
-    sock.close()
     time.sleep(2)
-    i+=1	
+    i+=1
+  sock.close()
   
 
   return
