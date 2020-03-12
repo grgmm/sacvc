@@ -26,7 +26,7 @@ def escribir_registros():
     for k in range(5):
       Pv=random.randint(0,1000)
       Current_Value.append(Pv)
-      print( Current_Value)
+     # print( Current_Value)
 
 
     message1 = tcp.write_multiple_registers(slave_id = 11, starting_address = 101, values = list(Current_Value))
@@ -37,6 +37,8 @@ def escribir_registros():
     message2 = tcp.read_holding_registers(slave_id =11, starting_address = 101, quantity=k)
     leer = tcp.send_message(message2, sock)
     print(leer)
+    time.sleep(1)
+
 
 
 
@@ -46,14 +48,16 @@ def escribir_registros():
      while j !=k:
 
        file.write(json.dumps({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": leer[j]})+ "\n")
-       time.sleep(1)
+
        j+=1
 
 
 
 
+
     i+=1
-  sock.close()  
+  sock.close()
+
 
   return
 
