@@ -23,7 +23,7 @@ def escribir_registros():
   #Escribir  
     Current_Value = []
 
-    for k in range(5):
+    for k in range(3):
       Pv=random.randint(0,1000)
       Current_Value.append(Pv)
      # print( Current_Value)
@@ -34,7 +34,7 @@ def escribir_registros():
  
     #Leer
 
-    message2 = tcp.read_holding_registers(slave_id =11, starting_address = 101, quantity=k)
+    message2 = tcp.read_holding_registers(slave_id =11, starting_address = 101, quantity=3)
     leer = tcp.send_message(message2, sock)
     print(leer)
     time.sleep(1)
