@@ -7,9 +7,14 @@ import time
 from datetime import datetime
 import random 
 from django.contrib.postgres.fields import JSONField
-
-
-
+from datetime import datetime
+import random 
+import time
+import json
+import socket
+import sys
+from umodbus import conf
+from umodbus.client import tcp
 
 # Create your models here.
 
