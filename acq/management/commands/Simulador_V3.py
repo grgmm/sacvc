@@ -12,7 +12,7 @@ class Command(BaseCommand):
     help = 'help'
 
     def handle(self, *args, **kwargs):
-        n=500
+        n=1000
         conf.SIGNED_VALUES = True
         print('\n' '\n'  "         SIMULADOR MODBUS DESARROLLADO POR: Ing Miguel Moreno")
         print('\n' '\n' "   Dirección IP del Esclavo Modbus: 192.168.43.143")
@@ -46,15 +46,19 @@ class Command(BaseCommand):
 
           time.sleep(1)
 
-          with open ('/home/morenomx/solucionesweb/sacvc/Backend/datos.json','w') as file: #abre un archivo json para escrtitura
+          with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para escrtitura
 
             j=0
             while j < numtags:
+             # file.write({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": leer[j]})
 
-              file.write(json.dumps({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": leer[j]})+ "\n")
+             file.write(json.dumps({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": leer[j]}))
+             j+=1
 
-              j+=1
+
        # print(i)
+          file.close()
           i+=1
         sock.close()
+       
 
