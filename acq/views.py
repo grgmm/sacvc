@@ -16,6 +16,8 @@ def index(request):
  print('\n' '\n' "Puerto del Esclavo Modbus: 5002")
  print('\n' '\n' "Id del Esclavo 1 Modbus 11")
  print('\n' '\n' "Dirección los registros en los Esclavo Modbus 101 en adelante")
+ json_data = []
+
  with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
   json_data = json.loads(json.dumps(data_file.read()))
   return HttpResponse(json_data, content_type='application/json')

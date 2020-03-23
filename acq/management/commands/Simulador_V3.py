@@ -12,7 +12,7 @@ class Command(BaseCommand):
     help = 'help'
 
     def handle(self, *args, **kwargs):
-        n=1000
+        n=5
         conf.SIGNED_VALUES = True
         print('\n' '\n'  "         SIMULADOR MODBUS DESARROLLADO POR: Ing Miguel Moreno")
         print('\n' '\n' "   Dirección IP del Esclavo Modbus: 192.168.43.143")
@@ -27,6 +27,7 @@ class Command(BaseCommand):
         while i<n:  
   #Escribir  
           Current_Value = []
+          json_temp = []
           numtags=3
           k=0
           for k in range(numtags):
@@ -43,21 +44,35 @@ class Command(BaseCommand):
           leer = tcp.send_message(message2, sock)
           print(leer)
           print(i)
+          timestamp=""
+          pv=""
 
-          time.sleep(1)
 
-          with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para escrtitura
 
-            j=0
-            while j < numtags:
+          j=0
+          while j < numtags:
+             with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para escrtitura
+
              # file.write({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": leer[j]})
 
-             file.write(json.dumps({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": leer[j]}))
-             j+=1
+              timestamp = str(datetime.now())
+              pv = str(leer[j])
+             #json_temp.append("id_Tag "+"9")
+             #json_temp.append("Timestamp " +(str(timestamp)))
+             #json_temp.append("Pv " + str(pv))
+              json_temp= {"id_tag":"9", "Timestamp":timestamp, "Pv":pv}
+             
+
+              file.write(json.dumps(json_temp))
+              file.close()
+            # json_temp.append("id_Tag: 9, Timestamp:"str(datetime.now())",Pv: "str(leer[j]))
+              time.sleep(1)
+              j+=1
+           
 
 
        # print(i)
-          file.close()
+        
           i+=1
         sock.close()
        
