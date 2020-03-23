@@ -7,11 +7,18 @@ import time
 from datetime import datetime
 import random 
 from django.contrib.postgres.fields import JSONField
-
-
-
+from datetime import datetime
+import random 
+import time
+import json
+import socket
+import sys
+from umodbus import conf
+from umodbus.client import tcp
 
 # Create your models here.
+
+#MODELOS DE TANQUES
 
 class PatioTanque(models.Model):
     
@@ -56,6 +63,27 @@ class Factor(models.Model):
        return '%d' % (self.id,)
 
 
+
+
+
+class Tct(models.Model):
+    id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)    
+    Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3)
+    Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3)
+    Lt2 = models.DecimalField(max_digits= 3, decimal_places = 3)
+    Tov = models.FloatField(default = 1.0)
+    
+      
+    def __str__(self):
+    
+       return '%d' % (self.id,)
+
+       
+
+
+       #MODELOS DE COMUNICACION
+
+
 class MbMaestro(models.Model):
  
   Vel_CHOICES = [    
@@ -87,9 +115,6 @@ class MbMaestro(models.Model):
        return '%d' % (self.id,)
 
 
-
-
-
 class MbEsclavo(models.Model):
    
   Vel_CHOICES = [    
@@ -119,24 +144,7 @@ class MbEsclavo(models.Model):
 
 
     
-
-
-class Tct(models.Model):
-  id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)    
-  Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3)
-  Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3)
-  Lt2 = models.DecimalField(max_digits= 3, decimal_places = 3)
-  Tov = models.FloatField(default = 1.0)
-
-
-    
-      
-  def __str__(self):
-    
-       return '%d' % (self.id,)
-
-    
-
+#MODELOS DE TAG
 
 class Tag(models.Model):
   
@@ -206,14 +214,55 @@ class Analogico(Tag):
     
      return '%s' % (self.Nombre)
 
-#HISTORICOS
 
+
+#HISTORICOS
 
 
 
 class Analogico_Hs0(models.Model):
  
   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+  class Analogico_Hs1(models.Model):
+ 
+   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+  class Analogico_Hs2(models.Model):
+ 
+   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+  class Analogico_Hs3(models.Model):
+ 
+   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+  class Analogico_Hs4(models.Model):
+ 
+   data = JSONField()
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+  class Analogico_Hs5(models.Model):
+ 
+   data = JSONField()
 
   def __str__(self):
     
