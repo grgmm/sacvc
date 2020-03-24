@@ -25,7 +25,7 @@ def index(request):
 
 def lista(request):
    tags = Tag.objects.all()
-   return render(request, 'lista.html', {'tags': tags})
+   return render(request, 'lista.html', {'tags': tags})	
 """ tags_names = list()
 
    for tag in tags:
