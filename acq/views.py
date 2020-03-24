@@ -7,6 +7,7 @@ from umodbus import conf
 from umodbus.client import tcp
 import time
 from datetime import datetime
+from .models import Tag
 
 
 def index(request):
@@ -23,4 +24,19 @@ def index(request):
   return HttpResponse(json_data, content_type='application/json')
 
 def lista(request):
-   return HttpResponse('Hello, World!')
+   tags = Tag.objects.all()
+   return render(request, 'lista.html', {'tags': tags})
+""" tags_names = list()
+
+   for tag in tags:
+       tags_names.append(tag.Nombre)
+
+   response_html = '<br>'.join(tags_names)
+
+   return HttpResponse(response_html)
+"""
+
+
+   #return HttpResponse('Hello, World!')
+
+
