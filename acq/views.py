@@ -8,8 +8,8 @@ from umodbus.client import tcp
 import time
 from datetime import datetime
 
+
 def index(request):
-# n=10
  conf.SIGNED_VALUES = True
  print('\n' '\n'  "         PRUEBA MODBUS DESARROLLADA POR: Ing Miguel Moreno")
  print('\n' '\n' "   Dirección IP del Esclavo Modbus: 192.168.43.143")
@@ -21,4 +21,6 @@ def index(request):
  with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
   json_data = json.loads(json.dumps(data_file.read()))
   return HttpResponse(json_data, content_type='application/json')
- #sock.close()
+
+def lista(request):
+   return HttpResponse('Hello, World!')
