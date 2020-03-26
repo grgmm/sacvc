@@ -7,28 +7,59 @@
   <body>
     <h1>Tags</h1>
 
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Tag</th>
-          <th>Descriptor</th>
-          <th>Current Value</th>
-          <th>Timestamp</th>
-        </tr>
-      </thead>
-      <tbody>
-            {% for tag in tags %}
-          <tr>
-            <td>
-               {{ tag.Nombre }}<br>
-              <small style="color: #888">{{ tag.Decriptor }}</small>
-            </td>
-            <td>0</td>
-            <td>0</td>
-            <td></td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </body>
-</html>
+    <p>lolo</p>
+
+   
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>HTML Table</h2>
+
+
+
+
+<table >
+
+
+  <tr>
+    <th>Id</th>
+    <th>Pv</th>
+ 	<th>Timestamp</th>
+  </tr>
+  <tr>
+    <td>"id"</td>
+    <td>"tag"</td>
+    <td>"timestamp"</td>
+  </tr> 
+
+
+</table>
+ 
+
+
+ <script>
+ {
+  var jsonObject = JSON.parse('{{ json_data | escapejs }}');
+  alert(jsonObject.id_tag);
+
+}
+	</script>

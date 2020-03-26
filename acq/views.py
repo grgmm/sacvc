@@ -25,18 +25,15 @@ def index(request):
 
 def lista(request):
    tags = Tag.objects.all()
-   return render(request, 'lista.html', {'tags': tags})	
-""" tags_names = list()
+   json_data = []
 
-   for tag in tags:
-       tags_names.append(tag.Nombre)
+   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
+       json_data = json.loads(json.dumps(data_file.read()))
+   
+   #return HttpResponse(json_data, content_type='application/json')
+  
 
-   response_html = '<br>'.join(tags_names)
+   return render(request, "lista.html", {'json_data': json_data})
 
-   return HttpResponse(response_html)
-"""
-
-
-   #return HttpResponse('Hello, World!')
-
+  #return render(request, 'lista.html', {'tags': tags}),
 
