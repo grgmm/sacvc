@@ -7,10 +7,7 @@
   <body>
     <h1>Tags</h1>
 
-    <p>lolo</p>
-
    
-
 
 <style>
 table {
@@ -46,20 +43,46 @@ tr:nth-child(even) {
  	<th>Timestamp</th>
   </tr>
   <tr>
-    <td>"id"</td>
-    <td>"tag"</td>
-    <td>"timestamp"</td>
+
+    <td id="idtag"></td>
+     <script>
+ {
+ 	let output1= '';
+  var jsonObject = JSON.parse('{{ json_data | escapejs }}');
+ // alert(jsonObject.id_tag);
+    y1=(jsonObject.id_tag);
+    output1 += y1;
+    document.getElementById('idtag').innerHTML = output1;
+
+}
+	</script>
+
+     <td id="pvtag"></td>
+     <script>
+ {
+ 	let output2= '';
+  var jsonObject = JSON.parse('{{ json_data | escapejs }}');
+ // alert(jsonObject.id_tag);
+    y2=(jsonObject.Pv);
+    output2 += y2;
+    document.getElementById('pvtag').innerHTML = output2;
+
+}
+	</script>
+   <td id="tstag"></td>
+     <script>
+ {
+ 	let output3= '';
+  var jsonObject = JSON.parse('{{ json_data | escapejs }}');
+ // alert(jsonObject.id_tag);
+    y3=(jsonObject.Timestamp);
+    output3 += y3;
+    document.getElementById('tstag').innerHTML = output3;
+
+}
+	</script>
   </tr> 
 
 
 </table>
- 
 
-
- <script>
- {
-  var jsonObject = JSON.parse('{{ json_data | escapejs }}');
-  alert(jsonObject.id_tag);
-
-}
-	</script>
