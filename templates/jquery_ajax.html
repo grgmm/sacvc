@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+            
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+	<script type="text/javascript" 
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+	
+	<script type="text/javascript">
+		//JSON.parse
+		
+     
+    
+     //JSON.parse('{{json_data}}').replace(/&quot;/g, '"');
+
+
+        $(document).ready(function () {
+			
+		
+		 $('ajaxBtn').click(function(){
+		 	
+
+		   var t = ('{{ json_data | escapejs }}');
+		   
+		  // console.log(t);
+
+
+ 	
+			$.ajax(JSON.parse(t), 
+			{
+				dataType: 'json', // type of response data
+				timeout: 500,     // timeout milliseconds
+				success: function (data,status,xhr) {   // success callback function
+					$('p').append(data.id_tag + ' ' + data.Timestamp + ' ' + data.Pv);
+				},
+				error: function (jqXhr, textStatus, errorMessage) { // error callback 
+					$('p').append('Error: ' + errorMessage);
+				}
+			});
+		 });
+
+        });
+    </script>
+
+
+</head>
+<body>
+	<h1> jQuery ajax() demo 
+	</h1>
+	<input type="button" id="ajaxBtn" value="Send Ajax request" />
+	<p>	
+
+	</p>
+</body>
+</html>

@@ -8,11 +8,12 @@ from umodbus import conf
 from umodbus.client import tcp
 from django.core.management.base import BaseCommand
 
+
 class Command(BaseCommand):
     help = 'help'
 
     def handle(self, *args, **kwargs):
-        n=5
+        n=500
         conf.SIGNED_VALUES = True
         print('\n' '\n'  "         SIMULADOR MODBUS DESARROLLADO POR: Ing Miguel Moreno")
         print('\n' '\n' "   Dirección IP del Esclavo Modbus: 192.168.43.143")

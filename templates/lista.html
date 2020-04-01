@@ -4,10 +4,18 @@
     <meta charset="utf-8">
     <title>TAGS</title>
   </head>
-  <body>
-    <h1>Tags</h1>
 
-   
+ 
+
+
+  <body>
+    <h1>SACV.</h1>
+
+
+   <div id ="my_menu" align="center"> 
+
+  <!– marca MM — >
+
 
 <style>
 table {
@@ -29,7 +37,7 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<h2>HTML Table</h2>
+<h2>Parámetros de Tk's - Valores Actuales:</h2>
 
 
 
@@ -47,6 +55,7 @@ tr:nth-child(even) {
     <td id="idtag"></td>
      <script>
  {
+
  	let output1= '';
   var jsonObject = JSON.parse('{{ json_data | escapejs }}');
  // alert(jsonObject.id_tag);
@@ -54,12 +63,15 @@ tr:nth-child(even) {
     output1 += y1;
     document.getElementById('idtag').innerHTML = output1;
 
+
 }
+
 	</script>
 
      <td id="pvtag"></td>
      <script>
  {
+  
  	let output2= '';
   var jsonObject = JSON.parse('{{ json_data | escapejs }}');
  // alert(jsonObject.id_tag);
@@ -72,6 +84,8 @@ tr:nth-child(even) {
    <td id="tstag"></td>
      <script>
  {
+
+  
  	let output3= '';
   var jsonObject = JSON.parse('{{ json_data | escapejs }}');
  // alert(jsonObject.id_tag);
@@ -85,4 +99,6 @@ tr:nth-child(even) {
 
 
 </table>
+</div>
+
 

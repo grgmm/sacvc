@@ -8,6 +8,7 @@ from umodbus.client import tcp
 import time
 from datetime import datetime
 from .models import Tag
+from django.http import JsonResponse
 
 
 def index(request):
@@ -26,14 +27,34 @@ def index(request):
 def lista(request):
    tags = Tag.objects.all()
    json_data = []
-
+   n=0
+    
+    
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
-       json_data = json.loads(json.dumps(data_file.read()))
-   
+     json_data = json.loads(json.dumps(data_file.read()))
+     render(request, "lista.html", {'json_data': json_data})
+     data_file.close()
+
+
    #return HttpResponse(json_data, content_type='application/json')
   
 
-   return render(request, "lista.html", {'json_data': json_data})
+   return  HttpResponse(render(request, "lista.html", {'json_data': json_data}))
 
   #return render(request, 'lista.html', {'tags': tags}),
+
+def jquery_ajax(request):
+   tags = Tag.objects.all()
+   json_data = []
+   n=0
+    
+    
+   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
+     json_data = json.loads(json.dumps(data_file.read()))
+     render(request, "jquery_ajax.html", {'json_data': json_data})
+     data_file.close()
+   #return HttpResponse(json_data, content_type='application/json')
+  
+
+   return  HttpResponse(render(request, "jquery_ajax.html", {'json_data': json_data}))
 
