@@ -46,7 +46,7 @@ class Command(BaseCommand):
           print(leer)
           print(i)
           timestamp=""
-          pv=""
+          pv=0
 
 
 
@@ -57,11 +57,11 @@ class Command(BaseCommand):
              # file.write({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": leer[j]})
 
               timestamp = str(datetime.now())
-              pv = str(leer[j])
+              pv = leer[j]
              #json_temp.append("id_Tag "+"9")
              #json_temp.append("Timestamp " +(str(timestamp)))
              #json_temp.append("Pv " + str(pv))
-              json_temp= {"id_tag":"9", "Timestamp":timestamp, "Pv":pv}
+              json_temp= {"idtag":9, "Timestamp":timestamp, "Pv":pv}
              
 
               file.write(json.dumps(json_temp))
@@ -69,7 +69,7 @@ class Command(BaseCommand):
             # json_temp.append("id_Tag: 9, Timestamp:"str(datetime.now())",Pv: "str(leer[j]))
               time.sleep(1)
               j+=1
-           
+            
 
 
        # print(i)

@@ -44,17 +44,16 @@ def lista(request):
   #return render(request, 'lista.html', {'tags': tags}),
 
 def jquery_ajax(request):
-   tags = Tag.objects.all()
-   json_data = []
-   n=0
-    
-    
+   
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
-     json_data = json.loads(json.dumps(data_file.read()))
-     render(request, "jquery_ajax.html", {'json_data': json_data})
-     data_file.close()
-   #return HttpResponse(json_data, content_type='application/json')
-  
+      data = json.loads(data_file.read())
+      data_file.close()
 
-   return  HttpResponse(render(request, "jquery_ajax.html", {'json_data': json_data}))
-
+   if request.is_ajax():   #render(request, "jquery_ajax.html", {'json_data': json_data})
+      
+    message = request.POST.get('message')
+    if message == 'Send Ajax request':
+     response= JsonResponse(data)
+      #data.update(is_valid=True)         
+      #data.update(‘response’=’This is the response you wanted’)
+   return JsonResponse(data)
