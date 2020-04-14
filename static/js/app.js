@@ -13,8 +13,14 @@
 
            
                 var textjson=JSON.stringify(data);
-                var objson = JSON.parse(textjson);
-                document.getElementById("divrefresca").innerHTML =textjson;
+               // var objson = JSON.parse(textjson);
+               var idtag = JSON.stringify(data,["idtag"]);
+               var Pv = JSON.stringify(data,["Pv"]);
+               var Timestamp = JSON.stringify(data,["Timestamp"]);
+              // console.log(JSON.stringify(data,["Pv"]));
+               document.getElementById("divrefresca").innerHTML = idtag+""+Pv+""+Timestamp;
+
+
 
                 
              
