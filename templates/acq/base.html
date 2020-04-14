@@ -3,18 +3,79 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}Default Title{% endblock %}</title>
-    <link rel="stylesheet" type="text/css">
+    <title>{% block title %}TAGS{% endblock %}</title>
+    
     {% block stylesheet %}{% endblock %}
+
   </head>
   <body>
+
+
+    <div id ="my_menu" align="center"> 
+
+
     <header>
-      ...
-    </header>
+     <h1>SACV.</h1>
+    </header> 
+
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+
+
+<h2>Parámetros de Tk's - Valores Actuales:</h2>
+
+<table >
+
     <main>
-      {% block content %}
+      
+       <table >
+
+
+  <tr>
+    <th>Id</th>
+    <th>Pv</th>
+  <th>Timestamp</th>
+  </tr>
+  <tr>
+
+    <td id="idtag"></td>
+    
+
+     <td id="pvtag"></td>
+    
+   <td id="tstag"></td>
+     
+  </tr> 
+
+   {% block content %}
       {% endblock %}
+
+
+</table>
+
+</div>
+
+     
     </main>
+
     <footer>
       ...
     </footer>
@@ -24,6 +85,10 @@
         crossorigin="anonymous"></script>
         
     {% block javascript %}{% endblock %}
+
+
+   
+
 
   </body>
 </html>

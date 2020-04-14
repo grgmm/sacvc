@@ -29,7 +29,7 @@ class Command(BaseCommand):
   #Escribir  
           Current_Value = []
           json_temp = []
-          numtags=3
+          numtags=1
           k=0
           for k in range(numtags):
             Pv=random.randint(0,1000)
