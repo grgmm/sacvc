@@ -1,5 +1,4 @@
 {% extends 'acq/base.html' %}
-{% load static %}
 {% block main %}
 <table  class="table table-bordered"  id="myTable">
 <thead>
@@ -19,16 +18,9 @@ TimeStamp
 </tbody>
 </table>
 
-<div  id="roomform">
-    <button  id="Iniciar Poll"  class="btn"> Iniciar Poll </button>
-</div>
 
 {% endblock %}
 
-{% block extrajs %}
-
-<script  src="{% static '/js/app.js' %}"> </script>
-{% endblock %}
 
 
 

@@ -11,18 +11,18 @@ from .models import Tag
 from django.http import JsonResponse
 
 
-def index(request):
- conf.SIGNED_VALUES = True
- print('\n' '\n'  "         PRUEBA MODBUS DESARROLLADA POR: Ing Miguel Moreno")
- print('\n' '\n' "   Dirección IP del Esclavo Modbus: 192.168.43.143")
- print('\n' '\n' "Puerto del Esclavo Modbus: 5002")
- print('\n' '\n' "Id del Esclavo 1 Modbus 11")
- print('\n' '\n' "Dirección los registros en los Esclavo Modbus 101 en adelante")
- json_data = []
+#def index(request):
+ #conf.SIGNED_VALUES = True
+ #print('\n' '\n'  "         PRUEBA MODBUS DESARROLLADA POR: Ing Miguel Moreno")
+ #print('\n' '\n' "   Dirección IP del Esclavo Modbus: 192.168.43.143")
+ #print('\n' '\n' "Puerto del Esclavo Modbus: 5002")
+ #print('\n' '\n' "Id del Esclavo 1 Modbus 11")
+ #print('\n' '\n' "Dirección los registros en los Esclavo Modbus 101 en adelante")
+ #json_data = []
 
- with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
-  json_data = json.loads(json.dumps(data_file.read()))
-  return HttpResponse(json_data, content_type='application/json')
+ #with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
+  #json_data = json.loads(json.dumps(data_file.read()))
+  #return HttpResponse(json_data, content_type='application/json')
 
 def lista(request):
    tags = Tag.objects.all()
@@ -32,7 +32,7 @@ def lista(request):
     
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
      json_data = json.loads(json.dumps(data_file.read()))
-     render(request, "lista.html", {'json_data': json_data})
+     #render(request, "lista.html", {'json_data': json_data})
      data_file.close()
 
 
@@ -43,17 +43,21 @@ def lista(request):
 
   #return render(request, 'lista.html', {'tags': tags}),
 
-def jquery_ajax(request):
+def actualizar(request):
    
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json para escrtitura 
-      data = json.loads(data_file.read())
+      dataf = json.loads(data_file.read())
       data_file.close()
 
-   if request.is_ajax():   #render(request, "jquery_ajax.html", {'json_data': json_data})
+ #  if request.is_ajax():   #render(request, "jquery_ajax.html", {'json_data': json_data})
       
-    message = request.POST.get('message')
-    if message == 'Send Ajax request':
-     response= JsonResponse(data)
+  #  message = request.POST.get('message')
+   # if message == 'Send Ajax request':
+    # response= JsonResponse(data)
       #data.update(is_valid=True)         
       #data.update(‘response’=’This is the response you wanted’)
-   return JsonResponse(data)
+   
+   return JsonResponse(dataf)
+   #return render(request, "jquery_ajax.html", {'data': data})
+
+   

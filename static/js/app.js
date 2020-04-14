@@ -1,52 +1,36 @@
-$.ajax({
-    url:  'jquery_ajax',
-    type:  'get',
-    dataType:  'json',
-    success: function  (data) {
-    	console.log(data);
-    	let rows = '';
-    	rows +=  `
-    	<tr>
-    	    <td>{data.idtag}</td>
-    	    <td>{data.Timestamp}</td>
-    	    <td>{data.Pv}</td>
-    	</tr>` ;
 
+    function getcurrentdataAJAX() {
 
+        //GUARDAMOS EN UNA VARIABLE EL RESULTADO DE LA CONSULTA AJAX    
 
+        var refresca = $.ajax({
 
+            url: 'actualizar/', //indicamos la ruta donde se genera la hora
+            dataType: 'json', //indicamos que es de tipo json
+            type: 'get'
+               //    async: false     //ponemos el parámetro asyn a falso
+        }).done(function(data) {
 
+           
+                var textjson=JSON.stringify(data);
+                var objson = JSON.parse(textjson);
+                document.getElementById("divrefresca").innerHTML =textjson;
 
-    }
-});
-//$('[#myTable] > tbody').append(rows);
+                
+             
 
+//  alert(JSON.stringify(data))
+  
+ 
 
+})
+        // alert(refresca);
 
-/*
+   }     //actualizamos el div que nos mostrará la hora actual
+       // document.getElementById("divrefresca").innerHTML ="" +JSON.stringify(refresca);
+    
 
-    {
-        let rows =  '';
-        data.rooms.forEach(room => {
-        rows += `
-        <tr>
-            <td>${room.room_number}</td>
-            <td>${room.name}</td>
-            <td>${room.nobeds}</td>
-            <td>${room.room_type}</td>
-            <td>
-                <button class="btn deleteBtn" data-id="${room.id}">Delete</button>
-                <button class="btn updateBtn" data-id="${room.id}">Update</button>
-            </td>
-        </tr>`;
-    });
-    $('[#myTable](https://paper.dropbox.com/?q=%23myTable) > tbody').append(rows);
-    $('.deleteBtn').each((i, elm) => {
-        $(elm).on("click",  (e) => {
-            deleteRoom($(elm))
-        })
-    })
-    }
-});
-*/
+    //con esta funcion llamamos a la función getcurrentdataAJAX cada segundo para actualizar el div que mostrará la hora
+    setInterval(getcurrentdataAJAX,4000);
 
+        
