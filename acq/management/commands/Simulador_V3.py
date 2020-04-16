@@ -13,68 +13,93 @@ class Command(BaseCommand):
     help = 'help'
 
     def handle(self, *args, **kwargs):
-        n=500
-        conf.SIGNED_VALUES = True
+        n=99 #100 iteraciones
+        slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
+        slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix. 
+        slaveip= '192.168.43.143' #ip del esclavo para modbus TCP
+        i=0
+        
+        conf.SIGNED_VALUES = True # No estoy seguro de su utilidad me lo copié del ejemplo.
         print('\n' '\n'  "         SIMULADOR MODBUS DESARROLLADO POR: Ing Miguel Moreno")
         print('\n' '\n' "   Dirección IP del Esclavo Modbus: 192.168.43.143")
         print('\n' '\n' "Puerto del Esclavo Modbus: 5002")
         print('\n' '\n' "Id del Esclavo 1 Modbus 11")
         print('\n' '\n' "Dirección los registros en los Esclavo Modbus a partir del 101 ")
+        #Mensajes en consola Python.
 
-        i=0
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #??
-        sock.connect(('192.168.43.143', 5002))
         
-        while i<n:  
-  #Escribir  
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #??
+        sock.connect((slaveip, slaveport))
+        
+        while i<=n:  
+    
           Current_Value = []
           json_temp = []
-          numtags=1
+          numtags=3
+          numregistros= numtags*2
           k=0
           for k in range(numtags):
-            Pv=random.randint(0,1000)
-            Current_Value.append(Pv)
+            Pv=random.randint(0,1000)    #simula la entrada de un Pv de un trnasmisor
+            idtag = random.randint(9,11) #simula la entrada de un id de ese transmisor
+           
+            Current_Value.append(idtag)
+            #se empaqueta en el arreglo Current_Value
+          
+           # print(k) 
+            Current_Value.append(Pv)    
+            #se empaqueta en el arreglo Current_Value id  y Pv
+            
+            print(Current_Value)          #consola para debugger
+          # Current_Value = valores de id (entre 0-9) y Pv (entre 0-1000) de 3 tags simulados.
 
+    #Escribir
+           #se requiere en formato list para el message modbus.
 
-          message1 = tcp.write_multiple_registers(slave_id = 11, starting_address = 101, values = list(Current_Value))
-          escribir = tcp.send_message(message1, sock)
+          message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = 101, values = list(Current_Value))  
+          #Se construye el msj de escritura (esto para llenar los registros en el esclavo)
+
+          escribir = tcp.send_message(message1, sock) #Se envia comando de escritura en esclavo en elsock abierto.
  
     #Leer
 
-          message2 = tcp.read_holding_registers(slave_id =11, starting_address = 101, quantity=numtags)
+          message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = 101, quantity= numregistros) 
+            #Se construye el msj de lectura desde el esclavo
           leer = tcp.send_message(message2, sock)
-          print(leer)
-          print(i)
+          #print(leer)
+         # print(i)
           timestamp=""
           pv=0
 
 
 
           j=0
-          while j < numtags:
+          while j < (numregistros-1) :
              with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para escrtitura
 
              # file.write({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": leer[j]})
 
               timestamp = str(datetime.now())
-              pv = leer[j]
-             #json_temp.append("id_Tag "+"9")
-             #json_temp.append("Timestamp " +(str(timestamp)))
-             #json_temp.append("Pv " + str(pv))
-              json_temp= {"idtag":9, "Timestamp":timestamp, "Pv":pv}
+              
              
 
+
+              
+              json_temp= {"idtag":leer[j], "Timestamp":timestamp, "Pv":leer[j+1]}           
+
+             
               file.write(json.dumps(json_temp))
               file.close()
-            # json_temp.append("id_Tag: 9, Timestamp:"str(datetime.now())",Pv: "str(leer[j]))
+              
               time.sleep(1)
-              j+=1
+              j+=2 #de dos en dos por que cada Tag ocupa dos registro Id y Pv
+          i+=1
+        sock.close()
+          
             
 
 
        # print(i)
         
-          i+=1
-        sock.close()
+   
        
 
