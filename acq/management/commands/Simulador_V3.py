@@ -25,11 +25,11 @@ class Command(BaseCommand):
         print('\n' '\n' "Puerto del Esclavo Modbus: 5002")
         print('\n' '\n' "Id del Esclavo 1 Modbus 11")
         print('\n' '\n' "Dirección los registros en los Esclavo Modbus a partir del 101 ")
-        #Mensajes en consola Python.
+        #Mensajes de encabezado en consola Python informativo.
 
         
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #??
-        sock.connect((slaveip, slaveport))
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
+        sock.connect((slaveip, slaveport)) #realiza la conexión
         
         while i<=n:  
     
@@ -39,7 +39,7 @@ class Command(BaseCommand):
           numregistros= numtags*2
           k=0
           for k in range(numtags):
-            Pv=random.randint(0,1000)    #simula la entrada de un Pv de un trnasmisor
+            Pv=random.randint(0,1000)    #simula la entrada de un Pv de un transmisor
             idtag = random.randint(9,11) #simula la entrada de un id de ese transmisor
            
             Current_Value.append(idtag)
@@ -56,7 +56,7 @@ class Command(BaseCommand):
            #se requiere en formato list para el message modbus.
 
           message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = 101, values = list(Current_Value))  
-          #Se construye el msj de escritura (esto para llenar los registros en el esclavo)
+          #Se construye el msj de escritura (esto para llenar los registros en el esclavo) simulación
 
           escribir = tcp.send_message(message1, sock) #Se envia comando de escritura en esclavo en elsock abierto.
  
@@ -65,8 +65,7 @@ class Command(BaseCommand):
           message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = 101, quantity= numregistros) 
             #Se construye el msj de lectura desde el esclavo
           leer = tcp.send_message(message2, sock)
-          #print(leer)
-         # print(i)
+        
           timestamp=""
           pv=0
 
@@ -76,8 +75,7 @@ class Command(BaseCommand):
           while j < (numregistros-1) :
              with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para escrtitura
 
-             # file.write({"id_Tag": 9,"Timestamp": str(datetime.now()),"Pv": leer[j]})
-
+          
               timestamp = str(datetime.now())
               
              
@@ -93,12 +91,7 @@ class Command(BaseCommand):
               time.sleep(1)
               j+=2 #de dos en dos por que cada Tag ocupa dos registro Id y Pv
           i+=1
-        sock.close()
-          
-            
-
-
-       # print(i)
+        sock.close() #cierra la conexión
         
    
        
