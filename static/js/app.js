@@ -19,9 +19,33 @@
                var Timestamp = JSON.stringify(data,["Timestamp"]);
               
             
-              document.getElementById("id-tag").innerHTML = data.idtag;
-              document.getElementById("P-V").innerHTML = data.Pv;
-              document.getElementById("Time-stamp").innerHTML = data.Timestamp;
+             // document.getElementById("id-tag").innerHTML = data.idtag;
+              //document.getElementById("P-V").innerHTML = data.Pv;
+              //document.getElementById("Time-stamp").innerHTML = data.Timestamp;
+
+
+
+
+              var table = document.getElementById("valores-actuales");
+  {
+  var row = table.insertRow(1);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+
+
+
+  cell1.innerHTML = data.idtag;
+  cell2.innerHTML = data.Pv;
+  cell3.innerHTML = data.Timestamp;
+
+  
+  }
+
+
+  
+
+
 
 
 })
