@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TAGS</title>
+  </head>
+
+ 
+
+
+  <body>
+    <h1>SACV.</h1>
+
+
+   <div id ="my_menu" align="center"> 
+
+  <!– marca MM — >
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+<body>
+
+<h2>Parámetros de Tk's - Valores Actuales:</h2>
+
+
+
+
+<table >
+
+
+  <tr>
+    <th>Id</th>
+    <th>Pv</th>
+ 	<th>Timestamp</th>
+  </tr>
+  <tr>
+
+    <td id="idtag"></td>
+     <script>
+ {
+
+ 	let output1= '';
+  var jsonObject = JSON.parse('{{ json_data | escapejs }}');
+ // alert(jsonObject.id_tag);
+  // src="https://code.jquery.com/jquery-3.4.1.js"
+    y1=(jsonObject.idtag);
+    output1 += y1;
+    document.getElementById('idtag').innerHTML = output1;
+
+
+}
+
+	</script>
+
+     <td id="pvtag"></td>
+     <script>
+ {
+  
+ 	let output2= '';
+  var jsonObject = JSON.parse('{{ json_data | escapejs }}');
+ // alert(jsonObject.id_tag);
+    y2=(jsonObject.Pv);
+    output2 += y2;
+    document.getElementById('pvtag').innerHTML = output2;
+
+}
+	</script>
+   <td id="tstag"></td>
+     <script>
+ {
+
+  
+ 	let output3= '';
+  var jsonObject = JSON.parse('{{ json_data | escapejs }}');
+ // alert(jsonObject.id_tag);
+    y3=(jsonObject.Timestamp);
+    output3 += y3;
+    document.getElementById('tstag').innerHTML = output3;
+
+}
+	</script>
+  </tr> 
+
+
+</table>
+</div>
+
+
