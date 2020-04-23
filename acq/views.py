@@ -7,8 +7,9 @@ from umodbus import conf
 from umodbus.client import tcp
 import time
 from datetime import datetime
-from .models import Tag
 from django.http import JsonResponse
+from .models import Tag
+from .models import PatioTanque
 
 
 
@@ -36,5 +37,11 @@ def actualizar(request):
       data_file.close()
    
    return JsonResponse(dataf)
+
+
+
+def patiotanque_list(request):
+    patiotanques = PatioTanque.objects.all()
+    return render(request, 'acq/patiotanques_list.html', {'patiotanques': patiotanques})
 
    
