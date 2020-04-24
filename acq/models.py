@@ -23,6 +23,8 @@ from umodbus.client import tcp
 class PatioTanque(models.Model):
     
     Nombre = models.CharField(max_length=30)
+    class Meta:
+        ordering = ["-Nombre"]
 
     
     def __str__(self):
