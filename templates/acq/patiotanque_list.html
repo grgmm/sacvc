@@ -1,0 +1,27 @@
+
+  {% extends 'acq/base.html' %}
+  {% block title %} Patios {% endblock %}
+  {% block content %}
+ 
+
+
+
+  <h2>Patios de Tanques o Terminales de Almaceamiento</h2>
+   
+      
+       <table id="Patios">
+
+  
+    <th>NOMBRE </th>
+    <th>ID</th>
+
+{% for patio in object_list %}
+  <tr>
+ <td> {{ patio.Nombre }}</td>
+    
+
+     <td> {{ patio.pk }} </td>
+    
+ {% endfor %}
+
+   {% endblock %}

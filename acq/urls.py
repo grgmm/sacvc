@@ -19,15 +19,19 @@ urlpatterns = [
 	
 	url('lista/',views.lista, name='lista'),
 	
-	path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'),
+	path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #JASON NATIVO
 	path('refrescar/',TemplateView.as_view(template_name="acq/refrescar.html"), name='refrescar'),
-	url('actualizar/',views.actualizar, name='actualizar'),
+	url('actualizar/',views.actualizar, name='actualizar'), #ELIMINAR
 
 	url(r'^listatankfarm/$', PatiotanqueList.as_view(), name='listtankfarm'),
+
 	#url(r'^$', CourseList.as_view(), name='list'),
     url(r'^(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detailtankfarm'),
+
     url(r'^nuevo$', PatiotanqueCreation.as_view(), name='newtankfarm'),
+
     url(r'^editar/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edittankfarm'),
+    
     url(r'^borrar/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='deletetankfarm'),
 	
 
