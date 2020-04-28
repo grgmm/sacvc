@@ -5,11 +5,9 @@ from django.views.generic.base import TemplateView
 from django.urls import path
 from django.conf.urls import url
 from .views import (
-    PatiotanqueList,
-    PatiotanqueDetail,
-    PatiotanqueCreation,
-    PatiotanqueUpdate,
-    PatiotanqueDelete
+    patiotanquelist,
+    add_patiotanque,
+   
     )
 #from acq.views import ListaPlantas
 
@@ -17,22 +15,27 @@ from .views import (
 app_name = 'acq'
 urlpatterns = [
 	
-	url('lista/',views.lista, name='lista'),
-	
-	path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #JASON NATIVO
-	path('refrescar/',TemplateView.as_view(template_name="acq/refrescar.html"), name='refrescar'),
-	url('actualizar/',views.actualizar, name='actualizar'), #ELIMINAR
+    url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
+	path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'),
+	path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'), #MUESTRA LOS VALORES EN LINEA DE FORMA TABULAR
 
-	url(r'^listatankfarm/$', PatiotanqueList.as_view(), name='listtankfarm'),
+
+    url(r'^add_tf/$', views.add_patiotanque, name='add_tf'), #AGREGAR PATIO DE TANQUES
+	
+
+    
+
+	url(r'^listatankfarm/$', patiotanquelist.as_view(), name='list_tf'), #LISTADO DE PATIOS DE TANQUES
+
+    url(r'^add_tf/$', views.add_patiotanque, name='add_tf'), #AGREGAR PATIO DE TANQUES
 
 	#url(r'^$', CourseList.as_view(), name='list'),
-    url(r'^(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detailtankfarm'),
+   # url(r'^(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detailtankfarm'),
 
-    url(r'^nuevo$', PatiotanqueCreation.as_view(), name='newtankfarm'),
 
-    url(r'^editar/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edittankfarm'),
+    #url(r'^editar/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edittankfarm'),
     
-    url(r'^borrar/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='deletetankfarm'),
+    #url(r'^borrar/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='deletetankfarm'),
 	
 
 ]

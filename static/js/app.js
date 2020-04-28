@@ -5,7 +5,7 @@
 
         var refresca = $.ajax({
 
-            url: 'actualizar/', //indicamos la ruta donde se genera la hora
+            url: 'actualizar/', //indicamos la ruta donde se genera 
             dataType: 'json', //indicamos que es de tipo json
             type: 'get'
                //    async: false     //ponemos el parámetro asyn a falso

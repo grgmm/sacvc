@@ -16,6 +16,8 @@ import sys
 from umodbus import conf
 from umodbus.client import tcp
 
+from django.forms import ModelForm
+
 # Create your models here.
 
 #MODELOS DE TANQUES
@@ -24,12 +26,21 @@ class PatioTanque(models.Model):
     
     Nombre = models.CharField(max_length=30)
     class Meta:
-        ordering = ["-Nombre"]
+        ordering = ["pk"]
 
     
     def __str__(self):
     
        return '%s' % (self.Nombre,)
+
+
+
+class PatioTanqueForm(ModelForm):
+
+    class Meta:
+        model = PatioTanque
+        fields = ('Nombre',)
+
 
 
 class Tk(models.Model):

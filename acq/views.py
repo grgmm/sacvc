@@ -10,13 +10,19 @@ import json
 #from datetime import datetime
 from django.http import JsonResponse
 from .models import Tag
-from .models import PatioTanque
-from django.views.generic import ListView
+
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
+
+from .models import PatioTanque
+from django.views.generic import ListView
+from .models import PatioTanqueForm
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
 
 
 
@@ -48,20 +54,36 @@ def actualizar(request):
 
 
 
-class PatiotanqueList(ListView):
+class patiotanquelist(ListView):
 
     model = PatioTanque
+
+
+def add_patiotanque(request): #AGREGARR PATIO DE TANQUE FORMULARIO
+    if request.method == 'POST':
+        form = PatioTanqueForm(request.POST)
+        if form.is_valid():
+            new_patiotanque = form.save()
+
+            return HttpResponseRedirect(reverse('uacq:list_tf'))
+    else:
+        form = PatioTanqueForm()
+
+    return render(request, 'acq/add_tf/patiotanque_form.html', {'form': form})
+
+
+
+
+
 
 class PatiotanqueDetail(DetailView):
     model = PatioTanque
 
- 
 
 class PatiotanqueCreation(CreateView):
     model = PatioTanque
     success_url = reverse_lazy('PatioTanque:list')
     fields = ['Nombre',]
-
 
 
 class PatiotanqueUpdate(UpdateView):
@@ -72,4 +94,4 @@ class PatiotanqueUpdate(UpdateView):
 
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
-    success_url = reverse_lazy('PatioTanque:list')
+    success_url = reverse_lazy('PatioTanque:list')  
