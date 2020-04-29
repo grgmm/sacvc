@@ -12,15 +12,18 @@
        <table id="Patios">
 
   
-    <th>NOMBRE </th>
-    <th>ID</th>
+    
+        <th>ID</th> <th>NOMBRE </th> <th> DESCRIPTOR </th> <th> ACCIÓN </th> 
+
 
 {% for patio in object_list %}
   <tr>
- <td> {{ patio.Nombre }}</td>
-    
-
-     <td> {{ patio.pk }} </td>
+ <td> {{ patio.pk }} </td> <td> {{ patio.Nombre }}</td> <td>{{ patio.Descriptor}}</td> 
+ <td>
+<a  href="{% url 'uacq:add_tf'  %}">Detalle</a>
+<a  href="{% url 'uacq:add_tf'  %}">Editar</a>
+<a  href="{% url 'uacq:del_tf' patio.pk  %}">Borrar</a>
+</td>
     
  {% endfor %}
 

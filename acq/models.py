@@ -25,6 +25,8 @@ from django.forms import ModelForm
 class PatioTanque(models.Model):
     
     Nombre = models.CharField(max_length=30)
+    Descriptor = models.CharField(max_length=120,default= '',)
+
     class Meta:
         ordering = ["pk"]
 
@@ -35,11 +37,13 @@ class PatioTanque(models.Model):
 
 
 
-class PatioTanqueForm(ModelForm):
+class PatioTanqueForm(ModelForm): #formulario agregar instalacion
 
     class Meta:
         model = PatioTanque
-        fields = ('Nombre',)
+        fields = ('Nombre','Descriptor')
+
+
 
 
 
