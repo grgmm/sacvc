@@ -1,0 +1,14 @@
+{% extends "acq/base.html" %}
+{% block title %} Agregar Instalación {% endblock %}
+
+
+{% block content %}
+
+<h2>{% if object %}Update{% else %}Create{% endif %} Instalación</h2>
+
+  <form action= "{% url 'uacq:add_tf' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Editar Instalación" />
+</form>
+{% endblock %}

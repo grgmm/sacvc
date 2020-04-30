@@ -75,7 +75,7 @@ def add_patiotanque(request): #AGREGAR PATIO DE TANQUE FORMULARIO (FORMULARIO)
 
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
-    success_url = reverse_lazy('uacq:list_tf')  
+    success_url = reverse_lazy('uacq:list_tf' )  
 
 
 
@@ -84,9 +84,8 @@ class PatiotanqueDetail(DetailView):
     model = PatioTanque
 
 
-
-
 class PatiotanqueUpdate(UpdateView):
     model = PatioTanque
     success_url = reverse_lazy('PatioTanque:list')
     fields = ['Nombre',]
+    template_name = 'acq/edit_tf/edit_tf.html'

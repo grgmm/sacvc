@@ -33,7 +33,7 @@ class PatioTanque(models.Model):
     
     def __str__(self):
     
-       return '%s' % (self.Nombre,)
+       return '%s' % (self.Nombre, self.Descriptor)
 
 
 

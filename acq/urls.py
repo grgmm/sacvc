@@ -9,6 +9,7 @@ from .views import (
     add_patiotanque,
     PatiotanqueDelete,
     PatiotanqueDetail,
+    PatiotanqueUpdate,
    
     )
 #from acq.views import ListaPlantas
@@ -29,7 +30,9 @@ urlpatterns = [
     #url(r'^delete_tf/$', views.add_patiotanque, name='delete_tf'), #AGREGAR PATIO DE TANQUES
     url(r'^del_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'),
 
-    url(r'^detail_tf(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detail_tf'),
+    url(r'^detail_tf/(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detail_tf'),
+    url(r'^edit_tf/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edit_tf'),
+
 
     
 
