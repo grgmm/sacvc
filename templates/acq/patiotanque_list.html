@@ -6,22 +6,22 @@
 
 
 
-  <h2>Patios de Tanques o Terminales de Almaceamiento</h2>
+  <h2>Patios de Tanques o Terminales de Almacenamiento</h2>
    
       
        <table id="Patios">
 
   
     
-        <th>ID</th> <th>NOMBRE </th> <th> DESCRIPTOR </th> <th> ACCIÓN </th> 
+        <th>ID</th> <th>NOMBRE </th> <th> ACCIÓN </th> 
 
 
 {% for patio in object_list %}
   <tr>
- <td> {{ patio.pk }} </td> <td> {{ patio.Nombre }}</td> <td>{{ patio.Descriptor}}</td> 
+ <td> {{ patio.pk }} </td> <td> {{ patio.Nombre }}</td>
  <td>
-<a  href="{% url 'uacq:add_tf'  %}">Detalle</a>
-<a  href="{% url 'uacq:add_tf'  %}">Editar</a>
+<a  href="{% url 'uacq:detail_tf' patio.pk  %}">Detalle</a>
+<a  href="{% url 'uacq:detail_tf' patio.pk  %}">Editar</a>
 <a  href="{% url 'uacq:del_tf' patio.pk  %}">Borrar</a>
 </td>
     

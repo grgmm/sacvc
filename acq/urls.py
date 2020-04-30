@@ -7,7 +7,8 @@ from django.conf.urls import url
 from .views import (
     patiotanquelist,
     add_patiotanque,
-    PatiotanqueDelete
+    PatiotanqueDelete,
+    PatiotanqueDetail,
    
     )
 #from acq.views import ListaPlantas
@@ -27,6 +28,9 @@ urlpatterns = [
    
     #url(r'^delete_tf/$', views.add_patiotanque, name='delete_tf'), #AGREGAR PATIO DE TANQUES
     url(r'^del_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'),
+
+    url(r'^detail_tf(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detail_tf'),
+
     
 
 	
