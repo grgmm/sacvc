@@ -21,8 +21,10 @@ from django.urls import reverse_lazy
 from .models import PatioTanque
 from .models import PatioTanqueForm
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
 
 
@@ -85,7 +87,9 @@ class PatiotanqueDetail(DetailView):
 
 
 class PatiotanqueUpdate(UpdateView):
-    model = PatioTanque
-    success_url = reverse_lazy('PatioTanque:list')
-    fields = ['Nombre',]
-    template_name = 'acq/edit_tf/edit_tf.html'
+   model = PatioTanque
+   success_url = reverse_lazy('PatioTanque:list')
+   fields = ['Nombre', 'Descriptor']
+   template_name = 'acq/edit_tf/edit_tf.html'
+
+
