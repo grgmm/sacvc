@@ -16,18 +16,35 @@ import sys
 from umodbus import conf
 from umodbus.client import tcp
 
+from django.forms import ModelForm
+
 # Create your models here.
 
 #MODELOS DE TANQUES
 
 class PatioTanque(models.Model):
     
-    Nombre = models.CharField(max_length=30)
+    Nombre = models.CharField(max_length=30,unique=True)
+    Descriptor = models.CharField(max_length=120,default= '',)
+
+    class Meta:
+        ordering = ["pk"]
 
     
     def __str__(self):
     
-       return '%s' % (self.Nombre,)
+       return '%s' % (self.Nombre, self.Descriptor)
+
+
+
+class PatioTanqueForm(ModelForm): #formulario agregar instalacion
+
+    class Meta:
+        model = PatioTanque
+        fields = ('Nombre','Descriptor')
+
+
+
 
 
 class Tk(models.Model):
