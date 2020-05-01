@@ -59,37 +59,45 @@ def actualizar(request):
 class patiotanquelist(ListView): #LISTADO DE pATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
 
     model = PatioTanque
+    template_name = 'acq/list_tf/list_tf.html'
 
 
-def add_patiotanque(request): #AGREGAR PATIO DE TANQUE FORMULARIO (FORMULARIO)
-    if request.method == 'POST':
-        form = PatioTanqueForm(request.POST)
-        if form.is_valid():
-            new_patiotanque = form.save()
 
-            return HttpResponseRedirect(reverse('uacq:list_tf'))
-    else:
-        form = PatioTanqueForm()
+#def add_patiotanque(request): #AGREGAR PATIO DE TANQUE FORMULARIO (FORMULARIO)
+    #if request.method == 'POST':
+        #form = PatioTanqueForm(request.POST)
+        #if form.is_valid():
+            #new_patiotanque = form.save()
 
-    return render(request, 'acq/add_tf/patiotanque_form.html', {'form': form})
+            #return HttpResponseRedirect(reverse('uacq:list_tf'))
+    #else:
+        #form = PatioTanqueForm()
+
+    #return render(request, 'acq/add_tf/patiotanque_form.html', {'form': form})
+class PatiotanqueAdd(CreateView):
+    model = PatioTanque
+    fields = ['Nombre', 'Descriptor',]
+    template_name = 'acq/add_tf/add_tf.html'
+    success_url = reverse_lazy('uacq:list_tf') 
+
+
 
 
 
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
-    success_url = reverse_lazy('uacq:list_tf' )  
-
+    success_url = reverse_lazy('uacq:list_tf')  
+    template_name = 'acq/del_tf/del_tf.html'
 
 
 
 class PatiotanqueDetail(DetailView):
     model = PatioTanque
+    template_name = 'acq/detail_tf/detail_tf.html'
 
 
 class PatiotanqueUpdate(UpdateView):
-   model = PatioTanque
-   success_url = reverse_lazy('PatioTanque:list')
-   fields = ['Nombre', 'Descriptor']
-   template_name = 'acq/edit_tf/edit_tf.html'
-
-
+  model = PatioTanque 
+  fields = ['Nombre', 'Descriptor']
+  template_name = 'acq/edit_tf/edit_tf.html' 
+  success_url = reverse_lazy('uacq:list_tf' )

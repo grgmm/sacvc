@@ -24,7 +24,7 @@ from django.forms import ModelForm
 
 class PatioTanque(models.Model):
     
-    Nombre = models.CharField(max_length=30,unique=False)
+    Nombre = models.CharField(max_length=30,unique=True)
     Descriptor = models.CharField(max_length=120,default= '',)
 
     class Meta:
