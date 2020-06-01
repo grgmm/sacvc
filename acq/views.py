@@ -2,12 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import socket
 import json
-#from django.core import serializers
-#import random
-#from umodbus import conf
-#from umodbus.client import tcp
-#import time
-#from datetime import datetime
+
 from django.http import JsonResponse
 from .models import Tag
 
@@ -63,17 +58,7 @@ class patiotanquelist(ListView): #LISTADO DE pATIOS DE TANQUES O TERMINALES DE A
 
 
 
-#def add_patiotanque(request): #AGREGAR PATIO DE TANQUE FORMULARIO (FORMULARIO)
-    #if request.method == 'POST':
-        #form = PatioTanqueForm(request.POST)
-        #if form.is_valid():
-            #new_patiotanque = form.save()
 
-            #return HttpResponseRedirect(reverse('uacq:list_tf'))
-    #else:
-        #form = PatioTanqueForm()
-
-    #return render(request, 'acq/add_tf/patiotanque_form.html', {'form': form})
 class PatiotanqueAdd(CreateView):
     model = PatioTanque
     fields = ['Nombre', 'Descriptor',]

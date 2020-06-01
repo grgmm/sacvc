@@ -12,7 +12,6 @@ from .views import (
     PatiotanqueUpdate,
    
     )
-#from acq.views import ListaPlantas
 
 
 app_name = 'acq'
@@ -25,9 +24,6 @@ urlpatterns = [
     url(r'^listatankfarm/$', patiotanquelist.as_view(), name='list_tf'), #LISTADO DE PATIOS DE TANQUES
 
 
-    #url(r'^add_tf/$', views.add_patiotanque, name='add_tf'), #AGREGAR PATIO DE TANQUES
-   
-    #url(r'^delete_tf/$', views.add_patiotanque, name='delete_tf'), #AGREGAR PATIO DE TANQUES
     url(r'^delete_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'),
 
     url(r'^detail_tf/(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detail_tf'),
@@ -35,28 +31,9 @@ urlpatterns = [
     
     url(r'^edit_tf/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edit_tf'),
 
-    url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'),
-
-
-
-    
-
+    url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'), 
 	
 
-    
-
-	
-
-   #url(r'^add_tf/$', views.add_patiotanque, name='add_tf'), #AGREGAR PATIO DE TANQUES
-
-	#url(r'^$', CourseList.as_view(), name='list'),
-   # url(r'^(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detailtankfarm'),
-
-
-    #url(r'^editar/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edittankfarm'),
-    
-    #url(r'^borrar/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='deletetankfarm'),
-	
 
 ]
 

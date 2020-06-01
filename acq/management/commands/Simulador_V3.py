@@ -35,21 +35,21 @@ class Command(BaseCommand):
     
           Current_Value = []
           json_temp = []
-          numtags=3
+          numtags=3    
           numregistros= numtags*2
           k=0
           for k in range(numtags):
-            Pv=random.randint(0,1000)    #simula la entrada de un Pv de un transmisor
-            idtag = random.randint(9,11) #simula la entrada de un id de ese transmisor
+            Pv=random.randint(0,1000)    #simula e vaor medido de un transmisor
+            idtag = random.randint(9,11) #id de ese transmisor entre 9 y 11 para esta simulación
            
             Current_Value.append(idtag)
-            #se empaqueta en el arreglo Current_Value
+            #se empaqueta en el arreglo id
           
            # print(k) 
             Current_Value.append(Pv)    
-            #se empaqueta en el arreglo Current_Value id  y Pv
+            #se empaqueta en el arreglo Current_Value id + Pv
             
-            print(Current_Value)          #consola para debugger
+          #  print(Current_Value)          #consola para debugger
           # Current_Value = valores de id (entre 0-9) y Pv (entre 0-1000) de 3 tags simulados.
 
     #Escribir
@@ -58,13 +58,16 @@ class Command(BaseCommand):
           message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = 101, values = list(Current_Value))  
           #Se construye el msj de escritura (esto para llenar los registros en el esclavo) simulación
 
-          escribir = tcp.send_message(message1, sock) #Se envia comando de escritura en esclavo en elsock abierto.
+          escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj en esclavo en el sock
+          # abierto.
  
     #Leer
 
           message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = 101, quantity= numregistros) 
             #Se construye el msj de lectura desde el esclavo
-          leer = tcp.send_message(message2, sock)
+          leer = tcp.send_message(message2, sock) #Se envia comando de lectura con el msj en esclavo en el sock
+          # abierto.
+ 
         
           timestamp=""
           pv=0
@@ -73,7 +76,8 @@ class Command(BaseCommand):
 
           j=0
           while j < (numregistros-1) :
-             with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para escrtitura
+             with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para 
+             #escrtitura
 
           
               timestamp = str(datetime.now())
@@ -82,16 +86,18 @@ class Command(BaseCommand):
 
 
               
-              json_temp= {"idtag":leer[j], "Timestamp":timestamp, "Pv":leer[j+1]}           
+              json_temp= {"idtag":leer[j], "Timestamp":timestamp, "Pv":leer[j+1]} 
+
 
              
-              file.write(json.dumps(json_temp))
+              file.write(json.dumps(json_temp)) #Paquete a enviar a las vistas y a BD
               file.close()
               
               time.sleep(1)
-              j+=2 #de dos en dos por que cada Tag ocupa dos registro Id y Pv
+              j+=2
           i+=1
         sock.close() #cierra la conexión
+        
         
    
        
