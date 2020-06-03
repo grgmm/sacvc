@@ -251,11 +251,7 @@ class Analogico_Hs(models.Model):
 
 #sample.save()
 
-with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json 
-  json_data = json.loads(data_file.read())
-  #objeto=Analogico_Hs(data=json_data)
- # objeto.save() #FUNCIONA ASI
-  Analogico_Hs.objects.create(data = json_data) #O ASI TAMBIEN
+
 
 
 
