@@ -237,6 +237,7 @@ class Analogico(Tag):
 class Analogico_Hs(models.Model):
  
   data = JSONField(null=True, blank=True,)
+
   
 
 
