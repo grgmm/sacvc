@@ -14,37 +14,35 @@ class Command(BaseCommand):
 
       iterar=999
       i=0
+      lolo=0
       while i<=iterar:
-       with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json 
-        json_data = json.loads(data_file.read())
-        
-        idtagfilter=json_data['idtag']
-        Pvtagfilter=json_data['Pv']
-        Tag_Bd=[]
-        
-        #print(idtagfilter)
-
-       # Analogico_Hs.objects.filter(data__idtag=idtagfilter)
-      #  Analogico_Hs.objects.latest('data_idtag', 'idtagfilter')
-        #print(todos)
-        Analogico_Hs.objects.create(data = json_data) #BORRAR
-
-        Tag_Bd=Analogico_Hs.objects.filter(data__idtag=idtagfilter).latest('data__Timestamp')
-        Tag_Validar=Tag_Bd.data
-      #  print(Tag_Validar)
-        Pv_Tag_Validar=Tag_Validar['Pv']
-        print(Pv_Tag_Validar)
-        print(Pvtagfilter)
-
-
-      
-       # print(bdtag.[data.'Pv'])
-               # print(lolo)
-        #if (json_data['Pv']=bdtag.data['Pv']):
-
-        if (Pv_Tag_Validar!=Pvtagfilter):
+       with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: 
+         json_data = json.loads(data_file.read())
+       
+       id_Tag_Filter=json_data['idtag'] 
+       Pv_Tag_Filter=json_data['Pv']
+       Tag_Bd=[]
+       
+       Bdcount= Analogico_Hs.objects.count()
+       if (Bdcount == 0):
          Analogico_Hs.objects.create(data = json_data)
-        data_file.close()
+         break #Se requiere un goto para no cerrar las iteraciones
+
+
+
+       if Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).exists():
+         Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__Timestamp')
+       
+         Tag_Validar=Tag_Bd.data
+         Pv_Tag_Validar=Tag_Validar['Pv'] 
+         print(Pv_Tag_Validar)
+         print(Pv_Tag_Filter)      
+      
+         if (Pv_Tag_Validar!=Pv_Tag_Filter):
+           Analogico_Hs.objects.create(data = json_data)
+       else:
+          Analogico_Hs.objects.create(data = json_data)
+       data_file.close()
        time.sleep(1)        
        i+=1
 
