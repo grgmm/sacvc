@@ -4,23 +4,22 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _ 
 import time
-from datetime import datetime
-import random 
+#from datetime import datetime #Borrar
+#import random #Borrar
 from django.contrib.postgres.fields import JSONField
 from datetime import datetime
-import random 
-import time
+#import random  #Borrar
+#import time #Borrar
 import json
-import socket
-import sys
-from umodbus import conf
-from umodbus.client import tcp
-
+#import socket #Borrar
+#import sys #Borrar
+#from umodbus import conf #Borrar
+#from umodbus.client import tcp #Borrar
 from django.forms import ModelForm
 
 # Create your models here.
 
-#MODELOS DE TANQUES
+#MODELOS DE PATIO DE TANQUES
 
 class PatioTanque(models.Model):
     
@@ -37,15 +36,14 @@ class PatioTanque(models.Model):
 
 
 
-class PatioTanqueForm(ModelForm): #formulario agregar instalacion
+class PatioTanqueForm(ModelForm): #formulario agregar instalacion OJO SACAR DE ESTE MODULO
 
     class Meta:
         model = PatioTanque
         fields = ('Nombre','Descriptor')
 
 
-
-
+#MODELOS DE TANQUES
 
 class Tk(models.Model):
    
@@ -68,6 +66,8 @@ class Tk(models.Model):
        return '%s' % (self.nombre,)
 
 
+#MODELOS DE FACTORES DE TANQUES
+
 class Factor(models.Model):
     
     id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)
@@ -79,9 +79,7 @@ class Factor(models.Model):
     
        return '%d' % (self.id,)
 
-
-
-
+#MODELOS TABLA CERTIFICADA (DE AFORO) DE TANQUES
 
 class Tct(models.Model):
     id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)    
@@ -233,7 +231,29 @@ class Analogico(Tag):
 
 
 
-#HISTORICOS
+#HISTORICOS Hs=todos, Hs0= tablas de segundos, Hs1= tablas de minutos, Hs2= tablas de horas, Hs3= tablas de dias,
+#Hs4= tablas de meses, Hs5= tablas de años.
+
+class Analogico_Hs(models.Model):
+ 
+  data = JSONField(null=True, blank=True,)
+
+  
+
+
+  def __str__(self):
+    
+     return '%s' % (self.id)
+
+
+#data_ = {"idtag": 11, "Timestamp": "2020-05-26 10:13:49.334038", "Pv": 3000}
+
+#sample=Analogico_Hs(data=data_)
+
+#sample.save()
+
+
+
 
 
 
@@ -245,42 +265,45 @@ class Analogico_Hs0(models.Model):
     
      return '%s' % (self.id)
 
-  class Analogico_Hs1(models.Model):
+class Analogico_Hs1(models.Model):
  
-   data = JSONField()
+  data = JSONField()
 
   def __str__(self):
     
      return '%s' % (self.id)
 
-  class Analogico_Hs2(models.Model):
+class Analogico_Hs2(models.Model):
  
-   data = JSONField()
+  data = JSONField()
 
   def __str__(self):
     
      return '%s' % (self.id)
 
-  class Analogico_Hs3(models.Model):
+class Analogico_Hs3(models.Model):
  
-   data = JSONField()
+  data = JSONField()
 
   def __str__(self):
     
      return '%s' % (self.id)
 
-  class Analogico_Hs4(models.Model):
+class Analogico_Hs4(models.Model):
  
-   data = JSONField()
+  data = JSONField()
 
   def __str__(self):
     
      return '%s' % (self.id)
 
-  class Analogico_Hs5(models.Model):
+class Analogico_Hs5(models.Model):
  
-   data = JSONField()
+  data = JSONField()
 
   def __str__(self):
     
      return '%s' % (self.id)
+
+
+ 

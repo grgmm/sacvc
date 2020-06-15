@@ -1,0 +1,4 @@
+﻿select datname AS db_name, 
+       pg_size_pretty(pg_database_size(datname)) as db_size
+from pg_database 
+order by pg_database_size(datname) desc;
