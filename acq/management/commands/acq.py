@@ -9,15 +9,17 @@ from umodbus.client import tcp
 from django.core.management.base import BaseCommand
 
 
+
 class Command(BaseCommand):
     help = 'help'
 
     def handle(self, *args, **kwargs):
-        n=99 #100 iteraciones
+        n=0 #100 iteraciones
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
         slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix. 
         slaveip= '192.168.43.143' #ip del esclavo para modbus TCP
-        i=0
+        i=1
+
         
         conf.SIGNED_VALUES = True # No estoy seguro de su utilidad me lo copié del ejemplo.
         print('\n' '\n'  "         SIMULADOR MODBUS DESARROLLADO POR: Ing Miguel Moreno")
@@ -28,19 +30,45 @@ class Command(BaseCommand):
         #Mensajes de encabezado en consola Python informativo.
 
         
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
-        sock.connect((slaveip, slaveport)) #realiza la conexión
+       # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
+        #sock.connect((slaveip, slaveport)) #realiza la conexión
+
+        import struct
+        import numpy as np
+
+       # t = (16552,0)
+        R0=int(16500)
+        R1=int(17000)
+        packed_string = struct.pack("ii", R0,R1)
+        print ('{};{}'.format(R0, R1))
+
+        bit_number = '0'+ str(np.base_repr(R1, base=2)) + '0' + str(np.base_repr(R0, base=2)) 
+        print(bit_number)
+        unpacked_float = struct.unpack("f", packed_string[:4])
+
+        f = int(bit_number, 2)
+        value = round(struct.unpack('f', struct.pack('I', f))[0], 2)
+        print(f)
+        print(value)
+        #unpacked_lolo= struct.unpack("l", packed_string)
+        #print(struct.calcsize("f"))
+
+        #print(packed_string)
+        #print(unpacked_lolo)
+        #print(unpacked_float)
+#result: 7.34690863652e-38
+        
         
         while i<=n:  
     
-          Current_Value = []
+          Current_Value = []  
           json_temp = []
           numtags=3    
           numregistros= numtags*2
           k=0
           for k in range(numtags):
             Pv=random.randint(0,1000)    #simula e vaor medido de un transmisor
-            idtag = random.randint(9,11) #id de ese transmisor entre 9 y 11 para esta simulación
+            idtag = random.randint(9,100) #id de ese transmisor entre 9 y 100 para esta simulación
            
             Current_Value.append(idtag)
             #se empaqueta en el arreglo id
@@ -93,11 +121,11 @@ class Command(BaseCommand):
               file.write(json.dumps(json_temp)) #Paquete a enviar a las vistas y a BD
               file.close()
               
-              time.sleep(1)
+              time.sleep(0.1)# para debugger 90 ms
               j+=2
           i+=1
-        sock.close() #cierra la conexión
-        
+       # sock.close() #cierra la conexión
+       
         
    
        

@@ -15,34 +15,42 @@ class Command(BaseCommand):
       iterar=999
       i=0
       lolo=0
+      Tag_Bd=[]
       while i<=iterar:
        with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: 
          json_data = json.loads(data_file.read())
        
-       id_Tag_Filter=json_data['idtag'] 
-       Pv_Tag_Filter=json_data['Pv']
-       Tag_Bd=[]
+         id_Tag_Filter=json_data['idtag'] 
+         Pv_Tag_Filter=json_data['Pv'] #Extraigo el pv del json del json de entrada
+         
        
        Bdcount= Analogico_Hs.objects.count()
-       if (Bdcount == 0):
-         Analogico_Hs.objects.create(data = json_data)
-         break #Se requiere un goto para no cerrar las iteraciones
-
-
-
-       if Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).exists():
-         Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__Timestamp')
        
-         Tag_Validar=Tag_Bd.data
-         Pv_Tag_Validar=Tag_Validar['Pv'] 
-         print(Pv_Tag_Validar)
-         print(Pv_Tag_Filter)      
-      
-         if (Pv_Tag_Validar!=Pv_Tag_Filter):
-           Analogico_Hs.objects.create(data = json_data)
-       else:
-          Analogico_Hs.objects.create(data = json_data)
-       data_file.close()
-       time.sleep(1)        
-       i+=1
 
+       if (Bdcount != 0): #BD NO ESTA EN BLANCO
+        if Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).exists(): #Si existe tags en bd con el id del json de entrada
+         Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__Timestamp') #se posiciona en el ultimo
+       
+         Tag_Validar=Tag_Bd.data 
+         Pv_Tag_Validar=Tag_Validar['Pv'] #Extraigo el pv del json de la Bd
+         
+         #LOGS DE LA APP
+
+         if (Pv_Tag_Validar!=Pv_Tag_Filter): #si los Pv son diferentes creo el de entrada
+           print('Grabando en BD id existente PV nuevo')     
+           Analogico_Hs.objects.create(data = json_data)
+         else:
+           print('Sin Guardar: PV Guardado en Bd recientemente')
+
+        else: #BD con Data pro no contiene el id entrante
+          print('Grabando en BD no vacia: id no exitente y PV nuevo')     
+          Analogico_Hs.objects.create(data = json_data)
+           
+       else: #BD EN BLANCO (VACIA)
+          
+          print('Grabando en BD Vacia id no existente y PV nuevo')     
+          Analogico_Hs.objects.create(data = json_data)
+          #data_file.close()      
+       
+       time.sleep(0.5)   #para deugger 900 ms
+       i+=1
