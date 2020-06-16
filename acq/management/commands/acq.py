@@ -7,14 +7,29 @@ import sys
 from umodbus import conf
 from umodbus.client import tcp
 from django.core.management.base import BaseCommand
+import struct
+import numpy as np
 
 
 
 class Command(BaseCommand):
     help = 'help'
+  
 
+    
     def handle(self, *args, **kwargs):
-        n=0 #100 iteraciones
+        def FloatIeee754(registro0=16384,registro1=16500):
+          packed_string = struct.pack("ii", registro0,registro1)
+          bit_number = '0'+ str(np.base_repr(registro1, base=2)) + '0' + str(np.base_repr(registro0, base=2))
+          fdata = int(bit_number, 2)        
+          fvalue = struct.unpack('f', struct.pack('I', fdata))[0]
+       #print ('{};{}'.format(R0, R1))
+       #print(bit_number)           
+       #print(fdata)       
+       #print(fvalue)
+          return(fvalue)
+
+        n=1000 #100 iteraciones
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
         slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix. 
         slaveip= '192.168.43.143' #ip del esclavo para modbus TCP
@@ -30,56 +45,35 @@ class Command(BaseCommand):
         #Mensajes de encabezado en consola Python informativo.
 
         
-       # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
-        #sock.connect((slaveip, slaveport)) #realiza la conexión
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
+        sock.connect((slaveip, slaveport)) #realiza la conexión
 
-        import struct
-        import numpy as np
-
-       # t = (16552,0)
-        R0=int(16500)
-        R1=int(17000)
-        packed_string = struct.pack("ii", R0,R1)
-        print ('{};{}'.format(R0, R1))
-
-        bit_number = '0'+ str(np.base_repr(R1, base=2)) + '0' + str(np.base_repr(R0, base=2)) 
-        print(bit_number)
-        unpacked_float = struct.unpack("f", packed_string[:4])
-
-        f = int(bit_number, 2)
-        value = round(struct.unpack('f', struct.pack('I', f))[0], 2)
-        print(f)
-        print(value)
-        #unpacked_lolo= struct.unpack("l", packed_string)
-        #print(struct.calcsize("f"))
-
-        #print(packed_string)
-        #print(unpacked_lolo)
-        #print(unpacked_float)
-#result: 7.34690863652e-38
-        
+              
         
         while i<=n:  
     
           Current_Value = []  
           json_temp = []
           numtags=3    
-          numregistros= numtags*2
+          numregistros= numtags*3
           k=0
+          
           for k in range(numtags):
-            Pv=random.randint(0,1000)    #simula e vaor medido de un transmisor
+            Pv0=random.randint(16384,32765)     #simula e valor medido de un transmisor
+            Pv1=random.randint(16000,17900)    #simula e valor medido de un transmisor
             idtag = random.randint(9,100) #id de ese transmisor entre 9 y 100 para esta simulación
            
             Current_Value.append(idtag)
             #se empaqueta en el arreglo id
           
-           # print(k) 
-            Current_Value.append(Pv)    
-            #se empaqueta en el arreglo Current_Value id + Pv
-            
-          #  print(Current_Value)          #consola para debugger
-          # Current_Value = valores de id (entre 0-9) y Pv (entre 0-1000) de 3 tags simulados.
+          
+            Current_Value.append(Pv0)
+            Current_Value.append(Pv1)
 
+            
+            #se empaqueta en el arreglo Current_Value id + Pv0 + PV1
+            
+         
     #Escribir
            #se requiere en formato list para el message modbus.
 
@@ -112,19 +106,26 @@ class Command(BaseCommand):
               
              
 
+              R0=leer[j+1]
+              R1=leer[j+2]
+              print(R0)
+              print(R1)
+              float_value=FloatIeee754(R0,R1)
+              print(float_value)
 
               
-              json_temp= {"idtag":leer[j], "Timestamp":timestamp, "Pv":leer[j+1]} 
+              json_temp= {"idtag":leer[j], "Timestamp":timestamp, "Pv0":leer[j+1],"Pv1":leer[j+2], "Pv_Float":float_value}
 
 
              
               file.write(json.dumps(json_temp)) #Paquete a enviar a las vistas y a BD
               file.close()
               
-              time.sleep(0.1)# para debugger 90 ms
-              j+=2
+              time.sleep(1)# para debugger 90 ms
+              j+=3
+
           i+=1
-       # sock.close() #cierra la conexión
+        sock.close() #cierra la conexión
        
         
    
