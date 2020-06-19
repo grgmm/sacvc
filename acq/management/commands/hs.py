@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-      iterar=999
+      iterar=100
       i=0
       lolo=0
       Tag_Bd=[]
@@ -21,7 +21,9 @@ class Command(BaseCommand):
          json_data = json.loads(data_file.read())
        
          id_Tag_Filter=json_data['idtag'] 
-         Pv_Tag_Filter=json_data['Pv'] #Extraigo el pv del json del json de entrada
+         Pv_Tag_Filter=json_data['Pv0']
+         Pv_Tag_Filter=json_data['Pv1'] #Extraigo el pv del json del json de entrada
+         Pv_Tag_Filter=json_data['Pv_Float']
          
        
        Bdcount= Analogico_Hs.objects.count()
@@ -32,7 +34,7 @@ class Command(BaseCommand):
          Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__Timestamp') #se posiciona en el ultimo
        
          Tag_Validar=Tag_Bd.data 
-         Pv_Tag_Validar=Tag_Validar['Pv'] #Extraigo el pv del json de la Bd
+         Pv_Tag_Validar=Tag_Validar['Pv_Float'] #Extraigo el pv del json de la Bd
          
          #LOGS DE LA APP
 
@@ -40,9 +42,9 @@ class Command(BaseCommand):
            print('Grabando en BD id existente PV nuevo')     
            Analogico_Hs.objects.create(data = json_data)
          else:
-           print('Sin Guardar: PV Guardado en Bd recientemente')
+           print('Sin Guardar: TAG y PV Guardado en Bd recientemente')
 
-        else: #BD con Data pro no contiene el id entrante
+        else: #BD con Data pero no contiene el id entrante
           print('Grabando en BD no vacia: id no exitente y PV nuevo')     
           Analogico_Hs.objects.create(data = json_data)
            

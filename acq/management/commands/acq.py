@@ -29,7 +29,7 @@ class Command(BaseCommand):
        #print(fvalue)
           return(fvalue)
 
-        n=1000 #100 iteraciones
+        n=3 #100 iteraciones
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
         slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix. 
         slaveip= '192.168.43.143' #ip del esclavo para modbus TCP
@@ -59,35 +59,38 @@ class Command(BaseCommand):
           k=0
           
           for k in range(numtags):
-            Pv0=random.randint(16384,32765)     #simula e valor medido de un transmisor
-            Pv1=random.randint(16000,17900)    #simula e valor medido de un transmisor
-            idtag = random.randint(9,100) #id de ese transmisor entre 9 y 100 para esta simulación
+            Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
+            Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
+            idtag = random.randint(9,100)      #id de ese transmisor entre 9 y 100 para esta simulación 
+                                               #Para simular entrada de diversos transmisores
            
             Current_Value.append(idtag)
-            #se empaqueta en el arreglo id
-          
-          
             Current_Value.append(Pv0)
             Current_Value.append(Pv1)
 
+
+
             
-            #se empaqueta en el arreglo Current_Value id + Pv0 + PV1
+            #se empaqueta en el arreglo Current_Value: id + Pv0 + PV1
             
          
     #Escribir
            #se requiere en formato list para el message modbus.
 
           message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = 101, values = list(Current_Value))  
-          #Se construye el msj de escritura (esto para llenar los registros en el esclavo) simulación
-
+          #Se construye el msj de escritura un bloque de cantidad "numregistros" (esto para llenar los registros en el esclavo)
+          
           escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj en esclavo en el sock
           # abierto.
  
+   
+
     #Leer
 
           message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = 101, quantity= numregistros) 
-            #Se construye el msj de lectura desde el esclavo
-          leer = tcp.send_message(message2, sock) #Se envia comando de lectura con el msj en esclavo en el sock
+            #Se construye el msj de lectura desde el esclavo a partir de la dirección 101 (holding) para esta simulación
+
+          leer = tcp.send_message(message2, sock) #Se envia comando de lectura con el msj en el esclavo en el sock
           # abierto.
  
         
@@ -113,7 +116,7 @@ class Command(BaseCommand):
               float_value=FloatIeee754(R0,R1)
               print(float_value)
 
-              
+              #consttruye un json de una linea por cada tag luego sera sobrescrito por el sigueinte tag hasta terminar el ciclo
               json_temp= {"idtag":leer[j], "Timestamp":timestamp, "Pv0":leer[j+1],"Pv1":leer[j+2], "Pv_Float":float_value}
 
 
