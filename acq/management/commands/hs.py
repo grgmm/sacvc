@@ -16,6 +16,12 @@ class Command(BaseCommand):
       i=0
       lolo=0
       Tag_Bd=[]
+      q = Analogico_Hs.objects.all().iterator()
+      for t in q:
+       print(t)
+       print(q)
+       
+
       while i<=iterar:
        with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: 
          json_data = json.loads(data_file.read())
@@ -29,7 +35,7 @@ class Command(BaseCommand):
        Bdcount= Analogico_Hs.objects.count()
        
 
-       if (Bdcount != 0): #BD NO ESTA EN BLANCO
+       if (Bdcount != 0): #BD NO ESTA EN VACIA
         if Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).exists(): #Si existe tags en bd con el id del json de entrada
          Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__Timestamp') #se posiciona en el ultimo
        
