@@ -29,7 +29,7 @@ class Command(BaseCommand):
        #print(fvalue)
           return(fvalue)
 
-        n=3 #100 iteraciones
+        n=99 #100 iteraciones
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
         slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix. 
         slaveip= '192.168.43.143' #ip del esclavo para modbus TCP

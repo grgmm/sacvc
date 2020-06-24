@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-      iterar=100
+      iterar=199
       i=0
       lolo=0
       Tag_Bd=[]
