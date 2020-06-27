@@ -16,7 +16,7 @@ class Command(BaseCommand):
      iterar = 1
      i = 2
 
-     while i > iterar:
+     while i > iterar: #(ciclo infinito)
 
       def Gestion_Hs0(delta_t, bd_origen, bd_destino):
 
@@ -29,13 +29,14 @@ class Command(BaseCommand):
           for recorrido in q:
 
             objetodata=recorrido.data
-            objetoindexado=objetodata['indexado'] #Extraigo el pv del json de la Bd
-            print(objetoindexado)
+            objetoindexado=objetodata['indexado'] #Exraigo el estado de la bander "indexado"
             
-            if objetoindexado==0:
+            
+            if objetoindexado==0: #solo si no ha sido indexado/copiado
 
     
-             delt=(datetime.now()- datetime.strptime(recorrido.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f'))
+             delt=(datetime.now()- datetime.strptime(recorrido.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f')) #tiempo actual del sistema- 
+             #tiempo del tag actual
      
              if (delt < delta_t):
               
@@ -43,12 +44,11 @@ class Command(BaseCommand):
               bd_destino.objects.create(data = recorrido.data)
 
 
-              #recorrido.update(data__indexado=1) 
-              #recorrido.data.update(data__indexado=1)
-              #thing.properties['color'] = 'green'
-              recorrido.data['indexado']= '1'
-              print(recorrido.data)
-              recorrido.save()
+             
+              recorrido.data['indexado']= '1' #activa la bandera en la tabla de origen 
+              #para no duplicar registros en la sigiente tabla (mejorar)             
+              
+              recorrido.save() #guarda el cambio
               
                     
 
@@ -56,22 +56,31 @@ class Command(BaseCommand):
 
 
       def Gestion_Hs(delta_t, bd_origen, bd_destino):
+        
   
         if (bd_origen.count() != 0):
           first_obj = bd_origen.first()    
           q = bd_origen.iterator()
 
           for recorrido in q:
-    
-            delt=(datetime.strptime(recorrido.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f')-datetime.strptime(first_obj.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f'))
+            objetodata=recorrido.data
+            objetoindexado=objetodata['indexado'] #Exraigo el estado de la bander "indexado"
+           
+            
+            if objetoindexado==0: #solo si no ha sido indexado/copiado    
+             delt=(datetime.strptime(recorrido.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f')-datetime.strptime(first_obj.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f'))
      
-            print(delt)
-            print(delta_t)
-            if (delt > delta_t):       
+            
+            
+             if (delt > delta_t):       
               print('Grabando en el hs correspondiente')
-              bd_destino.create(data = recorrido.data)    
-    
-        qs=bd_origen.filter(data__timestamp__gte=str(delta_t))
+              bd_destino.create(data = first_obj.data)
+              first_obj.data['indexado']= '1' #activa la bandera en la tabla de origen 
+              #para no duplicar registros en la sigiente tabla (mejorar)
+              first_obj.save()
+        print(delt)
+        print(delta_t)
+        qs=bd_origen.filter(data__indexado='1')
         if (qs.count()>0):
           print('Eliminando registros Duplicados')
           qs.delete()
@@ -82,8 +91,7 @@ class Command(BaseCommand):
       hs0_delta_t = timedelta(seconds=59)
       #hs0_bd_origen  = Analogico_Hs.objects.all()
       hs0_bd_origen  = Analogico_Hs
-
-      hs0_bd_destino = Analogico_Hs0
+      hs0_bd_destino = Analogico_Hs0      
       Gestion_Hs0(hs0_delta_t, hs0_bd_origen, hs0_bd_destino)
       #i+=1
 
@@ -91,15 +99,9 @@ class Command(BaseCommand):
 
       hs1_bd_origen = Analogico_Hs0.objects.all()
       hs1_bd_destino = Analogico_Hs1.objects
-     # Gestion_Hs(hs0_delta_t, hs1_bd_origen, hs1_bd_destino)
+      Gestion_Hs(hs0_delta_t, hs1_bd_origen, hs1_bd_destino)
  
-      hs2_delta_t = timedelta(minutes=59)
-      hs2_bd_origen = Analogico_Hs1.objects.all()
-      hs2_bd_destino = Analogico_Hs2.objects
-    
-
-      #Gestion_Hs(hs2_delta_t, hs2_bd_origen, hs2_bd_destino)
-    
+     
 
 
 
