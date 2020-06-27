@@ -63,8 +63,7 @@ class Command(BaseCommand):
           q = bd_origen.iterator()
 
           for recorrido in q:
-            objetodata=recorrido.data
-            objetoindexado=objetodata['indexado'] #Exraigo el estado de la bander "indexado"
+            objetoindexado=first_obj.data['indexado'] #Exraigo el estado de la bander "indexado"
            
             
             if objetoindexado==0: #solo si no ha sido indexado/copiado    
