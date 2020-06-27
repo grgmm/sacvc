@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-      iterar=199
+      iterar=1999
       i=0
       lolo=0
       Tag_Bd=[]
@@ -28,14 +28,14 @@ class Command(BaseCommand):
        
          id_Tag_Filter=json_data['idtag'] 
          Pv_Tag_Filter=json_data['Pv0']
-         Pv_Tag_Filter=json_data['Pv1'] #Extraigo el pv del json del json de entrada
+         Pv_Tag_Filter=json_data['Pv1'] #Extraigo el pv del json de entrada
          Pv_Tag_Filter=json_data['Pv_Float']
          
        
        Bdcount= Analogico_Hs.objects.count()
        
 
-       if (Bdcount != 0): #BD NO ESTA EN VACIA
+       if (Bdcount != 0): #BD NO ESTA VACIA
         if Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).exists(): #Si existe tags en bd con el id del json de entrada
          Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__Timestamp') #se posiciona en el ultimo
        

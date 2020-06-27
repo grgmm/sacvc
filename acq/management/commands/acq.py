@@ -29,7 +29,7 @@ class Command(BaseCommand):
        #print(fvalue)
           return(fvalue)
 
-        n=99 #100 iteraciones
+        n=999 #100 iteraciones
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
         slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix. 
         slaveip= '192.168.43.143' #ip del esclavo para modbus TCP
@@ -117,7 +117,7 @@ class Command(BaseCommand):
               print(float_value)
 
               #consttruye un json de una linea por cada tag luego sera sobrescrito por el sigueinte tag hasta terminar el ciclo
-              json_temp= {"idtag":leer[j], "Timestamp":timestamp, "Pv0":leer[j+1],"Pv1":leer[j+2], "Pv_Float":float_value}
+              json_temp= {"idtag":leer[j], "Timestamp":timestamp, "Pv0":leer[j+1],"Pv1":leer[j+2], "Pv_Float":float_value, "indexado": 0}
 
 
              
