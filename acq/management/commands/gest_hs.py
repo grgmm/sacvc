@@ -68,7 +68,7 @@ class Command(BaseCommand):
             
             if objetoindexado==0: #solo si no ha sido indexado/copiado    
              delt=(datetime.strptime(recorrido.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f')-datetime.strptime(first_obj.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f'))
-     
+              
             
             
              if (delt > delta_t):       
@@ -77,8 +77,10 @@ class Command(BaseCommand):
               first_obj.data['indexado']= '1' #activa la bandera en la tabla de origen 
               #para no duplicar registros en la sigiente tabla (mejorar)
               first_obj.save()
-        print(delt)
-        print(delta_t)
+              print(delt)
+              print(delta_t)
+        
+        
         qs=bd_origen.filter(data__indexado='1')
         if (qs.count()>0):
           print('Eliminando registros Duplicados')
@@ -87,18 +89,48 @@ class Command(BaseCommand):
 
     
    
-      hs0_delta_t = timedelta(seconds=59)
+      hs0_delta_t = timedelta(seconds=59) 
       #hs0_bd_origen  = Analogico_Hs.objects.all()
       hs0_bd_origen  = Analogico_Hs
       hs0_bd_destino = Analogico_Hs0      
-      Gestion_Hs0(hs0_delta_t, hs0_bd_origen, hs0_bd_destino)
+      Gestion_Hs0(hs0_delta_t, hs0_bd_origen, hs0_bd_destino) #llenado de tabla de segundos hs0
       #i+=1
 
 
 
       hs1_bd_origen = Analogico_Hs0.objects.all()
       hs1_bd_destino = Analogico_Hs1.objects
-      Gestion_Hs(hs0_delta_t, hs1_bd_origen, hs1_bd_destino)
+      Gestion_Hs(hs0_delta_t, hs1_bd_origen, hs1_bd_destino) #llenado de tabla de minutos hs1, copiandolos
+      #desde la tabla de segundos una vez cumplido 60 segundos de permanencia, luego elimninadolos de dicha tabla
+
+      hs2_delta_t = timedelta(minutes=59)
+      hs2_bd_origen = Analogico_Hs1.objects.all()
+      hs2_bd_destino = Analogico_Hs2.objects
+      Gestion_Hs(hs2_delta_t, hs2_bd_origen, hs2_bd_destino) #llenado de tabla de horas hs2, copiandolos
+      #desde la tabla de minutos una vez cumplido 60 minutos de permanencia, luego elimninadolos de dicha tabla
+
+      hs3_delta_t = timedelta(hours=23)
+      hs3_bd_origen = Analogico_Hs2.objects.all()
+      hs3_bd_destino = Analogico_Hs3.objects
+      Gestion_Hs(hs3_delta_t, hs3_bd_origen, hs3_bd_destino) #llenado de tabla de dias hs3, copiandolos
+      #desde la tabla de horas una vez cumplido 24 horas de permanencia, luego elimninadolos de dicha tabla
+
+      hs4_delta_t = timedelta(days=29)
+      hs4_bd_origen = Analogico_Hs3.objects.all()
+      hs4_bd_destino = Analogico_Hs4.objects
+      Gestion_Hs(hs4_delta_t, hs4_bd_origen, hs4_bd_destino) #llenado de tabla de meses hs4, copiandolos
+      #desde la tabla de dias una vez cumplido 30 dias de permanencia, luego elimninadolos de dicha tabla
+
+
+
+      hs5_delta_t = timedelta(days=365)
+      hs5_bd_origen = Analogico_Hs4.objects.all()
+      hs5_bd_destino = Analogico_Hs5.objects
+      Gestion_Hs(hs5_delta_t, hs5_bd_origen, hs5_bd_destino) #llenado de tabla de Años hs5, copiandolos
+      #desde la tabla de meses una vez cumplido 12 meses de permanencia, luego elimninadolos de dicha tabla
+
+
+ 
  
      
 

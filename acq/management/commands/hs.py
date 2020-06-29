@@ -60,5 +60,5 @@ class Command(BaseCommand):
           Analogico_Hs.objects.create(data = json_data)
           #data_file.close()      
        
-       time.sleep(0.8)   #para deugger 900 ms
+       time.sleep(1)   #para deugger 900 ms
        i+=1
