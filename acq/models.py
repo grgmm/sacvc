@@ -7,7 +7,6 @@ import time
 #from datetime import datetime #Borrar
 #import random #Borrar
 from django.contrib.postgres.fields import JSONField
-from datetime import datetime
 #import random  #Borrar
 #import time #Borrar
 import json
@@ -16,6 +15,9 @@ import json
 #from umodbus import conf #Borrar
 #from umodbus.client import tcp #Borrar
 from django.forms import ModelForm
+from datetime import datetime
+from datetime import timedelta
+
 
 # Create your models here.
 
@@ -253,13 +255,10 @@ class Analogico_Hs(models.Model):
 #sample.save()
 
 
-
-
-
-
 class Analogico_Hs0(models.Model):
  
   data = JSONField()
+
 
   def __str__(self):
     
@@ -304,6 +303,3 @@ class Analogico_Hs5(models.Model):
   def __str__(self):
     
      return '%s' % (self.id)
-
-
- 
