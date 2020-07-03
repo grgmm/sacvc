@@ -4,16 +4,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _ 
 import time
-#from datetime import datetime #Borrar
-#import random #Borrar
 from django.contrib.postgres.fields import JSONField
-#import random  #Borrar
-#import time #Borrar
 import json
-#import socket #Borrar
-#import sys #Borrar
-#from umodbus import conf #Borrar
-#from umodbus.client import tcp #Borrar
 from django.forms import ModelForm
 from datetime import datetime
 from datetime import timedelta
@@ -26,19 +18,19 @@ from datetime import timedelta
 class PatioTanque(models.Model):
     
     Nombre = models.CharField(max_length=30,unique=True)
-    Descriptor = models.CharField(max_length=120,default= '',)
+    Descriptor = models.CharField(max_length=120,default="",)
 
     class Meta:
-        ordering = ["pk"]
+        ordering = ['pk']
 
     
     def __str__(self):
     
-       return '%s' % (self.Nombre, self.Descriptor)
+       return '%s, %s' % (self.Nombre, self.Descriptor)
 
 
 
-class PatioTanqueForm(ModelForm): #formulario agregar instalacion OJO SACAR DE ESTE MODULO
+class PatioTanqueForm(ModelForm): #Formulario agregar instalacion OJO SACAR DE ESTE MODULO
 
     class Meta:
         model = PatioTanque
@@ -85,9 +77,9 @@ class Factor(models.Model):
 
 class Tct(models.Model):
     id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)    
-    Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3)
-    Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3)
-    Lt2 = models.DecimalField(max_digits= 3, decimal_places = 3)
+    Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud Unidades de nivel(Ejemplo Metro o Pies)
+    Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud Sub-unidad de Nivel(Ej centimetro oPulgadas)
+    Lt2 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud Sub-Unidad (Fracción) de Nivel (milimetro, diciseisavo de pulgada)
     Tov = models.FloatField(default = 1.0)
     
       
@@ -161,9 +153,9 @@ class MbEsclavo(models.Model):
 
 
     
-#MODELOS DE TAG
+#MODELOS DE TAGS
 
-class Tag(models.Model):
+class Tag(models.Model): #Características comunes para Analógicos y Digitales
   
 
   TIPOVARIABLE_CHOICES= [
@@ -180,10 +172,10 @@ class Tag(models.Model):
   
   def __str__(self):
     
-       return '%d' % (self.id,) 
-  
-#Extiende del modelo Tag con Características comunes para Analógicos y Digitales    
-class Meta:
+       return '%d' % (self.id,)   
+
+
+class Meta: #Extiende del modelo Tag con Características no comunes para Analógicos y Digitales
   
   abstract = True  
 
@@ -196,12 +188,10 @@ class Digital(Tag):
   S1A= models.BooleanField(default = True)
 
 
-
   def __str__(self):
     
       return '%s' % (self.Nombre)
 
- #Extiende del modelo Tag con Características comunes para Analógicos y Digitales 
   abstract = True  
 
 
@@ -236,7 +226,7 @@ class Analogico(Tag):
 #HISTORICOS Hs=todos, Hs0= tablas de segundos, Hs1= tablas de minutos, Hs2= tablas de horas, Hs3= tablas de dias,
 #Hs4= tablas de meses, Hs5= tablas de años.
 
-class Analogico_Hs(models.Model):
+class Analogico_Hs(models.Model): #Poblado automatico al lvantar modulo hs.py
  
   data = JSONField(null=True, blank=True,)
 
@@ -255,7 +245,7 @@ class Analogico_Hs(models.Model):
 #sample.save()
 
 
-class Analogico_Hs0(models.Model):
+class Analogico_Hs0(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -264,7 +254,7 @@ class Analogico_Hs0(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs1(models.Model):
+class Analogico_Hs1(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -272,7 +262,7 @@ class Analogico_Hs1(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs2(models.Model):
+class Analogico_Hs2(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -280,7 +270,7 @@ class Analogico_Hs2(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs3(models.Model):
+class Analogico_Hs3(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -288,7 +278,7 @@ class Analogico_Hs3(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs4(models.Model):
+class Analogico_Hs4(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -296,7 +286,7 @@ class Analogico_Hs4(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs5(models.Model):
+class Analogico_Hs5(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
