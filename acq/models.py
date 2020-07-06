@@ -30,19 +30,14 @@ class PatioTanque(models.Model):
 
 
 
-class PatioTanqueForm(ModelForm): #Formulario agregar instalacion OJO SACAR DE ESTE MODULO
-
-    class Meta:
-        model = PatioTanque
-        fields = ('Nombre','Descriptor')
-
-
 #MODELOS DE TANQUES
 
 class Tk(models.Model):
    
     id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE)      
-    nombre = models.CharField(max_length=30)
+    Nombre = models.CharField(max_length=30)
+    Descriptor = models.CharField(max_length=120,default="",)
+
 
     TIPOTanque_CHOICES = [
     ('CV', 'Cilindrico Vertical'),
@@ -57,7 +52,7 @@ class Tk(models.Model):
     
     def __str__(self):
     
-       return '%s' % (self.nombre,)
+       return '%s' % (self.Nombre,)
 
 
 #MODELOS DE FACTORES DE TANQUES
@@ -77,9 +72,11 @@ class Factor(models.Model):
 
 class Tct(models.Model):
     id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)    
-    Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud Unidades de nivel(Ejemplo Metro o Pies)
-    Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud Sub-unidad de Nivel(Ej centimetro oPulgadas)
-    Lt2 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud Sub-Unidad (Fracción) de Nivel (milimetro, diciseisavo de pulgada)
+    Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud Unidades de nivel
+    Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud de Fracciones de nivel
+    
+    Tov_1 = models.FloatField(default = 1.0)
+    Tov_2 = models.FloatField(default = 1.0)
     Tov = models.FloatField(default = 1.0)
     
       

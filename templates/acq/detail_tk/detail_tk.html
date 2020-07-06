@@ -1,0 +1,18 @@
+
+ {% extends 'acq/base.html' %}
+  {% block title %} {{ tk.pk}} {% endblock %}
+  {% block content %}
+
+
+
+    <h2>Tanque:{{tk.Nombre}}</h2>
+
+
+<p>Detalle de Tanque <i>{{tk.Descriptor}}</i></p>
+<p>Id:<i>{{ tk.id}}</i></p>
+
+<p>
+    <a href="{% url 'uacq:list_tk' %}">Regresar</a>
+</p>
+  
+    {% endblock %}

@@ -10,7 +10,11 @@ from .views import (
     PatiotanqueDelete,
     PatiotanqueDetail,
     PatiotanqueUpdate,
-   
+    TkAdd,
+    TkDelete,
+    TkDetail,
+    TkUpdate,
+    tklist
     )
 
 
@@ -21,7 +25,7 @@ urlpatterns = [
 	path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'),
 	path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'), #MUESTRA LOS VALORES EN LINEA DE FORMA TABULAR
 
-    url(r'^listatankfarm/$', patiotanquelist.as_view(), name='list_tf'), #LISTADO DE PATIOS DE TANQUES
+    url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'), #LISTADO DE PATIOS DE TANQUES
 
 
     url(r'^delete_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'),
@@ -32,6 +36,20 @@ urlpatterns = [
     url(r'^edit_tf/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edit_tf'),
 
     url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'), 
+
+
+    url(r'^list_tk/$', tklist.as_view(), name='list_tk'), 
+
+
+    url(r'^delete_tk/(?P<pk>\d+)$', TkDelete.as_view(), name='del_tk'),
+
+    url(r'^detail_tk/(?P<pk>\d+)$', TkDetail.as_view(), name='detail_tk'),
+
+    
+    url(r'^edit_tk/(?P<pk>\d+)$', TkUpdate.as_view(), name='edit_tk'),
+
+    url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'), 
+    
 	
 
 
