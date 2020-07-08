@@ -1,13 +1,11 @@
 
   {% extends 'acq/base.html' %}
-  {% block title %} {% endblock %}
+  {% block title %}{% endblock %}
   {% block content %}
  
 
 
-
-  <h2>Tanques de Almacenamiento de la instalacion XXX</h2>
-   
+  
       
        <table id="Tk">
 
@@ -15,8 +13,11 @@
     
         <th>ID</th> <th>NOMBRE </th> <th> ACCIÓN </th> 
 
+<h2>Tanques de Almacenamiento de la instalacion {{object_list.first.id_patioTanque.Nombre}}</h2>
 
 {% for tk in object_list %}
+
+
   <tr>
  <td> {{ tk.pk }} </td> <td> {{ tk.Nombre }}</td>
  <td>
@@ -24,11 +25,13 @@
 <a  href="{% url 'uacq:edit_tk' tk.pk  %}">Editar</a>
 <a  href="{% url 'uacq:del_tk' tk.pk  %}">Borrar</a>
 </td>
+
     
  {% endfor %}
 
- <h2>Añadir Tanque</h2>
 
-  Haga click <a href="{% url 'uacq:add_tk'  %}">AQUÍ</a> para añadir una Instalación.
+  Haga click <a href="{% url 'uacq:add_tk' %}">AQUÍ</a> para añadir un Tanque a la instalación
+
+ 
 
    {% endblock %}

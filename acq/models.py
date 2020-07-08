@@ -6,7 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 import time
 from django.contrib.postgres.fields import JSONField
 import json
-from django.forms import ModelForm
 from datetime import datetime
 from datetime import timedelta
 
@@ -26,7 +25,8 @@ class PatioTanque(models.Model):
     
     def __str__(self):
     
-       return '%s, %s' % (self.Nombre, self.Descriptor)
+       return '%s' % (self.Nombre,)
+       
 
 
 
@@ -52,7 +52,7 @@ class Tk(models.Model):
     
     def __str__(self):
     
-       return '%s' % (self.Nombre,)
+       return '%s, %s' % (self.Nombre, self. Descriptor)
 
 
 #MODELOS DE FACTORES DE TANQUES
