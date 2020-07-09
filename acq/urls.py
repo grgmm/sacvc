@@ -38,7 +38,8 @@ urlpatterns = [
     url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'), 
 
 
-    url(r'^list_tk/$', tklist.as_view(), name='list_tk'), 
+    #url(r'^list_tk/$', tklist.as_view(), name='list_tk'),
+    url(r'^list_tk/(?P<exp>\d+)$', tklist.as_view(), name='list_tk'),
 
 
     url(r'^delete_tk/(?P<pk>\d+)$', TkDelete.as_view(), name='del_tk'),

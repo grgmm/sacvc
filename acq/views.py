@@ -79,17 +79,24 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
     model = Tk
     template_name = 'acq/list_tk/list_tk.html'
 
+    def get_queryset(self):
+      qs = super(tklist, self).get_queryset()
+      print(qs)
+      filtro= qs.filter(id_patioTanque__exact=self.kwargs['exp'])
+      print(filtro)
+      return(filtro)
+
 
 class TkAdd(CreateView):
     model = Tk
     fields = ['Nombre', 'Descriptor', 'id_patioTanque']
     template_name = 'acq/add_tk/add_tk.html'
-    success_url = reverse_lazy('uacq:list_tk')
+    success_url = reverse_lazy('uacq:list_tf')
 
 
 class TkDelete(DeleteView):
     model = Tk
-    success_url = reverse_lazy('uacq:list_tk')  
+    success_url = reverse_lazy('uacq:list_tf')
     template_name = 'acq/del_tk/del_tk.html'
 
 
@@ -101,5 +108,5 @@ class TkDetail(DetailView):
 class TkUpdate(UpdateView):
   model = Tk 
   fields = ['Nombre', 'Descriptor']
-  template_name = 'acq/edit_tk/edit_tk.html' 
-  success_url = reverse_lazy('uacq:list_tk' )
+  template_name = 'acq/edit_tk/edit_tk.html'
+  success_url = reverse_lazy('uacq:list_tf')
