@@ -18,6 +18,9 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.core.files.storage import FileSystemStorage
+#from django.core.files.storage import FileSystemStorage
+
 
 
 def lista(request):
@@ -118,4 +121,15 @@ class TkUpdate(UpdateView):
 
 def upload(request):
     template_name = 'acq/uploadfiles.html'
-    return render (request, 'acq/uploadfile.html')
+    if request.method == 'POST':
+      uploaded_file = request.FILES['document']
+      fs = FileSystemStorage()
+      filename = fs.save(uploaded_file.name, uploaded_file)
+      #print(upload_file.name)
+      #print(upload_file.size)
+      uploaded_file_url = fs.url(filename)
+
+    return render(request, 'core/simple_upload.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'core/simple_upload.html')
