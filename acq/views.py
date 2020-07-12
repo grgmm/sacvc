@@ -6,6 +6,7 @@ import json
 from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque
 
+
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -17,6 +18,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+
 
 def lista(request):
    tags = Tag.objects.all()
@@ -110,3 +112,10 @@ class TkUpdate(UpdateView):
   fields = ['Nombre', 'Descriptor']
   template_name = 'acq/edit_tk/edit_tk.html'
   success_url = reverse_lazy('uacq:list_tf')
+
+
+
+
+def upload(request):
+    template_name = 'acq/uploadfiles.html'
+    return render (request, 'acq/uploadfile.html')

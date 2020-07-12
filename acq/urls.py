@@ -14,7 +14,8 @@ from .views import (
     TkDelete,
     TkDetail,
     TkUpdate,
-    tklist
+    tklist,
+    upload,
     )
 
 
@@ -50,7 +51,9 @@ urlpatterns = [
     url(r'^edit_tk/(?P<pk>\d+)$', TkUpdate.as_view(), name='edit_tk'),
 
     url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'), 
-    
+
+    path('upload/', views.upload, name='upload')
+
 	
 
 
