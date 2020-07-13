@@ -120,16 +120,13 @@ class TkUpdate(UpdateView):
 
 
 def upload(request):
-    template_name = 'acq/uploadfiles.html'
     if request.method == 'POST':
       uploaded_file = request.FILES['document']
       fs = FileSystemStorage()
       filename = fs.save(uploaded_file.name, uploaded_file)
-      #print(upload_file.name)
-      #print(upload_file.size)
       uploaded_file_url = fs.url(filename)
 
-    return render(request, 'core/simple_upload.html', {
+      return render(request, 'acq/uploadfile.html', {
             'uploaded_file_url': uploaded_file_url
         })
-    return render(request, 'core/simple_upload.html')
+    return render(request, 'acq/uploadfile.html')

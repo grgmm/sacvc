@@ -13,12 +13,12 @@
 
   
     
-        <th>ID</th> <th>NOMBRE </th> <th> ACCIÓN </th> <th>TANQUES</th> 
+      <th>NOMBRE </th> <th> ACCIÓN </th> <th>TANQUES</th> 
 
 
 {% for patio in object_list %}
   <tr>
- <td> {{ patio.pk }} </td> <td> {{ patio.Nombre }}</td>
+<td> {{ patio.Nombre }}</td>
  <td>
 <a  href="{% url 'uacq:detail_tf' patio.pk  %}">Detalle</a>
 <a  href="{% url 'uacq:edit_tf' patio.pk  %}">Editar</a>

@@ -11,7 +11,7 @@
 
   
     
-        <th>ID</th> <th>NOMBRE </th> <th> ACCIÓN </th> 
+        <th>NOMBRE </th> <th> ACCIÓN </th> 
 
 <h2>Tanques de Almacenamiento de la instalacion {{object_list.first.id_patioTanque.Nombre}}</h2>
 
@@ -19,7 +19,7 @@
 
 
   <tr>
- <td> {{ tk.pk }} </td> <td> {{ tk.Nombre }}</td>
+ <td> {{ tk.Nombre }}</td>
  <td>
 <a  href="{% url 'uacq:detail_tk' tk.pk  %}">Detalle</a>
 <a  href="{% url 'uacq:edit_tk' tk.pk  %}">Editar</a>
