@@ -37,6 +37,7 @@ class Tk(models.Model):
     id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE)      
     Nombre = models.CharField(max_length=30)
     Descriptor = models.CharField(max_length=120,default="",)
+    tct_file = models.FileField(max_length=100, blank=True)  #upload_to='media'
 
 
     TIPOTanque_CHOICES = [

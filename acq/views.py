@@ -94,7 +94,7 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
 class TkAdd(CreateView):
     model = Tk
-    fields = ['Nombre', 'Descriptor', 'id_patioTanque']
+    fields = ['Nombre', 'Descriptor', 'tct_file','id_patioTanque']
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
 
