@@ -86,9 +86,9 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
     def get_queryset(self):
       qs = super(tklist, self).get_queryset()
-      print(qs)
+      #print(qs)
       filtro= qs.filter(id_patioTanque__exact=self.kwargs['exp'])
-      print(filtro)
+      #print(filtro)
       return(filtro)
 
 
@@ -105,6 +105,7 @@ class TkDelete(DeleteView):
     template_name = 'acq/del_tk/del_tk.html'
 
 
+
 class TkDetail(DetailView):
     model = Tk
     template_name = 'acq/detail_tk/detail_tk.html'
@@ -116,17 +117,3 @@ class TkUpdate(UpdateView):
   template_name = 'acq/edit_tk/edit_tk.html'
   success_url = reverse_lazy('uacq:list_tf')
 
-
-
-
-def upload(request):
-    if request.method == 'POST':
-      uploaded_file = request.FILES['document']
-      fs = FileSystemStorage()
-      filename = fs.save(uploaded_file.name, uploaded_file)
-      uploaded_file_url = fs.url(filename)
-
-      return render(request, 'acq/uploadfile.html', {
-            'uploaded_file_url': uploaded_file_url
-        })
-    return render(request, 'acq/uploadfile.html')

@@ -11,7 +11,7 @@
 
   
     
-        <th>NOMBRE </th> <th> ACCIÓN </th> 
+        <th>NOMBRE </th> <th> ACCIÓN </th> <th>  TABLA TCT </th>
 
 <h2>Tanques de Almacenamiento de la instalacion {{object_list.first.id_patioTanque.Nombre}}</h2>
 
@@ -19,18 +19,31 @@
 
 
   <tr>
- <td> {{ tk.Nombre }}</td>
+ <td> {{ tk.Nombre }} </td>
+
+ 
  <td>
 <a  href="{% url 'uacq:detail_tk' tk.pk  %}">Detalle</a>
 <a  href="{% url 'uacq:edit_tk' tk.pk  %}">Editar</a>
 <a  href="{% url 'uacq:del_tk' tk.pk  %}">Borrar</a>
+
 </td>
+
+ 
+ <td>
+ 	<a href ="{{tk.tct_file.url}}" >ver</a>
+
+
+</td>
+
+
+
 
     
  {% endfor %}
 
 
-  Haga click <a href="{% url 'uacq:add_tk' %}">AQUÍ</a> para añadir un Tanque a la instalación
+  PARA AÑADIR UN TANQUE A LA INSTALACION <a href="{%url 'uacq:add_tk'%}"> <H3>Haga click AQUI</h3></a> 
 
  
 
