@@ -8,6 +8,7 @@ from django.contrib.postgres.fields import JSONField
 import json
 from datetime import datetime
 from datetime import timedelta
+from django.core.validators import FileExtensionValidator
 
 
 # Create your models here.
@@ -34,10 +35,15 @@ class PatioTanque(models.Model):
 
 class Tk(models.Model):
    
-    id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE)      
+    id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE,verbose_name= _('Patio de Tanques'))      
     Nombre = models.CharField(max_length=30,)
-    Descriptor = models.CharField(max_length=120,default="",)
-    tct_file = models.FileField(upload_to='tct',max_length=100, blank=True,)
+    Descriptor = models.CharField(max_length=120,default="",)    
+    
+
+    tct_archivo = models.FileField(upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
+    Descriptor_tct = models.CharField(max_length=120,default="",)
+    fecha_subida_tct = models.DateTimeField(auto_now_add=True, blank=True)
+
 
 
     TIPOTanque_CHOICES = [
@@ -162,7 +168,7 @@ class Tag(models.Model): #Características comunes para Analógicos y Digitales
   ('C', 'Calculada'),]
     
   Nombre = models.CharField(max_length=42)
-  Descriptor = models.CharField(max_length=120)
+  Descriptor = models.CharField(max_length=120, default='')
   id_Tk= models.ForeignKey(Tk, on_delete=models.CASCADE)
   Habilitar= models.BooleanField(default = True)
   TipoVariable = models.CharField(choices = TIPOVARIABLE_CHOICES,max_length=1, default = 'B')

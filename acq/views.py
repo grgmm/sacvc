@@ -19,7 +19,6 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.core.files.storage import FileSystemStorage
-#from django.core.files.storage import FileSystemStorage
 
 
 
@@ -94,11 +93,11 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
 class TkAdd(CreateView):
     model = Tk
-    fields = ['Nombre', 'Descriptor', 'tct_file','id_patioTanque']
-    template_name = 'acq/add_tk/add_tk.html'
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque']
+    template_name = 'acq/add_tk/add_tk.html'  
     success_url = reverse_lazy('uacq:list_tf')
 
-
+    
 class TkDelete(DeleteView):
     model = Tk
     success_url = reverse_lazy('uacq:list_tf')
@@ -116,4 +115,13 @@ class TkUpdate(UpdateView):
   fields = ['Nombre', 'Descriptor']
   template_name = 'acq/edit_tk/edit_tk.html'
   success_url = reverse_lazy('uacq:list_tf')
+
+
+
+def subir_tct(request):
+
+  return HttpResponseRedirect(reverse('acq:subir_tct'))
+
+
+
 

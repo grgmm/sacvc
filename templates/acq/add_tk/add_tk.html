@@ -7,11 +7,19 @@
 {% block content %}
 <h2>Agregar de Tanque</h2>
 
+<a href="{% url 'uacq:subir_tct' %}"> <H3>Haga click AQUI para agregar TCT</h3> </a>
+
+
+
 
 <form method="post" enctype = 'multipart/form-data'>
 	{% csrf_token %}   
 
     {{ form.as_p}}
-    <input type="submit" class= btn btn-primary value="Guardar">
+    <input type="submit" name = 'guardar_tk' class= btn btn-primary value="Guardar Tk">
+
 </form>
 {% endblock %}
+
+
+	

@@ -49,7 +49,8 @@ urlpatterns = [
     
     url(r'^edit_tk/(?P<pk>\d+)$', TkUpdate.as_view(), name='edit_tk'),
 
-    url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'), 
+    url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'),
 
+    url(r'^subir_tct/$', views.subir_tct, name= 'subir_tct'),
 ]
 
