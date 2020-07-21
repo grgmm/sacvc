@@ -4,15 +4,19 @@
   {% block content %}
 
 
+  <a href ="{%url 'uacq:subir_tct' %} ">TCT</a>
 
     <h2>Tanque:{{tk.Nombre}}</h2>
 
+    
 
-<p>Detalle de Tanque <i>{{tk.Descriptor}}</i></p>
+
+<p>Detalle de Tanque <i>{{tk.Descriptor}}</i></p>	
 <p>Id:<i>{{ tk.id}}</i></p>
 
 <p>
     <a href="{% url 'uacq:list_tf' %}">Regresar</a>
+
 </p>
   
     {% endblock %}

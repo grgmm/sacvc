@@ -1,10 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 import socket
 import json
 
 from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque
+from .forms import TctForm
+
 
 
 from django.views.generic import ListView
@@ -20,6 +22,8 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.core.files.storage import FileSystemStorage
 
+from django.http import HttpResponseRedirect
+from django.shortcuts import render,  get_object_or_404
 
 
 def lista(request):
@@ -119,8 +123,22 @@ class TkUpdate(UpdateView):
 
 
 def subir_tct(request):
+    
 
-  return HttpResponseRedirect(reverse('acq:subir_tct'))
+    if request.method =='POST':
+      formulario_tct=TctForm(request.POST, request.FILES)
+      if formulario_tct.is_valid():
+        formulario_tct.save()
+        return HttpResponseRedirect ('uacq:list_tf') 
+      else:
+        return render(request, 'acq/add_tk/formulario_tct.html', {'formulario_tct': formulario_tct})
+    else:
+      formulario_tct = TctForm()
+      return render(request, 'acq/add_tk/formulario_tct.html', {'formulario_tct': formulario_tct})
+
+  
+
+      
 
 
 

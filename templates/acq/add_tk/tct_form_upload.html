@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-
-{% block content %}
-   <form action="{% url 'acq:subir_tct' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="file" name="csv_file">
-    <input type="submit" value="Subir TCT">
-</form>
-{% endblock %}

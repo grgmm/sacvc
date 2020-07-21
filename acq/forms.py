@@ -1,8 +1,10 @@
+
+from django.forms import ModelForm
 from django import forms
-from uploads.core.models import Tk
+from .models import Tk
 
 
 class TctForm(forms.ModelForm):
     class Meta:
         model = Tk
-        fields = ('descriptor_tct', 'tct_archivo', )
+        fields = ['Nombre', 'Descriptor']

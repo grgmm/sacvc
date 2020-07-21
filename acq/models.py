@@ -40,9 +40,9 @@ class Tk(models.Model):
     Descriptor = models.CharField(max_length=120,default="",)    
     
 
-    tct_archivo = models.FileField(upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
+    tct_archivo = models.FileField(upload_to='tct', max_length=100, blank=True,) #validators=[FileExtensionValidator(allowed_extensions=['csv'])]
     Descriptor_tct = models.CharField(max_length=120,default="",)
-    fecha_subida_tct = models.DateTimeField(auto_now_add=True, blank=True)
+    fecha_subida_tct = models.DateTimeField(auto_now_add=False, blank=True)
 
 
 

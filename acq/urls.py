@@ -51,6 +51,9 @@ urlpatterns = [
 
     url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'),
 
-    url(r'^subir_tct/$', views.subir_tct, name= 'subir_tct'),
+   
+    url(r'^subir_tct/', views.subir_tct, name= 'subir_tct'),
+   
+
 ]
 
