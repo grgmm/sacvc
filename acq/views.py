@@ -6,6 +6,8 @@ import json
 from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque
 from .forms import TctForm
+from datetime import timedelta, datetime
+
 
 
 
@@ -97,8 +99,9 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
 class TkAdd(CreateView):
     model = Tk
-    fields = ['Nombre', 'Descriptor', 'id_patioTanque']
-    template_name = 'acq/add_tk/add_tk.html'  
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'tct_archivo']
+    template_name = 'acq/add_tk/add_tk.html' 
+    Tk.objects.fecha_subida_tct =datetime.now()
     success_url = reverse_lazy('uacq:list_tf')
 
     

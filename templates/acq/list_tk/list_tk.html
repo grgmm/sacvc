@@ -32,15 +32,16 @@
 
  
  <td>
- 	<a href ="{{tk.tct_file.url}}" >ver</a>
+
+ 	{% if tk.tct_archivo  %}
+ 		<a href ="{{tk.tct_archivo.url}}" >ver</a>
+ 	{% endif %}
 
 
 </td>
 
 
-
-
-    
+   
  {% endfor %}
 
 
