@@ -15,15 +15,18 @@ from .views import (
     TkDetail,
     TkUpdate,
     tklist,
+    Validar_Tct
     )
 
 
 app_name = 'acq'
 urlpatterns = [
 	
-    url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
-	path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'),
-	path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'), #MUESTRA LOS VALORES EN LINEA DE FORMA TABULAR
+    #url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
+	
+
+    path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #principal (vacio)
+	path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'), #MUESTRA LOS VALORES EN LINEA DE FORMA TABULAR actualizada por ACQ
 
     url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'), #LISTADO DE PATIOS DE TANQUES
 
@@ -38,7 +41,6 @@ urlpatterns = [
     url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'), 
 
 
-    #url(r'^list_tk/$', tklist.as_view(), name='list_tk'),
     url(r'^list_tk/(?P<exp>\d+)$', tklist.as_view(), name='list_tk'),
 
 
@@ -51,9 +53,8 @@ urlpatterns = [
 
     url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'),
 
-   
-    url(r'^subir_tct/', views.subir_tct, name= 'subir_tct'),
-   
+
+    url(r'^validar_tct/(?P<pk>\d+)$', Validar_Tct.as_view(), name='validar_tct'),  
 
 ]
 

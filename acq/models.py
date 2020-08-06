@@ -40,9 +40,9 @@ class Tk(models.Model):
     Descriptor = models.CharField(max_length=120,default="",)    
     
 
-    tct_archivo = models.FileField(upload_to='tct', max_length=100, blank=True,) #validators=[FileExtensionValidator(allowed_extensions=['csv'])]
+    tct_archivo = models.FileField(upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
     Descriptor_tct = models.CharField(max_length=120,default="",null=True)
-    fecha_subida_tct = models.DateTimeField(auto_now_add=True, blank=True,)
+    fecha_subida_tct = models.DateTimeField(auto_now_add=True, blank=True, verbose_name= _('Subido El:'))
 
 
 
@@ -59,7 +59,7 @@ class Tk(models.Model):
     
     def __str__(self):
     
-       return '%s, %s' % (self.Nombre, self. Descriptor)
+       return '%s, %s' % (self.Nombre, self. Descriptor, )
 
 
 #MODELOS DE FACTORES DE TANQUES

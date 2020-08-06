@@ -5,7 +5,6 @@ import json
 
 from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque
-from .forms import TctForm
 from datetime import timedelta, datetime
 
 
@@ -16,6 +15,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
+from django.views import View
+from django.views.generic import View
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
@@ -43,13 +44,7 @@ def lista(request):
    return  HttpResponse(render(request, "lista.html", {'json_data': json_data}))
 
 
-def actualizar(request):
-   
-   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json
-      dataf = json.loads(data_file.read())
-      data_file.close()
-   
-   return JsonResponse(dataf)
+
 
 
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
@@ -97,11 +92,11 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
       return(filtro)
 
 
+
 class TkAdd(CreateView):
     model = Tk
-    fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'tct_archivo']
-    template_name = 'acq/add_tk/add_tk.html' 
-    Tk.objects.fecha_subida_tct =datetime.now()
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'tct_archivo' ] 
+    template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
 
     
@@ -115,33 +110,53 @@ class TkDelete(DeleteView):
 class TkDetail(DetailView):
     model = Tk
     template_name = 'acq/detail_tk/detail_tk.html'
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'fecha_subida_tct']
+
 
 
 class TkUpdate(UpdateView):
   model = Tk 
-  fields = ['Nombre', 'Descriptor']
+  fields = ['Nombre', 'Descriptor', 'tct_archivo', 'Descriptor_tct']
   template_name = 'acq/edit_tk/edit_tk.html'
-  success_url = reverse_lazy('uacq:list_tf')
+  Tk.objects.fecha_subida_tct =datetime.now()
+  
+  success_url = reverse_lazy('uacq:list_tf' )
+
+
+class Validar_Tct(UpdateView):
+    model = Tk
+    template_name = 'acq/detail_tk/validar_tct.html'
+    fields = ['tct_archivo', 'id_patioTanque']
+    success_url = reverse_lazy('uacq:list_tf')
 
 
 
-def subir_tct(request):
+
+  #model = Tk
+  
+ # def get(self, request):
+  #  tkobject1=Tk.objects.count()
+
+   # print(tkobject1)
     
-
-    if request.method =='POST':
-      formulario_tct=TctForm(request.POST, request.FILES)
-      if formulario_tct.is_valid():
-        formulario_tct.save()
-        return HttpResponseRedirect ('uacq:list_tf') 
-      else:
-        return render(request, 'acq/add_tk/formulario_tct.html', {'formulario_tct': formulario_tct})
-    else:
-      formulario_tct = TctForm()
-      return render(request, 'acq/add_tk/formulario_tct.html', {'formulario_tct': formulario_tct})
+   
+    #return HttpResponse('test')
 
   
 
-      
+
+
+  
+  
+
+
+  
+
+
+  
+    
+
+
 
 
 

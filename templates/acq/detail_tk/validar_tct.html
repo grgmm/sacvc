@@ -1,0 +1,10 @@
+{% extends "acq/base.html" %}
+{% block title %} Validar Tk{% endblock %}
+{% block content %}
+
+ <h2>Validar TCT del Tanque:{{tk.tct_archivo}}</h2>
+ <p>Fecha de subida del archivo TCT: <i> {{ tk.fecha_subida_tct }}</i></p>
+ <p>Descriptor del archivo TCT <i> {{ tk.Descriptor_tct}}</i></p>
+
+
+{% endblock %}
