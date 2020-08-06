@@ -1,10 +1,17 @@
 {% extends "acq/base.html" %}
 {% block title %} Validar Tk{% endblock %}
+
 {% block content %}
 
- <h2>Validar TCT del Tanque:{{tk.tct_archivo}}</h2>
- <p>Fecha de subida del archivo TCT: <i> {{ tk.fecha_subida_tct }}</i></p>
- <p>Descriptor del archivo TCT <i> {{ tk.Descriptor_tct}}</i></p>
+ <h2>Nombre del arcivo TCT guardado: {{tk.tct_archivo}}</h2>
+ <H2>Fecha de subida del archivo TCT : {{ tk.fecha_subida_tct }}</h2>
+
+
+ <form method="post" enctype = 'multipart/form-data'>
+    	{{ form.as_p }}
+   		{% csrf_token %}   		     	
+    	<input type="submit" value="Validar Tct">
+	</form>
 
 
 {% endblock %}

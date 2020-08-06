@@ -95,7 +95,7 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
 class TkAdd(CreateView):
     model = Tk
-    fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'tct_archivo' ] 
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque',] 
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
 
@@ -116,9 +116,8 @@ class TkDetail(DetailView):
 
 class TkUpdate(UpdateView):
   model = Tk 
-  fields = ['Nombre', 'Descriptor', 'tct_archivo', 'Descriptor_tct']
+  fields = ['Nombre', 'Descriptor',]
   template_name = 'acq/edit_tk/edit_tk.html'
-  Tk.objects.fecha_subida_tct =datetime.now()
   
   success_url = reverse_lazy('uacq:list_tf' )
 
@@ -126,28 +125,9 @@ class TkUpdate(UpdateView):
 class Validar_Tct(UpdateView):
     model = Tk
     template_name = 'acq/detail_tk/validar_tct.html'
-    fields = ['tct_archivo', 'id_patioTanque']
+    fields = ['tct_archivo', 'Descriptor_tct',]
     success_url = reverse_lazy('uacq:list_tf')
-
-
-
-
-  #model = Tk
-  
- # def get(self, request):
-  #  tkobject1=Tk.objects.count()
-
-   # print(tkobject1)
-    
-   
-    #return HttpResponse('test')
-
-  
-
-
-
-  
-  
+    Tk.objects.fecha_subida_tct =datetime.now()
 
 
   
