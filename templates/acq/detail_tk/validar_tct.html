@@ -7,10 +7,16 @@
  <H2>Fecha de subida del archivo TCT : {{ tk.fecha_subida_tct }}</h2>
 
 
- <form method="post" enctype = 'multipart/form-data'>
+ <form method="post" enctype = 'multipart/form-data' >
     	{{ form.as_p }}
-   		{% csrf_token %}   		     	
-    	<input type="submit" value="Validar Tct">
+   		{% csrf_token %}   
+   				     	
+    	<input type="submit" class="btn btn-danger" value="Validar tct_archivo" name = "btn_validar_tct" id = "btn_validar_tct" />
+    	<input type="submit" class="btn btn-danger" value="Guardar en BD" name="btn_guardar_bd"/>
+    	
+
+
+
 	</form>
 
 

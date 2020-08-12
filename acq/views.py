@@ -127,7 +127,27 @@ class Validar_Tct(UpdateView):
     template_name = 'acq/detail_tk/validar_tct.html'
     fields = ['tct_archivo', 'Descriptor_tct',]
     success_url = reverse_lazy('uacq:list_tf')
-    Tk.objects.fecha_subida_tct =datetime.now()
+
+    
+    
+
+    def post(self, request, *args, **kwargs):
+      if request.POST.get("btn_validar_tct", ""):      
+     
+       response=  HttpResponse('Validando integridad del archivo Tabla Certificada TCT')
+     
+      else:
+       response=HttpResponse('Guardando Tabla Certificada TCT en BD')
+       Tk.objects.fecha_subida_tct =datetime.now()
+
+      return(response)
+   
+        
+
+   
+
+
+     
 
 
   
