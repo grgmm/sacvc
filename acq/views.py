@@ -29,6 +29,19 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render,  get_object_or_404
 
 
+import csv
+
+
+def actualizar(request):
+   
+   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json
+      dataf = json.loads(data_file.read())
+      data_file.close()
+   
+   return JsonResponse(dataf)
+
+
+
 def lista(request):
    tags = Tag.objects.all()
    json_data = []
@@ -132,23 +145,30 @@ class Validar_Tct(UpdateView):
         self.object = self.get_object()
         request.POST = request.POST.copy()
 
-        if request.POST.get("btn_validar_tct", ""):
-          response= 'Validando integridad del archivo Tabla Certificada TCT'
-
-        
-        if request.POST.get("btn_guardar_bd", ""):
-          response= 'Guardando archivo de tabla certificada TCT en BD'
-
+       
         if request.POST.get("btn_editar_tct_salir", ""):
-          response= 'Editar Archivo Tct/ Salir'
-
-
+          response= 'Editar Archivo Tct / Salir'
         print(response)
-
-
-
-
         return super(Validar_Tct, self).post(request, **kwargs)
+
+
+
+class integridad_TCT(DetailView):
+
+    model = Tk
+    template_name = 'acq/detail_tk/integridad_tct.html'
+    fields = ['tct_archivo', ]
+
+   
+      
+
+
+
+
+
+
+
+
       
 
 

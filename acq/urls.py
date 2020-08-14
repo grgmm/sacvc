@@ -15,18 +15,22 @@ from .views import (
     TkDetail,
     TkUpdate,
     tklist,
-    Validar_Tct
+    Validar_Tct,
+    integridad_TCT
     )
 
 
 app_name = 'acq'
 urlpatterns = [
 	
-    #url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
-	
+    url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
 
+   
+    url(r'^integridad_TCT/(?P<pk>\d+)$' ,integridad_TCT.as_view(), name='integridad_TCT'),
+    
     path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #principal (vacio)
-	path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'), #MUESTRA LOS VALORES EN LINEA DE FORMA TABULAR actualizada por ACQ
+	
+    path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
 
     url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'), #LISTADO DE PATIOS DE TANQUES
 

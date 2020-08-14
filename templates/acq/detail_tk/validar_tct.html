@@ -10,19 +10,18 @@
  <form method="post" enctype = 'multipart/form-data' >
     	{{ form.as_p }}
    		{% csrf_token %}
+		   		
+	    <a href="{%url 'uacq:integridad_TCT' tk.pk %}" > Validar Archivo TCT</a>
+
+
+   		<button type="button" class="btn btn-info"> Guardar Configuración TCT en BD </button>
+
    		
-
-   		<input type="submit" class="btn btn-danger" value="Guardar en BD" name="btn_guardar_bd"	/>
-
-   		
-		<input type="submit" class="btn btn-danger" value="Editar TCT / Salir" name="btn_editar_tct_salir"/>
-
-   				     	
+		<input type="submit" class="btn btn-inf" value="Solo Guardar Archivo TCT / Salir" name="btn_editar_tct_salir"/>   				     	
     	   	
 	</form>
 
 	
-<button type="button" class="btn btn-info">Validar Archivo TCT</button>
 
 
 {% endblock %}
