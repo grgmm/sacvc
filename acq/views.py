@@ -150,7 +150,7 @@ class Validar_Tct(UpdateView):
           response= 'Editar Archivo Tct / Salir'
         print(response)
         return super(Validar_Tct, self).post(request, **kwargs)
-
+        
 
 
 class integridad_TCT(DetailView):
@@ -159,18 +159,24 @@ class integridad_TCT(DetailView):
     template_name = 'acq/detail_tk/integridad_tct.html'
     fields = ['tct_archivo', ]
 
+    queryset = Tk.objects.all()
+
+    def get_object(self):
+        obj = super().get_object()
+        # Record the last accessed date
+
+        fichero = open(obj.tct_archivo.path,'rb').read() 
+        path=obj.tct_archivo.path
+        
+        
+        print(obj)
+        print(path)
+        
+        obj.save()
+        
+        return HttpResponse(path, content_type = "text/csv")
+        
    
-      
-
-
-
-
-
-
-
-
-      
-
 
       
 
