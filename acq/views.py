@@ -159,22 +159,20 @@ class integridad_TCT(DetailView):
     template_name = 'acq/detail_tk/integridad_tct.html'
     fields = ['tct_archivo', ]
 
-    queryset = Tk.objects.all()
+    #queryset = Tk.objects.all()
 
     def get_object(self):
         obj = super().get_object()
         # Record the last accessed date
 
-        fichero = open(obj.tct_archivo.path,'rb').read() 
-        path=obj.tct_archivo.path
+        with open(obj.tct_archivo.path, newline='') as f:       
         
+          reader = csv.reader(f)
+          for row in reader:
+            print(row)        
+            obj.save()
         
-        print(obj)
-        print(path)
-        
-        obj.save()
-        
-        return HttpResponse(path, content_type = "text/csv")
+          return HttpResponse(f, content_type = "text/csv")
         
    
 
