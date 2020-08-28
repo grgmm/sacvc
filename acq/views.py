@@ -165,12 +165,18 @@ class integridad_TCT(DetailView):
         obj = super().get_object()
         # Record the last accessed date
 
-        with open(obj.tct_archivo.path, newline='') as f:       
-        
+        with open(obj.tct_archivo.path,) as f:       
+          
           reader = csv.reader(f)
-          for row in reader:
-            print(row)        
-            obj.save()
+         
+          try:
+            for row in reader:
+              print(row)
+              obj.save()
+              
+          except csv.Error as e:
+              sys.Exit('file {}, line {}: {}'.format(filename, reader.line_num, e))
+          
         
           return HttpResponse(f, content_type = "text/csv")
         
