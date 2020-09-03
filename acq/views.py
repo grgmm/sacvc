@@ -30,6 +30,8 @@ from django.shortcuts import render,  get_object_or_404
 
 
 import csv
+from django.core.validators import DecimalValidator, ValidationError
+from django.core.exceptions import ValidationError
 
 
 def actualizar(request):
@@ -164,14 +166,27 @@ class integridad_TCT(DetailView):
     def get_object(self):
         obj = super().get_object()
         # Record the last accessed date
+        value_vol = 600000
+        value_niv = 19.23
+        
+        try:
+            obj.tct_vol = float(value_vol)
+            #obj.tct_nivel = float(value)
+
+        except(ValidationError):
+            
+            print('lolo')
+        print(obj.tct_vol)
+
 
         with open(obj.tct_archivo.path,) as f:       
           
           reader = csv.reader(f)
          
+         
           try:
             for row in reader:
-              print(row)
+              #error_tct = DecimalValidator('row', max_digits = 6, decimal_places=3,)
               obj.save()
               
           except csv.Error as e:
