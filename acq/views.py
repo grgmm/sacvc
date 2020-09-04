@@ -31,7 +31,7 @@ from django.shortcuts import render,  get_object_or_404
 
 import csv
 from django.core.validators import DecimalValidator, ValidationError
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ValidationError
 
 
 def actualizar(request):
@@ -166,35 +166,37 @@ class integridad_TCT(DetailView):
     def get_object(self):
         obj = super().get_object()
         # Record the last accessed date
-        value_vol = 600000
+        value_vol = 0
         value_niv = 19.23
+        obj.tct_vol=0
+        obj.tct_vol = value_vol
+
+        fields=[]
+        rows=[]
         
-        try:
-            obj.tct_vol = float(value_vol)
-            #obj.tct_nivel = float(value)
-
-        except(ValidationError):
-            
-            print('lolo')
-        print(obj.tct_vol)
-
-
-        with open(obj.tct_archivo.path,) as f:       
+        with open(obj.tct_archivo.path, 'r') as f:       
           
           reader = csv.reader(f)
+          fields =next(reader)
+          print('n' .join(field for field in fields))
+          for row in reader:
+            rows.append(row)
+            print(row[0])
+          #print('%d' %(reader.line_num))
          
-         
-          try:
-            for row in reader:
-              #error_tct = DecimalValidator('row', max_digits = 6, decimal_places=3,)
-              obj.save()
-              
-          except csv.Error as e:
-              sys.Exit('file {}, line {}: {}'.format(filename, reader.line_num, e))
+          for col in row:
+            print(' lolo %s' %col),
+          print('\n')
+          
+
           
         
           return HttpResponse(f, content_type = "text/csv")
-        
+
+
+
+         
+          
    
 
       
