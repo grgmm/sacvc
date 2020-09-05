@@ -32,6 +32,8 @@ from django.shortcuts import render,  get_object_or_404
 import csv
 from django.core.validators import DecimalValidator, ValidationError
 from django.core.exceptions import ValidationError, ValidationError
+import pandas as pd
+
 
 
 def actualizar(request):
@@ -170,28 +172,21 @@ class integridad_TCT(DetailView):
         value_niv = 19.23
         obj.tct_vol=0
         obj.tct_vol = value_vol
+       
+        df=pd.read_csv(obj.tct_archivo.path, delimiter='\t')
+        print(df.dtypes)
+        for i in range(0, len(df)):
+          #print(df.iloc[i]['nivel'], df.iloc[i]['volumen'])
+          nivel=df.iloc[i]['nivel']
+          volumen=df.iloc[i]['volumen']
+          print(nivel)
+          print(volumen)
 
-        fields=[]
-        rows=[]
-        
-        with open(obj.tct_archivo.path, 'r') as f:       
-          
-          reader = csv.reader(f)
-          fields =next(reader)
-          print('n' .join(field for field in fields))
-          for row in reader:
-            rows.append(row)
-            print(row[0])
-          #print('%d' %(reader.line_num))
-         
-          for col in row:
-            print(' lolo %s' %col),
-          print('\n')
-          
 
           
+          
         
-          return HttpResponse(f, content_type = "text/csv")
+        return('HOLA')
 
 
 
