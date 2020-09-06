@@ -33,6 +33,7 @@ import csv
 from django.core.validators import DecimalValidator, ValidationError
 from django.core.exceptions import ValidationError, ValidationError
 import pandas as pd
+from .validaciones import validar_parametro_tct as valida
 
 
 
@@ -169,24 +170,35 @@ class integridad_TCT(DetailView):
         obj = super().get_object()
         # Record the last accessed date
         value_vol = 0
-        value_niv = 19.23
+        value_niv = 0
         obj.tct_vol=0
-        obj.tct_vol = value_vol
+        obj.tct_nivel = 0
+        nivel=0
+        volumen=0
+        nivel_minimo = 0
+        nivel_maximo = 40
+        volumen_minimo=0
+        volumen_maximo=999999
        
-        df=pd.read_csv(obj.tct_archivo.path, delimiter='\t')
-        print(df.dtypes)
-        for i in range(0, len(df)):
-          #print(df.iloc[i]['nivel'], df.iloc[i]['volumen'])
-          nivel=df.iloc[i]['nivel']
-          volumen=df.iloc[i]['volumen']
-          print(nivel)
-          print(volumen)
+        dataframe=pd.read_csv(obj.tct_archivo.path, delimiter='\t')
+        #print(dataframe.dtypes)
+        #print(dataframe)
+        
+
+        for i in range(0, len(dataframe)):
 
 
+          #print(dataframe.iloc[i]['nivel'])
+          #print(dataframe.iloc[i]['volumen'])
           
+          nivel=valida(dataframe.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
+          volumen=valida(dataframe.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
+          #print(i)
+          #print (i,nivel,volumen) 
+          print('Nivel:%f Volumen: (%f)' % (nivel,volumen))
           
         
-        return('HOLA')
+        return(nivel,volumen)
 
 
 
