@@ -9,7 +9,6 @@ from datetime import timedelta, datetime
 
 
 
-
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -180,25 +179,33 @@ class integridad_TCT(DetailView):
         volumen_minimo=0
         volumen_maximo=999999
        
-        dataframe=pd.read_csv(obj.tct_archivo.path, delimiter='\t')
+        DataFrame=pd.read_csv(obj.tct_archivo.path, delimiter='\t')
         #print(dataframe.dtypes)
         #print(dataframe)
-        
+        #print(dataframe)
 
-        for i in range(0, len(dataframe)):
+        for i in range(0, len(DataFrame)):
 
 
           #print(dataframe.iloc[i]['nivel'])
           #print(dataframe.iloc[i]['volumen'])
           
-          nivel=valida(dataframe.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
-          volumen=valida(dataframe.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
+          nivel=valida(DataFrame.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
+          volumen=valida(DataFrame.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
           #print(i)
-          #print (i,nivel,volumen) 
-          print('Nivel:%f Volumen: (%f)' % (nivel,volumen))
           
+          print('%d Nivel:%f Volumen: (%f)' % (i, nivel,volumen))
+
+        html = 'DATOS VALIDADOS:' + DataFrame.to_html()
+
+        text_file=open("/home/morenomx/solucionesweb/sacvc/templates/acq/detail_tk/integridad_tct.html", "w")
         
-        return(nivel,volumen)
+        text_file.write(html)
+        text_file.close()
+         
+
+         
+
 
 
 
