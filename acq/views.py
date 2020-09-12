@@ -45,20 +45,16 @@ def actualizar(request):
    return JsonResponse(dataf)
 
 
-
-def lista(request):
-   tags = Tag.objects.all()
-   json_data = []
-   n=0    
-    
-   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json 
-     json_data = json.loads(json.dumps(data_file.read()))
-     data_file.close()
+def tct_tmp(request):
+   
+   with open ('/home/morenomx/solucionesweb/sacvc/media/tct_tmp/tct_tmp.json', encoding='utf-8') as data_tct: #abre un archivo json
+      datatct = json.loads(data_tct.read())
+      data_tct.close()
+   
+   return JsonResponse(datatct)
 
 
-  
 
-   return  HttpResponse(render(request, "lista.html", {'json_data': json_data}))
 
 
 
@@ -154,54 +150,63 @@ class Validar_Tct(UpdateView):
           response= 'Editar Archivo Tct / Salir'
         print(response)
         return super(Validar_Tct, self).post(request, **kwargs)
+
         
 
 
-class integridad_TCT(DetailView):
+class integridad_TCT(UpdateView):
 
     model = Tk
     template_name = 'acq/detail_tk/integridad_tct.html'
-    fields = ['tct_archivo', ]
+    fields = ['tct_archivo', 'Nombre' ]
+    ruta_tct_tmp='/home/morenomx/solucionesweb/sacvc/media/tct_tmp/'
 
-    #queryset = Tk.objects.all()
+
+      
 
     def get_object(self):
         obj = super().get_object()
         # Record the last accessed date
-        value_vol = 0
-        value_niv = 0
-        obj.tct_vol=0
-        obj.tct_nivel = 0
-        nivel=0
-        volumen=0
+        print(obj.tct_archivo.url)
+      
         nivel_minimo = 0
         nivel_maximo = 40
         volumen_minimo=0
         volumen_maximo=999999
        
-        DataFrame=pd.read_csv(obj.tct_archivo.path, delimiter='\t')
-        #print(dataframe.dtypes)
-        #print(dataframe)
-        #print(dataframe)
+        DataFrame=pd.read_csv(obj.tct_archivo.path, delimiter='\t') #abre el csv tc y lo pasa a un dataframe
+       
 
         for i in range(0, len(DataFrame)):
 
 
-          #print(dataframe.iloc[i]['nivel'])
-          #print(dataframe.iloc[i]['volumen'])
           
-          nivel=valida(DataFrame.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
-          volumen=valida(DataFrame.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
+            nivel=valida(DataFrame.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
+            volumen=valida(DataFrame.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
+                     
+
+            json_tmp= {"registro": i, "nivel":nivel, "volumen":volumen,}
+            print(json_tmp)
+            with open (self.ruta_tct_tmp+'tct_tmp.json','w') as file:
+              file.write(json.dumps(json_tmp)) #Paquete a enviar a las vistas y a BD
+              file.close()       
+
+
+
+        print(obj)
+        
+        return(obj)
           #print(i)
           
-          print('%d Nivel:%f Volumen: (%f)' % (i, nivel,volumen))
 
-        html = 'DATOS VALIDADOS:' + DataFrame.to_html()
 
-        text_file=open("/home/morenomx/solucionesweb/sacvc/templates/acq/detail_tk/integridad_tct.html", "w")
+
+        #html = 'DATOS VALIDADOS:' + DataFrame.to_html()
+
+        #text_file=open("/home/morenomx/solucionesweb/sacvc/templates/acq/detail_tk/integridad_tct.html", "w")
         
-        text_file.write(html)
-        text_file.close()
+        #text_file.write(html)
+        #text_file.close()
          
 
          

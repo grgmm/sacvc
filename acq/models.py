@@ -41,9 +41,8 @@ class Tk(models.Model):
     
 
     tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
-    tct_nivel = models.DecimalField(default=0.0, max_digits=5, decimal_places=2, validators=[MaxValueValidator(30), MinValueValidator(0)])    
-    tct_vol = models.DecimalField(max_digits=9, decimal_places=3,  default=0.0, validators=[MinValueValidator(limit_value=0, 
-                                                    message='Price has to be >= 0.'),])
+    tct_nivel = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)    
+    tct_vol = models.DecimalField(max_digits=9, decimal_places=3,  default=0.0,)
     Descriptor_tct = models.CharField(max_length=120,default="",null=True)
     fecha_subida_tct = models.DateTimeField(auto_now_add=True, blank=True, verbose_name= _('Subido El:'))
 

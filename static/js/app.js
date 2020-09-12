@@ -11,7 +11,7 @@
                //    async: false     //ponemos el parámetro asyn a falso
         }).done(function(data) {
 
-               // console.log(data.idtag);
+               //console.log(data.idtag);
            
             
                var idtag = JSON.stringify(data,["idtag"]);
@@ -56,4 +56,3 @@
 
     setInterval(getcurrentdataAJAX,1000);
 
-        
