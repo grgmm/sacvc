@@ -55,9 +55,13 @@ def tct_tmp(request):
 
 
 
-
-
-
+def tct_validado(request):
+   
+   with open ('/home/morenomx/solucionesweb/sacvc/media/tct/csv_sacv01_5tPkArK.csv', encoding='utf-8') as data_file: #abre un archivo json
+      dataf = json.loads(data_file.read())
+      data_file.close()
+   
+   return JsonResponse(dataf)
 
 
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
@@ -154,92 +158,44 @@ class Validar_Tct(UpdateView):
         
 
 
-class integridad_TCT(UpdateView):
-
-    model = Tk
-    template_name = 'acq/detail_tk/integridad_tct.html'
-    fields = ['tct_archivo', 'Nombre' ]
-    ruta_tct_tmp='/home/morenomx/solucionesweb/sacvc/media/tct_tmp/'
-
-
-      
-
-    def get_object(self):
-        obj = super().get_object()
-        # Record the last accessed date
-        print(obj.tct_archivo.url)
-      
-        nivel_minimo = 0
-        nivel_maximo = 40
-        volumen_minimo=0
-        volumen_maximo=999999
-       
-        DataFrame=pd.read_csv(obj.tct_archivo.path, delimiter='\t') #abre el csv tc y lo pasa a un dataframe
-       
-
-        for i in range(0, len(DataFrame)):
+def integridad_TCT(request, pk):
+  nivel_minimo=0
+  nivel_maximo =100
+  volumen_minimo=0
+  volumen_maximo= 1000000
+  tct_valido=False
 
 
-          
-            nivel=valida(DataFrame.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
-            volumen=valida(DataFrame.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
-                     
-
-            json_tmp= {"registro": i, "nivel":nivel, "volumen":volumen,}
-            print(json_tmp)
-            with open (self.ruta_tct_tmp+'tct_tmp.json','w') as file:
-              file.write(json.dumps(json_tmp)) #Paquete a enviar a las vistas y a BD
-              file.close()       
-
-
-
-        print(obj)
-        
-        return(obj)
-          #print(i)
-          
-
-
-
-        #html = 'DATOS VALIDADOS:' + DataFrame.to_html()
-
-        #text_file=open("/home/morenomx/solucionesweb/sacvc/templates/acq/detail_tk/integridad_tct.html", "w")
-        
-        #text_file.write(html)
-        #text_file.close()
-         
-
-         
-
-
-
-
-         
-          
-   
-
-      
-
-
-    
-    
-
-
-
-   
-
-
-     
-
-
+  try:
+      obj = Tk.objects.get(pk=pk)
   
+  except Tk.DoesNotExist:
+    raise Http404("Tk no existe")
+
+  file=obj.tct_archivo.path
+
+
+
+  #response = HttpResponse(mimetype='text/csv')
+  #response['Content-Disposition'] = 'attachment; filename=obj.tct_archivo.path'
+
+
+
+    #return render(request, 'polls/detail.html', {'poll': p})
+
+  DataFrame=pd.read_csv(file, delimiter='\t') #abre el csv tc y lo pasa a un dataframe
+    
+
+  for i in range(0, len(DataFrame)):
+         
+    nivel=valida(DataFrame.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
+    volumen=valida(DataFrame.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
+    json_tmp= {"registro": i, "nivel":nivel, "volumen":volumen,}
+    print(json_tmp)
+    print(file)
+    tct_valido =True
+    
 
 
   
     
-
-
-
-
-
-

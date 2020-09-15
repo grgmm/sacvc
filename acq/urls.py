@@ -35,7 +35,7 @@ urlpatterns = [
 
 
    
-    url(r'^integridad_TCT/(?P<pk>\d+)$' ,integridad_TCT.as_view(), name='integridad_TCT'),
+    url(r'^integridad_TCT/(?P<pk>\d+)$' ,views.integridad_TCT, name='integridad_TCT'),
     
     path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #principal (vacio)
 	
