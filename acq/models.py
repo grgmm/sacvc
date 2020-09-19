@@ -37,7 +37,9 @@ class Tk(models.Model):
    
     id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE,verbose_name= _('Patio de Tanques'))      
     Nombre = models.CharField(max_length=30,)
-    Descriptor = models.CharField(max_length=120,default="",)    
+    Descriptor = models.CharField(max_length=120,default="",)
+
+    
     
 
     tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])

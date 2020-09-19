@@ -3,9 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 import socket
 import json
 
-from django.http import JsonResponse
+from django.http import JsonResponse 
 from .models import Tag, Tk, PatioTanque
 from datetime import timedelta, datetime
+from django.template.response import TemplateResponse
 
 
 
@@ -44,24 +45,14 @@ def actualizar(request):
    
    return JsonResponse(dataf)
 
-
-def tct_tmp(request):
+def tct_validado(request,f):
    
-   with open ('/home/morenomx/solucionesweb/sacvc/media/tct_tmp/tct_tmp.json', encoding='utf-8') as data_tct: #abre un archivo json
-      datatct = json.loads(data_tct.read())
-      data_tct.close()
-   
-   return JsonResponse(datatct)
-
-
-
-def tct_validado(request):
-   
-   with open ('/home/morenomx/solucionesweb/sacvc/media/tct/csv_sacv01_5tPkArK.csv', encoding='utf-8') as data_file: #abre un archivo json
+   with open (f, encoding='utf-8') as data_file: #abre un archivo json
       dataf = json.loads(data_file.read())
       data_file.close()
    
    return JsonResponse(dataf)
+
 
 
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
@@ -155,7 +146,6 @@ class Validar_Tct(UpdateView):
         print(response)
         return super(Validar_Tct, self).post(request, **kwargs)
 
-        
 
 
 def integridad_TCT(request, pk):
@@ -164,6 +154,8 @@ def integridad_TCT(request, pk):
   volumen_minimo=0
   volumen_maximo= 1000000
   tct_valido=False
+  ruta_tct_valido='/home/morenomx/solucionesweb/sacvc/media/tct/tct_valido.json'
+
 
 
   try:
@@ -174,28 +166,31 @@ def integridad_TCT(request, pk):
 
   file=obj.tct_archivo.path
 
+  DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
+
+  
+  
+  json_temp = {}
+  json_temp = []
 
 
-  #response = HttpResponse(mimetype='text/csv')
-  #response['Content-Disposition'] = 'attachment; filename=obj.tct_archivo.path'
-
-
-
-    #return render(request, 'polls/detail.html', {'poll': p})
-
-  DataFrame=pd.read_csv(file, delimiter='\t') #abre el csv tc y lo pasa a un dataframe
-    
+  register_range=[]
 
   for i in range(0, len(DataFrame)):
          
     nivel=valida(DataFrame.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
     volumen=valida(DataFrame.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
-    json_tmp= {"registro": i, "nivel":nivel, "volumen":volumen,}
-    print(json_tmp)
-    print(file)
-    tct_valido =True
+    json_temp.append({ 'registro': i,'nivel':nivel, 'volumen':volumen})
+    register_range.append(i)
     
 
-
-  
+  with open (ruta_tct_valido,'w') as file: #abre un archivo json para       
+    file.write(json.dumps(json_temp)) #Paquete a enviar a las vistas y a BD
+    file.close()
+    #print(type(json_temp))
+  print(register_range)
+  print(json_temp)
+  lolo=3
     
+ 
+  return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data':json_temp, 'rango':register_range, })

@@ -24,19 +24,15 @@ app_name = 'acq'
 urlpatterns = [
 	
     url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
+
    
-    url('tct_tmp/',views.tct_tmp, name='tct_tmp'), #CONVIERTE EL JSON DEL tct-tmp EN UNA URL
-   
-    path('tabla_tct/',TemplateView.as_view(template_name="acq/tabla_tct_validada.html"), name='tabla_tct'),
 
     path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
 
-
-
-
    
-    url(r'^integridad_TCT/(?P<pk>\d+)$' ,views.integridad_TCT, name='integridad_TCT'),
+   url(r'^integridad_TCT/(?P<pk>\d+)$' ,views.integridad_TCT, name='integridad_TCT'), #OJO
     
+   
     path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #principal (vacio)
 	
    

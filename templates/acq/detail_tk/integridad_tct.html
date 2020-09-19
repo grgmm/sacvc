@@ -1,41 +1,47 @@
-	{% extends 'acq/base.html' %}
-{% load static %}
 
+ {% extends 'acq/base.html' %}
+  {% block title %} 'TCT VALIDO'  {% endblock %}
+  {% load indices %}
 
-{% block javascript %}
-  <script src="{% static 'js/app_tct.js' %}"></script> 
+    {% block content %} 
+ 
 
-  <script src="{% static 'js/jquery-3.5.0.js' %}"></script> 
 
   
-{% endblock %}
-
-
-
-{% block content %}
-
-<h2>Parámetros TCT Validados</h2>
-   
       
-       <table id="valores-tct")>
-
+       <table id="tct-valido">
   
-  
-    <th>registro</th>
-    <th>nivel</th>
-    <th>volumen</th>
-    
+    <thead><H2>TABLA DE AFORO DE TANQUES VALIDA</H2> </thead>
+        <th>#</th> <th> NIVEL </th> <th>  VOLUMEN </th> 
 
 
-  <tr>
- <td id="registro"></td>
-    
 
-     <td id="nivel"></td>
-    
-   <td id="volumen"></td>
-     
-     
 
-    
+{% for x in data%}
+
+
+
+
+<tr>
+	
+	<td>
+<li>{{ x.registro}}</li>
+	</td>
+		<td>
+<li>{{ x.nivel}}</li>
+	</td>
+		<td>
+<li>{{ x.volumen}}</li>
+	</td>
+
+	
+
+<tr>
+
+{% endfor %}
+	
+
+
+
 {% endblock %}
+
