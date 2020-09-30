@@ -30,27 +30,20 @@ class PatioTanque(models.Model):
        
 
 
-
 #MODELOS DE TANQUES
 
 class Tk(models.Model):
    
     id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE,verbose_name= _('Patio de Tanques'))      
-    Nombre = models.CharField(max_length=30,)
+    Nombre = models.CharField(max_length=30,null=True)
     Descriptor = models.CharField(max_length=120, default="", blank=True,)
 
-    
-    
-
     tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
-    tct_nivel = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)    
-    tct_vol = models.DecimalField(max_digits=9, decimal_places=3,  default=0.0,)
+   
     Descriptor_tct = models.CharField(max_length=120,default="",null=True, blank=True,)
     fecha_subida_tct = models.DateTimeField(null=True, blank = True, verbose_name= _('Subido El:'))
-    tctvalido= models.BooleanField(default=False)
-
-   
-
+    tctvalido= models.BooleanField(default=False, editable = False)
+    
     TIPOTanque_CHOICES = [
     ('CV', 'Cilindrico Vertical'),
     ('CH', 'Cilindrico Horizontal'),
@@ -60,13 +53,27 @@ class Tk(models.Model):
     tipo_de_tk = models.CharField(
       max_length = 2, choices=TIPOTanque_CHOICES, default= 'TF',)
 
-    
-
-
-    
     def __str__(self):
     
        return '%s, %s' % (self.Nombre, self. Descriptor, )
+
+class Meta: #Extiende del modelo Tag con Características no comunes para Analógicos y Digitales
+  
+  abstract = True  
+
+class Tct(Tk):
+    
+    Lt0 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de nivel
+    Lt1 = models.FloatField(default = 0.0, null =True) #magnitud de Fracciones de nivel
+    
+    Tov0 = models.FloatField(default = 0.0, null =True)
+    Tov1 = models.FloatField(default = 0.0, null =True)
+    Tov = models.FloatField(default = 0.0, null =True)
+    
+      
+    def __str__(self):
+    
+       return '%s' % (self.Nombre)
 
 
 #MODELOS DE FACTORES DE TANQUES
@@ -84,21 +91,8 @@ class Factor(models.Model):
 
 #MODELOS TABLA CERTIFICADA (DE AFORO) DE TANQUES
 
-class Tct(models.Model):
-    id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)    
-    Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud Unidades de nivel
-    Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3) #magnitud de Fracciones de nivel
-    
-    Tov_1 = models.FloatField(default = 1.0)
-    Tov_2 = models.FloatField(default = 1.0)
-    Tov = models.FloatField(default = 1.0)
-    
-      
-    def __str__(self):
-    
-       return '%d' % (self.id,)
 
-       
+
 
 
        #MODELOS DE COMUNICACION
@@ -143,15 +137,11 @@ class MbEsclavo(models.Model):
    ('C', 38400),
     ]
 
-
-
     
   PARIDAD_CHOICES =[
     ('PAR','Par'),
     ('IMPAR', 'Impar'),]
 
-
-    
   Puerto = models.CharField(max_length=3, default='sa')
   Velocidad = models.IntegerField(choices = Vel_CHOICES, default=19200)
   Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR')
@@ -163,7 +153,6 @@ class MbEsclavo(models.Model):
        return '%d' % (self.id,)
 
 
-    
 #MODELOS DE TAGS
 
 class Tag(models.Model): #Características comunes para Analógicos y Digitales

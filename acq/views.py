@@ -47,16 +47,6 @@ def actualizar(request):
    
    return JsonResponse(dataf)
 
-def tct_validado(request,f):
-   
-   with open (f, encoding='utf-8') as data_file: #abre un archivo json
-      dataf = json.loads(data_file.read())
-      data_file.close()
-   
-   return JsonResponse(dataf)
-
-
-
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
 
     model = PatioTanque
@@ -135,7 +125,7 @@ class TkUpdate(UpdateView):
 class Validar_Tct(UpdateView):
     model = Tk
     template_name = 'acq/detail_tk/validar_tct.html'
-    fields = ['tct_archivo', 'Descriptor_tct', 'tctvalido', 'fecha_subida_tct']
+    fields = ['tct_archivo', 'Descriptor_tct', 'fecha_subida_tct']
     success_url = reverse_lazy('uacq:list_tf')
 
     
@@ -143,10 +133,10 @@ class Validar_Tct(UpdateView):
     def get(self, request, *args, **kwargs):
       obj = self.get_object()
       fs = FileSystemStorage()
+      print(request)
       
-     
-      #print(obj) 
-      #if fs.exists(obj.tct_archivo.path) == False:
+      
+    
         
       if not (bool(obj.tct_archivo)):
         print('sin archivo')
@@ -158,8 +148,14 @@ class Validar_Tct(UpdateView):
 
         TimestampTCT=fs.get_created_time(obj.tct_archivo.path)               
             
-        setattr(obj,'fecha_subida_tct',TimestampTCT) 
+        setattr(obj,'fecha_subida_tct',TimestampTCT)
+
+      
       obj.save()
+
+
+
+     
 
           
       return super(Validar_Tct, self).get(request, **kwargs)
@@ -170,23 +166,18 @@ class Validar_Tct(UpdateView):
         self.obj = self.get_object()
 
         
-        request.POST = request.POST.copy()      
+        request.POST = request.POST.copy()
 
 
        
         if request.POST.get("btn_guardar_tct_salir", ""):
           
-         
-
-
-           
+      
 
           response= 'Editar Archivo Tct / Salir'
 
             
-
         return super(Validar_Tct, self).post(request, **kwargs)
-
 
 
 def integridad_TCT(request, pk):
@@ -236,3 +227,19 @@ def integridad_TCT(request, pk):
     
  
   return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data':json_temp,})
+
+
+
+def guardar_TCT_BD(request, pk):
+ 
+
+
+  try:
+      obj = Tk.objects.get(pk=pk)
+
+      
+
+      
+      
+  except Tk.DoesNotExist:
+    raise Http404("Tk no existe")

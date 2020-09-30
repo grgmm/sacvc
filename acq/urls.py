@@ -26,11 +26,11 @@ urlpatterns = [
     url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
 
    
-
     path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
 
    
-   url(r'^integridad_TCT/(?P<pk>\d+)$' ,views.integridad_TCT, name='integridad_TCT'), #OJO
+    url(r'^integridad_TCT/(?P<pk>\d+)$' ,views.integridad_TCT, name='integridad_TCT'), #OJO
+
     
    
     path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #principal (vacio)
