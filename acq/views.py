@@ -34,6 +34,8 @@ from django.core.validators import DecimalValidator, ValidationError
 from django.core.exceptions import ValidationError, ValidationError
 import pandas as pd
 from .validaciones import validar_parametro_tct as valida
+from django.utils import timezone
+
 
 
 
@@ -133,17 +135,56 @@ class TkUpdate(UpdateView):
 class Validar_Tct(UpdateView):
     model = Tk
     template_name = 'acq/detail_tk/validar_tct.html'
-    fields = ['tct_archivo', 'Descriptor_tct',]
+    fields = ['tct_archivo', 'Descriptor_tct', 'tctvalido', 'fecha_subida_tct']
     success_url = reverse_lazy('uacq:list_tf')
 
+    
+
+    def get(self, request, *args, **kwargs):
+      obj = self.get_object()
+      fs = FileSystemStorage()
+      
+     
+      #print(obj) 
+      #if fs.exists(obj.tct_archivo.path) == False:
+        
+      if not (bool(obj.tct_archivo)):
+        print('sin archivo')
+        setattr(obj,'tctvalido', False)
+        setattr(obj,'Descriptor_tct', '')
+        setattr(obj,'fecha_subida_tct',None )
+      
+      else:
+
+        TimestampTCT=fs.get_created_time(obj.tct_archivo.path)               
+            
+        setattr(obj,'fecha_subida_tct',TimestampTCT) 
+      obj.save()
+
+          
+      return super(Validar_Tct, self).get(request, **kwargs)
+    
+
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        request.POST = request.POST.copy()
+        
+        self.obj = self.get_object()
+
+        
+        request.POST = request.POST.copy()      
+
 
        
-        if request.POST.get("btn_editar_tct_salir", ""):
+        if request.POST.get("btn_guardar_tct_salir", ""):
+          
+         
+
+
+           
+
           response= 'Editar Archivo Tct / Salir'
-        print(response)
+
+            
+
         return super(Validar_Tct, self).post(request, **kwargs)
 
 
@@ -160,11 +201,17 @@ def integridad_TCT(request, pk):
 
   try:
       obj = Tk.objects.get(pk=pk)
-  
+      print(obj.fecha_subida_tct)
+
+      
+      
   except Tk.DoesNotExist:
     raise Http404("Tk no existe")
+  
 
   file=obj.tct_archivo.path
+
+
 
   DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
 
@@ -182,15 +229,10 @@ def integridad_TCT(request, pk):
     volumen=valida(DataFrame.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
     json_temp.append({ 'registro': i,'nivel':nivel, 'volumen':volumen})
     register_range.append(i)
-    
-
-  with open (ruta_tct_valido,'w') as file: #abre un archivo json para       
-    file.write(json.dumps(json_temp)) #Paquete a enviar a las vistas y a BD
-    file.close()
-    #print(type(json_temp))
-  print(register_range)
-  print(json_temp)
-  lolo=3
+  
+  setattr(obj,'tctvalido', True)
+  
+  obj.save()
     
  
-  return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data':json_temp, 'rango':register_range, })
+  return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data':json_temp,})
