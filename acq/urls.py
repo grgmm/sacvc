@@ -16,7 +16,8 @@ from .views import (
     TkUpdate,
     tklist,
     Validar_Tct,
-    integridad_TCT
+    integridad_TCT,
+    guardar_TCT_BD,
     )
     
 
@@ -31,6 +32,7 @@ urlpatterns = [
    
     url(r'^integridad_TCT/(?P<pk>\d+)$' ,views.integridad_TCT, name='integridad_TCT'), #OJO
 
+    url(r'^guardar_TCT_BD/(?P<pk>\d+)$' ,views.guardar_TCT_BD, name='guardar_TCT_BD'),
     
    
     path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #principal (vacio)

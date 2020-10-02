@@ -4,7 +4,7 @@ import socket
 import json
 
 from django.http import JsonResponse 
-from .models import Tag, Tk, PatioTanque
+from .models import Tag, Tk, PatioTanque,Tct
 from datetime import timedelta, datetime
 from django.template.response import TemplateResponse
 
@@ -22,7 +22,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, Http404
 from django.core.files.storage import FileSystemStorage
 
 from django.http import HttpResponseRedirect
@@ -133,7 +133,7 @@ class Validar_Tct(UpdateView):
     def get(self, request, *args, **kwargs):
       obj = self.get_object()
       fs = FileSystemStorage()
-      print(request)
+      
       
       
     
@@ -155,7 +155,12 @@ class Validar_Tct(UpdateView):
 
 
 
-     
+      request.GET = request.GET.copy()
+      print(request.GET)
+      self.objx = self.get_object()
+      if request.GET.get("btn_guardar_BD", ""):
+        print('ayudame dios mio')
+
 
           
       return super(Validar_Tct, self).get(request, **kwargs)
@@ -230,16 +235,25 @@ def integridad_TCT(request, pk):
 
 
 
-def guardar_TCT_BD(request, pk):
- 
+def guardar_TCT_BD(request, pk): 
 
 
   try:
-      obj = Tk.objects.get(pk=pk)
+    #obj1 = Tct.objects.get(pk=pk)
+    obj_tk =  Tk.objects.get(pk=pk)
+    Tct.objects.all().delete()
 
-      
+    file=obj_tk.tct_archivo.path
+    DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
+    #nivel=DataFrame.iloc[3]['nivel']
+    
+    for i in range(0, len(DataFrame)):
+     Tct.objects.create(id=None,  Lt0=DataFrame.iloc[i]['nivel'], Tov0=DataFrame.iloc[i]['volumen'], id_tk=obj_tk)
 
-      
-      
+     
+         
   except Tk.DoesNotExist:
     raise Http404("Tk no existe")
+    Tct().save
+
+  return HttpResponse('Hello, World')

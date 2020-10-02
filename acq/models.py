@@ -57,11 +57,10 @@ class Tk(models.Model):
     
        return '%s, %s' % (self.Nombre, self. Descriptor, )
 
-class Meta: #Extiende del modelo Tag con Características no comunes para Analógicos y Digitales
-  
-  abstract = True  
 
-class Tct(Tk):
+class Tct(models.Model):
+
+    id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)
     
     Lt0 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de nivel
     Lt1 = models.FloatField(default = 0.0, null =True) #magnitud de Fracciones de nivel
@@ -73,7 +72,7 @@ class Tct(Tk):
       
     def __str__(self):
     
-       return '%s' % (self.Nombre)
+       return '%d' % (self.id)
 
 
 #MODELOS DE FACTORES DE TANQUES
@@ -90,8 +89,6 @@ class Factor(models.Model):
        return '%d' % (self.id,)
 
 #MODELOS TABLA CERTIFICADA (DE AFORO) DE TANQUES
-
-
 
 
 
@@ -114,7 +111,6 @@ class MbMaestro(models.Model):
     ('TCP', 'MBTCP'),
     ('RTU', 'MBRTU'),
    ]
-
 
 
   Puerto = models.CharField(max_length=3, default = 's0')

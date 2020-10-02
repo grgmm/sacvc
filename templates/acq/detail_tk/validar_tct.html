@@ -15,24 +15,21 @@
 		   	{%if tk.tct_archivo%}
 
 			    <a href="{%url 'uacq:integridad_TCT' tk.pk%}" type="button" class="btn btn-info"> Validar Archivo TCT</a>
-          {%if tk.tctvalido%}
-
-           <a href="{%url 'uacq:guardar_TCT_BD' tk.pk%}" type="button" class="btn btn-info"> Guardar_TCT_BD</a>
-
-          
-
-
-
-           <button type="button" class="btn btn-info"  name="btn_guardar_BD" onclick="return confirm('Confirma que desea Guardar el archivo tabla de Aforo {{tk.tct_archivo}} a la Base de Datos ?')"> Guardar Configuración TCT en BD  </button>
-           {%endif%}
-       
-        {%endif%}    
-     
-   	   		
-		<input type="submit" class="btn btn-info" value="Solo Guardar Archivo TCT / Salir" name="btn_guardar_tct_salir"/>   		
            
-    	    	   	
-	</form>
+            {%if tk.tctvalido%}
+               <a href="{%url 'uacq:guardar_TCT_BD' tk.pk%}" type="button" class="btn btn-info"> Guardar Tabla de Aforo en BD </a>
+              
+         
+            {%endif%}
+             {%endif%}
+
+
+		      <input type="submit" class="btn btn-info" value="Solo Guardar Archivo TCT / Salir" name="btn_guardar_tct_salir"/>   		
+               	    	   	
+	 </form>
+       
+     
+
 
 
   
