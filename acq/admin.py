@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tag, Analogico, Digital, PatioTanque, Tk, Analogico_Hs0, Analogico_Hs1, Analogico_Hs2, Analogico_Hs3, Analogico_Hs4, Analogico_Hs5
+from .models import Tag, Analogico, Digital, PatioTanque, Tk, Analogico_Hs0, Analogico_Hs1, Analogico_Hs2, Analogico_Hs3, Analogico_Hs4, Analogico_Hs5, Tct
 
 # Register your models here.
 
@@ -14,6 +14,8 @@ admin.site.register(Analogico_Hs2)
 admin.site.register(Analogico_Hs3)
 admin.site.register(Analogico_Hs4)
 admin.site.register(Analogico_Hs5)
+admin.site.register(Tct)
+
 
 
 

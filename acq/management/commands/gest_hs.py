@@ -7,8 +7,6 @@ from datetime import datetime
 from datetime import timedelta
 
 
-
-
 class Command(BaseCommand):
     help = 'help'
 
@@ -18,7 +16,7 @@ class Command(BaseCommand):
 
      while i > iterar: #(ciclo infinito)
 
-      def Gestion_Hs0(delta_t, bd_origen, bd_destino):
+      def Gestion_Hs0(delta_t, bd_origen, bd_destino): #FUNCION PARA POBLADO AUTOMATICO DE TABLA DE SEGUNDOS
 
   
         if (bd_origen.objects.count() != 0):
@@ -43,19 +41,14 @@ class Command(BaseCommand):
               time.sleep(1)      
               bd_destino.objects.create(data = recorrido.data)
 
-
              
               recorrido.data['indexado']= '1' #activa la bandera en la tabla de origen 
               #para no duplicar registros en la sigiente tabla (mejorar)             
               
               recorrido.save() #guarda el cambio
-              
-                    
 
 
-
-
-      def Gestion_Hs(delta_t, bd_origen, bd_destino):
+      def Gestion_Hs(delta_t, bd_origen, bd_destino): #FUNCION PARA POBLADO AUTOMATICO DE TABLA DE SEGUNDOS
         
   
         if (bd_origen.count() != 0):
@@ -85,8 +78,6 @@ class Command(BaseCommand):
         if (qs.count()>0):
           print('Eliminando registros Duplicados')
           qs.delete()
-
-
     
    
       hs0_delta_t = timedelta(seconds=59) 
@@ -94,7 +85,7 @@ class Command(BaseCommand):
       hs0_bd_origen  = Analogico_Hs
       hs0_bd_destino = Analogico_Hs0      
       Gestion_Hs0(hs0_delta_t, hs0_bd_origen, hs0_bd_destino) #llenado de tabla de segundos hs0
-      #i+=1
+      
 
 
 

@@ -1,0 +1,36 @@
+{% extends "acq/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} Validar Tk{% endblock %}
+  
+{% block content %}
+
+
+  
+
+    <form method="post" enctype = 'multipart/form-data'> 
+   		  
+      {{form.as_p}}
+      {% csrf_token %}
+
+		   	{%if tk.tct_archivo%}
+
+			    <a href="{%url 'uacq:integridad_TCT' tk.pk%}" type="button" class="btn btn-info"> Validar Archivo TCT</a>
+           
+            {%if tk.tctvalido%}
+               <a href="{%url 'uacq:guardar_TCT_BD' tk.pk%}" type="button" class="btn btn-info"> Guardar Tabla de Aforo en BD </a>
+              
+         
+            {%endif%}
+             {%endif%}
+
+
+		      <input type="submit" class="btn btn-info" value="Solo Guardar Archivo TCT / Salir" name="btn_guardar_tct_salir"/>   		
+               	    	   	
+	 </form>
+       
+     
+
+
+
+  
+{% endblock %}

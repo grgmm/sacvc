@@ -1,0 +1,23 @@
+
+ {% extends 'acq/base.html' %}
+  {% block title %} {{tk.Nombre}}{% endblock %}
+  {% block content %}
+
+
+
+   
+
+    
+<p><i>Tanque: {{tk.Nombre}} </i></p>
+<p>Decriptor <i>{{tk.Descriptor}}</i></p>	
+<p>Patio de Tanques:<i>{{ tk.id_patioTanque}}</i></p>
+<p>Fecha de subida del archivo TCT: <i> {{ tk.fecha_subida_tct }}</i></p>
+
+
+
+<p>
+    <a href="{% url 'uacq:list_tf' %}">Regresar</a>
+
+</p>
+  
+    {% endblock %}

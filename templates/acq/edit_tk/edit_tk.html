@@ -1,0 +1,20 @@
+{% extends "acq/base.html" %}
+{% block title %} Editar Tk{% endblock %}
+
+
+{% block content %}
+ <h2>Modificar Tanque: {{tk.Nombre}}</h2>
+
+	<form method="post" enctype = 'multipart/form-data'>
+    	{{ form.as_p }}
+   		{% csrf_token %}
+   		
+   		<h2>{{tk.id_patioTanque}}</h2>
+   		<a  href="{% url 'uacq:validar_tct' tk.pk%}">Validar TCT</a>
+
+
+   		     	
+    	<input type="submit" value="Modificar">
+	</form>
+
+{% endblock %}	

@@ -1,0 +1,46 @@
+
+ {% extends 'acq/base.html' %}
+  {% block title %} 'TCT VALIDO'  {% endblock %}
+  {% load indices %}
+
+    {% block content %} 
+ 
+
+
+  
+      
+       <table id="tct-valido">
+  
+    <thead><H2>TABLA DE AFORO DE TANQUES VALIDA</H2> </thead>
+        <th>#</th> <th> NIVEL </th> <th>  VOLUMEN </th> 
+
+
+
+{% for x in data%}
+
+
+
+
+<tr>
+	
+	<td>
+{{ x.registro}}
+	</td>
+		<td>
+{{ x.nivel}}
+	</td>
+		<td>
+{{ x.volumen}}
+	</td>
+
+	
+
+<tr>
+
+{% endfor %}
+	
+
+
+
+{% endblock %}
+

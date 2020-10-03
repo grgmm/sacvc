@@ -1,0 +1,27 @@
+{% extends "acq/base.html" %}
+{% block title %} {% endblock %}
+
+
+
+
+{% block content %}
+<h2>Agregar de Tanque</h2>
+
+
+
+
+
+<form method="post" enctype = 'multipart/form-data'>
+	{% csrf_token %}    	
+
+    {{ form.as_p}}
+    
+
+    <input type="submit" id='validar_subir_tct' value="Guardar Tk" >
+
+
+</form>
+{% endblock %}
+
+
+	

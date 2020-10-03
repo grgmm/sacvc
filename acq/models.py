@@ -4,19 +4,11 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _ 
 import time
-#from datetime import datetime #Borrar
-#import random #Borrar
 from django.contrib.postgres.fields import JSONField
-#import random  #Borrar
-#import time #Borrar
 import json
-#import socket #Borrar
-#import sys #Borrar
-#from umodbus import conf #Borrar
-#from umodbus.client import tcp #Borrar
-from django.forms import ModelForm
 from datetime import datetime
 from datetime import timedelta
+from django.core.validators import FileExtensionValidator, DecimalValidator, MaxValueValidator, MinValueValidator
 
 
 # Create your models here.
@@ -26,32 +18,32 @@ from datetime import timedelta
 class PatioTanque(models.Model):
     
     Nombre = models.CharField(max_length=30,unique=True)
-    Descriptor = models.CharField(max_length=120,default= '',)
+    Descriptor = models.CharField(max_length=120,default="",)
 
     class Meta:
-        ordering = ["pk"]
+        ordering = ['pk']
 
     
     def __str__(self):
     
-       return '%s' % (self.Nombre, self.Descriptor)
-
-
-
-class PatioTanqueForm(ModelForm): #formulario agregar instalacion OJO SACAR DE ESTE MODULO
-
-    class Meta:
-        model = PatioTanque
-        fields = ('Nombre','Descriptor')
+       return '%s' % (self.Nombre,)
+       
 
 
 #MODELOS DE TANQUES
 
 class Tk(models.Model):
    
-    id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE)      
-    nombre = models.CharField(max_length=30)
+    id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE,verbose_name= _('Patio de Tanques'))      
+    Nombre = models.CharField(max_length=30,null=True)
+    Descriptor = models.CharField(max_length=120, default="", blank=True,)
 
+    tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
+   
+    Descriptor_tct = models.CharField(max_length=120,default="",null=True, blank=True,)
+    fecha_subida_tct = models.DateTimeField(null=True, blank = True, verbose_name= _('Subido El:'))
+    tctvalido= models.BooleanField(default=False, editable = False)
+    
     TIPOTanque_CHOICES = [
     ('CV', 'Cilindrico Vertical'),
     ('CH', 'Cilindrico Horizontal'),
@@ -61,11 +53,26 @@ class Tk(models.Model):
     tipo_de_tk = models.CharField(
       max_length = 2, choices=TIPOTanque_CHOICES, default= 'TF',)
 
-
-    
     def __str__(self):
     
-       return '%s' % (self.nombre,)
+       return '%s, %s' % (self.Nombre, self. Descriptor, )
+
+
+class Tct(models.Model):
+
+    id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)
+    
+    Lt0 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de nivel
+    Lt1 = models.FloatField(default = 0.0, null =True) #magnitud de Fracciones de nivel
+    
+    Tov0 = models.FloatField(default = 0.0, null =True)
+    Tov1 = models.FloatField(default = 0.0, null =True)
+    Tov = models.FloatField(default = 0.0, null =True)
+    
+      
+    def __str__(self):
+    
+       return '%d' % (self.id)
 
 
 #MODELOS DE FACTORES DE TANQUES
@@ -83,19 +90,6 @@ class Factor(models.Model):
 
 #MODELOS TABLA CERTIFICADA (DE AFORO) DE TANQUES
 
-class Tct(models.Model):
-    id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)    
-    Lt0 = models.DecimalField(max_digits= 3, decimal_places = 3)
-    Lt1 = models.DecimalField(max_digits= 3, decimal_places = 3)
-    Lt2 = models.DecimalField(max_digits= 3, decimal_places = 3)
-    Tov = models.FloatField(default = 1.0)
-    
-      
-    def __str__(self):
-    
-       return '%d' % (self.id,)
-
-       
 
 
        #MODELOS DE COMUNICACION
@@ -119,7 +113,6 @@ class MbMaestro(models.Model):
    ]
 
 
-
   Puerto = models.CharField(max_length=3, default = 's0')
   Velocidad = models.IntegerField(choices = Vel_CHOICES, default= 'A')
   Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR')
@@ -140,15 +133,11 @@ class MbEsclavo(models.Model):
    ('C', 38400),
     ]
 
-
-
     
   PARIDAD_CHOICES =[
     ('PAR','Par'),
     ('IMPAR', 'Impar'),]
 
-
-    
   Puerto = models.CharField(max_length=3, default='sa')
   Velocidad = models.IntegerField(choices = Vel_CHOICES, default=19200)
   Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR')
@@ -160,10 +149,9 @@ class MbEsclavo(models.Model):
        return '%d' % (self.id,)
 
 
-    
-#MODELOS DE TAG
+#MODELOS DE TAGS
 
-class Tag(models.Model):
+class Tag(models.Model): #Características comunes para Analógicos y Digitales
   
 
   TIPOVARIABLE_CHOICES= [
@@ -172,7 +160,7 @@ class Tag(models.Model):
   ('C', 'Calculada'),]
     
   Nombre = models.CharField(max_length=42)
-  Descriptor = models.CharField(max_length=120)
+  Descriptor = models.CharField(max_length=120, default='')
   id_Tk= models.ForeignKey(Tk, on_delete=models.CASCADE)
   Habilitar= models.BooleanField(default = True)
   TipoVariable = models.CharField(choices = TIPOVARIABLE_CHOICES,max_length=1, default = 'B')
@@ -180,10 +168,10 @@ class Tag(models.Model):
   
   def __str__(self):
     
-       return '%d' % (self.id,) 
-  
-#Extiende del modelo Tag con Características comunes para Analógicos y Digitales    
-class Meta:
+       return '%d' % (self.id,)   
+
+
+class Meta: #Extiende del modelo Tag con Características no comunes para Analógicos y Digitales
   
   abstract = True  
 
@@ -196,12 +184,10 @@ class Digital(Tag):
   S1A= models.BooleanField(default = True)
 
 
-
   def __str__(self):
     
       return '%s' % (self.Nombre)
 
- #Extiende del modelo Tag con Características comunes para Analógicos y Digitales 
   abstract = True  
 
 
@@ -236,7 +222,7 @@ class Analogico(Tag):
 #HISTORICOS Hs=todos, Hs0= tablas de segundos, Hs1= tablas de minutos, Hs2= tablas de horas, Hs3= tablas de dias,
 #Hs4= tablas de meses, Hs5= tablas de años.
 
-class Analogico_Hs(models.Model):
+class Analogico_Hs(models.Model): #Poblado automatico al lvantar modulo hs.py
  
   data = JSONField(null=True, blank=True,)
 
@@ -255,7 +241,7 @@ class Analogico_Hs(models.Model):
 #sample.save()
 
 
-class Analogico_Hs0(models.Model):
+class Analogico_Hs0(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -264,7 +250,7 @@ class Analogico_Hs0(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs1(models.Model):
+class Analogico_Hs1(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -272,7 +258,7 @@ class Analogico_Hs1(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs2(models.Model):
+class Analogico_Hs2(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -280,7 +266,7 @@ class Analogico_Hs2(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs3(models.Model):
+class Analogico_Hs3(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -288,7 +274,7 @@ class Analogico_Hs3(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs4(models.Model):
+class Analogico_Hs4(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
@@ -296,7 +282,7 @@ class Analogico_Hs4(models.Model):
     
      return '%s' % (self.id)
 
-class Analogico_Hs5(models.Model):
+class Analogico_Hs5(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
  
   data = JSONField()
 
