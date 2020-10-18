@@ -25,7 +25,7 @@ SECRET_KEY = '4nrii@bdhlgv%w&#qikkht!cf8+)fe&wfs7cu8=i*9@rfbng3q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com]
 
 
 # Application definition
@@ -82,12 +82,12 @@ WSGI_APPLICATION = 'sacvc.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', #para heroku
         'NAME': 'sacvc_db',
         'USER': 'morenomx',
-        'PASSWORD': 'mm262517',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
         }
     }
 
@@ -135,3 +135,7 @@ STATICFILES_DIRS = (
 )
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL= '/configuraciones/'
+
+#para Heroku:
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASE['default'].update(db_from_env
