@@ -16,7 +16,7 @@ import os
 
 import dj_database_url  
 db_from_env = dj_database_url.config(conn_max_age=500)  
-DATABASES['dethdus4rjmd22'].update(db_from_env)
+DATABASES['default'].update(db_from_env)
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  
 STATIC_URL = '/static/'# Extra places for collectstatic to find static files.
@@ -98,16 +98,7 @@ WSGI_APPLICATION = 'sacvc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', #para heroku
-        'NAME': 'dethdus4rjmd22',
-        'USER': 'jbeoaktdxflgdt',
-        'PASSWORD': '09a8c1accbe2daa8049ff02e9bd38b470f9b0f757210b5e3780d7e1c31a7b977',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        }
-    }
+
 
 
 # Password validation
