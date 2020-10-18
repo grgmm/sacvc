@@ -138,4 +138,4 @@ MEDIA_URL= '/configuraciones/'
 
 #para Heroku:
 db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASE['default'].update(db_from_env
+DATABASE['default'].update(db_from_env)
