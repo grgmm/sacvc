@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'sacvc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', #para heroku
-        'NAME': 'sacvc_db',
-        'USER': 'morenomx',
-        'PASSWORD': '',
+        'NAME': 'dethdus4rjmd22',
+        'USER': 'jbeoaktdxflgdt',
+        'PASSWORD': '09a8c1accbe2daa8049ff02e9bd38b470f9b0f757210b5e3780d7e1c31a7b977',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
         }
     }
 
