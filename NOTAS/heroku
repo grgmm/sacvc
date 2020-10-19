@@ -1,0 +1,8 @@
+heroku
+*se creo cuenta libre
+*se creo rama git de la app  sacvc en local solo para interactuar con heroku
+*se creo espejo de la rama anterior en GitHub
+*se creo conexión entre la app sacvc en heroku y el repo anterior de github asi mediante comits y push en github se hace el deployed automatico en heroku
+*Se configuro heroku mediante la pag de heroku asi como su consola CLI
+*Se configuro base de datos postgres en Heroku
+*Se realizó make migrations y migrate en heroku mediante CLI
