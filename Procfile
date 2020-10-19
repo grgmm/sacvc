@@ -1,1 +1,1 @@
-web: gunicorn sacvc.wsgi --log-fle -
+web: gunicorn sacvc.wsgi --log-file -
