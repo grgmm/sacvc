@@ -11,42 +11,17 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
-# PARA HEROKU Update database configuration with $DATABASE_URL.
-
-
-import dj_database_url
-from decouple import config
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
-
-
-
-
-
-
+import django_heroku
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '4nrii@bdhlgv%w&#qikkht!cf8+)fe&wfs7cu8=i*9@rfbng3q'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
-
+ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
@@ -71,8 +46,32 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+
+
+
+
+
+import dj_database_url #EAPNA
+from decouple import config #EAPNA
+
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+
+
+# SECURITY WARNING: don't run with debug turned on in production!
+
 
 ROOT_URLCONF = 'sacvc.urls'
 
@@ -136,6 +135,7 @@ USE_TZ = True
 #Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
@@ -144,17 +144,5 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL= '/configuraciones/'
 
-#
 
-
-
-
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  
-STATIC_URL = '/static/'# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (  
-    os.path.join(BASE_DIR, 'static'),
-)
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+django_heroku.settings(locals())
