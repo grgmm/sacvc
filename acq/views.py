@@ -1,4 +1,4 @@
-from django.shortcuts import render
+  from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import socket
 import json
@@ -40,8 +40,8 @@ from django.utils import timezone
 
 
 def actualizar(request):
-   
-   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json
+    with open ('acq/media/datos.json', encoding='utf-8')
+  # with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json
       dataf = json.loads(data_file.read())
       data_file.close()
    
