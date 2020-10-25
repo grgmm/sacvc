@@ -41,8 +41,8 @@ from django.conf import settings
 
 
 def actualizar(request):
-    with open ('app/acq/datos.json', encoding='utf-8')
-  # with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json
+    #with open ('app/acq/datos.json', encoding='utf-8')
+    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json
       dataf = json.loads(data_file.read())
       data_file.close()
    
