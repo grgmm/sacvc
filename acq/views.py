@@ -35,6 +35,7 @@ from django.core.exceptions import ValidationError, ValidationError
 import pandas as pd
 from .validaciones import validar_parametro_tct as valida
 from django.utils import timezone
+from django.conf import settings
 
 
 
