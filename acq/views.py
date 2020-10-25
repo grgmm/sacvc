@@ -46,7 +46,7 @@ def actualizar(request):
       dataf = json.loads(data_file.read())
       data_file.close()
    
-   return JsonResponse(dataf)
+    return JsonResponse(dataf)
 
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
 
