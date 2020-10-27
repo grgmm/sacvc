@@ -18,6 +18,7 @@ from .views import (
     Validar_Tct,
     integridad_TCT,
     guardar_TCT_BD,
+    current_data,
     )
     
 
@@ -65,7 +66,9 @@ urlpatterns = [
     url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'),
 
 
-    url(r'^validar_tct/(?P<pk>\d+)$', Validar_Tct.as_view(), name='validar_tct'),  
+    url(r'^validar_tct/(?P<pk>\d+)$', Validar_Tct.as_view(), name='validar_tct'),
+
+    url(r'^data_actual/$', current_data.as_view(), name='current_data'), #LISTADO DE PATIOS DE TANQUES 
 
 ]
 
