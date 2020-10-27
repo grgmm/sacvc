@@ -9,6 +9,8 @@ from umodbus.client import tcp
 from django.core.management.base import BaseCommand
 import struct
 import numpy as np
+from acq.models import Tk
+
 
 
 
@@ -123,6 +125,9 @@ class Command(BaseCommand):
              
               file.write(json.dumps(json_temp)) #Paquete a enviar a las vistas y a BD
               file.close()
+              Tk.objects.create(current_data = json_temp)
+              
+
               
               time.sleep(1)# para debugger 90 ms
               j+=3

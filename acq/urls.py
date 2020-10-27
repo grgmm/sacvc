@@ -18,6 +18,7 @@ from .views import (
     Validar_Tct,
     integridad_TCT,
     guardar_TCT_BD,
+
     )
     
 
@@ -25,6 +26,7 @@ app_name = 'acq'
 urlpatterns = [
 	
     url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
+
 
    
     path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
@@ -65,7 +67,8 @@ urlpatterns = [
     url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'),
 
 
-    url(r'^validar_tct/(?P<pk>\d+)$', Validar_Tct.as_view(), name='validar_tct'),  
+    url(r'^validar_tct/(?P<pk>\d+)$', Validar_Tct.as_view(), name='validar_tct'), 
 
+    url(r'^data_actual/$', current_data.as_view(), name='current_data'), #LISTADO DE PATIOS DE TANQUES
 ]
 
