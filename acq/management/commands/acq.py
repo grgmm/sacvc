@@ -55,21 +55,24 @@ class Command(BaseCommand):
           numtags=Tag.objects.count()  
 
           numregistros= numtags*3
-          print(numtags)
-          print( numregistros)
+        
           k=0
+         
           tags_disponibles =Tag.objects.all().iterator()
          
           for t in tags_disponibles:
+           
             Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
             Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
             
-            idtag = t.pk    #id de ese transmisor entre 9 y 100 para esta simulación 
+            idtag = t.pk  #id de ese transmisor entre 9 y 100 para esta simulación 
                                         #Para simular entrada de diversos transmisores
-           
-            Current_Value.append(idtag)
-            Current_Value.append(Pv0)
-            Current_Value.append(Pv1)
+            
+            Current_Value=[idtag,Pv0,Pv1]
+            #Current_Value.append(Pv0)
+            #Current_Value.append(Pv1)
+
+            print(Current_Value)
 
             
             #se empaqueta en el arreglo Current_Value: id + Pv0 + PV1
@@ -87,59 +90,47 @@ class Command(BaseCommand):
    
     #Leer
 
-            message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = 101, quantity= numregistros) 
+            message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = 101, quantity= 3) 
             #Se construye el msj de lectura desde el esclavo a partir de la dirección 101 (holding) para esta simulación
 
             leer = tcp.send_message(message2, sock) #Se envia comando de lectura con el msj en el esclavo en el sock
           # abierto.
- 
+            
         
             timestamp=""
             pv=0
-
-
-
-            j=0
-            while j < (numregistros-1) :
-              with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para 
+            
+            with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para 
              #escrtitura
 
           
-                timestamp = str(datetime.now())
-              
-             
-
-                R0=leer[j+1]
-                R1=leer[j+2]
-                print(R0)
-                print(R1)
-                float_value=FloatIeee754(R0,R1)
-                print(float_value)
+              timestamp = str(datetime.now())
+              R0=leer[1]
+              R1=leer[2]
+              float_value=FloatIeee754(R0,R1)
+                
 
                 #consttruye un json de una linea por cada tag luego sera sobrescrito por el sigueinte tag hasta terminar el ciclo
-                json_temp= {"idtag":leer[j], "Timestamp":timestamp, "Pv0":leer[j+1],"Pv1":leer[j+2], "Pv_Float":float_value, "indexado": 0}
+              #json_temp= {"idtag":leer[0], "Timestamp":timestamp, "Pv0":leer[1],"Pv1":leer[2], "Pv_Float":float_value, "indexado": 0}
 
+              tag_instance = Tag.objects.get(pk=leer[0]) #idtag
 
+              tk_instance = Tk.objects.get(pk= tag_instance.id_Tk.pk)#idtk
+              
+              json_temp= {"TAG":str(tag_instance.Nombre),"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance. id_patioTanque.Nombre,"TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "INDEXADO": 0}
+
+              file.write(json.dumps(json_temp)) #Data en cache
+              file.close() 
+
+              tk_instance.current_data = json_temp #A Base de Datos 
                
-                file.write(json.dumps(json_temp)) #Paquete a enviar a las vistas y a BD
-                file.close()
+              tk_instance.save()
+              print(tk_instance.current_data)
 
-                tag_instance = Tag.objects.get(pk=json_temp['idtag'])
+              
 
-                tk_instance = Tk.objects.get(pk= tag_instance.id_Tk.pk)
-                #print(tk_instance)
+              time.sleep(1)# para debugger 90 ms
+             
 
-                tk_instance.current_data = json_temp
-                print(tk_instance.current_data)
-                tk_instance.save()
-                print(tk_instance.current_data)
-
-                
-         
-
-
-                time.sleep(1)# para debugger 90 ms
-                j+=3
-
-          i+=1
+        i+=1
         sock.close() #cierra la conexión

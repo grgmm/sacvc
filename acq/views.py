@@ -53,7 +53,7 @@ class current_data(ListView):
 
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')  
-  template_name = 'acq/current_data/current_data'
+  template_name = 'acq/current_data/current_data.html'
 
 
 
