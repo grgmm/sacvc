@@ -14,11 +14,13 @@
                //console.log(data.idtag);
            
             
-               var idtag = JSON.stringify(data,["idtag"]);
-               var Pv0 = JSON.stringify(data,["Pv0"]);
-               var Pv1 = JSON.stringify(data,["Pv1"]);
-               var Pv_float = JSON.stringify(data,["Pv_Float"]);
-               var Timestamp = JSON.stringify(data,["Timestamp"]);
+               var tag = JSON.stringify(data,["TAG"]);
+               var tanque = JSON.stringify(data,["TANQUE"]);
+               var instalacion = JSON.stringify(data,["INSTALACION"]);
+               var Pv0 = JSON.stringify(data,["PV0"]);
+               var Pv1 = JSON.stringify(data,["PV1"]);
+               var Pv_float = JSON.stringify(data,["PV_FLOAT"]);
+               var Timestamp = JSON.stringify(data,["TIMESTAMP"]);
               
             
              // document.getElementById("id-tag").innerHTML = data.idtag;
@@ -36,21 +38,22 @@
   var cell3 = row.insertCell(2);
   var cell4 = row.insertCell(3);
   var cell5 = row.insertCell(4);
+  var cell6 = row.insertCell(5);
+  var cell7 = row.insertCell(6);
 
 
 
-  cell1.innerHTML = data.idtag;
-  cell2.innerHTML = data.Pv0;
-  cell3.innerHTML = data.Pv1;
-  cell4.innerHTML = data.Pv_Float;
-  cell5.innerHTML = data.Timestamp;
+  cell1.innerHTML = data.TAG;
+  cell2.innerHTML = data.TANQUE;
+  cell3.innerHTML = data.INSTALACION;
+  cell4.innerHTML = data.PV0;
+  cell5.innerHTML = data.PV1;
+  cell6.innerHTML = data.PV_FLOAT;
+  cell7.innerHTML = data.TIMESTAMP;
 
-  
   }
 
-
 })
-       
 
    }    
 
