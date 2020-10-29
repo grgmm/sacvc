@@ -35,28 +35,29 @@ from django.core.exceptions import ValidationError, ValidationError
 import pandas as pd
 from .validaciones import validar_parametro_tct as valida
 from django.utils import timezone
-from django.conf import settings
 
 
 
 
 def actualizar(request):
-    #with open ('app/acq/datos.json', encoding='utf-8')
-    with open ('app/datos.json', encoding='utf-8') as data_file: #abre un archivo json
+   
+   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json
       dataf = json.loads(data_file.read())
       data_file.close()
    
-    return JsonResponse(dataf)
+   return JsonResponse(dataf)
 
 
 
-
-class actualizar_bizarro(ListView):
+class current_data(ListView):
 
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')  
-  template_name = 'acq/current_data/current_data'
-  
+  template_name = 'acq/current_data/current_data.html'
+
+
+
+
 
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
 
@@ -267,4 +268,4 @@ def guardar_TCT_BD(request, pk):
     raise Http404("Tk no existe")
     Tct().save
 
-  return HttpResponse('Guardado exitoso en BD')
+  return HttpResponse('Hello, World')
