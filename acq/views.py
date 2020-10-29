@@ -47,6 +47,18 @@ def actualizar(request):
    
    return JsonResponse(dataf)
 
+
+
+class current_data(ListView):
+
+  model = Tk
+  success_url = reverse_lazy('uacq:list_tf')  
+  template_name = 'acq/current_data/current_data.html'
+
+
+
+
+
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
 
     model = PatioTanque
@@ -256,4 +268,4 @@ def guardar_TCT_BD(request, pk):
     raise Http404("Tk no existe")
     Tct().save
 
-  return HttpResponse('Hello, World')
+  return HttpResponse('Guardado exitoso en BD")
