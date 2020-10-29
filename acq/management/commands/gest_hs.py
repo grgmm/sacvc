@@ -27,13 +27,13 @@ class Command(BaseCommand):
           for recorrido in q:
 
             objetodata=recorrido.data
-            objetoindexado=objetodata['indexado'] #Exraigo el estado de la bander "indexado"
+            objetoindexado=objetodata['INDEXADO'] #Exraigo el estado de la bandera "indexado"
             
             
             if objetoindexado==0: #solo si no ha sido indexado/copiado
 
     
-             delt=(datetime.now()- datetime.strptime(recorrido.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f')) #tiempo actual del sistema- 
+             delt=(datetime.now()- datetime.strptime(recorrido.data['TIMESTAMP'], '%Y-%m-%d %H:%M:%S.%f')) #tiempo actual del sistema- 
              #tiempo del tag actual
      
              if (delt < delta_t):
@@ -42,7 +42,7 @@ class Command(BaseCommand):
               bd_destino.objects.create(data = recorrido.data)
 
              
-              recorrido.data['indexado']= '1' #activa la bandera en la tabla de origen 
+              recorrido.data['INDEXADO']= '1' #activa la bandera en la tabla de origen 
               #para no duplicar registros en la sigiente tabla (mejorar)             
               
               recorrido.save() #guarda el cambio
@@ -56,25 +56,25 @@ class Command(BaseCommand):
           q = bd_origen.iterator()
 
           for recorrido in q:
-            objetoindexado=first_obj.data['indexado'] #Exraigo el estado de la bander "indexado"
+            objetoindexado=first_obj.data['INDEXADO'] #Exraigo el estado de la bander "indexado"
            
             
             if objetoindexado==0: #solo si no ha sido indexado/copiado    
-             delt=(datetime.strptime(recorrido.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f')-datetime.strptime(first_obj.data['Timestamp'], '%Y-%m-%d %H:%M:%S.%f'))
+             delt=(datetime.strptime(recorrido.data['TIMESTAMP'], '%Y-%m-%d %H:%M:%S.%f')-datetime.strptime(first_obj.data['TIMESTAMP'], '%Y-%m-%d %H:%M:%S.%f'))
               
             
             
              if (delt > delta_t):       
               print('Grabando en el hs correspondiente')
               bd_destino.create(data = first_obj.data)
-              first_obj.data['indexado']= '1' #activa la bandera en la tabla de origen 
+              first_obj.data['INDEXADO']= '1' #activa la bandera en la tabla de origen 
               #para no duplicar registros en la sigiente tabla (mejorar)
               first_obj.save()
               print(delt)
               print(delta_t)
         
         
-        qs=bd_origen.filter(data__indexado='1')
+        qs=bd_origen.filter(data__INDEXADO='1')
         if (qs.count()>0):
           print('Eliminando registros Duplicados')
           qs.delete()
