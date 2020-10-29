@@ -8,11 +8,10 @@
             url: 'actualizar/', //indicamos la ruta donde se genera 
             dataType: 'json', //indicamos que es de tipo json
             type: 'get'
-               //    async: false     //ponemos el parámetro asyn a falso
+               
         }).done(function(data) {
 
-               //console.log(data.idtag);
-           
+              
             
                var tag = JSON.stringify(data,["TAG"]);
                var tanque = JSON.stringify(data,["TANQUE"]);
@@ -21,15 +20,7 @@
                var Pv1 = JSON.stringify(data,["PV1"]);
                var Pv_float = JSON.stringify(data,["PV_FLOAT"]);
                var Timestamp = JSON.stringify(data,["TIMESTAMP"]);
-              
-            
-             // document.getElementById("id-tag").innerHTML = data.idtag;
-              //document.getElementById("P-V").innerHTML = data.Pv;
-              //document.getElementById("Time-stamp").innerHTML = data.Timestamp;
-
-
-
-
+                          
               var table = document.getElementById("valores-actuales");
   {
   var row = table.insertRow(1);

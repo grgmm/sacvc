@@ -117,7 +117,7 @@ class Command(BaseCommand):
 
               tk_instance = Tk.objects.get(pk= tag_instance.id_Tk.pk)#idtk
               
-              json_temp= {"TAG":str(tag_instance.Nombre),"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance. id_patioTanque.Nombre,"TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "INDEXADO": 0}
+              json_temp= {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance. id_patioTanque.Nombre,"TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "INDEXADO": 0}
 
               file.write(json.dumps(json_temp)) #Data en cache
               file.close() 
