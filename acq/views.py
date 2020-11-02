@@ -268,4 +268,4 @@ def guardar_TCT_BD(request, pk):
     raise Http404("Tk no existe")
     Tct().save
 
-  return HttpResponse('Guardado exitoso en BD")
+  return HttpResponse('Guardado exitoso en BD')
