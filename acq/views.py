@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 import socket
 import json
 
-from django.http import JsonResponse 
+from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque,Tct
 from datetime import timedelta, datetime
 from django.template.response import TemplateResponse
@@ -40,11 +40,11 @@ from django.utils import timezone
 
 
 def actualizar(request):
-   
+
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json
       dataf = json.loads(data_file.read())
       data_file.close()
-   
+
    return JsonResponse(dataf)
 
 
@@ -52,7 +52,7 @@ def actualizar(request):
 class current_data(ListView):
 
   model = Tk
-  success_url = reverse_lazy('uacq:list_tf')  
+  success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
 
 
@@ -69,12 +69,12 @@ class PatiotanqueAdd(CreateView):
     model = PatioTanque
     fields = ['Nombre', 'Descriptor',]
     template_name = 'acq/add_tf/add_tf.html'
-    success_url = reverse_lazy('uacq:list_tf') 
+    success_url = reverse_lazy('uacq:list_tf')
 
 
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
-    success_url = reverse_lazy('uacq:list_tf')  
+    success_url = reverse_lazy('uacq:list_tf')
     template_name = 'acq/del_tf/del_tf.html'
 
 
@@ -84,9 +84,9 @@ class PatiotanqueDetail(DetailView):
 
 
 class PatiotanqueUpdate(UpdateView):
-  model = PatioTanque 
+  model = PatioTanque
   fields = ['Nombre', 'Descriptor']
-  template_name = 'acq/edit_tf/edit_tf.html' 
+  template_name = 'acq/edit_tf/edit_tf.html'
   success_url = reverse_lazy('uacq:list_tf' )
 
 
@@ -107,11 +107,12 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
 class TkAdd(CreateView):
     model = Tk
-    fields = ['Nombre', 'Descriptor', 'id_patioTanque',] 
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque',]
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
 
-    
+
+
 class TkDelete(DeleteView):
     model = Tk
     success_url = reverse_lazy('uacq:list_tf')
@@ -127,10 +128,10 @@ class TkDetail(DetailView):
 
 
 class TkUpdate(UpdateView):
-  model = Tk 
+  model = Tk
   fields = ['Nombre', 'Descriptor',]
   template_name = 'acq/edit_tk/edit_tk.html'
-  
+
   success_url = reverse_lazy('uacq:list_tf' )
 
 
@@ -140,60 +141,52 @@ class Validar_Tct(UpdateView):
     fields = ['tct_archivo', 'Descriptor_tct', 'fecha_subida_tct']
     success_url = reverse_lazy('uacq:list_tf')
 
-    
+
 
     def get(self, request, *args, **kwargs):
       obj = self.get_object()
       fs = FileSystemStorage()
-      
-      
-      
-    
-        
+
+
+
+
+
       if not (bool(obj.tct_archivo)):
-        print('sin archivo')
+        print('no hay archivo tct en en model Tk actual')
         setattr(obj,'tctvalido', False)
         setattr(obj,'Descriptor_tct', '')
         setattr(obj,'fecha_subida_tct',None )
-      
+
       else:
 
-        TimestampTCT=fs.get_created_time(obj.tct_archivo.path)               
-            
+        TimestampTCT=fs.get_created_time(obj.tct_archivo.path)
+
         setattr(obj,'fecha_subida_tct',TimestampTCT)
 
-      
+
       obj.save()
 
 
 
-      request.GET = request.GET.copy()
-      print(request.GET)
-      self.objx = self.get_object()
-      if request.GET.get("btn_guardar_BD", ""):
-        print('ayudame dios mio')
-
-
-          
       return super(Validar_Tct, self).get(request, **kwargs)
-    
+
 
     def post(self, request, *args, **kwargs):
-        
+
         self.obj = self.get_object()
 
-        
+
         request.POST = request.POST.copy()
 
 
-       
+
         if request.POST.get("btn_guardar_tct_salir", ""):
-          
-      
+
+
 
           response= 'Editar Archivo Tct / Salir'
 
-            
+
         return super(Validar_Tct, self).post(request, **kwargs)
 
 
@@ -211,11 +204,11 @@ def integridad_TCT(request, pk):
       obj = Tk.objects.get(pk=pk)
       print(obj.fecha_subida_tct)
 
-      
-      
+
+
   except Tk.DoesNotExist:
     raise Http404("Tk no existe")
-  
+
 
   file=obj.tct_archivo.path
 
@@ -223,8 +216,8 @@ def integridad_TCT(request, pk):
 
   DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
 
-  
-  
+
+
   json_temp = {}
   json_temp = []
 
@@ -232,22 +225,21 @@ def integridad_TCT(request, pk):
   register_range=[]
 
   for i in range(0, len(DataFrame)):
-         
+
     nivel=valida(DataFrame.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
     volumen=valida(DataFrame.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
     json_temp.append({ 'registro': i,'nivel':nivel, 'volumen':volumen})
     register_range.append(i)
-  
+
   setattr(obj,'tctvalido', True)
-  
+
   obj.save()
-    
- 
-  return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data':json_temp,})
+
+  return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data':json_temp,'pk':pk})
 
 
 
-def guardar_TCT_BD(request, pk): 
+def guardar_TCT_BD(request, pk):
 
 
   try:
@@ -258,12 +250,12 @@ def guardar_TCT_BD(request, pk):
     file=obj_tk.tct_archivo.path
     DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
     #nivel=DataFrame.iloc[3]['nivel']
-    
+
     for i in range(0, len(DataFrame)):
      Tct.objects.create(id=None,  Lt0=DataFrame.iloc[i]['nivel'], Tov0=DataFrame.iloc[i]['volumen'], id_tk=obj_tk)
 
-     
-         
+
+
   except Tk.DoesNotExist:
     raise Http404("Tk no existe")
     Tct().save

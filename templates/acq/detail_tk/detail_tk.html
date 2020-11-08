@@ -1,6 +1,8 @@
 
  {% extends 'acq/base.html' %}
   {% block title %} {{tk.Nombre}}{% endblock %}
+  {% block footer %} <a href="{% url 'uacq:list_tf' %}" type="button" class="btn btn-info"> Regresar</a>
+{% endblock %}
   {% block content %}
 
 
@@ -16,7 +18,6 @@
 
 
 <p>
-    <a href="{% url 'uacq:list_tf' %}">Regresar</a>
 
 </p>
   
