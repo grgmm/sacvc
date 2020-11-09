@@ -41,7 +41,7 @@ class Tk(models.Model):
     tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
 
     Descriptor_tct = models.CharField(max_length=120,default="",null=True, blank=True,)
-    fecha_subida_tct = models.DateTimeField(null=True, blank = True, verbose_name= _('Subido El:'))
+    fecha_subida_tct = models.DateTimeField(null=True, blank = True, verbose_name= _('Subido El:'), )
     tctvalido= models.BooleanField(default=False, editable = False)
     current_data = JSONField(null=True)
 
