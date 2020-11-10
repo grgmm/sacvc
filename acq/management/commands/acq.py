@@ -107,7 +107,7 @@ class Command(BaseCommand):
              #escrtitura
 
 
-              timestamp = str(datetime.now())
+              timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
               R0=leer[1]
               R1=leer[2]
               float_value=FloatIeee754(R0,R1)
