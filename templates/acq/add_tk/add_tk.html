@@ -12,16 +12,13 @@
 
 
 <form method="post" enctype = 'multipart/form-data'>
-	{% csrf_token %}    	
+	{% csrf_token %}
 
     {{ form.as_p}}
-    
 
-    <input type="submit" id='validar_subir_tct' value="Guardar Tk" >
+
+    <input type="submit" id='validar_subir_tct' value="Guardar Tanque" >
 
 
 </form>
 {% endblock %}
-
-
-	

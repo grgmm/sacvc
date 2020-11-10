@@ -47,17 +47,11 @@ def actualizar(request):
 
    return JsonResponse(dataf)
 
-
-
 class current_data(ListView):
 
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
-
-
-
-
 
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
 
@@ -236,7 +230,6 @@ def integridad_TCT(request, pk):
   obj.save()
 
   return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data':json_temp,'pk':pk})
-
 
 
 def guardar_TCT_BD(request, pk):
