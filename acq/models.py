@@ -44,11 +44,6 @@ class Tk(models.Model):
     fecha_subida_tct = models.DateTimeField(null=True, blank = True, verbose_name= _('Subido El:'), )
     tctvalido= models.BooleanField(default=False, editable = False)
     current_data = JSONField(null=True)
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> sacvc_local_v1
     TIPOTanque_CHOICES = [
     ('CV', 'Cilindrico Vertical'),
     ('CH', 'Cilindrico Horizontal'),
