@@ -47,20 +47,15 @@ def actualizar(request):
 
    return JsonResponse(dataf)
 
-<<<<<<< HEAD
 
 
 class current_data(ListView):
 
   model = Tk
-  success_url = reverse_lazy('uacq:list_tf')  
+  success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
 
 
-
-
-
-=======
 class current_data(ListView):
 
   model = Tk
