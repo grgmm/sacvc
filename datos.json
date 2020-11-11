@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"idtag": 91, "Timestamp": "2020-10-24 22:40:04.088692", "Pv0": 29921, "Pv1": 16624, "Pv_Float": 7.514267444610596, "indexado": 0}
+=======
+{"IDTAG": "18", "TAG": "lt0110", "TANQUE": "nb", "INSTALACION": "TERMINAL HEROKU 01", "TIMESTAMP": "2020-11-10 17:35:17", "PV0": 26351, "PV1": 16480, "PV_FLOAT": 3.5062825679779053, "UNIDAD": "mts", "INDEXADO": 0}
+>>>>>>> sacvc_local_v1

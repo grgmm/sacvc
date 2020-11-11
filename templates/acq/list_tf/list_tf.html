@@ -1,6 +1,7 @@
 
   {% extends 'acq/base.html' %}
   {% block title %}  {% endblock %}
+  
   {% block content %}
  
 
@@ -34,7 +35,9 @@
  {% endfor %}
 
  <h2>Añadir Instalación</h2>
-   <a href="{% url 'uacq:add_tf' %}"> <H3>Haga click AQUI</h3> </a> para añadir una Instalación.
+ 
+   <H5>AGREGAR PATIO O TERMINAL DE ALMACENMIENTO</H5><a href="{%url 'uacq:add_tf'%}" type="button" class="btn btn-info"> Agregar Instalación</a>
+
  
 
 

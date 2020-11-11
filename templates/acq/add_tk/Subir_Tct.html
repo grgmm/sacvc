@@ -7,17 +7,11 @@
 {% block content %}
 <h2>Agregar de TCT A la Base de Datos</h2>
 
-
-
-
-
 <form method="post" enctype = 'multipart/form-data'>
-	{% csrf_token %}   
+	{% csrf_token %}
 
     {{ form.as_p}}
     <input type="submit" id='validar_subir_tct' value="Validar y Guardar TCT" >
 
-   
 </form>
 {% endblock %}
-

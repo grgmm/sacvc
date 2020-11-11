@@ -1,12 +1,14 @@
 
   {% extends 'acq/base.html' %}
   {% block title %}{% endblock %}
+  {% block footer %} <a href="{% url 'uacq:list_tf' %}" type="button" class="btn btn-info"> Regresar</a> 
+  {% endblock %}
+
   {% block content %}
  
 
 
-  
-      
+        
        <table id="Tk">
 
   
@@ -18,7 +20,7 @@
 {% for tk in object_list %}
 
 
-  <tr>
+  <tr> 
  <td> {{ tk.Nombre }} </td>
 
  
@@ -37,7 +39,7 @@
  		<a href ="{{tk.tct_archivo.url}}" >ver</a>
  	{% endif %}
 
-
+  
 </td>
 
 
@@ -45,8 +47,9 @@
  {% endfor %}
 
 
-  PARA AÑADIR UN TANQUE A LA INSTALACION <a href="{%url 'uacq:add_tk'%}"> <H3>Haga click AQUI</h3></a> 
+  <H5>AGREGAR TANQUE</H5><a href="{%url 'uacq:add_tk'%}" type="button" class="btn btn-info"> AgregarTK </a>
 
- 
+
+
 
    {% endblock %}

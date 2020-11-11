@@ -10,8 +10,8 @@
    		{% csrf_token %}
    		
    		<h2>{{tk.id_patioTanque}}</h2>
-   		<a  href="{% url 'uacq:validar_tct' tk.pk%}">Validar TCT</a>
-
+   		<a  href="{% url 'uacq:validar_tct' tk.pk%}"type="button" class="btn btn-info">Menu Validar TCT</a>
+   	
 
    		     	
     	<input type="submit" value="Modificar">
