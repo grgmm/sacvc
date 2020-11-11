@@ -62,7 +62,6 @@ class current_data(ListView):
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
 
->>>>>>> sacvc_local_v1
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
 
     model = PatioTanque
@@ -153,8 +152,6 @@ class Validar_Tct(UpdateView):
 
 
 
-
-
       if not (bool(obj.tct_archivo)):
         print('no hay archivo tct en en model Tk actual')
         setattr(obj,'tctvalido', False)
@@ -169,7 +166,6 @@ class Validar_Tct(UpdateView):
 
 
       obj.save()
-
 
 
       return super(Validar_Tct, self).get(request, **kwargs)
@@ -201,7 +197,6 @@ def integridad_TCT(request, pk):
   volumen_maximo= 1000000
   tct_valido=False
   ruta_tct_valido='/home/morenomx/solucionesweb/sacvc/media/tct/tct_valido.json'
-
 
 
   try:
