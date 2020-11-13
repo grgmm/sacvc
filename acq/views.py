@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-import socket
 import json
-
 from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque,Tct
-from datetime import timedelta, datetime
+#from datetime import timedelta, datetime
 from django.template.response import TemplateResponse
 
 
@@ -31,12 +29,11 @@ from django.shortcuts import render,  get_object_or_404
 
 import csv
 from django.core.validators import DecimalValidator, ValidationError
-from django.core.exceptions import ValidationError, ValidationError
+from django.core.exceptions import ValidationError
 import pandas as pd
 from .validaciones import validar_parametro_tct as valida
-from django.utils import timezone
 
-
+#from django.utils import timezone
 
 
 def actualizar(request):
@@ -84,7 +81,6 @@ class PatiotanqueUpdate(UpdateView):
   success_url = reverse_lazy('uacq:list_tf' )
 
 
-
 class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
     model = Tk
@@ -97,15 +93,11 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
       #print(filtro)
       return(filtro)
 
-
-
 class TkAdd(CreateView):
     model = Tk
     fields = ['Nombre', 'Descriptor', 'id_patioTanque',]
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
-
-
 
 class TkDelete(DeleteView):
     model = Tk
@@ -118,8 +110,6 @@ class TkDetail(DetailView):
     model = Tk
     template_name = 'acq/detail_tk/detail_tk.html'
     fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'fecha_subida_tct']
-
-
 
 class TkUpdate(UpdateView):
   model = Tk
@@ -135,14 +125,9 @@ class Validar_Tct(UpdateView):
     fields = ['tct_archivo', 'Descriptor_tct', 'fecha_subida_tct']
     success_url = reverse_lazy('uacq:list_tf')
 
-
-
     def get(self, request, *args, **kwargs):
       obj = self.get_object()
       fs = FileSystemStorage()
-
-
-
 
 
       if not (bool(obj.tct_archivo)):
@@ -185,19 +170,17 @@ class Validar_Tct(UpdateView):
 
 
 def integridad_TCT(request, pk):
-  nivel_minimo=0
-  nivel_maximo =100
-  volumen_minimo=0
-  volumen_maximo= 1000000
-  tct_valido=False
-  ruta_tct_valido='/home/morenomx/solucionesweb/sacvc/media/tct/tct_valido.json'
 
+  nivel_minimo=0.0
+  nivel_maximo =100.0
+  volumen_minimo=0.0
+  volumen_maximo= 1000000.0
+  tct_valido=False
 
 
   try:
       obj = Tk.objects.get(pk=pk)
       print(obj.fecha_subida_tct)
-
 
 
   except Tk.DoesNotExist:
@@ -210,8 +193,6 @@ def integridad_TCT(request, pk):
 
   DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
 
-
-
   json_temp = {}
   json_temp = []
 
@@ -220,10 +201,15 @@ def integridad_TCT(request, pk):
 
   for i in range(0, len(DataFrame)):
 
-    nivel=valida(DataFrame.iloc[i]['nivel'],nivel_minimo,nivel_maximo)
-    volumen=valida(DataFrame.iloc[i]['volumen'],volumen_minimo,volumen_maximo)
-    json_temp.append({ 'registro': i,'nivel':nivel, 'volumen':volumen})
     register_range.append(i)
+    nivel_format=format(DataFrame.iloc[i]['nivel']).replace(',','.')
+    volumen_format=format(DataFrame.iloc[i]['volumen']).replace(',','.')
+    print(nivel_format)
+    print(volumen_format)
+
+    nivel=valida(float(nivel_format),nivel_minimo,nivel_maximo)
+    volumen=valida(float(volumen_format),volumen_minimo,volumen_maximo)
+    json_temp.append({ 'registro': i,'nivel':nivel, 'volumen':volumen})
 
   setattr(obj,'tctvalido', True)
 
