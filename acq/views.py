@@ -230,7 +230,7 @@ def guardar_TCT_BD(request, pk):
             nivel=float(nivel_format)
             volumen=float(volumen_format)
             Tct.objects.create(id=None,  Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
-
+            sleep(1)
 
 
   except Tk.DoesNotExist:
