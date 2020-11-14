@@ -1,17 +1,17 @@
 
- {% extends 'acq/base.html' %}
-  {% block title %} 'TCT VALIDO '  {% endblock %}
+{% extends 'acq/base.html' %}
+ {% block title %} 'TCT VALIDO '  {% endblock %}
 
-    {% block content %}
-   <a href="{% url 'uacq:validar_tct' pk%}" type="button" class="btn btn-info"> Regresar</a>
-
-
+   {% block content %}
+  <a href="{% url 'uacq:validar_tct' pk%}" type="button" class="btn btn-info"> Regresar</a>
 
 
-       <table id="tct-valido">
 
-    <thead><H2>TABLA DE AFORO DE TANQUES VALIDA</H2> </thead>
-        <th>#</th> <th> NIVEL </th> <th>  VOLUMEN </th>
+
+      <table id="tct-valido">
+
+   <thead><H2>TABLA DE AFORO DE TANQUES VALIDA</H2> </thead>
+      <th> NIVEL (m)</th> <th>  VOLUMEN (Bls) </th>
 
 
 
@@ -19,23 +19,20 @@
 
 
 
-	<tr>
+<tr>
 
-		<td>
-			{{ x.registro}}
-		</td>
-		<td>
+  <td>
 
-			{{ x.nivel}}
-		</td>
+    {{ x.nivel}}
+  </td>
 
-		<td>
-			{{ x.volumen}}
-		</td>
+  <td>
+    {{ x.volumen}}
+  </td>
 
 
 
-	<tr>
+<tr>
 
 {% endfor %}
 
