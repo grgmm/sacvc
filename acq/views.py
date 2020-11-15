@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-import json, time
+import json
 from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque,Tct
 #from datetime import timedelta, datetime
@@ -230,7 +230,6 @@ def guardar_TCT_BD(request, pk):
             nivel=float(nivel_format)
             volumen=float(volumen_format)
             Tct.objects.create(id=None,  Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
-            time.sleep(1)
 
 
   except Tk.DoesNotExist:
