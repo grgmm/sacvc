@@ -64,9 +64,7 @@ class Command(BaseCommand):
             Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
 
             idtag = t.pk  #De las Base de datos de Tags
-            print(idtag)
-
-
+            tag_addres = int(t.direccion)
 
             Current_Value=[idtag,Pv0,Pv1]
             #print(Current_Value)
@@ -81,8 +79,8 @@ class Command(BaseCommand):
 
     #Escribir
            #se requiere en formato list para el message modbus.
-            print(Current_Value)
-            message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = 101, values = list(Current_Value))
+
+            message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
           #Se construye el msj de escritura un bloque de cantidad "numregistros" (esto para llenar los registros en el esclavo)
 
             escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj en esclavo en el sock
@@ -91,7 +89,7 @@ class Command(BaseCommand):
 
     #Leer
 
-            message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = 101, quantity= 3)
+            message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = tag_addres  , quantity= 3)
             #Se construye el msj de lectura desde el esclavo a partir de la dirección 101 (holding) para esta simulación
 
             leer = tcp.send_message(message2, sock) #Se envia comando de lectura con el msj en el esclavo en el sock
@@ -101,7 +99,7 @@ class Command(BaseCommand):
             timestamp=""
             pv=0
 
-            print(leer)
+
 
             with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para
              #escrtitura
@@ -125,7 +123,7 @@ class Command(BaseCommand):
               #print(Analogico_instance.Unidad)
 
 
-              json_temp= {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "UNIDAD":(Analogico_instance.Unidad),  "INDEXADO": 0}
+              json_temp= {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"DIRECCION":tag_instance.direccion,"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "UNIDAD":(Analogico_instance.Unidad),  "INDEXADO": 0}
 
 
               file.write(json.dumps(json_temp)) #Data en cache
@@ -138,7 +136,7 @@ class Command(BaseCommand):
 
 
 
-              time.sleep(1)# para debugger 90 ms
+              time.sleep(1)# para debugger
 
 
           i+=1

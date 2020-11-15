@@ -17,17 +17,19 @@
 
 <table id="valores-actuales">
 
-  <th>TAG </th> <th> INSTALACIÓN </th> <th>  TANQUE </th>  <th>  VALOR </th>  <th>  UNIDAD </th> <th>  TIMESTAMP </th>
+  <th>TAG </th> <th> INSTALACIÓN </th> <th>  TANQUE </th>  <th>  VALOR </th>  <th>  UNIDAD </th>  <th>  DIRECCION </th> <th>  TIMESTAMP </th>
 
 
 {% for tk in object_list %}
   <tr>
   	<div id='datos-actuales'>
+
 <td> {{ tk.current_data.TAG }}</td>
 <td> {{ tk.current_data.INSTALACION }}</td>
 <td> {{ tk.current_data.TANQUE }}</td>
 <td> {{ tk.current_data.PV_FLOAT }}</td>
 <td> {{ tk.current_data.UNIDAD}}</td>
+<td> {{ tk.current_data.DIRECCION }}</td>
 <td> {{ tk.current_data.TIMESTAMP }}</td>
 
 </div>

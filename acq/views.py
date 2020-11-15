@@ -38,7 +38,7 @@ from .validaciones import validar_parametro_tct as valida
 
 def actualizar(request):
 
-   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: #abre un archivo json
+   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
       dataf = json.loads(data_file.read())
       data_file.close()
 
@@ -193,19 +193,18 @@ def integridad_TCT(request, pk):
 
   DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
 
-  json_temp = {}
+
   json_temp = []
 
 
-  register_range=[]
+  #register_range=[]
 
   for i in range(0, len(DataFrame)):
 
-    register_range.append(i)
+    #register_range.append(i)
     nivel_format=format(DataFrame.iloc[i]['nivel']).replace(',','.')
     volumen_format=format(DataFrame.iloc[i]['volumen']).replace(',','.')
-    print(nivel_format)
-    print(volumen_format)
+
 
     nivel=valida(float(nivel_format),nivel_minimo,nivel_maximo)
     volumen=valida(float(volumen_format),volumen_minimo,volumen_maximo)
@@ -220,18 +219,20 @@ def integridad_TCT(request, pk):
 
 def guardar_TCT_BD(request, pk):
 
-
   try:
     #obj1 = Tct.objects.get(pk=pk)
     obj_tk =  Tk.objects.get(pk=pk)
-    Tct.objects.all().delete()
 
-    file=obj_tk.tct_archivo.path
-    DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
-    #nivel=DataFrame.iloc[3]['nivel']
-
-    for i in range(0, len(DataFrame)):
-     Tct.objects.create(id=None,  Lt0=DataFrame.iloc[i]['nivel'], Tov0=DataFrame.iloc[i]['volumen'], id_tk=obj_tk)
+    if obj_tk.tctvalido:
+        Tct.objects.all().delete()
+        file=obj_tk.tct_archivo.path
+        DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
+        for i in range(0, len(DataFrame)):
+            nivel_format=format(DataFrame.iloc[i]['nivel']).replace(',','.')
+            volumen_format=format(DataFrame.iloc[i]['volumen']).replace(',','.')
+            nivel=float(nivel_format)
+            volumen=float(volumen_format)
+            Tct.objects.create(id=None,  Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
 
 
 
