@@ -32,6 +32,7 @@ from django.core.validators import DecimalValidator, ValidationError
 from django.core.exceptions import ValidationError
 import pandas as pd
 from .validaciones import validar_parametro_tct as valida
+from .calculos import mv_tanques
 
 #from django.utils import timezone
 
@@ -115,9 +116,7 @@ class TkUpdate(UpdateView):
   model = Tk
   fields = ['Nombre', 'Descriptor',]
   template_name = 'acq/edit_tk/edit_tk.html'
-
   success_url = reverse_lazy('uacq:list_tf' )
-
 
 class Validar_Tct(UpdateView):
     model = Tk
@@ -241,3 +240,20 @@ def guardar_TCT_BD(request, pk):
     Tct().save
 
   return HttpResponse('Guardado exitoso en BD')
+
+
+
+def Calcular_TOV(request):
+
+   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
+      dataf = json.loads(data_file.read())
+
+      nivel_medido = dataf['PV_FLOAT']
+      tag=dataf['TAG']
+      idtk=dataf['IDTK']
+      data_file.close()
+      lolo=mv_tanques(nivel_medido, tag, idtk)
+     # print(nivel_medido)
+      #print(lolo)
+
+   return HttpResponse(lolo)

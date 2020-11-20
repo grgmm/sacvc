@@ -101,7 +101,7 @@ class Command(BaseCommand):
 
 
 
-            with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json para
+            with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json (cambiar por ruta simbólica)
              #escrtitura
 
 
@@ -123,7 +123,7 @@ class Command(BaseCommand):
               #print(Analogico_instance.Unidad)
 
 
-              json_temp= {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"DIRECCION":tag_instance.direccion,"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "UNIDAD":(Analogico_instance.Unidad),  "INDEXADO": 0}
+              json_temp= {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"DIRECCION":tag_instance.direccion,"IDTK":tk_instance.pk,"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "UNIDAD":(Analogico_instance.Unidad),  "INDEXADO": 0}
 
 
               file.write(json.dumps(json_temp)) #Data en cache

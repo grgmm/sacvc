@@ -20,45 +20,45 @@ class Command(BaseCommand):
       for t in q:
        print(t)
        print(q)
-       
+
 
       while i<=iterar:
-       with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: 
+       with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file:  #ojo mejorar
          json_data = json.loads(data_file.read())
-       
-         id_Tag_Filter=json_data['IDTAG'] 
+
+         id_Tag_Filter=json_data['IDTAG']
          Pv_Tag_Filter=json_data['PV0']
          Pv_Tag_Filter=json_data['PV1'] #Extraigo el pv del json de entrada
          Pv_Tag_Filter=json_data['PV_FLOAT']
-         
-       
+
+
        Bdcount= Analogico_Hs.objects.count()
-       
+
 
        if (Bdcount != 0): #BD NO ESTA VACIA
         if Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).exists(): #Si existe tags en bd con el id del json de entrada
          Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__TIMESTAMP') #se posiciona en el ultimo
-       
-         Tag_Validar=Tag_Bd.data 
+
+         Tag_Validar=Tag_Bd.data
          Pv_Tag_Validar=Tag_Validar['PV_FLOAT'] #Extraigo el pv del json de la Bd
-         
+
          #LOGS DE LA APP
 
          if (Pv_Tag_Validar!=Pv_Tag_Filter): #si los Pv son diferentes creo el de entrada
-           print('Grabando en BD id existente PV nuevo')    
+           print('Grabando en BD id existente PV nuevo')
            Analogico_Hs.objects.create(data = json_data)
          else:
            print('Sin Guardar: TAG Guardado en Bd recientemente')
 
         else: #BD con Data pero no contiene el id entrante
-          print('Grabando en BD no vacia: entrada no existente')     
+          print('Grabando en BD no vacia: entrada no existente')
           Analogico_Hs.objects.create(data = json_data)
-           
+
        else: #BD EN BLANCO (VACIA)
-          
-          print('Grabando en BD sin data previa')     
+
+          print('Grabando en BD sin data previa')
           Analogico_Hs.objects.create(data = json_data)
-          #data_file.close()      
-       
+          #data_file.close()
+
        time.sleep(2)   #para deugger 900 ms
        i+=1

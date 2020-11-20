@@ -66,12 +66,12 @@ class Tct(models.Model):
 
     id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)
 
-    Lt0 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de nivel
-    Lt1 = models.FloatField(default = 0.0, null =True) #magnitud de Fracciones de nivel
+    Lt0 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de Nivel
+    Lt1 = models.FloatField(default = 0.0, null =True) #magnitud de Fracciones de Nivel
 
-    Tov0 = models.FloatField(default = 0.0, null =True)
-    Tov1 = models.FloatField(default = 0.0, null =True)
-    Tov = models.FloatField(default = 0.0, null =True)
+    Tov0 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de Volumen
+    Tov1 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de Volumen
+    Tov = models.FloatField(default = 0.0, null =True)  #magnitud Unidades de Volumen
 
 
     def __str__(self):
