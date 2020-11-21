@@ -52,8 +52,6 @@ class Command(BaseCommand):
               print('NO HAY DATOS PARA ENCUESTAR SALIENDO DEL ADQUISIDOR')
               exit()
 
-          numregistros= numtags*3
-
           k=0
 
           tags_disponibles =Tag.objects.all().iterator()
@@ -67,33 +65,23 @@ class Command(BaseCommand):
             tag_addres = int(t.direccion)
 
             Current_Value=[idtag,Pv0,Pv1]
-            #print(Current_Value)
-            #Current_Value.append(Pv0)
-            #Current_Value.append(Pv1)
-
-            #print(Current_Value)
-
-
-            #se empaqueta en el arreglo Current_Value: id + Pv0 + PV1
 
 
     #Escribir
            #se requiere en formato list para el message modbus.
 
             message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
-          #Se construye el msj de escritura un bloque de cantidad "numregistros" (esto para llenar los registros en el esclavo)
+          #Se construye el msj de escritura
 
-            escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj en esclavo en el sock
-          # abierto.
+            escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj en esclavo en el socket abierto.
 
 
     #Leer
 
             message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = tag_addres  , quantity= 3)
-            #Se construye el msj de lectura desde el esclavo a partir de la dirección 101 (holding) para esta simulación
+            #Se construye el msj de lectura desde el esclavo a partir de la dirección del tag configurada en Bd
 
-            leer = tcp.send_message(message2, sock) #Se envia comando de lectura con el msj en el esclavo en el sock
-          # abierto.
+            leer = tcp.send_message(message2, sock) #Se envia comando de lectura con el msj en el esclavo en el socket abierto.
 
 
             timestamp=""
@@ -102,8 +90,6 @@ class Command(BaseCommand):
 
 
             with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json (cambiar por ruta simbólica)
-             #escrtitura
-
 
               timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
               R0=leer[1]
@@ -111,8 +97,7 @@ class Command(BaseCommand):
               float_value=FloatIeee754(R0,R1)
 
 
-                #consttruye un json de una linea por cada tag luego sera sobrescrito por el sigueinte tag hasta terminar el ciclo
-              #json_temp= {"idtag":leer[0], "Timestamp":timestamp, "Pv0":leer[1],"Pv1":leer[2], "Pv_Float":float_value, "indexado": 0}
+              #consttruye un json de una linea por cada tag luego sera sobrescrito.
 
               tag_instance = Tag.objects.get(pk=leer[0]) #idtag
 

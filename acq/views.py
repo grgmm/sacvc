@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.http import JsonResponse
-from .models import Tag, Tk, PatioTanque,Tct
+from .models import Tag, Tk, PatioTanque,Tct, Analogico, Digital
 #from datetime import timedelta, datetime
 from django.template.response import TemplateResponse
 
@@ -32,9 +32,9 @@ from django.core.validators import DecimalValidator, ValidationError
 from django.core.exceptions import ValidationError
 import pandas as pd
 from .validaciones import validar_parametro_tct as valida
-from .calculos import mv_tanques
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
-#from django.utils import timezone
 
 
 def actualizar(request):
@@ -99,6 +99,21 @@ class TkAdd(CreateView):
     fields = ['Nombre', 'Descriptor', 'id_patioTanque',]
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
+    @receiver(post_save, sender=Tk)
+    def create_Tk(sender, instance, created, **kwargs):
+        #print(sender)
+        #print(created)
+        if created:
+            qtk= Tk.objects.count()
+
+            print(qtk)
+
+            lt={'Nombre': instance.Nombre+'_lt',
+            'Descriptor':'NIVEL DEL TANQUE '+ instance.Nombre,
+            'Unidad': 'pie',
+            'direccion':(qtk-1)*10+1,}
+        Analogico.objects.create(Nombre=lt['Nombre'] , Descriptor=lt['Descriptor'], Unidad=lt['Unidad'], direccion=lt['direccion'],id_Tk=instance)
+
 
 class TkDelete(DeleteView):
     model = Tk
@@ -240,20 +255,3 @@ def guardar_TCT_BD(request, pk):
     Tct().save
 
   return HttpResponse('Guardado exitoso en BD')
-
-
-
-def Calcular_TOV(request):
-
-   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
-      dataf = json.loads(data_file.read())
-
-      nivel_medido = dataf['PV_FLOAT']
-      tag=dataf['TAG']
-      idtk=dataf['IDTK']
-      data_file.close()
-      lolo=mv_tanques(nivel_medido, tag, idtk)
-     # print(nivel_medido)
-      #print(lolo)
-
-   return HttpResponse(lolo)

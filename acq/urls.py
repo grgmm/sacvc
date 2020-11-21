@@ -70,6 +70,6 @@ urlpatterns = [
 
     url(r'^data_actual/$', current_data.as_view(), name='current_data'), #LISTADO DE PATIOS DE TANQUES
 
-    url('Calcular_TOV/',views.Calcular_TOV, name='Calcular_TOV'), #CONVIERTE EL JSON DEL PV EN UNA URL
+    
 
 ]

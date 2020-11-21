@@ -3,7 +3,7 @@
 # OBTENER TOV A TRAVES DEL NIVEL MEDIDO
 from .models import Tag, Tk, Tct
 
-def mv_tanques(nivel_medido, tag, idtk):
+def TOV(nivel_medido, tag, idtk):
     lt_tct=0
     lt_t0v=0
     tov=0
@@ -24,10 +24,5 @@ def mv_tanques(nivel_medido, tag, idtk):
         lt_tov=recorrido.Tov0
         if lt_tct==nivel_medido:
           tov=lt_tov
-
-
-
-
-
 
     return(tov)
