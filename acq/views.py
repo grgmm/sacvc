@@ -101,18 +101,36 @@ class TkAdd(CreateView):
     success_url = reverse_lazy('uacq:list_tf')
     @receiver(post_save, sender=Tk)
     def create_Tk(sender, instance, created, **kwargs):
-        #print(sender)
-        #print(created)
+
         if created:
             qtk= Tk.objects.count()
+            Analogico.objects.create(Nombre= instance.Nombre+'_lt' ,
+             Descriptor='NIVEL DEL TANQUE'+ instance.Nombre  ,
+             Unidad= 'pie',
+             direccion=(qtk-1)*10+1,
+             id_Tk=instance,)
 
-            print(qtk)
+            Analogico.objects.create(Nombre= instance.Nombre +'_pt',
+             Descriptor='PRESION DEL TANQUE'+ instance.Nombre,
+             Unidad = 'psi',
+             direccion=(qtk-1)*10+3,
+             id_Tk=instance,)
 
-            lt={'Nombre': instance.Nombre+'_lt',
-            'Descriptor':'NIVEL DEL TANQUE '+ instance.Nombre,
-            'Unidad': 'pie',
-            'direccion':(qtk-1)*10+1,}
-        Analogico.objects.create(Nombre=lt['Nombre'] , Descriptor=lt['Descriptor'], Unidad=lt['Unidad'], direccion=lt['direccion'],id_Tk=instance)
+            Analogico.objects.create(Nombre= instance.Nombre +'_tt',
+             Descriptor='TEMPERATURA DEL TANQUE'+ instance.Nombre,
+             Unidad= 'F',
+             direccion=(qtk-1)*10+5,
+             id_Tk=instance,)
+
+
+            Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
+             Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
+             Unidad= 'BLS',
+             direccion=(qtk-1)*10+7,
+             id_Tk=instance,
+             TipoVariable= 'C')
+
+
 
 
 class TkDelete(DeleteView):
