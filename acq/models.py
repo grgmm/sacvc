@@ -163,12 +163,32 @@ class Tag(models.Model): #Características comunes para Analógicos y Digitales
   ('B', 'Basica'),
   ('C', 'Calculada'),]
 
+  PARAMETRO_TK_CHOICES= [
+   ('lt', 'Nivel Medido'),
+   ('pt', 'Presión'),
+   ('tt', 'Temperatura'),
+   ('TOV', 'Volumen Total Observado '),
+   ('NA', 'No Asignado'),
+   ('GSV', 'Volumen Bruto Estandar'),
+   ('NSV', 'Volumen Neto Estandar'),
+   ('LTA', 'Nivel de Agua Libre'),]
+
   Nombre = models.CharField(max_length=42)
   Descriptor = models.CharField(max_length=120, default='')
   id_Tk= models.ForeignKey(Tk, on_delete=models.CASCADE)
   Habilitar= models.BooleanField(default = True)
-  TipoVariable = models.CharField(choices = TIPOVARIABLE_CHOICES,max_length=1, default = 'B')
+  TipoVariable = models.CharField(choices =  TIPOVARIABLE_CHOICES, max_length=1, default = 'B')
   direccion = models.CharField(max_length=5, default= '4:0')
+
+  etiqueta1 = models.CharField(choices = PARAMETRO_TK_CHOICES,max_length=4, default = 'NA')
+
+  etiqueta2 = models.CharField(max_length=32, null =True, default = '',verbose_name= _('Tag del instrumento en campo o P&ID'), )
+
+  etiqueta3 = models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
+  etiqueta4 = models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
+  etiqueta5=  models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
+  etiqueta6=  models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
+
 
   def __str__(self):
 

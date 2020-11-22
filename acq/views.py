@@ -108,19 +108,25 @@ class TkAdd(CreateView):
              Descriptor='NIVEL DEL TANQUE'+ instance.Nombre  ,
              Unidad= 'pie',
              direccion=(qtk-1)*10+1,
-             id_Tk=instance,)
+             id_Tk=instance,
+             TipoVariable= 'B',
+             etiqueta1='lt')
 
             Analogico.objects.create(Nombre= instance.Nombre +'_pt',
              Descriptor='PRESION DEL TANQUE'+ instance.Nombre,
              Unidad = 'psi',
              direccion=(qtk-1)*10+4,
-             id_Tk=instance,)
+             id_Tk=instance,
+             TipoVariable= 'B',
+             etiqueta1='pt')
 
             Analogico.objects.create(Nombre= instance.Nombre +'_tt',
              Descriptor='TEMPERATURA DEL TANQUE'+ instance.Nombre,
              Unidad= 'F',
              direccion=(qtk-1)*10+7,
-             id_Tk=instance,)
+             id_Tk=instance,
+             TipoVariable= 'B',
+             etiqueta1='tt')
 
 
             Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
@@ -128,10 +134,8 @@ class TkAdd(CreateView):
              Unidad= 'BLS',
              direccion=(qtk-1)*10+10,
              id_Tk=instance,
+             etiqueta1='TOV',
              TipoVariable= 'C')
-
-
-
 
 class TkDelete(DeleteView):
     model = Tk
@@ -264,8 +268,7 @@ def guardar_TCT_BD(request, pk):
             volumen_format=format(DataFrame.iloc[i]['volumen']).replace(',','.')
             nivel=float(nivel_format)
             volumen=float(volumen_format)
-            Tct.objects.create(id=None,  Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
-
+            Tct.objects.create(id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
 
 
   except Tk.DoesNotExist:

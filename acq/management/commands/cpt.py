@@ -1,35 +1,49 @@
-
+import json
 from django.core.management.base import BaseCommand
 from acq.models import Tk, Tag, Analogico
-from .calculos import TOV
+from acq.calculos import TOV
 from datetime import datetime
+import time
+
 
 
 class Command(BaseCommand):
     help = 'help'
-
-
-    def vol_tanques():
+    def handle(self, *args, **kwargs):
 
        timestamp=""
 
-       with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file_r: # OJO MEJORAR
-          data_fr = json.loads(data_file_r.read())
+       # CALCULAR TOV PARTINDO DEL NIVEL MEDIDO PROVENIENTE DEL MODULO DE ADQUISICION ACQ
+       json_tmp=""
+       i=0
+       n=2
+       iterando=0
+       while i<=n:
+               with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file_r: # OJO MEJORAR
+                  data_fr = json.loads(data_file_r.read())
 
-          timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+               if data_fr['PARAMETRO_TK']=='lt':
+                  print('paso')
+                  timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                  nivel_medido = data_fr['PV_FLOAT']
+                  tag_lt=data_fr['TAG']
+                  tk=data_fr['TANQUE']
+                  idtk=data_fr['IDTK']
+                  tov=TOV(nivel_medido, idtk)
+                  instance_tov = Tag.objects.get(id_Tk= idtk, etiqueta1='TOV')
+                  #print(instance_tov)
 
-          nivel_medido = dataf['PV_FLOAT']
-          tag=data_fr['TAG']
-          idtk=data_fr['IDTK']
-          data_fr.close()
-          tov=TOV(nivel_medido, tag, idtk)
+                  json_tmp= {"TANQUE":str(tk),
 
-          json_temp= {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"DIRECCION":tag_instance.direccion,"IDTK":tk_instance.pk,"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "UNIDAD":(Analogico_instance.Unidad),  "INDEXADO": 0}
+                  "LT_TAG":str(tag_lt),
+                  "LT_VALOR":str(nivel_medido),
+                  "TOV_TAG":str(instance_tov.Nombre),
+                  "TOV_DIR":str(instance_tov.direccion),
+                  "TOV_VALOR":str(tov),
+                  "TIMESTAMP":timestamp, "INDEXADO": 0,
+                  }
+                  print(json_tmp)
 
-        with open ('/home/morenomx/solucionesweb/sacvc/tov.json','w') as data_file_w:
-          data_file_w.write(json.dumps(json_temp))
-          data_file_w.close()
-
-
-
-       return(tov)
+               time.sleep(3)# para debugger
+               iterando+=1
+               print(iterando)
