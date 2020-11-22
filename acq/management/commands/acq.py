@@ -93,40 +93,53 @@ class Command(BaseCommand):
                 timestamp=""
                 pv=0
 
-
-
-
                 timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                 R0=leer[1]
                 R1=leer[2]
                 float_value=FloatIeee754(R0,R1)
 
 
+
               #consttruye un json de una linea por cada tag luego sera sobrescrito.
+                if float_value <= 19.9:
+                    tag_instance = Tag.objects.get(pk=leer[0]) #idtag
 
-                tag_instance = Tag.objects.get(pk=leer[0]) #idtag
+                    tk_instance = Tk.objects.get(pk= tag_instance.id_Tk.pk) #idtk
 
-                tk_instance = Tk.objects.get(pk= tag_instance.id_Tk.pk) #idtk
+                    Analogico_instance =  Analogico.objects.get(pk=tag_instance.pk)
 
-                Analogico_instance =  Analogico.objects.get(pk=tag_instance.pk)
-
-              #print(Analogico_instance.Unidad)
+                  #print(Analogico_instance.Unidad)
 
 
-                json_temp= {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"DIRECCION":tag_instance.direccion,"IDTK":tk_instance.pk,"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "UNIDAD":(Analogico_instance.Unidad),"PARAMETRO_TK":tag_instance.etiqueta1, "INDEXADO": 0}
-
-                with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json (cambiar por ruta simbólica)
-
-                  file.write(json.dumps(json_temp)) #Data en cache
-
-                tk_instance.current_data = json_temp #A Base de Datos
-
-                tk_instance.save()
-                print(tk_instance.current_data)
+                    json_temp = {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"DIRECCION":tag_instance.direccion,"IDTK":tk_instance.pk,"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "UNIDAD":(Analogico_instance.Unidad),"PARAMETRO_TK":tag_instance.etiqueta1, "INDEXADO": 0}
 
 
 
-                time.sleep(2)# para debugger
+                    Valor_Actual={'IDTAG':json_temp['IDTAG'],
+                    'TAG_VALUE':json_temp['PV_FLOAT'],
+                    'TIMESTAMP':json_temp['TIMESTAMP'],
+                    "INDEXADO": 0,
+                    'PARAMETRO_TK':json_temp['PARAMETRO_TK'],
+                    }
+
+
+                    print(Valor_Actual)
+
+                    with open ('/home/morenomx/solucionesweb/sacvc/valoresbasicos.json','w') as file1: #abre un archivo json (cambiar por ruta simbólica)
+
+                      file1.write(json.dumps(Valor_Actual)) #Data en cache
+
+
+                    with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file2: #abre un archivo json (cambiar por ruta simbólica)
+
+                      file2.write(json.dumps(json_temp)) #Data en cache
+
+                    tk_instance.current_data = json_temp #A Base de Datos
+
+                    tk_instance.save()
+                    #print(tk_instance.current_data)
+
+                    time.sleep(2)# para debugger
 
 
           i+=1
