@@ -37,14 +37,13 @@
   var cell8 = row.insertCell(7);
   var cell9 = row.insertCell(8);
 
-  var Pv_floatFormatted=data.PV_FLOAT.toFixed(2); //"12.13 CANTIDAD DE DECIMALES SEGUN LA NORMA PARA BARRILES DOS (2)
 
   cell1.innerHTML = data.TAG;
   cell2.innerHTML = data.TANQUE;
   cell3.innerHTML = data.INSTALACION;
   cell4.innerHTML = data.PV0;
   cell5.innerHTML = data.PV1;
-  cell6.innerHTML = Pv_floatFormatted;
+  cell6.innerHTML = data.PV_FLOAT;
   cell7.innerHTML = data.UNIDAD;
   cell8.innerHTML = data.DIRECCION;
   cell9.innerHTML = data.TIMESTAMP;

@@ -113,20 +113,20 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre +'_pt',
              Descriptor='PRESION DEL TANQUE'+ instance.Nombre,
              Unidad = 'psi',
-             direccion=(qtk-1)*10+3,
+             direccion=(qtk-1)*10+4,
              id_Tk=instance,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_tt',
              Descriptor='TEMPERATURA DEL TANQUE'+ instance.Nombre,
              Unidad= 'F',
-             direccion=(qtk-1)*10+5,
+             direccion=(qtk-1)*10+7,
              id_Tk=instance,)
 
 
             Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
              Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
              Unidad= 'BLS',
-             direccion=(qtk-1)*10+7,
+             direccion=(qtk-1)*10+10,
              id_Tk=instance,
              TipoVariable= 'C')
 

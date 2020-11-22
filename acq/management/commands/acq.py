@@ -21,8 +21,8 @@ class Command(BaseCommand):
           bit_number = '0'+ str(np.base_repr(registro1, base=2)) + '0' + str(np.base_repr(registro0, base=2))
           fdata = int(bit_number, 2)
           fvalue = struct.unpack('f', struct.pack('I', fdata))[0]
-
-          return(fvalue)
+          fvalue1= round(fvalue,3)
+          return(fvalue1)
 
         n=999 #100 iteraciones
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
@@ -57,71 +57,73 @@ class Command(BaseCommand):
           tags_disponibles =Tag.objects.all().iterator()
 
           for t in tags_disponibles:
+            if t.TipoVariable != 'C': #solo para variables no calculadas(básicas)
+                print(t.TipoVariable)
 
-            Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
-            Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
+                Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
+                Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
 
-            idtag = t.pk  #De las Base de datos de Tags
-            tag_addres = int(t.direccion)
+                idtag = t.pk  #De las Base de datos de Tags
+                tag_addres = int(t.direccion)
 
-            Current_Value=[idtag,Pv0,Pv1]
-
-
-    #Escribir
-           #se requiere en formato list para el message modbus.
-
-            message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
-          #Se construye el msj de escritura
-
-            escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj en esclavo en el socket abierto.
+                Current_Value=[idtag,Pv0,Pv1]
 
 
-    #Leer
+        #Escribir
+               #se requiere en formato list para el message modbus.
 
-            message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = tag_addres  , quantity= 3)
-            #Se construye el msj de lectura desde el esclavo a partir de la dirección del tag configurada en Bd
+                message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
+              #Se construye el msj de escritura
 
-            leer = tcp.send_message(message2, sock) #Se envia comando de lectura con el msj en el esclavo en el socket abierto.
-
-
-            timestamp=""
-            pv=0
+                escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj en esclavo en el socket abierto.
 
 
+        #Leer
 
-            with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json (cambiar por ruta simbólica)
+                message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = tag_addres  , quantity= 3)
+                #Se construye el msj de lectura desde el esclavo a partir de la dirección del tag configurada en Bd
 
-              timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-              R0=leer[1]
-              R1=leer[2]
-              float_value=FloatIeee754(R0,R1)
-
-
-              #consttruye un json de una linea por cada tag luego sera sobrescrito.
-
-              tag_instance = Tag.objects.get(pk=leer[0]) #idtag
-
-              tk_instance = Tk.objects.get(pk= tag_instance.id_Tk.pk) #idtk
-
-              Analogico_instance =  Analogico.objects.get(pk=tag_instance.pk)
-
-              #print(Analogico_instance.Unidad)
+                leer = tcp.send_message(message2, sock) #Se envia comando de lectura con el msj en el esclavo en el socket abierto.
 
 
-              json_temp= {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"DIRECCION":tag_instance.direccion,"IDTK":tk_instance.pk,"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "UNIDAD":(Analogico_instance.Unidad),  "INDEXADO": 0}
-
-
-              file.write(json.dumps(json_temp)) #Data en cache
-              file.close()
-
-              tk_instance.current_data = json_temp #A Base de Datos
-
-              tk_instance.save()
-              print(tk_instance.current_data)
+                timestamp=""
+                pv=0
 
 
 
-              time.sleep(1)# para debugger
+                with open ('/home/morenomx/solucionesweb/sacvc/datos.json','w') as file: #abre un archivo json (cambiar por ruta simbólica)
+
+                  timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                  R0=leer[1]
+                  R1=leer[2]
+                  float_value=FloatIeee754(R0,R1)
+
+
+                  #consttruye un json de una linea por cada tag luego sera sobrescrito.
+
+                  tag_instance = Tag.objects.get(pk=leer[0]) #idtag
+
+                  tk_instance = Tk.objects.get(pk= tag_instance.id_Tk.pk) #idtk
+
+                  Analogico_instance =  Analogico.objects.get(pk=tag_instance.pk)
+
+                  #print(Analogico_instance.Unidad)
+
+
+                  json_temp= {"IDTAG":str(tag_instance.pk),"TAG":str(tag_instance.Nombre),"DIRECCION":tag_instance.direccion,"IDTK":tk_instance.pk,"TANQUE":str(tk_instance.Nombre), "INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":float_value, "UNIDAD":(Analogico_instance.Unidad),  "INDEXADO": 0}
+
+
+                  file.write(json.dumps(json_temp)) #Data en cache
+                  file.close()
+
+                  tk_instance.current_data = json_temp #A Base de Datos
+
+                  tk_instance.save()
+                  print(tk_instance.current_data)
+
+
+
+                  time.sleep(1)# para debugger
 
 
           i+=1
