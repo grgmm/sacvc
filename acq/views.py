@@ -5,10 +5,6 @@ from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque,Tct, Analogico, Digital
 #from datetime import timedelta, datetime
 from django.template.response import TemplateResponse
-
-
-
-
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -36,14 +32,11 @@ from .validaciones import validar_parametro_tct as valida
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
-
-
 def actualizar(request):
 
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
       dataf = json.loads(data_file.read())
       data_file.close()
-
    return JsonResponse(dataf)
 
 class current_data(ListView):
@@ -100,9 +93,9 @@ class TkAdd(CreateView):
     fields = ['Nombre', 'Descriptor', 'id_patioTanque',]
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
-    @receiver(post_save, sender=Tk)
-    def create_Tk(sender, instance, created, **kwargs):
-
+    @receiver(post_save, sender=Tk)  #CREA LA SEÑAL DE GUARDADO
+    def create_Tk(sender, instance, created, **kwargs):#FUNCION QUE CAPTURA LA SEÑAL DE GUARDADO DE TK Y TRABAJA CON ESA INSTANCIA DE TK
+        #INICIALIZA EL TANQUE CON SUS PARAMETROS (PT,LT,TT, TOV) #FALTA INCLUIR ENTRE OTROS LTA, AYS.
         if created:
             qtk= Tk.objects.count()
             Analogico.objects.create(Nombre= instance.Nombre+'_lt' ,
@@ -135,15 +128,13 @@ class TkAdd(CreateView):
              Unidad= 'BLS',
              direccion=(qtk-1)*10+10,
              id_Tk=instance,
-             etiqueta1='TOV',
-             TipoVariable= 'C')
+             TipoVariable= 'C',
+             etiqueta1='TOV',)
 
 class TkDelete(DeleteView):
     model = Tk
     success_url = reverse_lazy('uacq:list_tf')
     template_name = 'acq/del_tk/del_tk.html'
-
-
 
 class TkDetail(DetailView):
     model = Tk
@@ -182,8 +173,6 @@ class Validar_Tct(UpdateView):
 
       obj.save()
 
-
-
       return super(Validar_Tct, self).get(request, **kwargs)
 
 
@@ -193,19 +182,9 @@ class Validar_Tct(UpdateView):
 
 
         request.POST = request.POST.copy()
-
-
-
         if request.POST.get("btn_guardar_tct_salir", ""):
-
-
-
           response= 'Editar Archivo Tct / Salir'
-
-
         return super(Validar_Tct, self).post(request, **kwargs)
-
-
 def integridad_TCT(request, pk):
 
   nivel_minimo=0.0
@@ -226,14 +205,8 @@ def integridad_TCT(request, pk):
 
   file=obj.tct_archivo.path
 
-
-
   DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
-
-
   json_temp = []
-
-
   #register_range=[]
 
   for i in range(0, len(DataFrame)):
@@ -241,7 +214,6 @@ def integridad_TCT(request, pk):
     #register_range.append(i)
     nivel_format=format(DataFrame.iloc[i]['nivel']).replace(',','.')
     volumen_format=format(DataFrame.iloc[i]['volumen']).replace(',','.')
-
 
     nivel=valida(float(nivel_format),nivel_minimo,nivel_maximo)
     volumen=valida(float(volumen_format),volumen_minimo,volumen_maximo)

@@ -7,24 +7,20 @@ import sys
 from umodbus import conf
 from umodbus.client import tcp
 from django.core.management.base import BaseCommand
-import struct
 import numpy as np
 from acq.models import Tk, Tag, Analogico
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 
 class Command(BaseCommand):
-        help = 'help'
-
-
-
+    help = 'help'
+    def handle(self, *args, **kwargs):
         n=999 #100 iteraciones
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
         slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix.
         slaveip= '192.168.43.143' #ip del esclavo para modbus TCP
         i=1
         timestamp=""
-
 
         numtags=Tag.objects.count()
         tags=Tag.objects.all()
@@ -39,7 +35,6 @@ class Command(BaseCommand):
                 print('NO HAY DATOS PARA ENCUESTAR SALIENDO DEL ADQUISIDOR ###################')
                 exit()
             #print(filtro_Tags_acq.exists())
-
 
         conf.SIGNED_VALUES = True # No estoy seguro de su utilidad me lo copié del ejemplo.
         print('\n' '\n'  "         SIMULADOR MODBUS DESARROLLADO POR: Ing Miguel Moreno")
@@ -93,7 +88,7 @@ class Command(BaseCommand):
 
 
           #consttruye un json de una linea por cada tag luego sera sobrescrito.
-            
+
             tag_instance = Tag.objects.get(pk=leer[0]) #idtag
 
             tk_instance = Tk.objects.get(pk= tag_instance.id_Tk.pk) #idtk
