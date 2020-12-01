@@ -19,10 +19,9 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, Http404
 from django.core.files.storage import FileSystemStorage
-
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,  get_object_or_404
-
 
 import csv
 from django.core.validators import DecimalValidator, ValidationError
@@ -50,31 +49,26 @@ class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE A
     model = PatioTanque
     template_name = 'acq/list_tf/list_tf.html'
 
-
 class PatiotanqueAdd(CreateView):
     model = PatioTanque
     fields = ['Nombre', 'Descriptor',]
     template_name = 'acq/add_tf/add_tf.html'
     success_url = reverse_lazy('uacq:list_tf')
 
-
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
     success_url = reverse_lazy('uacq:list_tf')
     template_name = 'acq/del_tf/del_tf.html'
 
-
 class PatiotanqueDetail(DetailView):
     model = PatioTanque
     template_name = 'acq/detail_tf/detail_tf.html'
-
 
 class PatiotanqueUpdate(UpdateView):
   model = PatioTanque
   fields = ['Nombre', 'Descriptor']
   template_name = 'acq/edit_tf/edit_tf.html'
   success_url = reverse_lazy('uacq:list_tf' )
-
 
 class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
@@ -122,7 +116,6 @@ class TkAdd(CreateView):
              TipoVariable= 'B',
              etiqueta1='tt')
 
-
             Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
              Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
              Unidad= 'BLS',
@@ -157,7 +150,6 @@ class Validar_Tct(UpdateView):
       obj = self.get_object()
       fs = FileSystemStorage()
 
-
       if not (bool(obj.tct_archivo)):
         print('no hay archivo tct en en model Tk actual')
         setattr(obj,'tctvalido', False)
@@ -170,7 +162,6 @@ class Validar_Tct(UpdateView):
 
         setattr(obj,'fecha_subida_tct',TimestampTCT)
 
-
       obj.save()
 
       return super(Validar_Tct, self).get(request, **kwargs)
@@ -180,11 +171,11 @@ class Validar_Tct(UpdateView):
 
         self.obj = self.get_object()
 
-
         request.POST = request.POST.copy()
         if request.POST.get("btn_guardar_tct_salir", ""):
           response= 'Editar Archivo Tct / Salir'
         return super(Validar_Tct, self).post(request, **kwargs)
+
 def integridad_TCT(request, pk):
 
   nivel_minimo=0.0
@@ -193,15 +184,12 @@ def integridad_TCT(request, pk):
   volumen_maximo= 1000000.0
   tct_valido=False
 
-
   try:
       obj = Tk.objects.get(pk=pk)
       print(obj.fecha_subida_tct)
 
-
   except Tk.DoesNotExist:
     raise Http404("Tk no existe")
-
 
   file=obj.tct_archivo.path
 
@@ -243,9 +231,23 @@ def guardar_TCT_BD(request, pk):
             volumen=float(volumen_format)
             Tct.objects.create(id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
 
-
   except Tk.DoesNotExist:
     raise Http404("Tk no existe")
     Tct().save
 
   return HttpResponse('Guardado exitoso en BD')
+
+def Valores_Actuales(request):
+
+       # do something with the your data
+       fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+       ruta_Data=fs.location   #RUTA DE BUFFER
+
+       data_fr = {}
+       with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode = 'r') as data_file_r:
+           data_fr = json.loads(data_file_r.read())
+
+       # just return a JsonResponse
+      # return JsonResponse(data_fr)
+
+       return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data_fr})

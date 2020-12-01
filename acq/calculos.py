@@ -5,8 +5,6 @@ from .models import Tag, Tk, Tct
 import numpy as np
 import struct
 
-
-
 def FloatIeee754(registro0=16384,registro1=16500):
         packed_string = struct.pack("ii", registro0,registro1)
         bit_number = '0'+ str(np.base_repr(registro1, base=2)) + '0' + str(np.base_repr(registro0, base=2))
