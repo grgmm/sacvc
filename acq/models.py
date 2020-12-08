@@ -171,7 +171,7 @@ class Tag(models.Model): #Características comunes para Analógicos y Digitales
    ('NA', 'No Asignado'),
    ('GSV', 'Volumen Bruto Estandar'),
    ('NSV', 'Volumen Neto Estandar'),
-   ('LTA', 'Nivel de Agua Libre'),]
+   ('lta', 'Nivel de Agua Libre'),]
 
   Nombre = models.CharField(max_length=42)
   Descriptor = models.CharField(max_length=120, default='')

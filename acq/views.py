@@ -95,32 +95,46 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre+'_lt' ,
              Descriptor='NIVEL DEL TANQUE'+ instance.Nombre  ,
              Unidad= 'pie',
-             direccion=(qtk-1)*10+1,
+             direccion=(qtk-1)*16+1,
              id_Tk=instance,
              TipoVariable= 'B',
+             direccion_campo= 100+((qtk-1)*16+1),
              etiqueta1='lt')
 
             Analogico.objects.create(Nombre= instance.Nombre +'_pt',
              Descriptor='PRESION DEL TANQUE'+ instance.Nombre,
              Unidad = 'psi',
-             direccion=(qtk-1)*10+4,
+             direccion=(qtk-1)*16+4,
              id_Tk=instance,
+             direccion_campo= 100+(qtk-1)*16+4,
              TipoVariable= 'B',
              etiqueta1='pt')
 
             Analogico.objects.create(Nombre= instance.Nombre +'_tt',
              Descriptor='TEMPERATURA DEL TANQUE'+ instance.Nombre,
              Unidad= 'F',
-             direccion=(qtk-1)*10+7,
+             direccion=(qtk-1)*16+7,
              id_Tk=instance,
+             direccion_campo= 100+(qtk-1)*16+7,
              TipoVariable= 'B',
              etiqueta1='tt')
+
+
+            Analogico.objects.create(Nombre= instance.Nombre +'_lta',
+             Descriptor='NIVEL DE AGUA LIBRE '+ instance.Nombre,
+             Unidad= 'pie',
+             direccion=(qtk-1)*16+10,
+             id_Tk=instance,
+             direccion_campo= 100+(qtk-1)*16+10,
+             TipoVariable= 'B',
+             etiqueta1='lta',)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
              Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
              Unidad= 'BLS',
-             direccion=(qtk-1)*10+10,
+             direccion=(qtk-1)*16+13,
              id_Tk=instance,
+             direccion_campo= 100+(qtk-1)*16+13,
              TipoVariable= 'C',
              etiqueta1='TOV',)
 
@@ -246,8 +260,28 @@ def Valores_Actuales(request):
        data_fr = {}
        with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode = 'r') as data_file_r:
            data_fr = json.loads(data_file_r.read())
+       #print(data_fr)
+           #INSTANCIANDO tk,tag
+
+       TAG=Tag.objects.get(pk=data_fr['IDTAG'])
+       #print(TAG)
+       idtk=TAG.id_Tk.pk
+
+       TK=Tk.objects.get(pk=idtk)
+
+       TAG_VALUE=data_fr['TAG_VALUE']
+       TIMESTAMP=data_fr['TTIMESTAMP']
+
+       data={'TK':'TANQUE1',
+       'LT':'1000',
+       'PT':'3000',
+       'TT':'5000',
+       'TOV':'2000',
+        }
+       #data={'TK':TK.Nombre,'TAG':TAG.Nombre, 'TAG_VALUE':str(TAG_VALUE), 'TIMESTAMP':TIMESTAMP}
+           #print(data_fr)
+       #print(data)
 
        # just return a JsonResponse
       # return JsonResponse(data_fr)
-
-       return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data_fr})
+       return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data})
