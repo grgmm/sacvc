@@ -83,7 +83,7 @@ class Command(BaseCommand):
                     "REGISTRO_2_" +Prmtr_tk:str(leer[2]),
                     "TIMESTAMP_" +Prmtr_tk: timestamp  }
 
-                    TKS=prmtr_temp
+                    TKS=prmtr_temp #ojo
 
 
                 #tk = {"IDTK":tk_instance.pk,IDTAG":str(tag_instance.pk),"INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":0.000, "UNIDAD":(Analogico_instance.Unidad),"PARAMETRO_TK":tag_instance.etiqueta1, "INDEXADO": 0}
@@ -100,16 +100,11 @@ class Command(BaseCommand):
                         file2.write(json.dumps(TKS)) #Data en cache
 
                     print(TKS)
+
+
                     tk.current_data = TKS #A Base de Datos
 
                     tk.save()
-
                     time.sleep(1)# para debugger
-
-
-            #print(tk_instance.current_data)
-
-
-          #print(i)
 
         sock.close() #cierra la conexión
