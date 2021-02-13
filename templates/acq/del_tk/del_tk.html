@@ -1,0 +1,14 @@
+{% extends 'acq/base.html' %}
+{% block title %}{% endblock %}
+{% block footer %} <a href="{{ view.get_success_url }}" type="button" class="btn btn-info"> No, Regresar</a>
+{% endblock %}
+
+{% block content %}
+<h1>Borrar Tanque?</h1>
+<form  method="post">
+{% csrf_token %}
+Esta segur@ de eliminar este tanque
+<input  type="submit"  value="Si, Borrar"  />
+</form>
+
+{% endblock %}

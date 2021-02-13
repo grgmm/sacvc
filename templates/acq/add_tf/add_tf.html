@@ -1,0 +1,15 @@
+{% extends "acq/base.html" %}
+{% block title %} Agregar Instalación {% endblock %}
+
+
+{% block content %}
+<h2>Agregar de Instalación</h2>
+
+
+
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Guardar Instalación">
+</form>
+
+{% endblock %}
