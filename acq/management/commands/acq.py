@@ -11,6 +11,7 @@ import numpy as np
 from acq.models import Tk, Tag, Analogico
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+#from scapy.all import *
 
 class Command(BaseCommand):
     help = 'help'
@@ -42,7 +43,6 @@ class Command(BaseCommand):
         k=0
         TKS={}
         Parametro_tk= ''
-
 
         while i<=n:
             if not Tk.objects.exists():

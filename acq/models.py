@@ -4,8 +4,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 import time
-from django.contrib.postgres.fields import JSONField
-import json
+#from django.contrib.postgres.fields import JSONField
+#import json
 from datetime import datetime
 from datetime import timedelta
 from django.core.validators import FileExtensionValidator, DecimalValidator, MaxValueValidator, MinValueValidator
@@ -43,7 +43,7 @@ class Tk(models.Model):
     Descriptor_tct = models.CharField(max_length=120,default="",null=True, blank=True,)
     fecha_subida_tct = models.DateTimeField(null=True, blank = True, verbose_name= _('Subido El:'), )
     tctvalido= models.BooleanField(default=False, editable = False)
-    current_data = JSONField(null=True)
+    current_data = models.JSONField(null=True)
 
     TIPOTanque_CHOICES = [
     ('CV', 'Cilindrico Vertical'),
@@ -250,7 +250,7 @@ class Analogico(Tag):
 
 class Analogico_Hs(models.Model): #Poblado automatico al lvantar modulo hs.py
 
-  data = JSONField(null=True, blank=True,)
+  data = models.JSONField(null=True, blank=True,)
 
 
 
@@ -269,7 +269,7 @@ class Analogico_Hs(models.Model): #Poblado automatico al lvantar modulo hs.py
 
 class Analogico_Hs0(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
 
   def __str__(self):
@@ -278,7 +278,7 @@ class Analogico_Hs0(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs1(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 
@@ -286,7 +286,7 @@ class Analogico_Hs1(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs2(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 
@@ -294,7 +294,7 @@ class Analogico_Hs2(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs3(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 
@@ -302,7 +302,7 @@ class Analogico_Hs3(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs4(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 
@@ -310,7 +310,7 @@ class Analogico_Hs4(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs5(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 
