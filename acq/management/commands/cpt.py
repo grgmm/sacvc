@@ -24,7 +24,9 @@ class Command(BaseCommand):
        idtag_lt=0
        timestamp_lt=''
        tov=0.00
-
+       Data_Basica_lt={}
+       Data_Calculada_tov={}
+       instance_tov={}
        while i<=n:
 
 
@@ -36,64 +38,72 @@ class Command(BaseCommand):
 #INSTANCIAR EL NIVEL MEDIDO
                idtag_DC=Tag.objects.get(pk=data_fr['IDTAG']) #id tag data cruda
                Analogico_DC =  Analogico.objects.get(pk=idtag_DC) #INSTANCIANDO LOS RANGOS DEL TAG
+
               # for i in numpy.arange(0, 5.5, 0.5):
                 #   print(i)
                rango_valido_DC=numpy.arange(Analogico_DC.ValorMinimo, Analogico_DC.ValorMaximo, 0.001)
+               #print(rango_valido_DC)
                #rango_valido_DC=range( Analogico_DC.ValorMinimo,  Analogico_DC.ValorMaximo) #INSTANCIANDO LOS RANGOS DEL TAG
 
                REG_1=data_fr['REGISTRO_1']
                REG_2=data_fr['REGISTRO_2']
                timestamp_DC=data_fr['TIMESTAMP']
 
-#NIVEL MEDIDO CONVIRTIENDO EN DATA TIPO REAL LOS REGISTROS MODBUS PROVENIENTE DEL BUFFER DATA CRUDA
+
+               #NIVEL MEDIDO CONVIRTIENDO EN DATA TIPO REAL LOS REGISTROS MODBUS PROVENIENTE DEL BUFFER DATA CRUDA
 
                if idtag_DC.etiqueta1=='lt':
                   idtag_lt=idtag_DC
                   timestamp_lt=timestamp_DC
                   nivel_medido=FloatIeee754(int(REG_1),int(REG_2))
-                  #print(nivel_medido)
+
+                  #INSTANCIANDO EL TANQUE
+                  idtk=idtag_DC.id_Tk
+
+                  if nivel_medido in rango_valido_DC:
+                      print('Calculando TOV........')
+                      tov=TOV(nivel_medido, idtk)
+                      print(nivel_medido)
+                      print(tov)
+
+
+                      #INSTANCIANDO EL TAG TOV
+                      instance_tov = Tag.objects.get(id_Tk= idtk, etiqueta1='TOV')
+                      timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+
+                      #GENERANDO BUEFFERS DE DATOS BASICOS Y DATOS CALCULADOS DE TK
+
+
+                  else:
+                      print('VARIABLE BASICA FUERA DE RANGOS........')
+
+
+               Data_Basica_lt={"IDTAG":str(idtag_lt),
+                          "TAG_VALUE":str(nivel_medido),
+                          "TIMESTAMP":timestamp_lt,
+                          "INDEXADO": 0,
+                             }
+
+
+               Data_Calculada_tov  = {"IDTAG":str(instance_tov.pk),
+                        "TAG_VALUE":str(tov),
+                        "TIMESTAMP":timestamp_tov,
+                        "INDEXADO": 0,
+
+                        }
 
 
 
-#INSTANCIANDO EL TANQUE
-               idtk=idtag_lt.id_Tk
-#CACULO DE TOV PARTIENDO DEL NIVEL MEDIDO
-               if nivel_medido in rango_valido_DC:
-                  print('Calculando TOV........')
-                  tov=TOV(nivel_medido, idtk)
-                  print(nivel_medido)
-                  print(tov)
-               else:
-                 # print('VARIABLE BASICA FUERA DE RANGOS........')
 
+             #print(Data_Basica_lt)
+             #print(Data_Calculada_tov)
 
-#INSTANCIANDO EL TAG TOV
-                  instance_tov = Tag.objects.get(id_Tk= idtk, etiqueta1='TOV')
-                  timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+               with fs.open(ruta_Data+'/Buffer_Datos_Basicos.json', mode= 'w') as file1:
 
-#GENERANDO BUEFFERS DE DATOS BASICOS Y DATS CALCULADOS DE TK
+                      file1.write(json.dumps(Data_Basica_lt))
 
-                  Data_Basica_lt={"IDTAG":str(idtag_lt),
-                  "TAG_VALUE":str(nivel_medido),
-                  "TIMESTAMP":timestamp_lt,
-                  "INDEXADO": 0,
-                     }
+               with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
 
-                  Data_Calculada_tov  = {"IDTAG":str(instance_tov.pk),
-                  "TAG_VALUE":str(tov),
-                  "TIMESTAMP":timestamp_tov,
-                  "INDEXADO": 0,
+                      file2.write(json.dumps(Data_Calculada_tov))
 
-                  }
-                  #print(Data_Basica_lt)
-                  #print(Data_Calculada_tov)
-
-                  with fs.open(ruta_Data+'/Buffer_Datos_Basicos.json', mode= 'w') as file1:
-
-                    file1.write(json.dumps(Data_Basica_lt))
-
-                  with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
-
-                    file2.write(json.dumps(Data_Calculada_tov))
-
-               time.sleep(2)# para debugger
+               time.sleep(1)

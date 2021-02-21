@@ -4,6 +4,10 @@ import sys
 from django.core.management.base import BaseCommand
 from acq.models import Analogico_Hs
 import time
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+
+
 
 
 
@@ -17,13 +21,21 @@ class Command(BaseCommand):
       lolo=0
       Tag_Bd=[]
       q = Analogico_Hs.objects.all().iterator()
+      fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+      ruta_Data=fs.location   #RUTA DEL BUFFER
+
       for t in q:
        print(t)
        print(q)
 
 
       while i<=iterar:
-       with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file:  #ojo mejorar
+       #with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file:  #ojo mejorar
+        #with fs.open(ruta_Data+'/Buffer_Data_Cruda.json'
+
+
+       with fs.open(ruta_Data+'/Buffer_Datos_Basicos.json', mode= 'r') as data_file:
+
          json_data = json.loads(data_file.read())
 
          id_Tag_Filter=json_data['IDTAG']

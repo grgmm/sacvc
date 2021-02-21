@@ -25,7 +25,7 @@ class Command(BaseCommand):
         #Mensajes de encabezado en consola Python informativo.
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
         slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix.
-        slaveip= '192.168.43.143' #ip del esclavo para modbus TCP
+        slaveip= '192.168.1.34' #ip del esclavo para modbus TCP
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
         sock.connect((slaveip, slaveport)) #realiza la conexión
