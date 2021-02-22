@@ -248,7 +248,7 @@ class Analogico(Tag):
 #HISTORICOS Hs=todos, Hs0= tablas de segundos, Hs1= tablas de minutos, Hs2= tablas de horas, Hs3= tablas de dias,
 #Hs4= tablas de meses, Hs5= tablas de años.
 
-class Analogico_Hs(models.Model): #Poblado automatico al lvantar modulo hs.py
+class Analogico_Hs(models.Model): #Poblado automatico al levantar modulo hs.py
 
   data = models.JSONField(null=True, blank=True,)
 

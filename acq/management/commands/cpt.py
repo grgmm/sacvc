@@ -71,6 +71,19 @@ class Command(BaseCommand):
                       instance_tov = Tag.objects.get(id_Tk= idtk, etiqueta1='TOV')
                       timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
 
+                      Data_Calculada_tov  = {"IDTAG":str(instance_tov.pk),
+                               "TAG_VALUE":str(tov),
+                               "TIMESTAMP":timestamp_tov,
+                               "INDEXADO": 0,
+
+                               }
+                      with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
+
+                               file2.write(json.dumps(Data_Calculada_tov))
+
+
+
+
                       #GENERANDO BUEFFERS DE DATOS BASICOS Y DATOS CALCULADOS DE TK
 
 
@@ -85,13 +98,6 @@ class Command(BaseCommand):
                              }
 
 
-               Data_Calculada_tov  = {"IDTAG":str(instance_tov.pk),
-                        "TAG_VALUE":str(tov),
-                        "TIMESTAMP":timestamp_tov,
-                        "INDEXADO": 0,
-
-                        }
-
 
 
 
@@ -102,8 +108,5 @@ class Command(BaseCommand):
 
                       file1.write(json.dumps(Data_Basica_lt))
 
-               with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
-
-                      file2.write(json.dumps(Data_Calculada_tov))
 
                time.sleep(1)

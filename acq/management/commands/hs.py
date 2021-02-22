@@ -39,9 +39,8 @@ class Command(BaseCommand):
          json_data = json.loads(data_file.read())
 
          id_Tag_Filter=json_data['IDTAG']
-         Pv_Tag_Filter=json_data['PV0']
-         Pv_Tag_Filter=json_data['PV1'] #Extraigo el pv del json de entrada
-         Pv_Tag_Filter=json_data['PV_FLOAT']
+
+         Pv_Tag_Filter=json_data['TAG_VALUE']
 
 
        Bdcount= Analogico_Hs.objects.count()
@@ -52,7 +51,7 @@ class Command(BaseCommand):
          Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__TIMESTAMP') #se posiciona en el ultimo
 
          Tag_Validar=Tag_Bd.data
-         Pv_Tag_Validar=Tag_Validar['PV_FLOAT'] #Extraigo el pv del json de la Bd
+         Pv_Tag_Validar=Tag_Validar['TAG_VALUE'] #Extraigo el pv del json de la Bd
 
          #LOGS DE LA APP
 
@@ -72,5 +71,5 @@ class Command(BaseCommand):
           Analogico_Hs.objects.create(data = json_data)
           #data_file.close()
 
-       time.sleep(2)   #para deugger 900 ms
+       time.sleep(3)   #para deugger 900 ms
        i+=1
