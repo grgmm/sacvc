@@ -8,9 +8,6 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 
 
-
-
-
 class Command(BaseCommand):
     help = 'help'
 
@@ -28,11 +25,9 @@ class Command(BaseCommand):
        print(t)
        print(q)
 
-
       while i<=iterar:
        #with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file:  #ojo mejorar
         #with fs.open(ruta_Data+'/Buffer_Data_Cruda.json'
-
 
        with fs.open(ruta_Data+'/Buffer_Datos_Basicos.json', mode= 'r') as data_file:
 
