@@ -35,7 +35,7 @@ class Command(BaseCommand):
 
                 if (delt < delta_t):
 
-                    time.sleep(1)
+                    time.sleep(2)
                     bd_destino.objects.create(data = recorrido.data)
 
 
@@ -53,7 +53,7 @@ class Command(BaseCommand):
           q = bd_origen.iterator()
 
           for recorrido in q:
-            objetoindexado=first_obj.data['INDEXADO'] #Exraigo el estado de la bander "indexado"
+            objetoindexado=first_obj.data['INDEXADO'] #Extraigo el estado de la bander "indexado"
 
 
             if objetoindexado==0: #solo si no ha sido indexado/copiado

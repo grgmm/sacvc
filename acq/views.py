@@ -270,7 +270,7 @@ def Valores_Actuales(request):
        TK=Tk.objects.get(pk=idtk)
 
        TAG_VALUE=data_fr['TAG_VALUE']
-       TIMESTAMP=data_fr['TTIMESTAMP']
+       TIMESTAMP=data_fr['TIMESTAMP']
 
        data={'TK':'TANQUE1',
        'LT':'1000',
