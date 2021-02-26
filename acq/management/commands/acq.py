@@ -50,6 +50,7 @@ class Command(BaseCommand):
                 exit() #SALIR DEL PROGRAMA SI NO HAY TANQUES QUE ENCUESTAR
             else:
               for tk in Tk.objects.iterator(): #ITERNDO EN TANQUES EXISTENTES.
+                Data_Cruda={'Data_Cruda':[] }
                 for tag in Tag.objects.filter(id_Tk=tk.pk).iterator():#RECORRIENDO LOS TAGS DE CADA TANQUE
                     Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
                     Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
@@ -68,11 +69,16 @@ class Command(BaseCommand):
                     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                     tag_instance =  Tag.objects.get(pk=leer[0]) #id extraido del paquete transferido
 
-                    Data_Cruda={'IDTAG':leer[0],
+
+                    Data_Cruda_Temp={'IDTAG':leer[0],
                     'REGISTRO_1':leer[1],
                     'REGISTRO_2':leer[2],
                     'TIMESTAMP': timestamp
                     }
+
+                    Data_Cruda['Data_Cruda'].append(Data_Cruda_Temp)
+                    print(Data_Cruda)
+                    #datacruda=json.dumps(Data_Cruda)
 
                     tag_leido=Tag.objects.get(pk=leer[0])
                     Prmtr_tk=tag_leido.etiqueta1
@@ -90,21 +96,21 @@ class Command(BaseCommand):
 
                 #print(Datos_Actuales) PARA DEBUGGER
 
-                    with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'w') as file1:
+                with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'w') as file1:
             #with open ('/home/morenomx/solucionesweb/sacvc/valoresbasicos.json','w') as file1: #abre un archivo json (cambiar por ruta simbólica)
 
                         file1.write(json.dumps(Data_Cruda)) #Data en cache
 
-                    with fs.open(ruta_Data+'/Valores_Tk.json', mode= 'w') as file2:
+                with fs.open(ruta_Data+'/Valores_Tk.json', mode= 'w') as file2:
 
-                        file2.write(json.dumps(TKS)) #Data en cache
+                        file2.write(json.dumps(Data_Cruda)) #Data en cache
 
-                    print(TKS)
+                        print(TKS)
 
 
-                    tk.current_data = TKS #A Base de Datos
+                        tk.current_data = Data_Cruda #A Base de Datos
 
-                    tk.save()
-                    time.sleep(1)# para debugger
+                        tk.save()
+                time.sleep(1)# para debugger
 
         sock.close() #cierra la conexión

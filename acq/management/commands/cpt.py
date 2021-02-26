@@ -35,36 +35,46 @@ class Command(BaseCommand):
                with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode = 'r') as data_file_r:
                   data_fr = json.loads(data_file_r.read())
 
-#INSTANCIAR EL NIVEL MEDIDO
+#INSTANCIAR EL TAG CALCULANDO SU VALOR REAL IEEE754 SOLO SI ES ANALOGICO
                idtag_DC=Tag.objects.get(pk=data_fr['IDTAG']) #id tag data cruda
-               Analogico_DC =  Analogico.objects.get(pk=idtag_DC) #INSTANCIANDO LOS RANGOS DEL TAG
+               if Analogico.objects.filter(data__idtag=idtag_DC).exists():
+
+                   Analogico_DC =  Analogico.objects.get(pk=idtag_DC) #INSTANCIANDO LOS RANGOS DEL TAG
 
               # for i in numpy.arange(0, 5.5, 0.5):
                 #   print(i)
-               rango_valido_DC=numpy.arange(Analogico_DC.ValorMinimo, Analogico_DC.ValorMaximo, 0.001)
+                   rango_valido_DC=numpy.arange(Analogico_DC.ValorMinimo, Analogico_DC.ValorMaximo, 0.001)
                #print(rango_valido_DC)
                #rango_valido_DC=range( Analogico_DC.ValorMinimo,  Analogico_DC.ValorMaximo) #INSTANCIANDO LOS RANGOS DEL TAG
 
-               REG_1=data_fr['REGISTRO_1']
-               REG_2=data_fr['REGISTRO_2']
-               timestamp_DC=data_fr['TIMESTAMP']
+                   vb_REG_1=data_fr['REGISTRO_1']
+                   vb_REG_2=data_fr['REGISTRO_2']
+                   vb_timestamp_DC=data_fr['TIMESTAMP']
+                   vb_PV= nivel_medido=FloatIeee754(int(vb_REG_1),int(vb_REG_2))
 
 
                #NIVEL MEDIDO CONVIRTIENDO EN DATA TIPO REAL LOS REGISTROS MODBUS PROVENIENTE DEL BUFFER DATA CRUDA
+                    switch (idtag_DC.etiqueta1) {
 
-               if idtag_DC.etiqueta1=='lt':
-                  idtag_lt=idtag_DC
-                  timestamp_lt=timestamp_DC
-                  nivel_medido=FloatIeee754(int(REG_1),int(REG_2))
+                    case 'lt': idtag_lt=idtag_DC;
+                               nivel_medido=vb_PV;
+                               break;
 
-                  #INSTANCIANDO EL TANQUE
-                  idtk=idtag_DC.id_Tk
+                    }
+                   if idtag_DC.etiqueta1=='lt':
+                      idtag_lt=idtag_DC
 
-                  if nivel_medido in rango_valido_DC:
-                      print('Calculando TOV........')
-                      tov=TOV(nivel_medido, idtk)
-                      print(nivel_medido)
-                      print(tov)
+                      timestamp_lt=timestamp_DC
+                      nivel_medido=FloatIeee754(int(REG_1),int(REG_2))
+
+                      #INSTANCIANDO EL TANQUE
+                      idtk=idtag_DC.id_Tk
+
+                      if nivel_medido in rango_valido_DC:
+                          print('Calculando TOV........')
+                          tov=TOV(nivel_medido, idtk)
+                          print(nivel_medido)
+                          print(tov)
 
 
                       #INSTANCIANDO EL TAG TOV

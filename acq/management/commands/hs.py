@@ -29,13 +29,15 @@ class Command(BaseCommand):
        #with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file:  #ojo mejorar
         #with fs.open(ruta_Data+'/Buffer_Data_Cruda.json'
 
-       with fs.open(ruta_Data+'/Buffer_Datos_Basicos.json', mode= 'r') as data_file:
+       with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'r') as data_file:
 
          json_data = json.loads(data_file.read())
 
          id_Tag_Filter=json_data['IDTAG']
 
-         Pv_Tag_Filter=json_data['TAG_VALUE']
+         Tag_R1=json_data['REGISTRO_1']
+
+         Tag_R2=json_data['REGISTRO_2']
 
 
        Bdcount= Analogico_Hs.objects.count()
@@ -43,28 +45,30 @@ class Command(BaseCommand):
 
        if (Bdcount != 0): #BD NO ESTA VACIA
         if Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).exists(): #Si existe tags en bd con el id del json de entrada
-         Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__TIMESTAMP') #se posiciona en el ultimo
+         Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__TIMESTAMP') #se posiciona en el ultimo según su Timestamp
 
          Tag_Validar=Tag_Bd.data
-         Pv_Tag_Validar=Tag_Validar['TAG_VALUE'] #Extraigo el pv del json de la Bd
+
+         Tag_Validar_R1=Tag_Validar['REGISTRO_1'] #Extraigo el pv del json de la Bd
+         Tag_Validar_R2=Tag_Validar['REGISTRO_2']
 
          #LOGS DE LA APP
 
-         if (Pv_Tag_Validar!=Pv_Tag_Filter): #si los Pv son diferentes creo el de entrada
-           print('Grabando en BD id existente PV nuevo')
+         if (Tag_Validar_R1!=Tag_R1 or Tag_Validar_R2!=Pv_Tag_R2): #si los Pv son diferentes creo el de entrada
+           print('Grabando en BD Registros Nuevos en Tag ya existente')
            Analogico_Hs.objects.create(data = json_data)
          else:
-           print('Sin Guardar: TAG Guardado en Bd recientemente')
+           print('Sin Guardar: TAG sin actualizar su valor.')
 
         else: #BD con Data pero no contiene el id entrante
-          print('Grabando en BD no vacia: entrada no existente')
+          print('Grabando en BD Tag Nuevo')
           Analogico_Hs.objects.create(data = json_data)
 
        else: #BD EN BLANCO (VACIA)
 
-          print('Grabando en BD sin data previa')
+          print('Grabando Tag Nuevo en BD sin datos')
           Analogico_Hs.objects.create(data = json_data)
           #data_file.close()
 
-       time.sleep(4)   #para deugger 900 ms
+       time.sleep(5)   #para deugger 900 ms
        i+=1
