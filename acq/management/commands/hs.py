@@ -13,62 +13,68 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-      iterar=1999
+      iterar=1000
+      Key= ''
+      value =''
       i=0
-      lolo=0
       Tag_Bd=[]
-      q = Analogico_Hs.objects.all().iterator()
       fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
       ruta_Data=fs.location   #RUTA DEL BUFFER
+      actualizarbd =False
+      crearbd =False
 
-      for t in q:
-       print(t)
-       print(q)
+      #print(ruta_Data)
 
       while i<=iterar:
-       #with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file:  #ojo mejorar
-        #with fs.open(ruta_Data+'/Buffer_Data_Cruda.json'
 
-       with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'r') as data_file:
+          with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'r') as data_file:
 
-         json_data = json.loads(data_file.read())
+              BFjson_data = json.loads(data_file.read()) #PROVIENE DEL BUFFER DATA CRUDA
 
-         id_Tag_Filter=json_data['IDTAG']
-
-         Tag_R1=json_data['REGISTRO_1']
-
-         Tag_R2=json_data['REGISTRO_2']
+              tagcount=(len(BFjson_data['Data_Cruda']))
 
 
-       Bdcount= Analogico_Hs.objects.count()
+          if Analogico_Hs.objects.all().count() !=0: #SI ESTA EN BLANCO ESCRIBE EL BUFFER DIRECTAMENTE EN BD
+              Bd=Analogico_Hs.objects.all()
+              BDTag_Validar=Bd.last().data
 
 
-       if (Bdcount != 0): #BD NO ESTA VACIA
-        if Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).exists(): #Si existe tags en bd con el id del json de entrada
-         Tag_Bd = Analogico_Hs.objects.filter(data__idtag=id_Tag_Filter).latest('data__TIMESTAMP') #se posiciona en el ultimo según su Timestamp
 
-         Tag_Validar=Tag_Bd.data
 
-         Tag_Validar_R1=Tag_Validar['REGISTRO_1'] #Extraigo el pv del json de la Bd
-         Tag_Validar_R2=Tag_Validar['REGISTRO_2']
+              for jsonindice in range(tagcount):# no es la forma
+                #print(BFjson_data['Data_Cruda'][jsonindice]['IDTAG'] in BDTag_Validar['Data_Cruda'][jsonindice])
+                #print(BFjson_data['Data_Cruda'][jsonindice]['IDTAG'], BDTag_Validar['Data_Cruda'][jsonindice] )
+                #if (['IDTAG'], BFjson_data['Data_Cruda'][jsonindice]['IDTAG'] in BDTag_Validar['Data_Cruda'][jsonindice].items()):
+                #for (['IDTAG'], BFjson_data['Data_Cruda'][jsonindice]['IDTAG']) in BDTag_Validar['Data_Cruda'][jsonindice].items():
 
-         #LOGS DE LA APP
+                for (k, v) in BFjson_data['Data_Cruda'][jsonindice].items():
+                    for (ke, va) in BDTag_Validar['Data_Cruda'][jsonindice].items():
 
-         if (Tag_Validar_R1!=Tag_R1 or Tag_Validar_R2!=Pv_Tag_R2): #si los Pv son diferentes creo el de entrada
-           print('Grabando en BD Registros Nuevos en Tag ya existente')
-           Analogico_Hs.objects.create(data = json_data)
-         else:
-           print('Sin Guardar: TAG sin actualizar su valor.')
+                        if (k == 'IDTAG' and v==va):
+                            if BFjson_data['Data_Cruda'][jsonindice]['REGISTRO_1']==BDTag_Validar['Data_Cruda'][jsonindice]['REGISTRO_1'] and BFjson_data['Data_Cruda'][jsonindice]['REGISTRO_2']==BDTag_Validar['Data_Cruda'][jsonindice]['REGISTRO_2']:
 
-        else: #BD con Data pero no contiene el id entrante
-          print('Grabando en BD Tag Nuevo')
-          Analogico_Hs.objects.create(data = json_data)
 
-       else: #BD EN BLANCO (VACIA)
+                                actualizarbd =True
+                                crearbd =False
+                                break
 
-          print('Grabando Tag Nuevo en BD sin datos')
-          Analogico_Hs.objects.create(data = json_data)
-          #data_file.close()
 
-       time.sleep(5)   #para deugger 900 ms
-       i+=1
+                            else :
+                                 actualizarbd=False
+                                 crearbd =True
+                                 break
+
+
+              if actualizarbd == True and crearbd== False:
+                print('Actualizando Hs')
+                time.sleep(1)
+                Analogico_Hs.objects.all().last().data=BFjson_data
+              else:
+                time.sleep(1)
+                print('Creando Hs')
+                Analogico_Hs.objects.create(data=BFjson_data)
+
+
+          else:
+            print('Creando Hs en Bd Nueva')
+            Analogico_Hs.objects.create(data=BFjson_data)

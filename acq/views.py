@@ -95,27 +95,27 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre+'_lt' ,
              Descriptor='NIVEL DEL TANQUE'+ instance.Nombre  ,
              Unidad= 'pie',
-             direccion=(qtk-1)*16+1,
+             direccion=(qtk-1)*10+1,
              id_Tk=instance,
              TipoVariable= 'B',
-             direccion_campo= 100+((qtk-1)*16+1),
+             direccion_campo= 100+((qtk-1)*10+1),
              etiqueta1='lt')
 
             Analogico.objects.create(Nombre= instance.Nombre +'_pt',
              Descriptor='PRESION DEL TANQUE'+ instance.Nombre,
              Unidad = 'psi',
-             direccion=(qtk-1)*16+4,
+             direccion=(qtk-1)*10+3,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+4,
+             direccion_campo= 100+(qtk-1)*10+3,
              TipoVariable= 'B',
              etiqueta1='pt')
 
             Analogico.objects.create(Nombre= instance.Nombre +'_tt',
              Descriptor='TEMPERATURA DEL TANQUE'+ instance.Nombre,
              Unidad= 'F',
-             direccion=(qtk-1)*16+7,
+             direccion=(qtk-1)*10+5,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+7,
+             direccion_campo= 100+(qtk-1)*10+5,
              TipoVariable= 'B',
              etiqueta1='tt')
 
@@ -123,18 +123,18 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre +'_lta',
              Descriptor='NIVEL DE AGUA LIBRE '+ instance.Nombre,
              Unidad= 'pie',
-             direccion=(qtk-1)*16+10,
+             direccion=(qtk-1)*10+7,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+10,
+             direccion_campo= 100+(qtk-1)*10+7,
              TipoVariable= 'B',
              etiqueta1='lta',)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
              Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
              Unidad= 'BLS',
-             direccion=(qtk-1)*16+13,
+             direccion=(qtk-1)*10+9,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+13,
+             direccion_campo= 100+(qtk-1)*10+9,
              TipoVariable= 'C',
              etiqueta1='TOV',)
 
