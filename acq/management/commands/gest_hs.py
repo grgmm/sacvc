@@ -5,6 +5,11 @@ from acq.models import Analogico_Hs, Analogico_Hs0, Analogico_Hs1, Analogico_Hs2
 import time
 from datetime import datetime
 from datetime import timedelta
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+
+
+
 
 
 class Command(BaseCommand):
@@ -13,6 +18,13 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
      iterar = 1
      i = 2
+     fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+     ruta_Data=fs.location
+     with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'r') as data_file:
+
+          BFjson_data = json.loads(data_file.read()) #PROVIENE DEL BUFFER DATA CRUDA
+
+          tagcount=(len(BFjson_data['Data_Cruda']))
 
      while i > iterar: #(ciclo infinito)
 
@@ -25,24 +37,27 @@ class Command(BaseCommand):
 
           for recorrido in q:
 
-            objetodata=recorrido.data
-            objetoindexado=objetodata['INDEXADO'] #Exraigo el estado de la bandera "indexado"
+
+            for jsonindice in range(tagcount):
+                objetodata=recorrido.data['Data_Cruda'][jsonindice]
+
+                objetoindexado=objetodata['INDEXADO'] #Exraigo el estado de la bandera "indexado"
 
             #print(b)
-            if objetoindexado==0: #solo si no ha sido indexado/copiado
+                if objetoindexado==False: #solo si no ha sido indexado/copiado
 
-                delt=(datetime.now()- datetime.strptime(recorrido.data['TIMESTAMP'], '%Y-%m-%d %H:%M:%S')) #tiempo actual del sistema-
+                    delt=(datetime.now()- datetime.strptime(recorrido.data['Data_Cruda'][jsonindice]['TIMESTAMP'], '%Y-%m-%d %H:%M:%S')) #tiempo actual del sistema-
 
-                if (delt < delta_t):
+                    if (delt < delta_t):
 
-                    time.sleep(2)
-                    bd_destino.objects.create(data = recorrido.data)
+                        time.sleep(2)
+                        bd_destino.objects.create(data = recorrido.data['Data_Cruda'][jsonindice])
 
 
-                    recorrido.data['INDEXADO']= '1' #activa la bandera en la tabla de origen
-              #para no duplicar registros en la sigiente tabla (mejorar)
+                        recorrido.data['Data_Cruda'][jsonindice]['INDEXADO']= True #activa la bandera en la tabla de origen
+                  #para no duplicar registros en la sigiente tabla (mejorar)
 
-                    recorrido.save() #guarda el cambio
+                        recorrido.save() #guarda el cambio
 
 
       def Gestion_Hs(delta_t, bd_origen, bd_destino): #FUNCION PARA POBLADO AUTOMATICO DE TABLA DE SEGUNDOS

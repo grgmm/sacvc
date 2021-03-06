@@ -32,6 +32,8 @@ class Command(BaseCommand):
               BFjson_data = json.loads(data_file.read()) #PROVIENE DEL BUFFER DATA CRUDA
 
               tagcount=(len(BFjson_data['Data_Cruda']))
+              
+
 
 
           if Analogico_Hs.objects.all().count() !=0: #SI ESTA EN BLANCO ESCRIBE EL BUFFER DIRECTAMENTE EN BD
@@ -47,10 +49,13 @@ class Command(BaseCommand):
                 #if (['IDTAG'], BFjson_data['Data_Cruda'][jsonindice]['IDTAG'] in BDTag_Validar['Data_Cruda'][jsonindice].items()):
                 #for (['IDTAG'], BFjson_data['Data_Cruda'][jsonindice]['IDTAG']) in BDTag_Validar['Data_Cruda'][jsonindice].items():
 
+
+
                 for (k, v) in BFjson_data['Data_Cruda'][jsonindice].items():
                     for (ke, va) in BDTag_Validar['Data_Cruda'][jsonindice].items():
 
-                        if (k == 'IDTAG' and v==va):
+
+                        if (k == 'IDTAG' and v==va and k==ke): #ojo validar
                             if BFjson_data['Data_Cruda'][jsonindice]['REGISTRO_1']==BDTag_Validar['Data_Cruda'][jsonindice]['REGISTRO_1'] and BFjson_data['Data_Cruda'][jsonindice]['REGISTRO_2']==BDTag_Validar['Data_Cruda'][jsonindice]['REGISTRO_2']:
 
 
@@ -65,6 +70,7 @@ class Command(BaseCommand):
                                  break
 
 
+
               if actualizarbd == True and crearbd== False:
                 print('Actualizando Hs')
                 time.sleep(1)
@@ -72,6 +78,9 @@ class Command(BaseCommand):
               else:
                 time.sleep(1)
                 print('Creando Hs')
+
+
+
                 Analogico_Hs.objects.create(data=BFjson_data)
 
 

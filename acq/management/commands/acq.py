@@ -45,6 +45,7 @@ class Command(BaseCommand):
         Parametro_tk= ''
 
         while i<=n:
+            time.sleep(2)# para debugger
             if not Tk.objects.exists():
                 print('NO HAY DATOS PARA ENCUESTAR SALIENDO DEL ADQUISIDOR ###################')
                 exit() #SALIR DEL PROGRAMA SI NO HAY TANQUES QUE ENCUESTAR
@@ -73,7 +74,8 @@ class Command(BaseCommand):
                     Data_Cruda_Temp={'IDTAG':leer[0],
                     'REGISTRO_1':leer[1],
                     'REGISTRO_2':leer[2],
-                    'TIMESTAMP': timestamp
+                    'TIMESTAMP': timestamp,
+                    'INDEXADO':False
                     }
 
                     Data_Cruda['Data_Cruda'].append(Data_Cruda_Temp)
@@ -111,6 +113,6 @@ class Command(BaseCommand):
                         tk.current_data = Data_Cruda #A Base de Datos
 
                         tk.save()
-                time.sleep(1)# para debugger
+
 
         sock.close() #cierra la conexión
