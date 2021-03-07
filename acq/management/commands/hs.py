@@ -26,7 +26,7 @@ class Command(BaseCommand):
       #print(ruta_Data)
 
       while i<=iterar:
-          time.sleep(1)
+          time.sleep(5)
           with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'r') as data_file:
 
               BFjson_data = json.loads(data_file.read()) #PROVIENE DEL BUFFER DATA CRUDA
