@@ -4,6 +4,9 @@ from django.conf.urls import url
 from django.views.generic.base import TemplateView
 from django.urls import path
 from django.conf.urls import url
+
+
+
 from .views import (
     patiotanquelist,
     PatiotanqueAdd,
@@ -61,5 +64,10 @@ urlpatterns = [
     url(r'^data_actual/$', current_data.as_view(), name='current_data'), #LISTADO DE PATIOS DE TANQUES
 
     url('Valores_Actuales/',views.Valores_Actuales, name='Valores_Actuales'),
+
+    path('', views.welcome, name= 'welcome'),
+    path('register', views.register, name='register'),
+    path('login', views.login, name='login'),
+    path('logout', views.logout, name = 'logout'),
 
 ]

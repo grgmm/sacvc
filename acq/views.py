@@ -31,6 +31,13 @@ from .validaciones import validar_parametro_tct as valida
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
+from django.contrib.auth import logout as do_logout
+from django.contrib.auth import login as do_login
+
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
+
+
 def actualizar(request):
 
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
@@ -285,3 +292,44 @@ def Valores_Actuales(request):
        # just return a JsonResponse
       # return JsonResponse(data_fr)
        return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data})
+
+def welcome(request):
+    if request.user.is_authenticated:
+
+    # En otro caso redireccionamos al login
+        return render(request, "acq/authent/welcome.html")
+    return redirect('/login')
+
+def register(request):
+    return render(request, "acq/authent/register.html")
+
+def login(request):
+    # Creamos el formulario de autenticación vacío
+    form = AuthenticationForm()
+    if request.method == "POST":
+        # Añadimos los datos recibidos al formulario
+        form = AuthenticationForm(data=request.POST)
+        # Si el formulario es válido...
+        if form.is_valid():
+            # Recuperamos las credenciales validadas
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            # Verificamos las credenciales del usuario
+            user = authenticate(username=username, password=password)
+
+            # Si existe un usuario con ese nombre y contraseña
+            if user is not None:
+                # Hacemos el login manualmente
+                do_login(request, user)
+                # Y le redireccionamos a la portada
+                return redirect('/acq')
+
+    # Si llegamos al final renderizamos el formulario
+    return render(request, "acq/authent/login.html", {'form': form})
+
+
+def logout(request):
+    do_logout(request)
+    # Redireccionamos a la portada
+    return redirect('/')
