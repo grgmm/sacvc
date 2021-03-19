@@ -20,11 +20,15 @@ class Command(BaseCommand):
      i = 2
      fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
      ruta_Data=fs.location
-     with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'r') as data_file:
 
-          BFjson_data = json.loads(data_file.read()) #PROVIENE DEL BUFFER DATA CRUDA
+     try:
+         with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'r') as data_file:
 
-          tagcount=(len(BFjson_data['Data_Cruda']))
+              BFjson_data = json.loads(data_file.read()) #PROVIENE DEL BUFFER DATA CRUDA
+
+              tagcount=(len(BFjson_data['Data_Cruda']))
+     except:
+          print("Error inesperado:", sys.exc_info()[0])
 
      while i > iterar: #(ciclo infinito)
 
@@ -50,7 +54,6 @@ class Command(BaseCommand):
 
                     if (delt < delta_t):
 
-                        time.sleep(2)
                         bd_destino.objects.create(data = recorrido.data['Data_Cruda'][jsonindice])
 
 

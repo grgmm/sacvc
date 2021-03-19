@@ -15,6 +15,7 @@ from django.conf import settings
 
 class Command(BaseCommand):
     help = 'help'
+
     def handle(self, *args, **kwargs):
         conf.SIGNED_VALUES = True # No estoy seguro de su utilidad me lo copié del ejemplo.
         print('\n' '\n'  "         SIMULADOR MODBUS DESARROLLADO POR: Ing Miguel Moreno")
@@ -28,7 +29,10 @@ class Command(BaseCommand):
         slaveip= '192.168.1.34' #ip del esclavo para modbus TCP
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
+
+
         sock.connect((slaveip, slaveport)) #realiza la conexión
+
 
         n=2 #100 iteraciones
 
@@ -45,7 +49,6 @@ class Command(BaseCommand):
         Parametro_tk= ''
 
         while i<=n:
-            time.sleep(2)# para debugger
             if not Tk.objects.exists():
                 print('NO HAY DATOS PARA ENCUESTAR SALIENDO DEL ADQUISIDOR ###################')
                 exit() #SALIR DEL PROGRAMA SI NO HAY TANQUES QUE ENCUESTAR
@@ -98,21 +101,28 @@ class Command(BaseCommand):
 
                 #print(Datos_Actuales) PARA DEBUGGER
 
-                with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'w') as file1:
-            #with open ('/home/morenomx/solucionesweb/sacvc/valoresbasicos.json','w') as file1: #abre un archivo json (cambiar por ruta simbólica)
+                try:
+                    with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'w') as file1:
+                #with open ('/home/morenomx/solucionesweb/sacvc/valoresbasicos.json','w') as file1: #abre un archivo json (cambiar por ruta simbólica)
 
-                        file1.write(json.dumps(Data_Cruda)) #Data en cache
+                            file1.write(json.dumps(Data_Cruda)) #Data en cache
+                except:
+                     print("Error inesperado:", sys.exc_info()[0])
 
-                with fs.open(ruta_Data+'/Valores_Tk.json', mode= 'w') as file2:
+                try:
 
-                        file2.write(json.dumps(Data_Cruda)) #Data en cache
+                    with fs.open(ruta_Data+'/Valores_Tk.json', mode= 'w') as file2:
 
-                        print(TKS)
+                            file2.write(json.dumps(Data_Cruda)) #Data en cache
+
+                            print(TKS)
 
 
-                        tk.current_data = Data_Cruda #A Base de Datos
+                            tk.current_data = Data_Cruda #A Base de Datos
 
-                        tk.save()
+                            tk.save()
+                except:
+                     print("Error inesperado:", sys.exc_info()[0])
 
 
         sock.close() #cierra la conexión

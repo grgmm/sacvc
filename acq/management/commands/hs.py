@@ -11,6 +11,7 @@ from django.conf import settings
 class Command(BaseCommand):
     help = 'help'
 
+
     def handle(self, *args, **kwargs):
 
       iterar=1000
@@ -22,19 +23,17 @@ class Command(BaseCommand):
       ruta_Data=fs.location   #RUTA DEL BUFFER
       actualizarbd =False
       crearbd =False
-
-      #print(ruta_Data)
+      resultado = 0
 
       while i<=iterar:
-          time.sleep(5)
-          with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'r') as data_file:
+          try:
+              with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode= 'r') as data_file:
 
-              BFjson_data = json.loads(data_file.read()) #PROVIENE DEL BUFFER DATA CRUDA
+                  BFjson_data = json.loads(data_file.read()) #PROVIENE DEL BUFFER DATA CRUDA
 
-              tagcount=(len(BFjson_data['Data_Cruda']))
-
-
-
+                  tagcount=(len(BFjson_data['Data_Cruda']))
+          except:
+              print("Error inesperado:", sys.exc_info()[0])
 
           if Analogico_Hs.objects.all().count() !=0: #SI ESTA EN BLANCO ESCRIBE EL BUFFER DIRECTAMENTE EN BD
               Bd=Analogico_Hs.objects.all()
@@ -73,10 +72,8 @@ class Command(BaseCommand):
 
               if actualizarbd == True and crearbd== False:
                 print('Actualizando Hs')
-                time.sleep(1)
                 Analogico_Hs.objects.all().last().data=BFjson_data
               else:
-                time.sleep(1)
                 print('Creando Hs')
 
 

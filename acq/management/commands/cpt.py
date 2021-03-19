@@ -7,6 +7,7 @@ import time
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import numpy
+import sys
 
 class Command(BaseCommand):
     help = 'help'
@@ -29,15 +30,16 @@ class Command(BaseCommand):
        instance_tov={}
        while i<=n:
 
-               time.sleep(4)
 
 
 #OBTENIENDO DATOS DEL BUFFER DATA CRUDA
 
-
-               with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode = 'r') as data_file_r:
-                  data_fr = json.loads(data_file_r.read())
-                  tagcount=(len(data_fr['Data_Cruda']))
+               try:
+                   with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode = 'r') as data_file_r:
+                      data_fr = json.loads(data_file_r.read())
+                      tagcount=(len(data_fr['Data_Cruda']))
+               except:
+                    print("Error inesperado:", sys.exc_info()[0])
 
 
 
@@ -142,10 +144,10 @@ class Command(BaseCommand):
                     #with fs.open(ruta_Data+'/Buffer_Datos_Basicos.json', mode= 'w') as file1:
 
                           #file1.write(json.dumps(Data_Basica_lt))
+               try:
 
-               with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
+                   with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
 
-                   file2.write(json.dumps(Data_Calculada_tov))
-
-
-               time.sleep(1)
+                       file2.write(json.dumps(Data_Calculada_tov))
+               except:
+                    print("Error inesperado:", sys.exc_info()[0])
