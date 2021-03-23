@@ -28,6 +28,8 @@ from .views import (
 app_name = 'acq'
 urlpatterns = [
 
+    path('', views.welcome, name= 'welcome'),
+
     url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
 
     path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
@@ -65,7 +67,7 @@ urlpatterns = [
 
     url('Valores_Actuales/',views.Valores_Actuales, name='Valores_Actuales'),
 
-    path('', views.welcome, name= 'welcome'),
+
     path('register', views.register, name='register'),
     path('login', views.login, name='login'),
     path('logout', views.logout, name = 'logout'),

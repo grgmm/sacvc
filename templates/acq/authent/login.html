@@ -1,7 +1,56 @@
-<h2>Iniciar sesión</h2>
-<form method="POST">  {% csrf_token %} 
-    {{ form.as_p }}
-    <button type="submit">Login</button>
+{% extends "acq/base.html" %}
+	<!--{% load crispy_forms_tags %} -->
+{% load static %}
+
+{% block title %} SACVC-Inicio {% endblock %}
+
+
+{% block content %}
+
+<img class="img" src="{% static "recursos/imagenes/tanques.jpg" %}">
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<div id="ventanalogin">
+<form method="post" action="{% url 'uacq:login' %}">
+{% csrf_token %}
+<p>
+				<!-- Encabezado -->
+				<label for="encabezado">INICIO DE SESÍON</label>
+			</p>
+
+<table>
+<tr>
+	 <div id="username-input" >
+
+	<td>	<label for="nombre">Usuario:</label>
+				<p>{{ form.username }}	</p>
+		</td>
+
+
+			</div>
+
+			<!-- Clave de usuario -->
+
+				<div id="password-input" >
+
+			<td>	<label for="clave">Clave:</label>
+						<p>{{ form.password }} 	</p>
+				</td>
+
+
+					</div>
+				<!-- Clave de usuario -->
+
+
+
+</tr>
+</table>
+			<button tabindex="1" type="submit" value="Login">Login</button>
+
 </form>
-<hr />
-<a href="/register">Registrar usuario</a>
+
+	</div>
+{% endblock %}

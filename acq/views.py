@@ -37,6 +37,8 @@ from django.contrib.auth import login as do_login
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 
+from django.contrib.auth.models import User as usuario, Group
+
 
 def actualizar(request):
 
@@ -294,11 +296,11 @@ def Valores_Actuales(request):
        return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data})
 
 def welcome(request):
-    if request.user.is_authenticated:
+    #if request.user.is_authenticated:
 
     # En otro caso redireccionamos al login
-        return render(request, "acq/authent/welcome.html")
-    return redirect('/login')
+        #return render(request, "acq/authent/welcome.html")
+    return redirect('/sacvc/login')
 
 def register(request):
     return render(request, "acq/authent/register.html")
@@ -317,16 +319,36 @@ def login(request):
 
             # Verificamos las credenciales del usuario
             user = authenticate(username=username, password=password)
+            if usuario.objects.filter(pk=user.pk, groups__name='supervisores').exists():
+                print('AMBIENTE SUPERVISOR')
+                return redirect('/sacvc')
+
+            if usuario.objects.filter(pk=user.pk, groups__name='operativos').exists():
+                print('AMBIENTE OPERATIVO')
+                return redirect('/sacvc')
 
             # Si existe un usuario con ese nombre y contraseña
             if user is not None:
-                # Hacemos el login manualmente
                 do_login(request, user)
                 # Y le redireccionamos a la portada
-                return redirect('/acq')
+                return redirect('/sacvc')
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "acq/authent/login.html", {'form': form})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def logout(request):
