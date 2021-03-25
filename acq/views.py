@@ -301,15 +301,19 @@ class Menu(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            who= usuario.objects.get(pk=request.user.pk)
+
             if usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
                 print('AMBIENTE SUPERVISOR')
-                return HttpResponse('AMBIENTE SUPERVISOR')
+                return render(request, "acq/menus/menu_supervisor.html")
+                #return HttpResponse('AMBIENTE SUPERVISOR')
+
             if usuario.objects.filter(pk=request.user.pk, groups__name='operativos').exists():
                 print('AMBIENTE OPERADOR')
+
                 return HttpResponse('AMBIENTE OPERADOR')
+
             else:
-                return redirect('/sacvc/login')
+                return redirect('/sacvc/logout')
 
 
 
