@@ -22,10 +22,13 @@ from .views import (
     integridad_TCT,
     guardar_TCT_BD,
     current_data,
+    LoginView,
+    LogoutView,
+    Menu,
     )
 
 
-app_name = 'acq'
+app_name = 'sacvc'
 urlpatterns = [
 
     path('', views.welcome, name= 'welcome'),
@@ -33,7 +36,6 @@ urlpatterns = [
     url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
 
     path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
-
 
     url(r'^integridad_TCT/(?P<pk>\d+)$' ,views.integridad_TCT, name='integridad_TCT'), #OJO
 
@@ -67,9 +69,20 @@ urlpatterns = [
 
     url('Valores_Actuales/',views.Valores_Actuales, name='Valores_Actuales'),
 
+    url('login/',LoginView.as_view(), name='login'),
 
-    path('register', views.register, name='register'),
-    path('login', views.login, name='login'),
-    path('logout', views.logout, name = 'logout'),
+    url(r'^logout/$', LogoutView.as_view(), name = "logout"),
+
+    url(r'^Menu/$', Menu.as_view(), name = "Menu"),
+
+
+
+
+    #path('login', views.login, name='login'),
+    #path('logout', views.logout, name = 'logout'),
+
+
+
+
 
 ]

@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque,Tct, Analogico, Digital
 #from datetime import timedelta, datetime
 from django.template.response import TemplateResponse
-from django.views.generic import ListView
+from django.views.generic import ListView, FormView, TemplateView, RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
@@ -31,14 +31,15 @@ from .validaciones import validar_parametro_tct as valida
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
-from django.contrib.auth import logout as do_logout
-from django.contrib.auth import login as do_login
+from django.contrib.auth import logout
+from django.contrib.auth import login
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 
 from django.contrib.auth.models import User as usuario, Group
 
+from django.contrib.auth.forms import AuthenticationForm
 
 def actualizar(request):
 
@@ -295,63 +296,60 @@ def Valores_Actuales(request):
       # return JsonResponse(data_fr)
        return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data})
 
+
+class Menu(View):
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            who= usuario.objects.get(pk=request.user.pk)
+            if usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
+                print('AMBIENTE SUPERVISOR')
+                return HttpResponse('AMBIENTE SUPERVISOR')
+            if usuario.objects.filter(pk=request.user.pk, groups__name='operativos').exists():
+                print('AMBIENTE OPERADOR')
+                return HttpResponse('AMBIENTE OPERADOR')
+            else:
+                return redirect('/sacvc/login')
+
+
+
+
+
+class LoginView(FormView):
+    form_class = AuthenticationForm
+    template_name = "acq/authent/login.html"
+    success_url =  reverse_lazy('sacvc:Menu')
+
+
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.is_authenticated:
+            #print(request.user.is_authenticated)
+
+            return HttpResponseRedirect('sacvc:Menu' )
+            #return HttpResponseRedirect(self.get_success_url())
+
+        else:
+
+            return super(LoginView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+        return super(LoginView, self).form_valid(form)
+
+
+class LogoutView(RedirectView):
+    pattern_name = 'sacvc:login'
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return super(LogoutView, self).get(request, *args, **kwargs)
+
+
 def welcome(request):
     #if request.user.is_authenticated:
 
     # En otro caso redireccionamos al login
         #return render(request, "acq/authent/welcome.html")
     return redirect('/sacvc/login')
-
-def register(request):
-    return render(request, "acq/authent/register.html")
-
-def login(request):
-    # Creamos el formulario de autenticación vacío
-    form = AuthenticationForm()
-    if request.method == "POST":
-        # Añadimos los datos recibidos al formulario
-        form = AuthenticationForm(data=request.POST)
-        # Si el formulario es válido...
-        if form.is_valid():
-            # Recuperamos las credenciales validadas
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-
-            # Verificamos las credenciales del usuario
-            user = authenticate(username=username, password=password)
-            if usuario.objects.filter(pk=user.pk, groups__name='supervisores').exists():
-                print('AMBIENTE SUPERVISOR')
-                return redirect('/sacvc')
-
-            if usuario.objects.filter(pk=user.pk, groups__name='operativos').exists():
-                print('AMBIENTE OPERATIVO')
-                return redirect('/sacvc')
-
-            # Si existe un usuario con ese nombre y contraseña
-            if user is not None:
-                do_login(request, user)
-                # Y le redireccionamos a la portada
-                return redirect('/sacvc')
-
-    # Si llegamos al final renderizamos el formulario
-    return render(request, "acq/authent/login.html", {'form': form})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def logout(request):
-    do_logout(request)
-    # Redireccionamos a la portada
-    return redirect('/')
