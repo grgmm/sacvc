@@ -54,10 +54,27 @@ class current_data(ListView):
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
 
+
+
 class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
 
     model = PatioTanque
     template_name = 'acq/list_tf/list_tf.html'
+
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            if not usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
+                print('usuario sin perfil adecuado cerrando sesión')
+                return redirect('/sacvc/logout')
+            else:
+                 return super(patiotanquelist, self).get(request, *args, **kwargs)
+
+
+
+
+
 
 class PatiotanqueAdd(CreateView):
     model = PatioTanque

@@ -1,14 +1,53 @@
-{% extends "acq/base.html" %}
-	<!--{% load crispy_forms_tags %} -->
+{% extends 'acq/base.html' %}
 {% load static %}
 
-{% block title %} SACVC-Inicio {% endblock %}
 
+
+
+{% block title %} Ambiente Supervisor {% endblock %}
 
 {% block content %}
 
-<img class="img" src="{% static "recursos/imagenes/refineria.jpg" %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 
+
+
+
+
+		<table id="MenuSupervisor" style="width:180%" style="margin": 0 center;>
+
+
+
+		<tr>
+
+			<th>	<h3> <a href="#" class="link-primary">VISTAS</a></th></h3>
+
+			<th>	<h3> <a href="#" class="link-primary">USUARIOS</a></th></h3>
+
+			<tr>
+				<td> <img class="img" src="{% static "recursos/iconos/vistas.jpg" %}" </td>
+
+			<td> <img class="img" src="{% static "recursos/iconos/usuarios.jpg" %}" </td>
+		</tr>
+
+
+
+
+		<tr>
+
+<th>	<h3> <a href="{% url 'uacq:list_tf' %}"  class="link-primary">PLANTAS</a></th></h3>
+
+<th>	<h3> <a href="#" class="link-primary">SALIR</a></th></h3>
+
+				<tr>
+			<tr>
+			<td> 	<img class="img" src="{% static "recursos/iconos/plantas.jpg" %}" </td>
+
+	<td> <img class="img" src="{% static "recursos/iconos/logout.jpg" %}" </td>
+
+
+
+</tr>
 
 
 {% endblock %}
