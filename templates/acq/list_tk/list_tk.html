@@ -1,18 +1,19 @@
 
   {% extends 'acq/base.html' %}
   {% block title %}{% endblock %}
-  {% block footer %} <a href="{% url 'uacq:list_tf' %}" type="button" class="btn btn-info"> Regresar</a> 
+  {% block footer %} <a href="{% url 'uacq:list_tf' %}" type="button" class="btn btn-info"> Regresar</a>
   {% endblock %}
 
   {% block content %}
- 
 
 
-        
+  <th>	<h3> <a href="{% url 'uacq:logout' %}"  class="link-primary">SALIR</a></th></h3>
+
+
        <table id="Tk">
 
-  
-    
+
+
         <th>NOMBRE </th> <th> ACCIÓN </th> <th>  TABLA TCT </th>
 
 <h2>Tanques de Almacenamiento de la instalacion {{object_list.first.id_patioTanque.Nombre}}</h2>
@@ -20,10 +21,10 @@
 {% for tk in object_list %}
 
 
-  <tr> 
+  <tr>
  <td> {{ tk.Nombre }} </td>
 
- 
+
  <td>
 <a  href="{% url 'uacq:detail_tk' tk.pk  %}">Detalle</a>
 <a  href="{% url 'uacq:edit_tk' tk.pk  %}">Editar</a>
@@ -32,18 +33,18 @@
 
 </td>
 
- 
+
  <td>
 
  	{% if tk.tct_archivo  %}
  		<a href ="{{tk.tct_archivo.url}}" >ver</a>
  	{% endif %}
 
-  
+
 </td>
 
 
-   
+
  {% endfor %}
 
 

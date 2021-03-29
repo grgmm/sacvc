@@ -1,0 +1,49 @@
+{% extends 'acq/base.html' %}
+{% load static %}
+
+
+
+
+{% block title %} Ambiente Supervisor {% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+
+
+
+
+		<table id="MenuSupervisor" style="width:180%" style="margin": 0 center;>
+
+
+
+		<tr>
+
+			<th>	<h3> <a href="#" class="link-primary">VISTAS</a></th></h3>
+
+
+			<tr>
+				<td> <img class="img" src="{% static "recursos/iconos/vistas.jpg" %}" </td>
+
+		</tr>
+
+
+
+
+		<tr>
+
+
+<th>	<h3> <a href="{% url 'uacq:logout' %}"  class="link-primary">SALIR</a></th></h3>
+
+				<tr>
+			<tr>
+
+	<td> <img class="img" src="{% static "recursos/iconos/logout.jpg" %}" </td>
+
+
+
+</tr>
+
+
+{% endblock %}

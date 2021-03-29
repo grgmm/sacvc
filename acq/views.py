@@ -56,12 +56,13 @@ class current_data(ListView):
 
 
 
-class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMINTO
+class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
+     #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = PatioTanque
     template_name = 'acq/list_tf/list_tf.html'
 
-
+#EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
@@ -71,16 +72,29 @@ class patiotanquelist(ListView): #LISTADO DE PATIOS DE TANQUES O TERMINALES DE A
             else:
                  return super(patiotanquelist, self).get(request, *args, **kwargs)
 
+        else:
+            return redirect('/sacvc/logout')
 
-
-
-
-
-class PatiotanqueAdd(CreateView):
+class PatiotanqueAdd(CreateView): #VALIDADO PRELIMINAR
     model = PatioTanque
     fields = ['Nombre', 'Descriptor',]
     template_name = 'acq/add_tf/add_tf.html'
     success_url = reverse_lazy('uacq:list_tf')
+
+
+#EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            if not usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
+                print('usuario sin perfil adecuado cerrando sesión')
+                return redirect('/sacvc/logout')
+            else:
+                 return super(PatiotanqueAdd, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
 
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
@@ -109,11 +123,29 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
       #print(filtro)
       return(filtro)
 
-class TkAdd(CreateView):
+
+class TkAdd(CreateView): #VALIDADO PRELIMINAR
     model = Tk
     fields = ['Nombre', 'Descriptor', 'id_patioTanque',]
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
+
+
+    #EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            if not usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
+                print('usuario sin perfil adecuado cerrando sesión')
+                return redirect('/sacvc/logout')
+            else:
+                 return super(TkAdd, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
+
     @receiver(post_save, sender=Tk)  #CREA LA SEÑAL DE GUARDADO
     def create_Tk(sender, instance, created, **kwargs):#FUNCION QUE CAPTURA LA SEÑAL DE GUARDADO DE TK Y TRABAJA CON ESA INSTANCIA DE TK
         #INICIALIZA EL TANQUE CON SUS PARAMETROS (PT,LT,TT, TOV) #FALTA INCLUIR ENTRE OTROS LTA, AYS.
@@ -164,6 +196,7 @@ class TkAdd(CreateView):
              direccion_campo= 100+(qtk-1)*10+9,
              TipoVariable= 'C',
              etiqueta1='TOV',)
+
 
 class TkDelete(DeleteView):
     model = Tk
@@ -314,7 +347,7 @@ def Valores_Actuales(request):
        return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data})
 
 
-class Menu(View):
+class Menu(View): #VALIDADO PRELIMINAR
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -327,16 +360,18 @@ class Menu(View):
             if usuario.objects.filter(pk=request.user.pk, groups__name='operativos').exists():
                 print('AMBIENTE OPERADOR')
 
-                return HttpResponse('AMBIENTE OPERADOR')
+                #return HttpResponse('AMBIENTE OPERADOR')
+                return render(request, "acq/menus/menu_operativo.html")
+
 
             else:
                 return redirect('/sacvc/logout')
 
+        else:
+                return redirect('/sacvc/logout')
 
 
-
-
-class LoginView(FormView):
+class LoginView(FormView): #VALIDADO PRELIMINAR
     form_class = AuthenticationForm
     template_name = "acq/authent/login.html"
     success_url =  reverse_lazy('sacvc:Menu')
@@ -360,7 +395,7 @@ class LoginView(FormView):
         return super(LoginView, self).form_valid(form)
 
 
-class LogoutView(RedirectView):
+class LogoutView(RedirectView): #VALIDADO PRELIMINAR
     pattern_name = 'sacvc:login'
 
     def get(self, request, *args, **kwargs):
