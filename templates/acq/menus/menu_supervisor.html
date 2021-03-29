@@ -1,53 +1,29 @@
-{% extends 'acq/base.html' %}
-{% load static %}
-
-
-
-
-{% block title %} Ambiente Supervisor {% endblock %}
-
+{% extends 'acq/base.html' %} 
+{% load static %} 
+{% block title %}Ambiente Supervisor {% endblock %} 
 {% block content %}
-
-<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-
-
-
-
-
-		<table id="MenuSupervisor" style="width:180%" style="margin": 0 center;>
-
-
-
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/menu_supervisor.css' %}">
+<div>
+	<table id="MenuSupervisor">
 		<tr>
+			<th><a href="#">VISTAS</a></th>
 
-			<th>	<h3> <a href="#" class="link-primary">VISTAS</a></th></h3>
-
-			<th>	<h3> <a href="#" class="link-primary">USUARIOS</a></th></h3>
-
-			<tr>
-				<td> <img class="img" src="{% static "recursos/iconos/vistas.jpg" %}" </td>
-
-			<td> <img class="img" src="{% static "recursos/iconos/usuarios.jpg" %}" </td>
+			<th><a href="#">USUARIOS</a></th>
 		</tr>
-
-
-
-
 		<tr>
+			<td><img class="img" src="{% static "recursos/iconos/vistas.jpg" %}"></td>
 
-<th>	<h3> <a href="{% url 'uacq:list_tf' %}"  class="link-primary">PLANTAS</a></th></h3>
-
-<th>	<h3> <a href="{% url 'uacq:logout' %}"  class="link-primary">SALIR</a></th></h3>
-
-				<tr>
-			<tr>
-			<td> 	<img class="img" src="{% static "recursos/iconos/plantas.jpg" %}" </td>
-
-	<td> <img class="img" src="{% static "recursos/iconos/logout.jpg" %}" </td>
-
-
-
-</tr>
-
-
+			<td><img class="img" src="{% static "recursos/iconos/usuarios.jpg" %}"></td>
+		</tr>
+		<tr>
+			<th><a href="{% url 'uacq:list_tf' %}">PLANTAS</a></th>
+			<th><a href="{% url 'uacq:logout' %}" >SALIR</a></th>
+		</tr>
+		<tr>
+			<td><img class="img" src="{% static "recursos/iconos/plantas.jpg" %}"></td>
+			<td><img class="img" src="{% static "recursos/iconos/logout.jpg" %}"></td>
+		</tr>
+	</table>
+</div>
 {% endblock %}

@@ -30,11 +30,12 @@ html, body {
 }
 
 #ventanalogin {
-	position: absolute; /*posicion respecto a la esquina superior izquierda de body*/
-	top: 53%; 		/* mayor que height de la imagen*/
-	left: 38%; 		/*(100%-(width:24%))/2*/
-	height: 40%;	/*menor que 100%-height de la imagen*/
-	width:24%;
+	position: absolute;
+	/*posicion respecto a la esquina superior izquierda de body*/
+	top: 53%; /* mayor que height de la imagen*/
+	left: 38%; /*(100%-(width:24%))/2*/
+	height: 35%; /*menor que 100%-height de la imagen*/
+	width: 24%;
 	background: #fff;
 	border-radius: 10px;
 	border: 1px solid #ccc;
@@ -57,18 +58,25 @@ html, body {
 }
 
 .img {
-	position: absolute; /*posicion respecto a la esquina superior izquierda de body*/
+	position: absolute;
+	/*posicion respecto a la esquina superior izquierda de body*/
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 50%;
-	padding-bottom:0.3%;
-	border-bottom: 2px solid  rgb(191, 223, 255);
+	padding-bottom: 0.3%;
+	border-bottom: 2px solid rgb(191, 223, 255);
 }
 
 form {
 	margin: 0 auto;
 	margin-top: 20px;
+}
+
+#tabla {
+	width: 90%;
+	margin: 0 auto; 
+	margin-top: 10%; /*Distancia del encabezado a los campos Usuario/clave*/
 }
 
 label {
@@ -94,8 +102,8 @@ label[for=encabezado] {
 	text-align: center;
 }
 
-label[for=nombre], label[for=clave] {
-	margin-left: 5%;
+label[for=nombre], label[for=clave]{
+	margin-left: 10%;
 }
 
 p a {
@@ -141,18 +149,16 @@ input[type=text]:hover, input[type=password]:hover {
 
 input[type=text]:focus, input[type=password]:focus {
 	border: 1px solid #a8c9e4;
-	background-color:#ffffe6;
+	background-color: #ffffe6;
 	box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
 }
 
 button[type=submit]:focus {
 	border: 1px solid #a8c9e4;
-	color:black;
-	font-size:1.1 em;
+	color: black;
+	font-size: 1.1 em;
 	box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
 }
-
-
 
 input[type=checkbox] {
 	margin-left: 20px;
@@ -167,14 +173,15 @@ input[type=checkbox] {
 }
 
 button[type=submit] {
-	position: absolute; /*posicion respecto a la esquina inferior derecha  de ventanalogin*/
+	position: absolute;
+	/*posicion respecto a la esquina inferior derecha  de ventanalogin*/
 	right: 35%;
 	bottom: 5%;
-	width: 80px;
+	width: 30%;
 	height: 30px;
 	font-size: 14px;
 	font-weight: bold;
-	color:rgb(122, 122, 122);
+	color: rgb(122, 122, 122);
 	background-color: rgb(191, 223, 255);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#acd6ef),
 		to(#6ec2e8));

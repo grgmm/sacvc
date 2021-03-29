@@ -1,57 +1,37 @@
 {% extends "acq/base.html" %}
-	<!--{% load crispy_forms_tags %} -->
-{% load static %}
-
-{% block title %} SACVC-Inicio {% endblock %}
-
-
+<!--{% load crispy_forms_tags %} -->
+{% load static %} 
+{% block title %} SACVC-Inicio {% endblock %} 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/styles1.css' %}">
-
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 <img class="img" src="{% static "recursos/imagenes/tanques.jpg" %}">
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p>Su usuario o password no concuerdan. Intente de nuevo.</p>
 {% endif %}
 
 <div id="ventanalogin">
-<form method="post" action="{% url 'uacq:login' %}">
-{% csrf_token %}
-<p>
-				<!-- Encabezado -->
-				<label for="encabezado">INICIO DE SESÍON</label>
-			</p>
+	<form method="post" action="{% url 'uacq:login' %}">
+		{% csrf_token %}
+		<p>
+			<!-- Encabezado -->
+			<label for="encabezado">INICIO DE SESÍON</label>
+		</p>
+		<div>
+			<table id=tabla>
+				<tr>
+					<!-- Nombre de usuario -->
+					<td><label for="nombre">Usuario:</label>
+						<p tabindex="1">{{ form.username }}</p></td>
 
-<table>
-<tr>
-	 <div id="username-input" >
-
-	<td>	<label for="nombre">Usuario:</label>
-				<p>{{ form.username }}	</p>
-		</td>
-
-
-			</div>
-
-			<!-- Clave de usuario -->
-
-				<div id="password-input" >
-
-			<td>	<label for="clave">Clave:</label>
-						<p>{{ form.password }} 	</p>
-				</td>
-
-
-					</div>
-				<!-- Clave de usuario -->
-
-
-
-</tr>
-</table>
-			<button tabindex="1" type="submit" value="Login">Login</button>
-
-</form>
-
-	</div>
+					<!-- Clave de usuario -->
+					<td><label for="clave">Clave:</label>
+						<p tabindex="2">{{ form.password }}</p></td>
+				</tr>
+			</table>
+		</div>
+		<button tabindex="3" type="submit" value="Login">Login</button>
+	</form>
+</div>
 {% endblock %}
