@@ -69,7 +69,7 @@ urlpatterns = [
 
     url('Valores_Actuales/',views.Valores_Actuales, name='Valores_Actuales'),
 
-    url('login/',LoginView.as_view(), name='login'),
+    url('login/',LoginView.as_view(), name='login'), # TDD 1
 
     url(r'^logout/$', LogoutView.as_view(), name = "logout"),
 
