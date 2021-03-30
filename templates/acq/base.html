@@ -1,18 +1,17 @@
 {% load static %}
+<!DOCTYPE html>
 <html>
 <head>
-<title>{% block title %} {% endblock %}</title>
+<meta charset="UTF-8">
+<title>{% block title %}Titulo de la pestaña {% endblock %}</title>
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+<div id="tituloBase">
+	Sistema Automatizado de Cálculo de Volumen de Crudo
+</div >
 </head>
-<body>
-	<div class="page-header">
-		<h1>
-			<a="/">Sistema Automatizado de Cálculo de Volumen de Crudo</a>
-		</h1>
-	</div>
-	<div class="content container">
-		<div class="row">
-			<div class="col-md-8">{% block content %} {% endblock %}</div>
-		</div>
-	</div>
+<body id="cuerpo">	
+	{% block content %} {% endblock %}		
 </body>
 </html>
