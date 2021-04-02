@@ -43,7 +43,7 @@ urlpatterns = [
 
     path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #principal (vacio)
 
-    url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'), #LISTADO DE PATIOS DE TANQUES
+    url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'), #Probada con TDD
 
     url(r'^delete_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'),
 
@@ -69,11 +69,11 @@ urlpatterns = [
 
     url('Valores_Actuales/',views.Valores_Actuales, name='Valores_Actuales'),
 
-    url('login/',LoginView.as_view(), name='login'), # TDD 1
+    url('login/',LoginView.as_view(), name='login'), #Probada con TDD
 
-    url(r'^logout/$', LogoutView.as_view(), name = "logout"),
+    url(r'^logout/$', LogoutView.as_view(), name = "logout"), #Probada con TDD
 
-    url(r'^Menu/$', Menu.as_view(), name = "Menu"),
+    url(r'^Menu/$', Menu.as_view(), name = "Menu"), #Probada con TDD
 
 
 
