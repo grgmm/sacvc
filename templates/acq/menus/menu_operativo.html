@@ -1,49 +1,34 @@
-{% extends 'acq/base.html' %}
-{% load static %}
-
-
-
-
-{% block title %} Ambiente Operativo {% endblock %}
-
+{% extends 'acq/base.html' %} 
+{% load static %} 
+{% block title %}Ambiente Operativo{% endblock %} 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/menu_super_oper.css' %}">
 
-<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-
-
-
-
-
-		<table id="MenuSupervisor" style="width:180%" style="margin": 0 center;>
-
-
-
+<div id="MenuSupervisor">
+	<table id="tabla" border="black">
 		<tr>
-
-			<th>	<h3> <a href="#" class="link-primary">VISTAS</a></th></h3>
-
-
-			<tr>
-				<td> <img class="img" src="{% static "recursos/iconos/vistas.jpg" %}" </td>
-
+			<td><a href="#"> <br>VISTAS</br> 
+			<img src="{% static "recursos/iconos/vistas.jpg" %}" alt="VISTAS" name="sub_but" />
+			</a></td>
+			<!-- 
+			<td><a href="#"><br>USUARIOS</br>
+			<img src="{% static "recursos/iconos/usuarios.jpg" %}" alt="USUARIOS" name="sub_but" />
+			</a></td>	
+			 -->		
 		</tr>
-
-
-
-
 		<tr>
+			<!-- 
+			<td><a href="{% url 'uacq:list_tf' %}"> 
+			<img src="{% static "recursos/iconos/plantas.jpg" %}" /><br>PLANTAS</br>
+			</a></td>
+			 -->		
+			
+			<td><a href="{% url 'uacq:logout' %}"> 
+			<img src="{% static "recursos/iconos/logout.jpg" %}" /><br>SALIR</br>
+			</a></td>
+		</tr>
+	</table>
 
-
-<th>	<h3> <a href="{% url 'uacq:logout' %}"  class="link-primary">SALIR</a></th></h3>
-
-				<tr>
-			<tr>
-
-	<td> <img class="img" src="{% static "recursos/iconos/logout.jpg" %}" </td>
-
-
-
-</tr>
-
-
+</div>
 {% endblock %}
