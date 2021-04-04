@@ -26,7 +26,8 @@ time, mark, audio, video {
 body{
 	width: 100%;
 	height: 100%;
-	background-color: #EBE0F5;
+	/*background-color: #EBE0F5;*/
+	background-color: white;
 }
 
 /* HTML5 display-role reset for older browsers */
