@@ -9,6 +9,7 @@ from django.conf.urls import url
 from django.contrib.auth.models import User
 
 class TestUrls(SimpleTestCase):
+
     def test_login_url_resolves(self):
         url = reverse('sacvc:login')
         #print(resolve(url))
@@ -47,4 +48,13 @@ class TestUrls(SimpleTestCase):
 
         self.assertEquals(resolve(url).func.view_class, PatiotanqueAdd)
         response = self.client.get('/sacvc/add_tf')
+        self.assertEqual(response.status_code, 301)
+
+    def test_add_tk_url_resolves(self):
+
+        url = reverse('sacvc:add_tk')
+
+            #url= '/sacvc/add_tk'
+        self.assertEquals(resolve(url).func.view_class, TkAdd)
+        response = self.client.get('/sacvc/add_tk')
         self.assertEqual(response.status_code, 301)

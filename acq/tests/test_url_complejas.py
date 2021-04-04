@@ -33,7 +33,11 @@ class testUrls2(TestCase):
 
             PATIO= PatioTanque.objects.create(Nombre='PATIO DE TANQUES X', Descriptor='PATIO DE TANQUES X')
             PATIO.save()
+
+
+            TANQUE = Tk.objects.create(Nombre='TK X', Descriptor='TANQUE 1001 X', id_patioTanque= PATIO)
             #print(PATIOX.Nombre)
+            TANQUE.save()
 
          def test_edit_tf_url_resolves(self):
 
@@ -61,8 +65,93 @@ class testUrls2(TestCase):
                 patio= PatioTanque.objects.all().last()
                 patiopk=patio.pk
                 url= '/sacvc/delete_tf/'+str(patiopk)
-                print(url)
+
                 response = self.client.get(url)
                 #print(response)
                 #print(response)
                 self.assertEqual(response.status_code, 200)
+
+         def test_detail_tf_url_resolves(self):
+
+                patio= PatioTanque.objects.all().first()
+                patiopk=patio.pk
+                url= '/sacvc/detail_tf/'+str(patiopk)
+                #print(url)
+                response = self.client.get(url)
+                #print(response)
+                #print(response)
+                self.assertEqual(response.status_code, 200)
+
+
+         def test_list_tk_url_resolves(self):
+
+               patio= PatioTanque.objects.all().first()
+               patiopk=patio.pk
+               url= '/sacvc/list_tk/'+str(patiopk)
+               #print(url)
+               response = self.client.get(url)
+               #print(response)
+               #print(response)
+               self.assertEqual(response.status_code, 200)
+
+
+         def test_delete_tk_url_resolves(self):
+
+              patio= PatioTanque.objects.all().first()
+              patiopk=patio.pk
+
+              filtrotanque= Tk.objects.filter(id_patioTanque= patio)
+
+              for tanque in filtrotanque:
+
+                  tanquepk=tanque.pk
+                  print(tanquepk)
+
+              url= '/sacvc/delete_tk/'+str(tanquepk)
+              print(url)
+              response = self.client.get(url)
+
+              self.assertEqual(response.status_code, 200)
+
+
+
+         def test_detail_tk_url_resolves(self):
+
+              patio= PatioTanque.objects.all().first()
+              patiopk=patio.pk
+
+
+              filtrotanque= Tk.objects.filter(id_patioTanque= patio)
+
+
+              for tanque in filtrotanque:
+
+                  tanquepk=tanque.pk
+                  print(tanquepk)
+
+              url= '/sacvc/detail_tk/'+str(tanquepk)
+              print(url)
+              response = self.client.get(url)
+
+              self.assertEqual(response.status_code, 200)
+
+
+         def test_edit_tk_url_resolves(self):
+
+              patio= PatioTanque.objects.all().first()
+              patiopk=patio.pk
+
+
+              filtrotanque= Tk.objects.filter(id_patioTanque= patio)
+
+
+              for tanque in filtrotanque:
+
+                 tanquepk=tanque.pk
+                 print(tanquepk)
+
+              url= '/sacvc/edit_tk/'+str(tanquepk)
+              print(url)
+              response = self.client.get(url)
+
+              self.assertEqual(response.status_code, 200)
