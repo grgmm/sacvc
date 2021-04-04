@@ -1,0 +1,10 @@
+@charset "ISO-8859-1";
+
+#tituloBase{
+	background-color: #338599;
+	font-size: 40px;
+	text-align: center;
+	padding-top:5px;
+	padding-bottom:5px;
+	color: white;
+}
