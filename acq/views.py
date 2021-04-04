@@ -66,8 +66,14 @@ class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
-            if not usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
+            filtro_usuario = Group.objects.filter(user = request.user)
+            for g in filtro_usuario:
+    # this should print all group names for the user
+                    print(g.name)
+
+            if (not g.name =='supervisores'):
                 print('usuario sin perfil adecuado cerrando sesión')
+
                 return redirect('/sacvc/logout')
             else:
                  return super(patiotanquelist, self).get(request, *args, **kwargs)

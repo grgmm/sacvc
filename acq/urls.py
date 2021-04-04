@@ -43,7 +43,7 @@ urlpatterns = [
 
     path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #principal (vacio)
 
-    url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'), #Probada con TDD
+    url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'), #Probada con módulo de prueba teste_url_simples
 
     url(r'^delete_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'),
 
@@ -51,7 +51,7 @@ urlpatterns = [
 
     url(r'^edit_tf/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edit_tf'),
 
-    url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'),
+    url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'), #Probada con módulo de prueba teste_url_simples
 
     url(r'^list_tk/(?P<exp>\d+)$', tklist.as_view(), name='list_tk'),
 
@@ -69,11 +69,11 @@ urlpatterns = [
 
     url('Valores_Actuales/',views.Valores_Actuales, name='Valores_Actuales'),
 
-    url('login/',LoginView.as_view(), name='login'), #Probada con TDD
+    url('login/',LoginView.as_view(), name='login'), #Probada con módulo de prueba teste_url_simples
 
-    url(r'^logout/$', LogoutView.as_view(), name = "logout"), #Probada con TDD
+    url(r'^logout/$', LogoutView.as_view(), name = "logout"), #Probada con módulo de prueba teste_url_simples
 
-    url(r'^Menu/$', Menu.as_view(), name = "Menu"), #Probada con TDD
+    url(r'^Menu/$', Menu.as_view(), name = "Menu"), #Probada con módulo de prueba teste_url_simples
 
 
 
