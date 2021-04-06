@@ -1,25 +1,25 @@
  {% extends 'acq/base.html' %} 
  {% load static %} 
  {% block title %} 
+ 
  {% endblock %} 
  
  {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/reset.css' %}">
-<link rel="stylesheet" href="{% static 'css/list_tf.css' %}">
+<link rel="stylesheet" href="{% static 'css/list_tf_tk.css' %}">
 
 <div id="cuerpo">
 	<h2 class="titulo">Patios de Tanques o Terminales de
 		Almacenamiento</h2>
 		<div>
-			<a href="{%url 'uacq:add_tf'%}" type="button" class="btn_control">
-				AGREGAR INSTALACÓN</a>
+			<a href="{%url 'uacq:add_tf'%}" type="button" class="btn_control">AGREGAR INSTALACÓN</a>
 			<a href="{% url 'uacq:logout' %}" type="button" class="btn_control">SALIR</a>
 		</div>
 		<div id="principal">
 			<table class="table">
 				<!-- Encabezado de la tabla con tres columnas-->
-				<th>NOMBRE</th>
+				<th>PATIO</th>
 				<th>ACCIÓN</th>
 				<th>TANQUES</th> 
 				
@@ -38,7 +38,8 @@
 					<!-- Columna3=link a tanques del patio -->
 					<td>
 						<a href="{% url 'uacq:list_tk' patio.pk %}" class="btn_tabla">Tanques</a>
-					</td> 		
+					</td>
+				 	</tr>			 		
 				{% endfor %}
 			</table>
 		</div>

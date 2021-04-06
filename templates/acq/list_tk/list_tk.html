@@ -1,56 +1,48 @@
+{% extends 'acq/base.html' %} 
+ {% load static %} 
+ {% block title %} 
+ {% endblock %} 
+ 
+ {% block content %}
 
-  {% extends 'acq/base.html' %}
-  {% block title %}{% endblock %}
-  {% block footer %} <a href="{% url 'uacq:list_tf' %}" type="button" class="btn btn-info"> Regresar</a>
-  {% endblock %}
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/list_tf_tk.css' %}">
 
-  {% block content %}
-
-
-  <th>	<h3> <a href="{% url 'uacq:logout' %}"  class="link-primary">SALIR</a></th></h3>
-
-
-       <table id="Tk">
-
-
-
-        <th>NOMBRE </th> <th> ACCIÓN </th> <th>  TABLA TCT </th>
-
-<h2>Tanques de Almacenamiento de la instalacion {{object_list.first.id_patioTanque.Nombre}}</h2>
-
-{% for tk in object_list %}
-
-
-  <tr>
- <td> {{ tk.Nombre }} </td>
-
-
- <td>
-<a  href="{% url 'uacq:detail_tk' tk.pk  %}">Detalle</a>
-<a  href="{% url 'uacq:edit_tk' tk.pk  %}">Editar</a>
-<a  href="{% url 'uacq:del_tk' tk.pk  %}">Borrar</a>
-
-
-</td>
-
-
- <td>
-
- 	{% if tk.tct_archivo  %}
- 		<a href ="{{tk.tct_archivo.url}}" >ver</a>
- 	{% endif %}
-
-
-</td>
-
-
-
- {% endfor %}
-
-
-  <H5>AGREGAR TANQUE</H5><a href="{%url 'uacq:add_tk'%}" type="button" class="btn btn-info"> AgregarTK </a>
-
-
-
-
-   {% endblock %}
+<div id="cuerpo">
+	<h2 class="titulo">Tanques de Almacenamiento de la instalacion {{object_list.first.id_patioTanque.Nombre}}</h2>
+		<div>
+			<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control">REGRESAR</a>
+			<a href="{% url 'uacq:logout' %}" type="button" class="btn_control">SALIR</a>
+			<a href="{%url 'uacq:add_tk'%}" type="button" class="btn_control">AGREGAR TK </a>
+		</div>
+		<div id="principal">
+			<table class="table">
+				<!-- Encabezado de la tabla con tres columnas-->
+				<th>TANQUE</th>
+				<th>ACCIÓN</th>
+				<th>TABLA TCT</th> 
+				
+				{% for tk in object_list %}
+					<tr>
+					<!-- Columna1=Nombre del TANQUE -->
+						<td>{{ tk.Nombre }}</td>
+						
+						<!-- Columna2=links -->
+						<td>
+							<a href="{% url 'uacq:detail_tk' tk.pk  %}" class="btn_tabla">Detalle</a> 
+							<a href="{% url 'uacq:edit_tk' tk.pk  %}" class="btn_tabla">Editar</a>
+							<a href="{% url 'uacq:del_tk' tk.pk  %}" class="btn_tabla">Borrar</a>
+						</td>
+						
+						<!-- Columna3-->
+						<td>
+							{% if tk.tct_archivo %} 
+								<a href="{{tk.tct_archivo.url}}">ver</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</table>	
+		</div>
+</div>
+{% endblock %}
