@@ -1,0 +1,15 @@
+{% extends 'acq/base.html' %}
+{% block title %}Borar Usuario{% endblock %}
+{% block footer %} <a href="{{ view.get_success_url }}" type="button" class="btn btn-info"> No, Regresar</a>
+{% endblock %}
+
+{% block content %}
+
+<h1>Borrar Usuario</h1>
+<form  method="post">
+{% csrf_token %}
+Esta segur@ de eliminar esta Usuario?
+<input  type="submit"  value="Si, Borrar"  />
+<br>
+</form>
+   {% endblock %}

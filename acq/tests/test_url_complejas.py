@@ -41,22 +41,12 @@ class testUrls2(TestCase):
 
          def test_edit_tf_url_resolves(self):
 
-                #OJO NO ESTA DISCRIMINANDO TIPO DE PERFIL EN LAS PRUEBAS URL
 
-                #if lolo1.is_authenticated:
-                #    lolo1.authenticated = False
-                #    lolo1.save()
-                #    if lolo1.is_authenticated:
-                #        print('no hice nada')
-
-                #else:
-                #        print('No estaba de macho')
                 patio= PatioTanque.objects.all().last()
                 patiopk=patio.pk
                 url= '/sacvc/edit_tf/'+str(patiopk)
                 response = self.client.get(url)
-                #print(response)
-                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.status_code, 302)
 
          def test_delete_tf_url_resolves(self):
 
@@ -65,20 +55,18 @@ class testUrls2(TestCase):
                 url= '/sacvc/delete_tf/'+str(patiopk)
 
                 response = self.client.get(url)
-                #print(response)
-                #print(response)
-                self.assertEqual(response.status_code, 200)
+
+                self.assertEqual(response.status_code, 302)
 
          def test_detail_tf_url_resolves(self):
 
                 patio= PatioTanque.objects.all().first()
                 patiopk=patio.pk
                 url= '/sacvc/detail_tf/'+str(patiopk)
-                #print(url)
+
                 response = self.client.get(url)
-                #print(response)
-                #print(response)
-                self.assertEqual(response.status_code, 200)
+
+                self.assertEqual(response.status_code, 302)
 
 
          def test_list_tk_url_resolves(self):
@@ -86,10 +74,9 @@ class testUrls2(TestCase):
                patio= PatioTanque.objects.all().first()
                patiopk=patio.pk
                url= '/sacvc/list_tk/'+str(patiopk)
-               #print(url)
+
                response = self.client.get(url)
-               #print(response)
-               #print(response)
+
                self.assertEqual(response.status_code, 200)
 
 
@@ -103,13 +90,11 @@ class testUrls2(TestCase):
               for tanque in filtrotanque:
 
                   tanquepk=tanque.pk
-                  print(tanquepk)
 
               url= '/sacvc/delete_tk/'+str(tanquepk)
-              print(url)
               response = self.client.get(url)
 
-              self.assertEqual(response.status_code, 200)
+              self.assertEqual(response.status_code, 302)
 
 
 
@@ -125,13 +110,11 @@ class testUrls2(TestCase):
               for tanque in filtrotanque:
 
                   tanquepk=tanque.pk
-                  print(tanquepk)
 
               url= '/sacvc/detail_tk/'+str(tanquepk)
-              print(url)
               response = self.client.get(url)
 
-              self.assertEqual(response.status_code, 200)
+              self.assertEqual(response.status_code, 302)
 
 
          def test_edit_tk_url_resolves(self):
@@ -146,14 +129,11 @@ class testUrls2(TestCase):
               for tanque in filtrotanque:
 
                  tanquepk=tanque.pk
-                 print(tanquepk)
 
               url= '/sacvc/edit_tk/'+str(tanquepk)
-              print(url)
               response = self.client.get(url)
 
-              self.assertEqual(response.status_code, 200)
-
+              self.assertEqual(response.status_code, 302)
 
 
          def test_edit_usr_url_resolves(self):
@@ -162,7 +142,20 @@ class testUrls2(TestCase):
               usuario1pk = usuario1.pk
 
               url= '/sacvc/edit_usr/'+str(usuario1pk)
-              print(url)
               response = self.client.get(url)
 
-              self.assertEqual(response.status_code, 200)
+              self.assertEqual(response.status_code, 302)
+
+
+         def test_delete_usr_url_resolves(self):
+
+                usuario1 = User.objects.all().last()
+                usuario1pk = usuario1.pk
+
+                url= '/sacvc/del_user/'+str(usuario1pk)
+                print(url)
+
+                response = self.client.get(url)
+                print(response)
+                #print(response)
+                self.assertEqual(response.status_code, 302)

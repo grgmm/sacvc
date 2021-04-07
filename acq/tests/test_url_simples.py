@@ -67,3 +67,13 @@ class TestUrls(SimpleTestCase):
         self.assertEquals(resolve(url).func.view_class,usuarioslist)
         response = self.client.get('/sacvc/list_usr')
         self.assertEqual(response.status_code, 301)
+
+
+    def test_add_usr_url_resolves(self):
+
+        url = reverse('sacvc:add_usr')
+
+            #url= '/sacvc/add_tk'
+        self.assertEquals(resolve(url).func.view_class, usuariosadd)
+        response = self.client.get('/sacvc/add_usr')
+        self.assertEqual(response.status_code, 301)

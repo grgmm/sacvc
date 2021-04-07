@@ -57,7 +57,6 @@ class current_data(ListView):
   template_name = 'acq/current_data/current_data.html'
 
 
-
 class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
      #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
@@ -74,9 +73,9 @@ class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
                     print(g.name)
 
             if (not g.name =='supervisores'):
-                print('usuario sin perfil adecuado cerrando sesión')
+                print('Usuario sin Perfil')
 
-                return redirect('/sacvc/logout')
+                return redirect('/sacvc/Menu')
             else:
                  return super(patiotanquelist, self).get(request, *args, **kwargs)
 
@@ -89,14 +88,18 @@ class PatiotanqueAdd(CreateView): #VALIDADO PRELIMINAR
     template_name = 'acq/add_tf/add_tf.html'
     success_url = reverse_lazy('uacq:list_tf')
 
-
-#EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
-            if not usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
-                print('usuario sin perfil adecuado cerrando sesión')
-                return redirect('/sacvc/logout')
+            filtro_usuario = Group.objects.filter(user = request.user)
+            for g in filtro_usuario:
+    # this should print all group names for the user
+                    print(g.name)
+
+            if (not g.name =='supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
             else:
                  return super(PatiotanqueAdd, self).get(request, *args, **kwargs)
 
@@ -104,20 +107,80 @@ class PatiotanqueAdd(CreateView): #VALIDADO PRELIMINAR
             return redirect('/sacvc/logout')
 
 
+#EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
+
+
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
     success_url = reverse_lazy('uacq:list_tf')
     template_name = 'acq/del_tf/del_tf.html'
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user = request.user)
+            for g in filtro_usuario:
+    # this should print all group names for the user
+                    print(g.name)
+
+            if (not g.name =='supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                 return super(PatiotanqueDelete, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
 class PatiotanqueDetail(DetailView):
     model = PatioTanque
     template_name = 'acq/detail_tf/detail_tf.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user = request.user)
+            for g in filtro_usuario:
+    # this should print all group names for the user
+                    print(g.name)
+
+            if (not g.name =='supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                 return super(PatiotanqueDetail, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
+
 
 class PatiotanqueUpdate(UpdateView):
   model = PatioTanque
   fields = ['Nombre', 'Descriptor']
   template_name = 'acq/edit_tf/edit_tf.html'
   success_url = reverse_lazy('uacq:list_tf' )
+
+  def get(self, request, *args, **kwargs):
+      if request.user.is_authenticated:
+
+          filtro_usuario = Group.objects.filter(user = request.user)
+          for g in filtro_usuario:
+  # this should print all group names for the user
+                  print(g.name)
+
+          if (not g.name =='supervisores'):
+              print('Usuario sin Perfil')
+
+              return redirect('/sacvc/Menu')
+          else:
+               return super(PatiotanqueUpdate, self).get(request, *args, **kwargs)
+
+      else:
+          return redirect('/sacvc/logout')
+
 
 class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
@@ -131,6 +194,24 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
       #print(filtro)
       return(filtro)
 
+      def get(self, request, *args, **kwargs):
+          if request.user.is_authenticated:
+
+              filtro_usuario = Group.objects.filter(user = request.user)
+              for g in filtro_usuario:
+      # this should print all group names for the user
+                      print(g.name)
+
+              if (not g.name =='supervisores'):
+                  print('Usuario sin Perfil')
+
+                  return redirect('/sacvc/Menu')
+              else:
+                   return super(tklist, self).get(request, *args, **kwargs)
+
+          else:
+              return redirect('/sacvc/logout')
+
 
 class TkAdd(CreateView): #VALIDADO PRELIMINAR
     model = Tk
@@ -138,6 +219,12 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
 
+    def get_queryset(self):
+      qs = super(tklist, self).get_queryset()
+      #print(qs)
+      filtro= qs.filter(id_patioTanque__exact=self.kwargs['exp'])
+      #print(filtro)
+      return(filtro)
 
     #EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
 
@@ -211,16 +298,71 @@ class TkDelete(DeleteView):
     success_url = reverse_lazy('uacq:list_tf')
     template_name = 'acq/del_tk/del_tk.html'
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user = request.user)
+            for g in filtro_usuario:
+    # this should print all group names for the user
+                    print(g.name)
+
+            if (not g.name =='supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                 return super(TkDelete, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
 class TkDetail(DetailView):
     model = Tk
     template_name = 'acq/detail_tk/detail_tk.html'
     fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'fecha_subida_tct']
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user = request.user)
+            for g in filtro_usuario:
+    # this should print all group names for the user
+                    print(g.name)
+
+            if (not g.name =='supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                 return super(TkDetail, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
 
 class TkUpdate(UpdateView):
   model = Tk
   fields = ['Nombre', 'Descriptor',]
   template_name = 'acq/edit_tk/edit_tk.html'
   success_url = reverse_lazy('uacq:list_tf' )
+
+
+  def get(self, request, *args, **kwargs):
+      if request.user.is_authenticated:
+
+          filtro_usuario = Group.objects.filter(user = request.user)
+          for g in filtro_usuario:
+  # this should print all group names for the user
+                  print(g.name)
+
+          if (not g.name =='supervisores'):
+              print('Usuario sin Perfil')
+
+              return redirect('/sacvc/Menu')
+          else:
+               return super(TkUpdate, self).get(request, *args, **kwargs)
+
+      else:
+          return redirect('/sacvc/logout')
 
 class Validar_Tct(UpdateView):
     model = Tk
@@ -257,6 +399,25 @@ class Validar_Tct(UpdateView):
         if request.POST.get("btn_guardar_tct_salir", ""):
           response= 'Editar Archivo Tct / Salir'
         return super(Validar_Tct, self).post(request, **kwargs)
+
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user = request.user)
+            for g in filtro_usuario:
+    # this should print all group names for the user
+                    print(g.name)
+
+            if (not g.name =='supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                 return super(Validar_Tct, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
 
 def integridad_TCT(request, pk):
 
@@ -426,9 +587,96 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
     template_name = 'acq/list_usr/list_usr.html'
 
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user = request.user)
+            for g in filtro_usuario:
+    # this should print all group names for the user
+                    print(g.name)
+
+            if (not g.name =='supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                 return super(usuarioslist, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
+
+
 class usuariosedit(UpdateView):
   model = usuario
   template_name = 'acq/edit_usr/edit_usr.html'
   fields = ['username','email']
-
   success_url = reverse_lazy('uacq:list_usr' )
+
+  def get(self, request, *args, **kwargs):
+      if request.user.is_authenticated:
+
+          filtro_usuario = Group.objects.filter(user = request.user)
+          for g in filtro_usuario:
+  # this should print all group names for the user
+                  print(g.name)
+
+          if (not g.name =='supervisores'):
+              print('Usuario sin Perfil')
+
+              return redirect('/sacvc/Menu')
+          else:
+               return super(usuariosedit, self).get(request, *args, **kwargs)
+
+      else:
+          return redirect('/sacvc/logout')
+
+
+class usuariosadd(CreateView):
+    model = usuario
+    fields = ['username', 'email', ]
+    template_name = 'acq/add_usr/add_usr.html'
+    success_url = reverse_lazy('uacq:list_usr')
+
+    def get(self, request, *args, **kwargs):
+         if request.user.is_authenticated:
+
+             filtro_usuario = Group.objects.filter(user = request.user)
+             for g in filtro_usuario:
+     # this should print all group names for the user
+                     print(g.name)
+
+             if (not g.name =='supervisores'):
+                 print('Usuario sin Perfil')
+
+                 return redirect('/sacvc/Menu')
+             else:
+                  return super(usuariosadd, self).get(request, *args, **kwargs)
+
+         else:
+             return redirect('/sacvc/logout')
+
+
+class usuariosdelete(DeleteView):
+    model = usuario
+    success_url = reverse_lazy('uacq:list_usr')
+    template_name = 'acq/del_usr/del_usr.html'
+
+
+    def get(self, request, *args, **kwargs):
+         if request.user.is_authenticated:
+
+             filtro_usuario = Group.objects.filter(user = request.user)
+             for g in filtro_usuario:
+     # this should print all group names for the user
+                     print(g.name)
+
+             if (not g.name =='supervisores'):
+                 print('Usuario sin Perfil')
+
+                 return redirect('/sacvc/Menu')
+             else:
+                  return super(usuariosdelete, self).get(request, *args, **kwargs)
+
+         else:
+             return redirect('/sacvc/logout')

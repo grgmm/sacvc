@@ -27,6 +27,8 @@ from .views import (
     Menu,
     usuarioslist,
     usuariosedit,
+    usuariosadd,
+    usuariosdelete,
     )
 
 
@@ -80,5 +82,9 @@ urlpatterns = [
     url(r'^list_usr/$', usuarioslist.as_view(), name = "list_usr"), #Probada con módulo de prueba teste_url_simples
 
     url(r'^edit_usr/(?P<pk>\d+)$', usuariosedit.as_view(), name='edit_usr'),
+
+    url(r'^add_usr/', usuariosadd.as_view(), name='add_usr'),
+
+    url(r'^del_user/(?P<pk>\d+)$', usuariosdelete.as_view(), name='del_user'),
 
 ]
