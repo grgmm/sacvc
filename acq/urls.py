@@ -25,6 +25,8 @@ from .views import (
     LoginView,
     LogoutView,
     Menu,
+    usuarioslist,
+    usuariosedit,
     )
 
 
@@ -45,23 +47,23 @@ urlpatterns = [
 
     url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'), #Probada con módulo de prueba teste_url_simples
 
-    url(r'^delete_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'),
+    url(r'^delete_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'), #Probada con módulo de prueba teste_url_complejas
 
-    url(r'^detail_tf/(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detail_tf'),
+    url(r'^detail_tf/(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detail_tf'), #Probada con módulo de prueba teste_url_complejas
 
-    url(r'^edit_tf/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edit_tf'),
+    url(r'^edit_tf/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edit_tf'), #Probada con módulo de prueba teste_url_complejas
 
-    url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'), #Probada con módulo de prueba teste_url_simples
+    url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'), #Probada con módulo de prueba teste_url_complejas
 
-    url(r'^list_tk/(?P<exp>\d+)$', tklist.as_view(), name='list_tk'),
+    url(r'^list_tk/(?P<exp>\d+)$', tklist.as_view(), name='list_tk'), #Probada con módulo de prueba teste_url_simples
 
-    url(r'^delete_tk/(?P<pk>\d+)$', TkDelete.as_view(), name='del_tk'),
+    url(r'^delete_tk/(?P<pk>\d+)$', TkDelete.as_view(), name='del_tk'), #Probada con módulo de prueba teste_url_complejas
 
-    url(r'^detail_tk/(?P<pk>\d+)$', TkDetail.as_view(), name='detail_tk'),
+    url(r'^detail_tk/(?P<pk>\d+)$', TkDetail.as_view(), name='detail_tk'), #Probada con módulo de prueba teste_url_complejas
 
-    url(r'^edit_tk/(?P<pk>\d+)$', TkUpdate.as_view(), name='edit_tk'),
+    url(r'^edit_tk/(?P<pk>\d+)$', TkUpdate.as_view(), name='edit_tk'), #Probada con módulo de prueba teste_url_complejas
 
-    url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'),
+    url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'), #Probada con módulo de prueba teste_url_complejas
 
     url(r'^validar_tct/(?P<pk>\d+)$', Validar_Tct.as_view(), name='validar_tct'),
 
@@ -75,14 +77,8 @@ urlpatterns = [
 
     url(r'^Menu/$', Menu.as_view(), name = "Menu"), #Probada con módulo de prueba teste_url_simples
 
+    url(r'^list_usr/$', usuarioslist.as_view(), name = "list_usr"), #Probada con módulo de prueba teste_url_simples
 
-
-
-    #path('login', views.login, name='login'),
-    #path('logout', views.logout, name = 'logout'),
-
-
-
-
+    url(r'^edit_usr/(?P<pk>\d+)$', usuariosedit.as_view(), name='edit_usr'),
 
 ]

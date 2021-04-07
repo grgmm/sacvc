@@ -41,6 +41,8 @@ from django.contrib.auth.models import User as usuario, Group
 
 from django.contrib.auth.forms import AuthenticationForm
 
+from django.contrib.auth.decorators import login_required
+
 def actualizar(request):
 
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
@@ -415,3 +417,18 @@ def welcome(request):
     # En otro caso redireccionamos al login
         #return render(request, "acq/authent/welcome.html")
     return redirect('/sacvc/login')
+
+
+class usuarioslist(ListView):  #VALIDADO PRELIMINAR
+     #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
+
+    model = usuario
+    template_name = 'acq/list_usr/list_usr.html'
+
+
+class usuariosedit(UpdateView):
+  model = usuario
+  template_name = 'acq/edit_usr/edit_usr.html'
+  fields = ['username','email']
+
+  success_url = reverse_lazy('uacq:list_usr' )

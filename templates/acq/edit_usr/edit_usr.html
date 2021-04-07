@@ -1,0 +1,17 @@
+{% extends "acq/base.html" %}
+{% block title %} Editar Usuario {% endblock %}
+
+
+{% block content %}
+ <h2>Modificar Tanque: {{usuario.username}}</h2>
+
+	<form method="post" enctype = 'multipart/form-data'>
+    	{{ form.as_p }}s
+   		{% csrf_token %}
+
+   		<h2>{{usuario.pk}}</h2>
+
+    	<input type="submit" value="Modificar">
+	</form>
+
+{% endblock %}

@@ -2,7 +2,7 @@ from django.urls import resolve, reverse
 from acq.views import *
 from acq.models import *
 from django.test import TestCase
-from django.conf.urls import url
+#from django.conf.urls import url
 
 from django.contrib.auth.models import User
 
@@ -42,8 +42,6 @@ class testUrls2(TestCase):
          def test_edit_tf_url_resolves(self):
 
                 #OJO NO ESTA DISCRIMINANDO TIPO DE PERFIL EN LAS PRUEBAS URL
-                lolo1 = User.objects.get(username = 'testuser1')
-                lolo2 = User.objects.get(username = 'testuser2')
 
                 #if lolo1.is_authenticated:
                 #    lolo1.authenticated = False
@@ -151,6 +149,19 @@ class testUrls2(TestCase):
                  print(tanquepk)
 
               url= '/sacvc/edit_tk/'+str(tanquepk)
+              print(url)
+              response = self.client.get(url)
+
+              self.assertEqual(response.status_code, 200)
+
+
+
+         def test_edit_usr_url_resolves(self):
+
+              usuario1 = User.objects.all().last()
+              usuario1pk = usuario1.pk
+
+              url= '/sacvc/edit_usr/'+str(usuario1pk)
               print(url)
               response = self.client.get(url)
 
