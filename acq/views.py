@@ -577,7 +577,7 @@ def welcome(request):
 
     # En otro caso redireccionamos al login
         #return render(request, "acq/authent/welcome.html")
-    return redirect('/sacvc/login')
+    return redirect('/sacvc/logout')
 
 
 class usuarioslist(ListView):  #VALIDADO PRELIMINAR

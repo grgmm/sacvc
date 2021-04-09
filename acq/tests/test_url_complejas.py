@@ -153,9 +153,9 @@ class testUrls2(TestCase):
                 usuario1pk = usuario1.pk
 
                 url= '/sacvc/del_user/'+str(usuario1pk)
-                print(url)
+                #print(url)
 
                 response = self.client.get(url)
-                print(response)
+                #print(response)
                 #print(response)
                 self.assertEqual(response.status_code, 302)
