@@ -62,18 +62,18 @@ class TestUrls(SimpleTestCase):
 
     def test_list_usr_url_resolves(self):
 
-        url = reverse('sacvc:list_usr')
+        url = reverse('sacvc:list_user')
         #print(resolve(url))
         self.assertEquals(resolve(url).func.view_class,usuarioslist)
-        response = self.client.get('/sacvc/list_usr')
+        response = self.client.get('/sacvc/list_user')
         self.assertEqual(response.status_code, 301)
 
 
     def test_add_usr_url_resolves(self):
 
-        url = reverse('sacvc:add_usr')
+        url = reverse('sacvc:add_user')
 
             #url= '/sacvc/add_tk'
         self.assertEquals(resolve(url).func.view_class, usuariosadd)
-        response = self.client.get('/sacvc/add_usr')
+        response = self.client.get('/sacvc/add_user')
         self.assertEqual(response.status_code, 301)

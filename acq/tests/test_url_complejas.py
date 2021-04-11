@@ -141,7 +141,7 @@ class testUrls2(TestCase):
               usuario1 = User.objects.all().last()
               usuario1pk = usuario1.pk
 
-              url= '/sacvc/edit_usr/'+str(usuario1pk)
+              url= '/sacvc/edit_user/'+str(usuario1pk)
               response = self.client.get(url)
 
               self.assertEqual(response.status_code, 302)
@@ -157,5 +157,18 @@ class testUrls2(TestCase):
 
                 response = self.client.get(url)
                 #print(response)
+                #print(response)
+                self.assertEqual(response.status_code, 302)
+
+         def test_detail_usr_url_resolves(self):
+
+                usuario1 = User.objects.all().last()
+                usuario1pk = usuario1.pk
+
+                url= '/sacvc/detail_user/'+str(usuario1pk)
+                print(url)
+
+                response = self.client.get(url)
+                print(response)
                 #print(response)
                 self.assertEqual(response.status_code, 302)

@@ -29,6 +29,7 @@ from .views import (
     usuariosedit,
     usuariosadd,
     usuariosdelete,
+    usuariodetail,
     )
 
 
@@ -79,12 +80,14 @@ urlpatterns = [
 
     url(r'^Menu/$', Menu.as_view(), name = "Menu"), #Probada con módulo de prueba teste_url_simples
 
-    url(r'^list_usr/$', usuarioslist.as_view(), name = "list_usr"), #Probada con módulo de prueba teste_url_simples
+    url(r'^list_user/$', usuarioslist.as_view(), name = "list_user"), #Probada con módulo de prueba teste_url_simples
 
-    url(r'^edit_usr/(?P<pk>\d+)$', usuariosedit.as_view(), name='edit_usr'),
+    url(r'^edit_user/(?P<pk>\d+)$', usuariosedit.as_view(), name='edit_user'),
 
-    url(r'^add_usr/', usuariosadd.as_view(), name='add_usr'),
+    url(r'^add_user/', usuariosadd.as_view(), name='add_user'),
 
     url(r'^del_user/(?P<pk>\d+)$', usuariosdelete.as_view(), name='del_user'),
+
+    url(r'^detail_user/(?P<pk>\d+)$', usuariodetail.as_view(), name='detail_user'),
 
 ]

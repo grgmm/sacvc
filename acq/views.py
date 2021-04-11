@@ -56,7 +56,6 @@ class current_data(ListView):
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
 
-
 class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
      #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
@@ -106,9 +105,7 @@ class PatiotanqueAdd(CreateView): #VALIDADO PRELIMINAR
         else:
             return redirect('/sacvc/logout')
 
-
 #EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
-
 
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
@@ -155,8 +152,6 @@ class PatiotanqueDetail(DetailView):
         else:
             return redirect('/sacvc/logout')
 
-
-
 class PatiotanqueUpdate(UpdateView):
   model = PatioTanque
   fields = ['Nombre', 'Descriptor']
@@ -180,7 +175,6 @@ class PatiotanqueUpdate(UpdateView):
 
       else:
           return redirect('/sacvc/logout')
-
 
 class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
@@ -211,7 +205,6 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
           else:
               return redirect('/sacvc/logout')
-
 
 class TkAdd(CreateView): #VALIDADO PRELIMINAR
     model = Tk
@@ -291,7 +284,6 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              direccion_campo= 100+(qtk-1)*10+9,
              TipoVariable= 'C',
              etiqueta1='TOV',)
-
 
 class TkDelete(DeleteView):
     model = Tk
@@ -456,7 +448,6 @@ def integridad_TCT(request, pk):
 
   return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data':json_temp,'pk':pk})
 
-
 def guardar_TCT_BD(request, pk):
 
   try:
@@ -515,7 +506,6 @@ def Valores_Actuales(request):
       # return JsonResponse(data_fr)
        return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data})
 
-
 class Menu(View): #VALIDADO PRELIMINAR
 
     def get(self, request, *args, **kwargs):
@@ -538,7 +528,6 @@ class Menu(View): #VALIDADO PRELIMINAR
 
         else:
                 return redirect('/sacvc/logout')
-
 
 class LoginView(FormView): #VALIDADO PRELIMINAR
     form_class = AuthenticationForm
@@ -563,14 +552,12 @@ class LoginView(FormView): #VALIDADO PRELIMINAR
         login(self.request, form.get_user())
         return super(LoginView, self).form_valid(form)
 
-
 class LogoutView(RedirectView): #VALIDADO PRELIMINAR
     pattern_name = 'sacvc:login'
 
     def get(self, request, *args, **kwargs):
         logout(request)
         return super(LogoutView, self).get(request, *args, **kwargs)
-
 
 def welcome(request):
     #if request.user.is_authenticated:
@@ -579,13 +566,11 @@ def welcome(request):
         #return render(request, "acq/authent/welcome.html")
     return redirect('/sacvc/logout')
 
-
 class usuarioslist(ListView):  #VALIDADO PRELIMINAR
      #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = usuario
-    template_name = 'acq/list_usr/list_usr.html'
-
+    template_name = 'acq/list_user/list_user.html'
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -605,13 +590,11 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
         else:
             return redirect('/sacvc/logout')
 
-
-
 class usuariosedit(UpdateView):
   model = usuario
-  template_name = 'acq/edit_usr/edit_usr.html'
+  template_name = 'acq/edit_user/edit_user.html'
   fields = ['username','email']
-  success_url = reverse_lazy('uacq:list_usr' )
+  success_url = reverse_lazy('uacq:list_user' )
 
   def get(self, request, *args, **kwargs):
       if request.user.is_authenticated:
@@ -631,12 +614,11 @@ class usuariosedit(UpdateView):
       else:
           return redirect('/sacvc/logout')
 
-
 class usuariosadd(CreateView):
     model = usuario
     fields = ['username', 'email', ]
-    template_name = 'acq/add_usr/add_usr.html'
-    success_url = reverse_lazy('uacq:list_usr')
+    template_name = 'acq/add_user/add_user.html'
+    success_url = reverse_lazy('uacq:list_user')
 
     def get(self, request, *args, **kwargs):
          if request.user.is_authenticated:
@@ -656,11 +638,10 @@ class usuariosadd(CreateView):
          else:
              return redirect('/sacvc/logout')
 
-
 class usuariosdelete(DeleteView):
     model = usuario
-    success_url = reverse_lazy('uacq:list_usr')
-    template_name = 'acq/del_usr/del_usr.html'
+    success_url = reverse_lazy('uacq:list_user')
+    template_name = 'acq/del_user/del_user.html'
 
 
     def get(self, request, *args, **kwargs):
@@ -680,3 +661,25 @@ class usuariosdelete(DeleteView):
 
          else:
              return redirect('/sacvc/logout')
+
+class usuariodetail(DetailView):
+        model = usuario
+        template_name = 'acq/detail_user/detail_user.html'
+
+        def get(self, request, *args, **kwargs):
+            if request.user.is_authenticated:
+
+                filtro_usuario = Group.objects.filter(user = request.user)
+                for g in filtro_usuario:
+        # this should print all group names for the user
+                        print(g.name)
+
+                if (not g.name =='supervisores'):
+                    print('Usuario sin Perfil')
+
+                    return redirect('/sacvc/Menu')
+                else:
+                     return super(usuariodetail, self).get(request, *args, **kwargs)
+
+            else:
+                return redirect('/sacvc/logout')

@@ -12,9 +12,13 @@
 <div id="cuerpo">
  <h2 class="titulo">Patios de Tanques o Terminales de
    Almacenamiento</h2>
-   <div>
 
+   <div>
+     <a href="{%url 'uacq:add_user'%}" type="button" class="btn_control">AGREGAR USUARIO</a>
+     <a href="{% url 'uacq:logout' %}" type="button" class="btn_control">SALIR</a>
    </div>
+
+
    <div id="principal">
      <table class="table">
        <!-- Encabezado de la tabla con tres columnas-->
@@ -26,11 +30,15 @@
          <tr>
          <!-- Columna1=Nombre del patio -->
          <td id="nombre_patio">{{ usuario.username }}</td>
+         <td id="nombre_patio">{{ usuario.email }}</td>
 
-         <!-- Columna2=links -->
+
          <td>
-
+           <a href="{% url 'uacq:detail_user' usuario.pk  %}" class="btn_tabla">Detalle</a>
+           <a href="{% url 'uacq:edit_user' usuario.pk  %}" class="btn_tabla">Editar</a>
+           <a href="{% url 'uacq:del_user' usuario.pk  %}" class="btn_tabla">Borrar</a>
          </td>
+
 
          <!-- Columna3=link a tanques del patio -->
          <td>

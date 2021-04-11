@@ -1,0 +1,17 @@
+
+ {% extends 'acq/base.html' %}
+  {% block title %}Instalación {{user.get.username}} {% endblock %}
+  {% block content %}
+
+
+
+<p>Usuario: <i>{{user.username}}</i></p>
+<p>Id del Usuario: <i>{{user.pk}}</i></p>
+<p>Email Usuario: <i>{{user.email}}</i></p>
+
+
+<p>
+<a href="{% url 'uacq:list_user' %}" type="button" class="btn btn-info"> Regresar</a>
+</p>
+
+    {% endblock %}
