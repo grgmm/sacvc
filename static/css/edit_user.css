@@ -9,9 +9,9 @@ html, body {
 #ventana {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
-	top: 33%; /* mayor que height de la imagen*/
-	left: 33%; /*(100%-(width:24%))/2*/
-	height: 35%; /*menor que 100%-height de la imagen*/
+	top: 32%; /* mayor que height de la imagen*/
+	left: 32%; /*(100%-(width:24%))/2*/
+	height: 44%; /*menor que 100%-height de la imagen*/
 	width: 33%;
 	background: #fff;
 	border-radius: 10px;
