@@ -5,40 +5,21 @@
 {% endblock %}
 
 {% block content %}
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" href="{% static 'css/del_user.css' %}">
 
-<h1>Borrar Usuario</h1>
-<form  method="post">
-{% csrf_token %}
-Esta seguro de eliminar esta Usuario:  {{user.username}}?
-<input  type="submit"  value="Si, Borrar"  />
-<br>
-</form>
+	<div id="ventana">
+		<p>	
+			<label for="encabezado">Eliminar Usuario</label>
+		</p>
 
-<!-- 
-
-
-<link rel="stylesheet" href="{% static 'css/reset.css' %}">
-<link rel="stylesheet" href="{% static 'css/del_user.css' %}">
-
-<div id="ventana">
-	<p>
-		
-		<label for="encabezado">Eliminar Usuario: {{user.username}}</label>
-	</p>
-
-	<form method="post" novalidate>	
-   		
-   		<div >
-  			
-   		</div>
-    	
-		<button type="submit" class="btn_control">Modificar</button>
-		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
-	</form>
-</div>
-
- 
- -->
-
-
-   {% endblock %}
+		<form  method="post" novalidate>
+			{% csrf_token %}
+			<p>	Esta seguro de eliminar el Usuario:</p>  
+			<p>{{user.username}}?</p> 
+			<button type="submit" class="btn_control">Si, Borrar</button>
+			<a href="{{ view.get_success_url }}" type="button" class="btn_control"> No, Regresar</a>
+		<br>
+		</form>
+	</div>
+{% endblock %}

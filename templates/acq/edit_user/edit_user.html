@@ -11,7 +11,7 @@
 <div id="ventana">
 	<p>
 		<!-- Encabezado -->
-		<label for="encabezado">Editar Usuario: {{user.username}}</label>
+		<label for="encabezado">Editar Usuario</label>
 	</p>
 
 	<form method="post" novalidate>
@@ -36,7 +36,6 @@
  	 		</table>
    			<h2>{{usuario.pk}}</h2>
    		</div>
-    	<!--  <input type="submit" value="Modificar">-->
 		<button type="submit" class="btn_control">Modificar</button>
 		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
 	</form>
