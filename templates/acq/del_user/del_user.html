@@ -1,4 +1,5 @@
 {% extends 'acq/base.html' %}
+{% load static %}
 {% block title %}Borar Usuario{% endblock %}
 {% block footer %} <a href="{{ view.get_success_url }}" type="button" class="btn btn-info"> No, Regresar</a>
 {% endblock %}
@@ -8,8 +9,36 @@
 <h1>Borrar Usuario</h1>
 <form  method="post">
 {% csrf_token %}
-Esta segur@ de eliminar esta Usuario?
+Esta seguro de eliminar esta Usuario:  {{user.username}}?
 <input  type="submit"  value="Si, Borrar"  />
 <br>
 </form>
+
+<!-- 
+
+
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/edit_user.css' %}">
+
+<div id="ventana">
+	<p>
+		
+		<label for="encabezado">Eliminar Usuario: {{user.username}}</label>
+	</p>
+
+	<form method="post" novalidate>	
+   		
+   		<div >
+  			
+   		</div>
+    	
+		<button type="submit" class="btn_control">Modificar</button>
+		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
+	</form>
+</div>
+
+ 
+ -->
+
+
    {% endblock %}

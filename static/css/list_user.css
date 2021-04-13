@@ -1,0 +1,120 @@
+@charset "ISO-8859-1";
+
+/*gradiente vertical del fondo*/
+
+/*
+#cuerpo{
+	  background: linear-gradient(#cbcaa5, #334d50) fixed;	  
+}
+*/
+
+.titulo {
+	text-align: center;
+	font-size: 28px;
+	font-weight: bold;
+	color: #338599;
+	margin:auto;
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+	padding: 1rem;
+	border: solid 0.2rem #338599;
+	border-radius: 0.4rem;
+	width: 60%;
+	height: 40%;
+}
+
+/*ESTILOS PARA LA TABLA*/
+table {
+	text-align: center; 
+	border-collapse:collapse;
+	border-radius: 15px;
+	width: 60%;
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+	color: #212529;
+}
+
+/*para centrar*/
+#principal {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+th {
+	background-color: #338599;
+	color: white;
+	font-size:1.5em;
+	font-weight: bold;
+	border: black 2px solid;
+	height:3rem;
+	vertical-align: middle;
+}
+
+/*estlos celda*/
+td {
+	height:3rem;
+	vertical-align: middle;
+	/*padding: 0.75rem;*/
+	border: #338599 2px solid;
+}
+
+#nombre_patio{
+	text-align: left; 
+	margin-left: 10px;
+	font-size: 1.1rem;
+	padding-left: 0.5rem
+}
+
+/*color de fondo lineas pares*/
+tr:nth-of-type(even) {
+	background-color: rgb(255, 255, 255);
+}
+
+/*color de fondo lineas inpares*/
+table, tr:nth-of-type(odd) {
+	background-color: #e5e5e5;
+}
+
+/*Estilos para los link*/
+
+.btn_tabla{
+	padding: 1.5% 1.5%;
+	border-radius: 0.4rem;
+}
+
+.btn_control{
+	padding: 0.7% 0.7%;
+	border-radius: 0.4rem;
+}
+
+.btn_tabla:hover, .btn_control:hover{
+	text-decoration: none;
+	background-color:#1cc1d9; /*fondo del link*/
+	font-size:1.1rem;
+	border-color: #000000;
+}
+
+.btn_tabla:focus {
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+	background-color: #138496;
+	border-color: #117a8b;
+}
+
+.btn_tabla:disabled {
+	opacity: 0.65;
+	background-color: #117a8b;
+	border-color: #10707f;
+}
+
+.btn_tabla:not(:disabled) {
+	cursor: pointer;
+}
+
+
+a {
+	background-color: #138496; 
+	color: white; 
+	margin-left: 1rem;
+}
