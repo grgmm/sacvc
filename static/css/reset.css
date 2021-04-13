@@ -26,7 +26,7 @@ time, mark, audio, video {
 body{
 	width: 100%;
 	height: 100%;
-	/*background-color: #EBE0F5;*/
+	 background: linear-gradient(#cbcaa5, #334d50) fixed;	  
 }
 
 /* HTML5 display-role reset for older browsers */

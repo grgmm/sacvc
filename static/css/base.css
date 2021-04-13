@@ -1,10 +1,49 @@
 @charset "ISO-8859-1";
 
-#tituloBase{
+/*gradiente vertical del fondo*/
+#cuerpo {
+	background: linear-gradient(#cbcaa5, #334d50) fixed;
+}
+
+#tituloBase {
 	background-color: #338599;
 	font-size: 40px;
 	text-align: center;
-	padding-top:5px;
-	padding-bottom:5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	color: white;
+}
+
+#piepagina {
+	position: absolute;
+	bottom: 0px;
+	left: 0;
+	padding-top:1rem;
+	padding-right: 2rem;
+	padding-bottom: 1rem;
+	padding-left: 1rem;
+	width: 100%;
+	height:1.5rem;
+	border-style: solid;
+	border-top-color: #338599;
+	border-width: 0.1rem;
+	color: white;
+}
+
+.btn_salir, .btn_menu{
+	background-color: #138496; 
+	color: white; /*color de texto del link*/
+	position: absolute;
+	top: 0.3rem;
+	padding: 0.7rem 0.7%;
+	border-radius: 0.4rem;
+	margin-left: 1rem;
+}
+
+.btn_salir{
+	right: 14rem;
+}
+
+.btn_menu{
+	right: 8rem;
 }

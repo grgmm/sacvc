@@ -1,17 +1,49 @@
 {% extends "acq/base.html" %}
-{% block title %} Editar Usuario {% endblock %}
+{% load static %}
+{% block title %}{% endblock %}
 
 
 {% block content %}
- <h2>Modificar Tanque: {{usuario.username}}</h2>
 
-	<form method="post" enctype = 'multipart/form-data'>
-    	{{ form.as_p }}s
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/edit_user.css' %}">
+
+<div id="ventana">
+<!-- <h2 class="titulo">Editar Usuario: {{usuario.username}}</h2> -->
+	<p>
+		<!-- Encabezado -->
+		<label for="encabezado">Editar Usuario: {{user.username}}</label>
+	</p>
+
+	<form method="post" novalidate>
+    	
    		{% csrf_token %}
 
-   		<h2>{{usuario.pk}}</h2>
+  		{{ form.non_field_errors }}
 
-    	<input type="submit" value="Modificar">
+  		{% for hidden_field in form.hidden_fields %}
+    		{{ hidden_field.errors }}
+    		{{ hidden_field }}
+		{% endfor %}
+
+   		<div >
+  			<table border="1">
+    			{% for field in form.visible_fields %}
+      				<tr>
+        				<td class="etiqueta">{{ field.label_tag }}</td>
+        				<td class="dato">{{ field }}</td>
+      				</tr>
+    			{% endfor %}
+ 	 		</table>
+   			<h2>{{usuario.pk}}</h2>
+   		</div>
+    	<!--  <input type="submit" value="Modificar">-->
+		<button type="submit" class="btn_control">Modificar</button>
+		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
 	</form>
+</div>
+
+ 
+
 
 {% endblock %}

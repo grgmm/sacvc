@@ -11,7 +11,20 @@
 	Sistema Automatizado de Cálculo de Volumen de Crudo
 </div >
 </head>
+
 <body id="cuerpo">	
 	{% block content %} {% endblock %}		
 </body>
+
+<footer  id=piepagina>
+  		<p>Author: Nombre Apellido</p>
+  		<a id="correo" href="mailto:micorreo@prueba.com">micorreo@prueba.com</a>
+  	<div id="pie">
+ 		{% block footer %}
+  			<a href="{% url 'uacq:logout' %}" type="button" class="btn_salir">SALIR</a>
+  			<a href="{% url 'uacq:Menu' %}" type="button" class="btn_menu">MENU</a>	
+ 		{% endblock %}	
+ 	</div>
+</footer> 
+
 </html>

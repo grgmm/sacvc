@@ -1,9 +1,12 @@
 @charset "ISO-8859-1";
 
 /*gradiente vertical del fondo*/
+
+/*
 #cuerpo{
 	  background: linear-gradient(#cbcaa5, #334d50) fixed;	  
 }
+*/
 
 .titulo {
 	text-align: center;
@@ -22,6 +25,7 @@
 
 /*ESTILOS PARA LA TABLA*/
 table {
+	text-align: center; 
 	border-collapse:collapse;
 	border-radius: 15px;
 	width: 60%;
@@ -56,8 +60,9 @@ td {
 }
 
 #nombre_patio{
+	text-align: left; 
+	margin-left: 10px;
 	font-size: 1.1rem;
-	font-weight: bold;
 	padding-left: 0.5rem
 }
 
@@ -107,8 +112,9 @@ table, tr:nth-of-type(odd) {
 	cursor: pointer;
 }
 
+
 a {
-	background-color: #138496; /*fondo del link*/
-	color: #fff; /*color de texto del link*/
+	background-color: #138496; 
+	color: white; 
 	margin-left: 1rem;
 }

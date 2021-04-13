@@ -1,17 +1,35 @@
+{% extends 'acq/base.html' %}
+{% load static %}
+  {% block title %}Instalacion {{user.username}} {% endblock %}
 
- {% extends 'acq/base.html' %}
-  {% block title %}Instalación {{user.get.username}} {% endblock %}
-  {% block content %}
-
-
-
-<p>Usuario: <i>{{user.username}}</i></p>
-<p>Id del Usuario: <i>{{user.pk}}</i></p>
-<p>Email Usuario: <i>{{user.email}}</i></p>
-
-
-<p>
-<a href="{% url 'uacq:list_user' %}" type="button" class="btn btn-info"> Regresar</a>
-</p>
-
-    {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/detail_user.css' %}">
+<div id="ventana">
+		<p>
+			<!-- Encabezado -->
+			<label for="encabezado">DETALLE DE USUARIO</label>
+		</p>
+		<div>
+			<table>
+				<tr>
+					<!-- Nombre de usuario-->
+					<td class="etiqueta">Usuario:</td>
+					<td class="dato">{{user.username}}</td>
+				</tr>
+				
+				<tr>
+					<!-- id de usuario -->
+					<td class="etiqueta">Id del Usuario:</td>
+					<td class="dato">{{user.pk}}</td>
+				</tr>
+				<tr>
+					<!-- correo de usuario-->
+					<td class="etiqueta">Email del Usuario:</td>
+					<td class="dato">{{user.email}}</td>
+				</tr>
+			</table>
+		</div>
+		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
+</div>		
+{% endblock %}

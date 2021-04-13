@@ -9,18 +9,20 @@
 <link rel="stylesheet" href="{% static 'css/reset.css' %}">
 <link rel="stylesheet" href="{% static 'css/list_tf_tk.css' %}">
 
+
 <div id="cuerpo">
- <h2 class="titulo">Patios de Tanques o Terminales de
-   Almacenamiento</h2>
+ <h2 class="titulo">Listado de Usuarios</h2>
 
    <div>
      <a href="{%url 'uacq:add_user'%}" type="button" class="btn_control">AGREGAR USUARIO</a>
-     <a href="{% url 'uacq:logout' %}" type="button" class="btn_control">SALIR</a>
    </div>
 
-
+<p>
+			<!-- Encabezado -->
+			<label for="encabezado"></label>
+		</p>
    <div id="principal">
-     <table class="table">
+     <table >
        <!-- Encabezado de la tabla con tres columnas-->
        <th>USUARIO</th>
        <th>EMAIL</th>
