@@ -19,8 +19,8 @@ html, body {
 }
 
 table, th, td {
-  border: 1px solid  black;
-  vertical-align: middle;
+	border: 1px solid black;
+	vertical-align: middle;
 }
 
 table {
