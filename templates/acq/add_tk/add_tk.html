@@ -1,24 +1,41 @@
 {% extends "acq/base.html" %}
-{% block title %} {% endblock %}
-
-
+{% load static %}
+{% block title %}{% endblock %}
 
 
 {% block content %}
-<h2>Agregar de Tanque</h2>
 
+<link rel="stylesheet" href="{% static 'css/add.css' %}">
+<!--css add=edit-->
 
+<div id="ventana">
+	<p>	
+		<label for="encabezado">Agregar Tanque</label>
+	</p>
 
+	<form method="post" novalidate>  	
+   		{% csrf_token %}
+  		{{ form.non_field_errors }}
 
+  		{% for hidden_field in form.hidden_fields %}
+    		{{ hidden_field.errors }}
+    		{{ hidden_field }}
+		{% endfor %}
 
-<form method="post" enctype = 'multipart/form-data'>
-	{% csrf_token %}
+   		<div >
+  			<table border="1">
+    			{% for field in form.visible_fields %}
+      				<tr>
+        				<td class="etiqueta">{{ field.label_tag }}</td>
+        				<td class="dato">{{ field }}</td>
+      				</tr>
+    			{% endfor %}
+ 	 		</table>
+   			<h2>{{usuario.pk}}</h2>
+   		</div>
+		<button type="submit" class="btn_control">Agregar</button>
+		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
+	</form>
+</div>
 
-    {{ form.as_p}}
-
-
-    <input type="submit" id='validar_subir_tct' value="Guardar Tanque" >
-
-
-</form>
 {% endblock %}

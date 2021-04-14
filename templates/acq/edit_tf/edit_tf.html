@@ -1,11 +1,42 @@
 {% extends "acq/base.html" %}
-{% block title %} Agregar Instalación {% endblock %}
+{% load static %}
+{% block title %}{% endblock %}
 
 
 {% block content %}
-  <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Modificar">
-</form>
-{% endblock %}
 
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+
+<div id="ventana">
+	<p>
+		<!-- Encabezado -->
+		<label for="encabezado">Editar Instalacion</label>
+	</p>
+
+	<form method="post" novalidate>
+    	
+   		{% csrf_token %}
+
+  		{{ form.non_field_errors }}
+
+  		{% for hidden_field in form.hidden_fields %}
+    		{{ hidden_field.errors }}
+    		{{ hidden_field }}
+		{% endfor %}
+
+   		<div >
+  			<table border="1">
+    			{% for field in form.visible_fields %}
+      				<tr>
+        				<td class="etiqueta">{{ field.label_tag }}</td>
+        				<td class="dato">{{ field }}</td>
+      				</tr>
+    			{% endfor %}
+ 	 		</table>
+   			<h2>{{usuario.pk}}</h2>
+   		</div>
+		<button type="submit" class="btn_control">Modificar</button>
+		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
+	</form>
+</div>
+{% endblock %}

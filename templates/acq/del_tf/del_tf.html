@@ -1,15 +1,22 @@
 {% extends 'acq/base.html' %}
-{% block title %}{% endblock %}
-{% block footer %} <a href="{{ view.get_success_url }}" type="button" class="btn btn-info"> No, Regresar</a>
-{% endblock %}
+{% load static %}
+{% block title %}Borrar Usuario{% endblock %}
 
 {% block content %}
+	<link rel="stylesheet" href="{% static 'css/del.css' %}">
 
-<h1>Borrar Instalación?</h1>
-<form  method="post">
-{% csrf_token %}
-Esta segur@ de eliminar esta instalación
-<input  type="submit"  value="Si, Borrar"  />
-<br>
-</form>
-   {% endblock %}
+	<div id="ventana">
+		<p>	
+			<label for="encabezado">Borrar Instalacion</label>
+		</p>
+
+		<form  method="post" novalidate>
+			{% csrf_token %}
+			<p>	Esta seguro de borrar la instalacion:</p>  
+			<p>{{PatioTanque.Nombre}}</p> 
+			<button type="submit" class="btn_control">Si, Borrar</button>
+			<a href="{{ view.get_success_url }}" type="button" class="btn_control"> No, Regresar</a>
+		<br>
+		</form>
+	</div>
+{% endblock %}
