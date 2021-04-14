@@ -11,7 +11,7 @@
 			<label for="encabezado">Eliminar Usuario</label>
 		</p>
 
-		<form  method="post" novalidate>
+		<form  method="post">
 			{% csrf_token %}
 			<p>	Esta seguro de eliminar el Usuario:</p>  
 			<p>{{user.username}}?</p> 

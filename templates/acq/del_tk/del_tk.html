@@ -10,7 +10,7 @@
 			<label for="encabezado">Borrar Tanque</label>
 		</p>
 
-		<form  method="post" novalidate>
+		<form  method="post">
 			{% csrf_token %}
 			<p>	Esta seguro de eliminar el Tanque:</p>  
 			<p>{{Tk.Nombre}}</p> 

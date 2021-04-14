@@ -10,7 +10,7 @@
 			<label for="encabezado">Borrar Instalacion</label>
 		</p>
 
-		<form  method="post" novalidate>
+		<form  method="post">
 			{% csrf_token %}
 			<p>	Esta seguro de borrar la instalacion:</p>  
 			<p>{{PatioTanque.Nombre}}</p> 
