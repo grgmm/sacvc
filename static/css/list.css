@@ -1,12 +1,4 @@
-@charset "ISO-8859-1";
-
-/*gradiente vertical del fondo*/
-
-/*
-#cuerpo{
-	  background: linear-gradient(#cbcaa5, #334d50) fixed;	  
-}
-*/
+@charset "UTF-8";
 
 .titulo {
 	text-align: center;

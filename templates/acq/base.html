@@ -3,15 +3,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>{% block title %}Titulo de la pestaña {% endblock %}</title>
 <link rel="stylesheet" href="{% static 'css/reset.css' %}">
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
+<title>
+	{% block title %}Titulo de la pestaña {% endblock %}
+	</title>
 
-<div id="tituloBase">
+<div id="tituloPrincipal">
 	Sistema Automatizado de Cálculo de Volumen de Crudo
 </div >
 </head>
 
+<<<<<<< HEAD
 <body id="cuerpo">
 	{% block content %} {% endblock %}
 
@@ -26,5 +29,17 @@
  		{% endblock %}
  	</div>
 </footer>
+=======
+<body id="pagina">	
+	{% block content %} {% endblock %}		
+</body>
+
+<footer  id=piepagina>
+ 	{% block footer %}
+  		<a href="{% url 'uacq:logout' %}" type="button" class="btn_salir">SALIR</a>
+  		<a href="{% url 'uacq:Menu' %}" type="button" class="btn_menu">MENU</a>	
+ 	{% endblock %}	
+</footer> 
+>>>>>>> f29a66212e28ae830e9fcb2357989f3c220c0e3c
 
 </html>
