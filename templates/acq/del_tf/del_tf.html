@@ -7,12 +7,12 @@
 
 	<div id="ventana">
 		<p>	
-			<label for="encabezado">Borrar Instalacion</label>
+			<label for="encabezado">Borrar instalación</label>
 		</p>
 
 		<form  method="post">
 			{% csrf_token %}
-			<p>	Esta seguro de borrar la instalacion:</p>  
+			<p>	Esta seguro de borrar la instalación:</p>  
 			<p>{{PatioTanque.Nombre}}</p> 
 			<button type="submit" class="btn_control">Si, Borrar</button>
 			<a href="{{ view.get_success_url }}" type="button" class="btn_control"> No, Regresar</a>
