@@ -3,26 +3,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>{% block title %}Titulo de la pestaña {% endblock %}</title>
 <link rel="stylesheet" href="{% static 'css/reset.css' %}">
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
+<title>{% block title %}Titulo de la pestaña {% endblock %}</title>
 
-<div id="tituloBase">
+<div id="tituloPrincipal">
 	Sistema Automatizado de Cálculo de Volumen de Crudo
 </div >
 </head>
 
-<body id="cuerpo">	
+<body id="pagina">	
 	{% block content %} {% endblock %}		
 </body>
 
 <footer  id=piepagina>
-  	<div id="pie">
- 		{% block footer %}
-  			<a href="{% url 'uacq:logout' %}" type="button" class="btn_salir">SALIR</a>
-  			<a href="{% url 'uacq:Menu' %}" type="button" class="btn_menu">MENU</a>	
- 		{% endblock %}	
- 	</div>
+ 	{% block footer %}
+  		<a href="{% url 'uacq:logout' %}" type="button" class="btn_salir">SALIR</a>
+  		<a href="{% url 'uacq:Menu' %}" type="button" class="btn_menu">MENU</a>	
+ 	{% endblock %}	
 </footer> 
 
 </html>

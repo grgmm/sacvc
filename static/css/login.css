@@ -1,7 +1,7 @@
-/* Stylesheet */
+@charset "UTF-8";
 @import url(animate.css);
 
-/* Selections */
+/* Define presentacion de texto seleccionado*/
 ::selection {
 	color: #fff;
 	text-shadow: none;
@@ -13,23 +13,14 @@
 	text-shadow: none;
 	background: #444;
 }
+/*****************************/
 
 /* Basics */
 html, body {
-	width: 100%;
-	height: 100%;
-	font-family: 'Helvetica Neue', Helvetica, sans-serif;
-	color: #444;
-	-webkit-font-smoothing: antialiased;
 	background: linear-gradient(#334d50, #cbcaa5) fixed;
-	/*background-image: url("../imagenes/fondo.jpg");*/
 }
 
-#divisor {
-	border: 1px black;
-}
-
-#ventanalogin {
+#container {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
 	top: 53%; /* mayor que height de la imagen*/
@@ -57,6 +48,7 @@ html, body {
 	animation-timing-function: linear;
 }
 
+/*Dimensiones y posicion de la imagen*/
 .img {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
@@ -73,7 +65,7 @@ form {
 	margin-top: 20px;
 }
 
-#tabla {
+table {
 	width: 90%;
 	margin: 0 auto; 
 	margin-top: 10%; /*Distancia del encabezado a los campos Usuario/clave*/
