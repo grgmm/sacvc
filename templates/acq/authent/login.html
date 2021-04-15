@@ -1,5 +1,6 @@
-{% load static %} 
-{% block title %}{% endblock %} 
+{% extends 'acq/base.html' %} 
+{% load static %}
+{% block title %}Autenticación{% endblock %} 
 {% block content %}
 	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" href="{% static 'css/login.css' %}">
@@ -31,3 +32,5 @@
 		</form>
 	</div>
 {% endblock %}
+
+{% block footer %}{% endblock %}	
