@@ -9,11 +9,12 @@
 <!--css add=edit-->
 
 <div id="ventana">
-	<p>	
+	<p>
 		<label for="encabezado">Agregar Tanque</label>
 	</p>
 
-	<form id="my_form" method="post">  	
+	
+	<form id="my_form" method="post">
    		{% csrf_token %}
   		{{ form.non_field_errors }}
 
@@ -34,14 +35,20 @@
    			<h2>{{usuario.pk}}</h2>
    		</div>
 		<button type="submit" class="btn_control">Agregar</button>
-		  
+
 		<!--  Posible solucioa a sustituir boton por link
 		<a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;">Agregar</a>-->
 	</form>
-		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
-		<!-- 
+
+
+
+
+
+
+	<a class="btn_control" href="{% url 'uacq:list_tf'  %}">Regresar</a>
+
+	<!--
 		<button class="btn_control" role="link" onclick="window.location='{% url 'uacq:list_tf' %}'">Regresar</button>
-		<a class="btn_control" href="{% url 'uacq:list_tf' %}">Regresar</a>
 		 -->
 	</form>
 </div>

@@ -1,9 +1,11 @@
-{% extends 'acq/base.html' %} 
- {% load static %} 
- {% block title %} 
- {% endblock %} 
- 
+{% extends 'acq/base.html' %}
+ {% load static %}
+ {% block title %}
+ {% endblock %}
+
  {% block content %}
+
+
 
 <link rel="stylesheet" href="{% static 'css/reset.css' %}">
 <link rel="stylesheet" href="{% static 'css/list.css' %}">
@@ -11,37 +13,51 @@
 <div id="cuerpo">
 	<h2 class="titulo">Tanques de Almacenamiento de la instalacion {{object_list.first.id_patioTanque.Nombre}}</h2>
 		<div>
-			<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control">REGRESAR</a>
-			<a href="{%url 'uacq:add_tk'%}" type="button" class="btn_control">AGREGAR TK </a>
+			<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control" >REGRESAR</a>
+
+    	<a href="{%url 'uacq:add_tk'%}" type="button" class="btn_control" name= "AGREGAR">AGREGAR TK </a>
+
+
 		</div>
 		<div id="principal">
 			<table class="table">
 				<!-- Encabezado de la tabla con tres columnas-->
 				<th>TANQUE</th>
 				<th>ACCIÓN</th>
-				<th>TABLA TCT</th> 
-				
+				<th>TABLA TCT</th>
+
 				{% for tk in object_list %}
 					<tr>
 					<!-- Columna1=Nombre del TANQUE -->
 						<td>{{ tk.Nombre }}</td>
-						
+
 						<!-- Columna2=links -->
 						<td>
-							<a href="{% url 'uacq:detail_tk' tk.pk  %}" class="btn_tabla">Detalle</a> 
+							<a href="{% url 'uacq:detail_tk' tk.pk  %}" class="btn_tabla">Detalle</a>
 							<a href="{% url 'uacq:edit_tk' tk.pk  %}" class="btn_tabla">Editar</a>
 							<a href="{% url 'uacq:del_tk' tk.pk  %}" class="btn_tabla">Borrar</a>
 						</td>
-						
+
 						<!-- Columna3-->
 						<td>
-							{% if tk.tct_archivo %} 
+							{% if tk.tct_archivo %}
 								<a href="{{tk.tct_archivo.url}}">ver</a>
 							{% endif %}
 						</td>
 					</tr>
 				{% endfor %}
-			</table>	
+			</table>
 		</div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
 {% endblock %}

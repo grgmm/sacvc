@@ -22,6 +22,8 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,  get_object_or_404
+import sys
+
 
 import csv
 from django.core.validators import DecimalValidator, ValidationError
@@ -185,10 +187,32 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
       qs = super(tklist, self).get_queryset()
       #print(qs)
       filtro= qs.filter(id_patioTanque__exact=self.kwargs['exp'])
+      patio=self.kwargs['exp']
+
+      fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+      ruta_Data=fs.location
+
+      add_tk_iniciales ={'Nombre':'TANQUE....',
+          'Descriptor':'EJEMPLO TANQUE DE 10000 BARRILES',
+          'id_patioTanque':patio,}
+
+      #print(add_tk_iniciales)
+
+
+      try:
+            with fs.open(ruta_Data+'/tk_iniciales.json', mode= 'w') as file:
+                #with open ('/home/morenomx/solucionesweb/sacvc/valoresbasicos.json','w') as file1: #abre un archivo json (cambiar por ruta simbólica)
+
+                file.write(json.dumps(add_tk_iniciales)) #Data en cache
+      except:
+                print("Error inesperado:", sys.exc_info()[0])
+
+
       #print(filtro)
       return(filtro)
 
-      def get(self, request, *args, **kwargs):
+
+    def get(self, request, *args, **kwargs):
           if request.user.is_authenticated:
 
               filtro_usuario = Group.objects.filter(user = request.user)
@@ -209,15 +233,11 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 class TkAdd(CreateView): #VALIDADO PRELIMINAR
     model = Tk
     fields = ['Nombre', 'Descriptor', 'id_patioTanque',]
+
+
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
 
-    def get_queryset(self):
-      qs = super(tklist, self).get_queryset()
-      #print(qs)
-      filtro= qs.filter(id_patioTanque__exact=self.kwargs['exp'])
-      #print(filtro)
-      return(filtro)
 
     #EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
 
@@ -228,7 +248,20 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
                 print('usuario sin perfil adecuado cerrando sesión')
                 return redirect('/sacvc/logout')
             else:
-                 return super(TkAdd, self).get(request, *args, **kwargs)
+
+                fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+                ruta_Data=fs.location
+                print(ruta_Data)
+
+                try:
+                    with fs.open(ruta_Data+'/tk_iniciales.json', mode= 'r') as data_file:
+
+                        self.initial = json.loads(data_file.read())
+
+                except:
+                    print("Error inesperado:", sys.exc_info()[0])
+
+                return super(TkAdd, self).get(request, *args, **kwargs)
 
         else:
             return redirect('/sacvc/logout')
