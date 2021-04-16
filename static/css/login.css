@@ -35,16 +35,16 @@ table {
 }
 
 label {
+	background-color: #117a8b;
 	color:  #117a8b;
 	display: inline-block;
-	padding-top: 10px;
+	border-radius:10px;
 	font-size: 14px;
 	font-weight: bold;
 }
 
 label[for=encabezado] {
 	border: 1px solid #c7d0d2;
-	background-color: #117a8b;
 	color:white;
 	border-radius: 10px;
 	width: 90%;
@@ -60,6 +60,7 @@ label[for=encabezado] {
 }
 
 label[for=nombre], label[for=clave]{
+	background-color: white;
 	margin-left: 10%;
 }
 
