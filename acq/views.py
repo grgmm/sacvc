@@ -238,6 +238,27 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
     template_name = 'acq/add_tk/add_tk.html'
     success_url = reverse_lazy('uacq:list_tf')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+        ruta_Data=fs.location
+        try:
+            with fs.open(ruta_Data+'/tk_iniciales.json', mode= 'r') as data_file:
+
+                self.initial = json.loads(data_file.read())
+                print(self.initial)
+
+                context['patio'] = (self.initial['id_patioTanque'])
+                print(context['patio'])
+
+        except:
+                print("Error inesperado:", sys.exc_info()[0])
+
+
+
+        return context
+
 
     #EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
 
@@ -251,7 +272,6 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
 
                 fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
                 ruta_Data=fs.location
-                print(ruta_Data)
 
                 try:
                     with fs.open(ruta_Data+'/tk_iniciales.json', mode= 'r') as data_file:
