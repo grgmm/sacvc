@@ -14,15 +14,17 @@
 </div >
 </head>
 
-<body id="pagina">	
-	{% block content %} {% endblock %}		
+
+
+<body id="pagina">
+	{% block content %} {% endblock %}
 </body>
 
 <footer  id=piepagina>
  	{% block footer %}
   		<a href="{% url 'uacq:logout' %}" type="button" class="btn_salir">SALIR</a>
-  		<a href="{% url 'uacq:Menu' %}" type="button" class="btn_menu">MENU</a>	
- 	{% endblock %}	
-</footer> 
+  		<a href="{% url 'uacq:Menu' %}" type="button" class="btn_menu">MENU</a>
+ 	{% endblock %}
+</footer>
 
 </html>
