@@ -1,14 +1,22 @@
-{% extends 'acq/base.html' %}
-{% block title %}{% endblock %}
-{% block footer %} <a href="{{ view.get_success_url }}" type="button" class="btn btn-info"> No, Regresar</a>
-{% endblock %}
+{{% extends 'acq/base.html' %}
+{% load static %}
+{% block title %}Borar Usuario{% endblock %}
 
 {% block content %}
-<h1>Borrar Tanque?</h1>
-<form  method="post">
-{% csrf_token %}
-Esta segur@ de eliminar este tanque
-<input  type="submit"  value="Si, Borrar"  />
-</form>
+	<link rel="stylesheet" href="{% static 'css/del.css' %}">
 
+	<div id="ventana">
+		<p>	
+			<label for="encabezado">Borrar Tanque</label>
+		</p>
+
+		<form  method="post">
+			{% csrf_token %}
+			<p>	Esta seguro de eliminar el Tanque:</p>  
+			<p>{{Tk.Nombre}}</p> 
+			<button type="submit" class="btn_control">Si, Borrar</button>
+			<a href="{{ view.get_success_url }}" type="button" class="btn_control"> No, Regresar</a>
+		<br>
+		</form>
+	</div>
 {% endblock %}

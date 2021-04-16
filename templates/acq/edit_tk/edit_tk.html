@@ -1,20 +1,46 @@
 {% extends "acq/base.html" %}
-{% block title %} Editar Tk{% endblock %}
+{% load static %}
+{% block title %}{% endblock %}
 
 
 {% block content %}
- <h2>Modificar Tanque: {{tk.Nombre}}</h2>
 
-	<form method="post" enctype = 'multipart/form-data'>
-    	{{ form.as_p }}
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+
+<div id="ventana">
+	<p>
+		<!-- Encabezado -->
+		<label for="encabezado">Modificar Tanque</label>
+	</p>
+
+	<form method="post">
+    	
    		{% csrf_token %}
-   		
-   		<h2>{{tk.id_patioTanque}}</h2>
-   		<a  href="{% url 'uacq:validar_tct' tk.pk%}"type="button" class="btn btn-info">Menu Validar TCT</a>
-   	
 
-   		     	
-    	<input type="submit" value="Modificar">
+  		{{ form.non_field_errors }}
+
+  		{% for hidden_field in form.hidden_fields %}
+    		{{ hidden_field.errors }}
+    		{{ hidden_field }}
+		{% endfor %}
+
+   		<div >
+  			<table border="1">
+    			{% for field in form.visible_fields %}
+      				<tr>
+        				<td class="etiqueta">{{ field.label_tag }}</td>
+        				<td class="dato">{{ field }}</td>
+      				</tr>
+    			{% endfor %}
+ 	 		</table>
+   			<h2>{{usuario.pk}}</h2>
+   		</div>
+		<button type="submit" class="btn_control">Modificar</button>
+		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
 	</form>
+</div>
 
-{% endblock %}	
+ 
+
+
+{% endblock %}
