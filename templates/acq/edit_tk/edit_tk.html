@@ -12,9 +12,9 @@
 		<!-- Encabezado -->
 		<label for="encabezado">Modificar Tanque</label>
 	</p>
-
+{{object.id_patioTanque.pk}}
 	<form method="post">
-    	
+
    		{% csrf_token %}
 
   		{{ form.non_field_errors }}
@@ -36,11 +36,11 @@
    			<h2>{{usuario.pk}}</h2>
    		</div>
 		<button type="submit" class="btn_control">Modificar</button>
-		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
+		<a href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control"> Regresar</a>
 	</form>
 </div>
 
- 
+
 
 
 {% endblock %}
