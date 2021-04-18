@@ -4,8 +4,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 import time
-from django.contrib.postgres.fields import JSONField
-import json
+#from django.contrib.postgres.fields import JSONField
+#import json
 from datetime import datetime
 from datetime import timedelta
 from django.core.validators import FileExtensionValidator, DecimalValidator, MaxValueValidator, MinValueValidator
@@ -43,7 +43,8 @@ class Tk(models.Model):
     Descriptor_tct = models.CharField(max_length=120,default="",null=True, blank=True,)
     fecha_subida_tct = models.DateTimeField(null=True, blank = True, verbose_name= _('Subido El:'), )
     tctvalido= models.BooleanField(default=False, editable = False)
-    current_data = JSONField(null=True)
+    current_data = models.JSONField(null=True)
+
     TIPOTanque_CHOICES = [
     ('CV', 'Cilindrico Vertical'),
     ('CH', 'Cilindrico Horizontal'),
@@ -65,12 +66,12 @@ class Tct(models.Model):
 
     id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)
 
-    Lt0 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de nivel
-    Lt1 = models.FloatField(default = 0.0, null =True) #magnitud de Fracciones de nivel
+    Lt0 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de Nivel
+    Lt1 = models.FloatField(default = 0.0, null =True) #magnitud de Fracciones de Nivel
 
-    Tov0 = models.FloatField(default = 0.0, null =True)
-    Tov1 = models.FloatField(default = 0.0, null =True)
-    Tov = models.FloatField(default = 0.0, null =True)
+    Tov0 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de Volumen
+    Tov1 = models.FloatField(default = 0.0, null =True) #magnitud Unidades de Volumen
+    Tov = models.FloatField(default = 0.0, null =True)  #magnitud Unidades de Volumen
 
 
     def __str__(self):
@@ -162,12 +163,34 @@ class Tag(models.Model): #Características comunes para Analógicos y Digitales
   ('B', 'Basica'),
   ('C', 'Calculada'),]
 
+  PARAMETRO_TK_CHOICES= [
+   ('lt', 'Nivel Medido'),
+   ('pt', 'Presión'),
+   ('tt', 'Temperatura'),
+   ('TOV', 'Volumen Total Observado '),
+   ('NA', 'No Asignado'),
+   ('GSV', 'Volumen Bruto Estandar'),
+   ('NSV', 'Volumen Neto Estandar'),
+   ('lta', 'Nivel de Agua Libre'),]
+
   Nombre = models.CharField(max_length=42)
   Descriptor = models.CharField(max_length=120, default='')
   id_Tk= models.ForeignKey(Tk, on_delete=models.CASCADE)
   Habilitar= models.BooleanField(default = True)
-  TipoVariable = models.CharField(choices = TIPOVARIABLE_CHOICES,max_length=1, default = 'B')
+  TipoVariable = models.CharField(verbose_name= _('Tipo de Variable'),choices =  TIPOVARIABLE_CHOICES, max_length=1, default = 'B')
   direccion = models.CharField(max_length=5, default= '4:0')
+  direccion_campo = models.CharField(max_length=5, default= '4:0')
+
+
+  etiqueta1 = models.CharField(choices = PARAMETRO_TK_CHOICES,max_length=4, default = 'NA')
+
+  etiqueta2 = models.CharField(max_length=32, blank=True, null =True, default = '',verbose_name= _('Tag del instrumento en campo o P&ID'), )
+
+  etiqueta3 = models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
+  etiqueta4 = models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
+  etiqueta5=  models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
+  etiqueta6=  models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
+
 
   def __str__(self):
 
@@ -225,9 +248,9 @@ class Analogico(Tag):
 #HISTORICOS Hs=todos, Hs0= tablas de segundos, Hs1= tablas de minutos, Hs2= tablas de horas, Hs3= tablas de dias,
 #Hs4= tablas de meses, Hs5= tablas de años.
 
-class Analogico_Hs(models.Model): #Poblado automatico al lvantar modulo hs.py
+class Analogico_Hs(models.Model): #Poblado automatico al levantar modulo hs.py
 
-  data = JSONField(null=True, blank=True,)
+  data = models.JSONField(null=True, blank=True,)
 
 
 
@@ -246,7 +269,7 @@ class Analogico_Hs(models.Model): #Poblado automatico al lvantar modulo hs.py
 
 class Analogico_Hs0(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
 
   def __str__(self):
@@ -255,7 +278,7 @@ class Analogico_Hs0(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs1(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 
@@ -263,7 +286,7 @@ class Analogico_Hs1(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs2(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 
@@ -271,7 +294,7 @@ class Analogico_Hs2(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs3(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 
@@ -279,7 +302,7 @@ class Analogico_Hs3(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs4(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 
@@ -287,7 +310,7 @@ class Analogico_Hs4(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs
 
 class Analogico_Hs5(models.Model): #POBLADO AUTOMATICO AL LEVANTAR MODULO ges_hs.py
 
-  data = JSONField()
+  data = models.JSONField()
 
   def __str__(self):
 

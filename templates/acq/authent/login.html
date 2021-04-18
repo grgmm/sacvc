@@ -1,0 +1,36 @@
+{% extends 'acq/base.html' %} 
+{% load static %}
+{% block title %}Autenticación{% endblock %} 
+{% block content %}
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" href="{% static 'css/login.css' %}">
+	<img class="img" src="{% static "recursos/imagenes/tanques.jpg" %}">
+	
+	{% if form.errors %}
+		<p>Su usuario o password no concuerdan. Intente de nuevo.</p>
+	{% endif %}
+	
+	<div id="container">
+		<form method="post" action="{% url 'uacq:login' %}">
+			{% csrf_token %}
+			<p>
+				<!-- Encabezado -->
+				<label for="encabezado">INICIO DE SESIÓN</label>
+			</p>
+			<table>
+				<tr>
+					<!-- Nombre de usuario -->
+					<td><label for="nombre">Usuario:</label>
+						<p tabindex="1">{{ form.username }}</p></td>
+	
+					<!-- Clave de usuario -->
+					<td><label for="clave">Clave:</label>
+						<p tabindex="2">{{ form.password }}</p></td>
+				</tr>
+			</table>
+			<button tabindex="3" type="submit" value="Login">Login</button>
+		</form>
+	</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}	

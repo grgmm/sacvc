@@ -1,44 +1,46 @@
+ {% extends 'acq/base.html' %}
+ {% load static %}
+ {% block title %}
 
-  {% extends 'acq/base.html' %}
-  {% block title %}  {% endblock %}
-  
-  {% block content %}
- 
+ {% endblock %}
 
+ {% block content %}
 
+<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
 
-  <h2>Patios de Tanques o Terminales de Almacenamiento</h2>
-   
-      
-       <table id="Patios">
+<div id="cuerpo">
+	<h2 class="titulo">Patios de Tanques o Terminales de
+		Almacenamiento</h2>
+		<div>
+			<a href="{%url 'uacq:add_tf'%}" type="button" class="btn_control">AGREGAR INSTALACIÓN</a>
+		</div>
+		<div id="principal">
+			<table class="table">
+				<!-- Encabezado de la tabla con tres columnas-->
+				<th>PATIO</th>
+				<th>ACCION</th>
+				<th>TANQUES</th>
 
-  
-    
-      <th>NOMBRE </th> <th> ACCIÓN </th> <th>TANQUES</th> 
+				{% for patio in object_list %}
+					<tr>
+					<!-- Columna1=Nombre del patio -->
+					<td id="nombre_patio">{{ patio.Nombre }}</td>
 
+					<!-- Columna2=links -->
+					<td>
+						<a href="{% url 'uacq:detail_tf' patio.pk  %}" class="btn_tabla">Detalle</a>
+						<a href="{% url 'uacq:edit_tf' patio.pk  %}" class="btn_tabla">Editar</a>
+						<a href="{% url 'uacq:del_tf' patio.pk  %}" class="btn_tabla">Borrar</a>
+					</td>
 
-{% for patio in object_list %}
-  <tr>
-<td> {{ patio.Nombre }}</td>
- <td>
-<a  href="{% url 'uacq:detail_tf' patio.pk  %}">Detalle</a>
-<a  href="{% url 'uacq:edit_tf' patio.pk  %}">Editar</a>
-<a  href="{% url 'uacq:del_tf' patio.pk  %}">Borrar</a>
-
-
-
-</td>
-<td>
-<a  href="{% url 'uacq:list_tk' patio.pk %}">Tanques</a>
-</td>
-    
- {% endfor %}
-
- <h2>Añadir Instalación</h2>
- 
-   <H5>AGREGAR PATIO O TERMINAL DE ALMACENMIENTO</H5><a href="{%url 'uacq:add_tf'%}" type="button" class="btn btn-info"> Agregar Instalación</a>
-
- 
-
-
-   {% endblock %}
+					<!-- Columna3=link a tanques del patio -->
+					<td>
+						<a href="{% url 'uacq:list_tk' patio.pk %}" class="btn_tabla">Tanques</a>
+					</td>
+				 	</tr>
+				{% endfor %}
+			</table>
+		</div>
+</div>
+{% endblock %}

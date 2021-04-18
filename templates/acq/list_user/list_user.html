@@ -1,0 +1,47 @@
+{% extends 'acq/base.html' %}
+{% load static %}
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+
+
+<div id="cuerpo">
+ <h2 class="titulo">Listado de Usuarios</h2>
+
+   <div>
+     <a href="{%url 'uacq:add_user'%}" type="button" class="btn_control">AGREGAR USUARIO</a>
+   </div>
+
+<p>
+			<!-- Encabezado -->
+			<label for="encabezado"></label>
+		</p>
+   <div id="principal">
+     <table >
+       <!-- Encabezado de la tabla con tres columnas-->
+       <th>USUARIO</th>
+       <th>EMAIL</th>
+       <th>ACCION</th>
+
+       {% for usuario in object_list %}
+         <tr>
+         <!-- Columna1=Nombre del patio -->
+         <td id="nombre_patio">{{ usuario.username }}</td>
+         <td id="nombre_patio">{{ usuario.email }}</td>
+
+
+         <td>
+           <a href="{% url 'uacq:detail_user' usuario.pk  %}" class="btn_tabla">Detalle</a>
+           <a href="{% url 'uacq:edit_user' usuario.pk  %}" class="btn_tabla">Editar</a>
+           <a href="{% url 'uacq:del_user' usuario.pk  %}" class="btn_tabla">Borrar</a>
+         </td>
+
+       {% endfor %}
+     </table>
+   </div>
+</div>
+{% endblock %}

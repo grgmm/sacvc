@@ -1,24 +1,34 @@
+{% extends 'acq/base.html' %}
+{% load static %}
+  {% block title %}{% endblock %}
 
- {% extends 'acq/base.html' %}
-  {% block title %} {{tk.Nombre}}{% endblock %}
-  {% block footer %} <a href="{% url 'uacq:list_tf' %}" type="button" class="btn btn-info"> Regresar</a>
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+<div id="ventana">
+		<p>
+			<!-- Encabezado -->
+			<label for="encabezado">Detalle del Tanque</label>
+		</p>
+		<div>
+			<table>
+				<tr>
+					<!-- Nombre de Tanque-->
+					<td class="etiqueta">Nombre:</td>
+					<td class="dato">{{tk.Nombre}}</td>
+				</tr>
+				
+				<tr>
+					<!-- Descriptor del tanque-->
+					<td class="etiqueta">Descriptor:</td>
+					<td class="dato">{{tk.Descriptor}}</td>
+				</tr>
+				<tr>
+					<!-- Fecha TCT-->
+					<td class="etiqueta">Fecha de subida del archivo TCT:</td>
+					<td class="dato">{{ tk.fecha_subida_tct }}</td>
+				</tr>
+			</table>
+		</div>
+		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
+</div>		
 {% endblock %}
-  {% block content %}
-
-
-
-   
-
-    
-<p><i>Tanque: {{tk.Nombre}} </i></p>
-<p>Decriptor <i>{{tk.Descriptor}}</i></p>	
-<p>Patio de Tanques:<i>{{ tk.id_patioTanque}}</i></p>
-<p>Fecha de subida del archivo TCT: <i> {{ tk.fecha_subida_tct }}</i></p>
-
-
-
-<p>
-
-</p>
-  
-    {% endblock %}

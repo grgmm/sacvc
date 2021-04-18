@@ -2,36 +2,12 @@
   {% extends 'acq/base.html' %}
   {% load static %}
   {% block title %}  {% endblock %}
-<<<<<<< HEAD
-  {% block content %}
-
-=======
 
   {% block content %}
->>>>>>> sacvc_local_v1
 
 
 	{% block javascript %}
  		 <script src="{% static 'js/apps2.js' %}"></script>
-<<<<<<< HEAD
-  		 <script src="{% static 'js/jquery-3.5.0.js' %}"></script>  
-	{% endblock %}
- 
-
-  <h2>Valores Actuales</h2>
-
-
-
-
-<table id="valores-actuales">
-
-  <th>TAG </th> <th> INSTALACIÓN </th> <th>  TANQUE </th>  <th>  VALOR </th> <th>  TIMESTAMP </th>
-   
- 
-{% for tk in object_list %}
-  <tr>
-  	<div id='datos-actuales'> 
-=======
   	 <script src="{% static 'js/jquery-3.5.0.js' %}"></script>
 	{% endblock %}
 
@@ -41,21 +17,18 @@
 
 <table id="valores-actuales">
 
-  <th>TAG </th> <th> INSTALACIÓN </th> <th>  TANQUE </th>  <th>  VALOR </th>  <th>  UNIDAD </th> <th>  TIMESTAMP </th>
-
+  <th>TAG </th> <th> INSTALACIÓN </th> <th>  TANQUE </th>  <th>  VALOR </th>  <th>  UNIDAD </th>  <th>  DIRECCION </th> <th>  TIMESTAMP </th>
 
 {% for tk in object_list %}
   <tr>
   	<div id='datos-actuales'>
->>>>>>> sacvc_local_v1
+
 <td> {{ tk.current_data.TAG }}</td>
 <td> {{ tk.current_data.INSTALACION }}</td>
 <td> {{ tk.current_data.TANQUE }}</td>
 <td> {{ tk.current_data.PV_FLOAT }}</td>
-<<<<<<< HEAD
-=======
 <td> {{ tk.current_data.UNIDAD}}</td>
->>>>>>> sacvc_local_v1
+<td> {{ tk.current_data.DIRECCION }}</td>
 <td> {{ tk.current_data.TIMESTAMP }}</td>
 
 </div>
@@ -63,9 +36,5 @@
  {% endfor %}
 
  <h2>Patios de Tanque</h2>
-<<<<<<< HEAD
-   <a href="{% url 'uacq:list_tf' %}"> <H3>REGRESAR</h3> </a> 
-=======
->>>>>>> sacvc_local_v1
 
    {% endblock %}

@@ -1,17 +1,36 @@
 
  {% extends 'acq/base.html' %}
-  {% block title %}Instalación {{patiotanque.pk}} {% endblock %}
-  {% block content %}
+{% load static %}
+  {% block title %}{% endblock %}
 
-
-
-    <h2>Nombre de la Instalación: {{patiotanque.Nombre}}</h2>
-
-
-<p>Descripción de la Instalación: <i>{{ patiotanque.Descriptor}}</i></p>
-
-<p>
-<a href="{% url 'uacq:list_tf' %}" type="button" class="btn btn-info"> Regresar</a>
-</p>
-  
-    {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+<div id="ventana">
+		<p>
+			<!-- Encabezado -->
+			<label for="encabezado">Detalle del Patio de Tanques</label>
+		</p>
+		<div>
+			<table>
+				
+				<tr>
+					<!-- id del Patio -->
+					<td class="etiqueta">Id:</td>
+					<td class="dato">{{patiotanque.pk}}</td>
+				</tr>
+				<tr>
+					<!-- Nombre del Patio -->
+					<td class="etiqueta">Nombre:</td>
+					<td class="dato">{{patiotanque.Nombre}}</td>
+				</tr>
+				
+				<tr>
+					<!-- Descripcion-->
+					<td class="etiqueta">Descripcion:</td>
+					<td class="dato">>{{ patiotanque.Descriptor}}</td>
+				</tr>
+			</table>
+		</div>
+		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
+</div>		
+{% endblock %}
