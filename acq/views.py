@@ -736,3 +736,7 @@ class usuariodetail(DetailView):
 
             else:
                 return redirect('/sacvc/logout')
+
+
+def tanquesGrupo(request):
+    return render(request,'acq/grupo_tk/grupo_tk.html') 
