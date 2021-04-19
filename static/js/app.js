@@ -20,7 +20,9 @@
                var Pv1 = JSON.stringify(data,["PV1"]);
                var Pv_float = JSON.stringify(data,["PV_FLOAT"]);
                var Unidad = JSON.stringify(data,["UNIDAD"]);
+               var Direccion = JSON.stringify(data,["DIRECCION"]);
                var Timestamp = JSON.stringify(data,["TIMESTAMP"]);
+
 
               var table = document.getElementById("valores-actuales");
   {
@@ -33,6 +35,8 @@
   var cell6 = row.insertCell(5);
   var cell7 = row.insertCell(6);
   var cell8 = row.insertCell(7);
+  var cell9 = row.insertCell(8);
+
 
   cell1.innerHTML = data.TAG;
   cell2.innerHTML = data.TANQUE;
@@ -41,7 +45,8 @@
   cell5.innerHTML = data.PV1;
   cell6.innerHTML = data.PV_FLOAT;
   cell7.innerHTML = data.UNIDAD;
-  cell8.innerHTML = data.TIMESTAMP;
+  cell8.innerHTML = data.DIRECCION;
+  cell9.innerHTML = data.TIMESTAMP;
 
   }
 
