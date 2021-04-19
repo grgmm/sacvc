@@ -1,20 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Grupo de Tanques</title>
-</head>
-<body>
+{% extends 'acq/base.html' %} 
+{% load static %}
+{% block title %}Grupo de tanques{% endblock %} 
+{% block content %}
 	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
-	<link rel="stylesheet" href="{% static 'css/login.css' %}">
-	<img class="img" src="{% static "recursos/imagenes/tanques.jpg" %}">
-	<script>
-    $(document).ready(function () {
-      $('.menuContainer').load('./menu.html');
-    });
-  </script>
-<div>
+	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
+	<!-- 
+	<img class="img" src="{% static "recursos/imagenes/tanque.png" %}">
+	 -->
+	
+	<div id="container">
+			{% csrf_token %}
+			<p>
+				<!-- Encabezado -->
+				<label for="encabezado">PATIO DE TANQUES</label>
+			</p>
+			<table id="tablaExterna">
+			
+			<!-- Primera fila -->
+				<tr>
+					<td><label class="variable">Tanque1</label>
+						<p><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></p>
+						
+						<p> 
+							<table id="tablaInterna">
+								<tr>
+									<td><label class="variable">TOV:</label>
+										<p class="valor">VARIABLE1</p>
+									</td>
+									<br><br><br><br><br>
+								</tr>
 
-</div>
-</body>
-</html>
+								<tr>
+									<td><label class="variable">NSV:</label>
+										<p class="valor">VARIABLE2</p>
+									</td>
+								</tr>
+							</table>
+						</p>
+						
+					</td>
+					<td><label class="variable">Tanque2</label>
+						<p></p></td>
+					<td><label class="variable">Tanque3</label>
+						<p></p>
+					</td>
+				</tr>
+			
+			<!-- Segunda fila -->
+				<tr>
+					<td><label class="variable">Tanque4</label>
+						<p tabindex="4"><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></p>
+						<p></p>
+					</td>
+					<td><label class="variable">Tanque5</label>
+						<p></p>
+					</td>
+					<td><label class="variable">Tanque6</label>
+						<p></p>
+					</td>
+				</tr>
+				
+			</table>
+	</div>
+{% endblock %}
