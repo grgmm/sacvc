@@ -388,7 +388,17 @@ class TkUpdate(UpdateView):
   model = Tk
   fields = ['Nombre', 'Descriptor',]
   template_name = 'acq/edit_tk/edit_tk.html'
-  success_url = reverse_lazy('uacq:list_tf' )
+  #success_url = reverse_lazy('uacq:list_tk', kwargs={'pk': self.object.pk})
+
+  def get_success_url(self):
+          # if you are passing 'pk' from 'urls' to 'DeleteView' for company
+          # capture that 'pk' as companyid and pass it to 'reverse_lazy()' function
+         print(self.object.id_patioTanque.pk)
+
+         success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
+         return(success_url)
+
+         #return reverse_lazy('uacq:list_tf')
 
 
   def get(self, request, *args, **kwargs):
