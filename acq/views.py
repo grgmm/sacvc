@@ -233,10 +233,17 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 class TkAdd(CreateView): #VALIDADO PRELIMINAR
     model = Tk
     fields = ['Nombre', 'Descriptor', 'id_patioTanque',]
-
-
     template_name = 'acq/add_tk/add_tk.html'
-    success_url = reverse_lazy('uacq:list_tf')
+    #success_url = reverse_lazy('uacq:list_tf')
+
+    def get_success_url(self):
+             # if you are passing 'pk' from 'urls' to 'DeleteView' for company
+             # capture that 'pk' as companyid and pass it to 'reverse_lazy()' function
+            print(self.object.id_patioTanque.pk)
+
+            success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
+            return(success_url)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -340,8 +347,16 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
 
 class TkDelete(DeleteView):
     model = Tk
-    success_url = reverse_lazy('uacq:list_tf')
     template_name = 'acq/del_tk/del_tk.html'
+
+    def get_success_url(self):
+             # if you are passing 'pk' from 'urls' to 'DeleteView' for company
+             # capture that 'pk' as companyid and pass it to 'reverse_lazy()' function
+            print(self.object.id_patioTanque.pk)
+
+            success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
+            return(success_url)
+
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -365,6 +380,14 @@ class TkDetail(DetailView):
     model = Tk
     template_name = 'acq/detail_tk/detail_tk.html'
     fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'fecha_subida_tct']
+
+    def get_success_url(self):
+             # if you are passing 'pk' from 'urls' to 'DeleteView' for company
+             # capture that 'pk' as companyid and pass it to 'reverse_lazy()' function
+            print(self.object.id_patioTanque.pk)
+
+            success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
+            return(success_url)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -749,4 +772,4 @@ class usuariodetail(DetailView):
 
 
 def tanquesGrupo(request):
-    return render(request,'acq/grupo_tk/grupo_tk.html') 
+    return render(request,'acq/grupo_tk/grupo_tk.html')
