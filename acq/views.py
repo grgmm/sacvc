@@ -243,17 +243,10 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
 
         fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
         ruta_Data=fs.location
-        try:
-            with fs.open(ruta_Data+'/tk_iniciales.json', mode= 'r') as data_file:
+        self.initial={'Nombre':'TANQUE....',
+            'Descriptor':'EJEMPLO TANQUE DE 10000 BARRILES',
+            'id_patioTanque':1,}      
 
-                self.initial = json.loads(data_file.read())
-                print(self.initial)
-
-                context['patio'] = (self.initial['id_patioTanque'])
-                print(context['patio'])
-
-        except:
-                print("Error inesperado:", sys.exc_info()[0])
 
 
 
