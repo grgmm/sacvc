@@ -24,7 +24,7 @@ table, th, td {
 }
 
 table {
-	width: 90%;
+	width: 80%;
 	margin: 0 auto;
 	margin-top: 5%;
 }
@@ -49,21 +49,20 @@ label[for=encabezado] {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
-
-.etiqueta {
+.etiqueta, .dato{
 	padding-top: .5rem;
 	padding-bottom: .5rem;
+	padding-left: 1rem;
+	
+}
+.etiqueta {
 	background-color: #117a8b;
-	width: 10rem;
+	width: 40%;
 	color: white;
-	padding-left: 0.5rem;
 }
 
 .dato {
-	padding-top: .5rem;
-	padding-bottom: .5rem;
-	width: 10rem;
-	padding-left: 1rem;
+	width: 60%;
 }
 
 .btn_control {
@@ -84,13 +83,15 @@ label[for=encabezado] {
 }
 
 button {
+	/*agregar*/
 	right: 15%;
-	padding: 0.7rem 0;
+	padding: 0.830rem 0;
 }
 
 a {
+	/*regresar*/
 	right: 55%;
-	padding: 0.80rem 0;
+	padding: 0.844rem 0;
 }
 
 .btn_control:hover {

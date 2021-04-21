@@ -1,12 +1,19 @@
+
 {% extends 'acq/base.html' %} 
 {% load static %}
 {% block title %}Grupo de tanques{% endblock %} 
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+ 	$(document).ready(function(){
+    	$(".elTanque").load("tanque.html");
+    });
+ </script>
+	
 {% block content %}
-	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
-	<!-- 
-	<img class="img" src="{% static "recursos/imagenes/tanque.png" %}">
-	 -->
 	
 	<div id="container">
 			{% csrf_token %}
@@ -19,9 +26,8 @@
 			<!-- Primera fila -->
 				<tr>
 					<td><label class="variable">Tanque1</label>
+						<div>
 						<p><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></p>
-						
-						<p> 
 							<table id="tablaInterna">
 								<tr>
 									<td><label class="variable">TOV:</label>
@@ -36,9 +42,10 @@
 									</td>
 								</tr>
 							</table>
-						</p>
+						</div>
 						
 					</td>
+					
 					<td><label class="variable">Tanque2</label>
 						<p></p></td>
 					<td><label class="variable">Tanque3</label>
@@ -48,15 +55,16 @@
 			
 			<!-- Segunda fila -->
 				<tr>
-					<td><label class="variable">Tanque4</label>
-						<p tabindex="4"><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></p>
+					<td><div class="elTanque"></div></td>
+
+					<td>
+						<label class="variable">Tanque5</label>
 						<p></p>
 					</td>
-					<td><label class="variable">Tanque5</label>
-						<p></p>
-					</td>
-					<td><label class="variable">Tanque6</label>
-						<p></p>
+					<td>
+						<label class="variable">Tanque6</label>
+						<p><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></p>
+						<p>1234</p>
 					</td>
 				</tr>
 				
