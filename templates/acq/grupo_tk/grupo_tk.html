@@ -2,16 +2,12 @@
 {% extends 'acq/base.html' %} 
 {% load static %}
 {% block title %}Grupo de tanques{% endblock %} 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
- 	$(document).ready(function(){
-    	$(".elTanque").load("tanque.html");
-    });
- </script>
-	
 {% block content %}
+	{% block javascript %}
+ 		 <script src="{% static 'js/tanqueGrupo.js' %}"></script>
+  	 <script src="{% static 'js/jquery-3.5.0.js' %}"></script>
+	{% endblock %}
 
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
 	
@@ -21,53 +17,19 @@
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
-			<table id="tablaExterna">
-			
+			<table id="tablaExterna">			
 			<!-- Primera fila -->
 				<tr>
-					<td><label class="variable">Tanque1</label>
-						<div>
-						<p><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></p>
-							<table id="tablaInterna">
-								<tr>
-									<td><label class="variable">TOV:</label>
-										<p class="valor">VARIABLE1</p>
-									</td>
-									<br><br><br><br><br>
-								</tr>
-
-								<tr>
-									<td><label class="variable">NSV:</label>
-										<p class="valor">VARIABLE2</p>
-									</td>
-								</tr>
-							</table>
-						</div>
-						
-					</td>
-					
-					<td><label class="variable">Tanque2</label>
-						<p></p></td>
-					<td><label class="variable">Tanque3</label>
-						<p></p>
-					</td>
-				</tr>
-			
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+				</tr>			
 			<!-- Segunda fila -->
 				<tr>
-					<td><div class="elTanque"></div></td>
-
-					<td>
-						<label class="variable">Tanque5</label>
-						<p></p>
-					</td>
-					<td>
-						<label class="variable">Tanque6</label>
-						<p><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></p>
-						<p>1234</p>
-					</td>
-				</tr>
-				
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+				</tr>			
 			</table>
 	</div>
 {% endblock %}

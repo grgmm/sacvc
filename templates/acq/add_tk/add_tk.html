@@ -9,14 +9,10 @@
 <!--css add=edit-->
 
 <div id="ventana">
-
 	<p>
 		<label for="encabezado">Agregar Tanque</label>
 	</p>
 <!--	<p>{{	patio}}</p>  PARA TRAER VARIABLE PROVENIENTE DE GET_CONTEXT EN LA VISTA add_tk.py-->
-
-
-
 
 	<form id="my_form" method="post">
    		{% csrf_token %}
@@ -38,5 +34,4 @@
 		<a class="btn_control" href="{%url 'uacq:list_tk' patio%}">Regresar</a>	
 	</form>
 </div>
-
 {% endblock %}
