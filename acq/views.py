@@ -679,7 +679,7 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
 class usuariosedit(UpdateView):
   model = usuario
   template_name = 'acq/edit_user/edit_user.html'
-  fields = ['username','email']
+  fields = ['first_name', 'last_name', 'email', 'password']
   success_url = reverse_lazy('uacq:list_user' )
 
   def get(self, request, *args, **kwargs):
@@ -702,7 +702,7 @@ class usuariosedit(UpdateView):
 
 class usuariosadd(CreateView):
     model = usuario
-    fields = ['username', 'email', ]
+    fields = ['first_name', 'last_name', 'email', 'password']
     template_name = 'acq/add_user/add_user.html'
     success_url = reverse_lazy('uacq:list_user')
 
