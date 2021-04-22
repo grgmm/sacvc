@@ -33,7 +33,7 @@ html, body {
 }
 
 #tablaExterna td {
-	/*border: 1px solid #117a8b;*/
+	border: 1px solid #117a8b;
 	height: 40%;
 	width: 33%;
 }
