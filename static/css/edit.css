@@ -10,13 +10,15 @@ html, body {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
 	top: 26%; /* mayor que height de la imagen*/
-	height: 46%; /*menor que 100%-height de la imagen*/
+	height: auto; ;
+    overflow-x:hidden;
 	width: 40%;
 	left: 30%; /*(100%-(width:24%))/2*/
 	background: #fff;
 	border-radius: 10px;
 	border: 1px solid #ccc;
 }
+
 
 table, th, td {
 	border: 1px solid black;
@@ -27,6 +29,7 @@ table {
 	width: 90%;
 	margin: 0 auto;
 	margin-top: 5%;
+	margin-bottom: 20%;
 }
 
 label {
@@ -68,7 +71,7 @@ label[for=encabezado] {
 
 .btn_control {
 	position: absolute;
-	/*posicion respecto a la esquina inferior derecha  de ventanalogin*/
+	/*posicion respecto a la esquina inferior derecha  de ventana*/
 	bottom: 5%;
 	width: 30%;
 	font-size: 14px;
