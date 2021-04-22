@@ -23,14 +23,16 @@
    <div id="principal">
      <table >
        <!-- Encabezado de la tabla con tres columnas-->
-       <th>USUARIO</th>
+       <th>NOMBRES</th>
+       <th>APELLIDOS</th>
        <th>EMAIL</th>
        <th>ACCION</th>
 
        {% for usuario in object_list %}
          <tr>
          <!-- Columna1=Nombre del patio -->
-         <td id="nombre_patio">{{ usuario.username }}</td>
+         <td id="nombre_patio">{{ usuario.first_name }}</td>
+         <td id="nombre_patio">{{ usuario.last_name }}</td>
          <td id="nombre_patio">{{ usuario.email }}</td>
 
 
