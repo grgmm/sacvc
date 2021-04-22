@@ -10,7 +10,7 @@ html, body {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
 	top: 26%; /* mayor que height de la imagen*/
-	height: auto; ;
+	height: auto; 
     overflow-x:hidden;
 	width: 40%;
 	left: 30%; /*(100%-(width:24%))/2*/

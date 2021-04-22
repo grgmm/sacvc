@@ -7,13 +7,16 @@ html, body {
 	background: linear-gradient(#334d50, #cbcaa5) fixed;
 }
 
-#container {
+#ventana {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
-	top: 7%; /* mayor que height de la imagen*/
+	top: 10%; /* mayor que height de la imagen*/
 	left: 5%; /*(100%-(width:24%))/2*/
-	height: 79%; /*menor que 100%-height de la imagen*/
+	height: auto; 
+    overflow-x:hidden;
 	width: 85%;
+	background-color: white;
+	border-radius: 10px;
 }
 /*Dimensiones y posicion de la imagen*/
 .img {
@@ -30,6 +33,7 @@ html, body {
 	width: 90%;
 	height: 80%;
 	margin: 0 auto;
+	margin-bottom: 2rem;
 }
 
 #tablaExterna td {

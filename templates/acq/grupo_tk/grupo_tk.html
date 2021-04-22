@@ -12,18 +12,20 @@
  -->
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
 	
-	<div id="container">
+	<div id="ventana">
 			{% csrf_token %}
 			<p>
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
-			<table id="tablaExterna">	
+			<table id="tablaExterna">		
+			
+			<!-- 
 			{% for tk in object_list %}
 				<!-- Aqui desplegare la tabla -->	
-			{% endfor %}
-			<!-- 
-			
+			{% endfor %}	
+			 -->		
+		
 				<tr>
 					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
 					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
@@ -34,8 +36,7 @@
 					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
 					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
 					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
-				</tr>	
-			 -->				
+				</tr>		
 			</table>
 	</div>
 {% endblock %}
