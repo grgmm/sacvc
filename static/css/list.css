@@ -20,7 +20,7 @@ table {
 	text-align: center; 
 	border-collapse:collapse;
 	border-radius: 15px;
-	width: 65%;
+	width: 75%;/*ajustar para resolucion mas baja*/
 	margin-top: 2rem;
 	margin-bottom: 1rem;
 	color: #212529;
@@ -48,14 +48,13 @@ th {
 td {
 	height:3rem;
 	vertical-align: middle;
-	/*padding: 0.75rem;*/
 	border: #338599 2px solid;
 }
 
 #nombre_patio{
 	text-align: left; 
 	font-size: 1.1rem;
-	padding-left: 1rem;
+	padding-left: 0.5rem;
 	width: 20%;
 }
 
@@ -72,7 +71,7 @@ table, tr:nth-of-type(odd) {
 /*Estilos para los link*/
 
 .btn_tabla{
-	padding: 1.5% 1.5%;
+	padding: 1.5% 1%;
 	border-radius: 0.4rem;
 }
 
