@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.http import JsonResponse
-from .models import Tag, Tk, PatioTanque,Tct, Analogico, Digital
+from .models import Tag, Tk, PatioTanque,Tct, Analogico, Digital, UserProfile
 #from datetime import timedelta, datetime
 from django.template.response import TemplateResponse
 from django.views.generic import ListView, FormView, TemplateView, RedirectView
@@ -701,8 +701,8 @@ class usuariosedit(UpdateView):
           return redirect('/sacvc/logout')
 
 class usuariosadd(CreateView):
-    model = usuario
-    fields = ['first_name', 'last_name', 'email', 'password']
+    model = UserProfile
+    fields = ['patios']
     template_name = 'acq/add_user/add_user.html'
     success_url = reverse_lazy('uacq:list_user')
 

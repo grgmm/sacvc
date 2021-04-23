@@ -9,7 +9,10 @@ import time
 from datetime import datetime
 from datetime import timedelta
 from django.core.validators import FileExtensionValidator, DecimalValidator, MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -27,6 +30,41 @@ class PatioTanque(models.Model):
     def __str__(self):
 
        return '%s' % (self.Nombre,)
+
+
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    patios = models.ManyToManyField(PatioTanque)
+
+
+    def __str__(self):
+        return "%s Usuariololin" % self.user.username
+
+
+
+
+@receiver(post_save, sender=User)
+def create_profile_handler(sender, instance, created, **kwargs):
+    if not created:
+        return
+    UserProfile.objects.create(user=instance)
+
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.user.save()
+
+
+
+
+
 
 
 
