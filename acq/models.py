@@ -57,17 +57,6 @@ def create_profile_handler(sender, instance, created, **kwargs):
 
 
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.user.save()
-
-
-
-
-
-
-
-
 #MODELOS DE TANQUES
 
 class Tk(models.Model):

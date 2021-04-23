@@ -30,6 +30,7 @@ from .views import (
     usuariosadd,
     usuariosdelete,
     usuariodetail,
+    grupo_tk,
     )
 
 
@@ -89,5 +90,8 @@ urlpatterns = [
     url(r'^del_user/(?P<pk>\d+)$', usuariosdelete.as_view(), name='del_user'),
 
     url(r'^detail_user/(?P<pk>\d+)$', usuariodetail.as_view(), name='detail_user'),
+
+    url(r'^grupo_tk/$', grupo_tk.as_view(), name='grupo_tk'), #Probada con módulo de prueba teste_url_simples
+
 
 ]

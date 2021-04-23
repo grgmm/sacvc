@@ -52,11 +52,13 @@ def actualizar(request):
       data_file.close()
    return JsonResponse(dataf)
 
-class current_data(ListView):
 
+class current_data(ListView):
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
+
+
 
 class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
      #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
@@ -179,7 +181,7 @@ class PatiotanqueUpdate(UpdateView):
           return redirect('/sacvc/logout')
 
 class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
-
+    #Vista en modo supervisión
     model = Tk
     template_name = 'acq/list_tk/list_tk.html'
 
@@ -701,8 +703,8 @@ class usuariosedit(UpdateView):
           return redirect('/sacvc/logout')
 
 class usuariosadd(CreateView):
-    model = UserProfile
-    fields = ['patios']
+    model = usuario
+    fields = ['username','first_name','last_name','password', 'email']
     template_name = 'acq/add_user/add_user.html'
     success_url = reverse_lazy('uacq:list_user')
 
@@ -773,3 +775,12 @@ class usuariodetail(DetailView):
 
 def tanquesGrupo(request):
     return render(request,'acq/grupo_tk/grupo_tk.html')
+
+
+
+
+class grupo_tk(ListView):
+  #vista de grupo de tanques en modo operación
+  model = Tk
+  success_url = reverse_lazy('uacq:list_tf')
+  template_name = 'acq/grupo_tk/grupo_tk.html'
