@@ -1,27 +1,13 @@
+
 {% extends 'acq/base.html' %} 
 {% load static %}
- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 {% block title %}Grupo de tanques{% endblock %} 
-<!-- 
-<script>
-	var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'tanque.html');
-    xhr.setRequestHeader('Content-Type', 'text/plain');
-    xhr.send();
-    xhr.onload = function () {
-    	document.querySelector("tanque").innerHTML = data.currentTarget.response;
-    };
-</script>
- -->
- 
- <script>
-    $(document).ready(function () {
-      $('.menuContainer').load('./tanque.html');
-    });
-  </script>
-	
+
 {% block content %}
-	
+	{% block javascript %}
+ 		 <script src="{% static 'js/tanqueGrupo.js' %}"></script>
+  	 <script src="{% static 'js/jquery-3.5.0.js' %}"></script>
+	{% endblock %}
 
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
 	
@@ -31,64 +17,19 @@
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
-			<table id="tablaExterna">
-			
+			<table id="tablaExterna">			
 			<!-- Primera fila -->
 				<tr>
-					<td><label class="variable">Tanque1</label>
-						<div>
-						<p><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></p>
-							<table id="tablaInterna">
-								<tr>
-									<td><label class="variable">TOV:</label>
-										<p class="valor">VARIABLE1</p>
-									</td>
-									<br><br><br><br><br>
-								</tr>
-
-								<tr>
-									<td><label class="variable">NSV:</label>
-										<p class="valor">VARIABLE2</p>
-									</td>
-								</tr>
-							</table>
-						</div>
-						
-					</td>
-					
-					<td><label class="variable">Tanque2</label>
-						<p></p></td>
-					<td><label class="variable">Tanque3</label>
-						<p></p>
-					</td>
-				</tr>
-			
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+				</tr>			
 			<!-- Segunda fila -->
-				<tr>														
-				<!-- 
-					<tanque></tanque>
-					<td>
-						<label class="variable">Tanque4</label>
-						<p><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></p>
-						<p></p>
-					</td>
-				 -->
-				 <div class="menuContainer"></div>	
-					
-					<td><label class="variable">Tanque5</label>
-						<p></p>
-					</td>
-					<td><label class="variable">Tanque6</label>
-						<p></p>
-					</td>
-				</tr>
-				
+				<tr>
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
+				</tr>			
 			</table>
 	</div>
 {% endblock %}
-
-<script>
-    $(document).ready(function () {
-      $('.menuContainer').load('tanque.html');
-    });
-</script>
