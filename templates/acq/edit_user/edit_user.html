@@ -8,12 +8,14 @@
 
 <div id="ventana">
 	<p>
-		<!-- Encabezado -->
+		<!-- Encabezado-->
 		<label for="encabezado">Editar Usuario</label>
-	</p>
+  <p>
+
+
 
 	<form method="post">
-    	
+
    		{% csrf_token %}
 
   		{{ form.non_field_errors }}
@@ -34,11 +36,11 @@
    		</div>
 		<button type="submit" class="btn_control">Modificar</button>
 		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
-	
+
 	</form>
 </div>
 
- 
+
 
 
 {% endblock %}

@@ -194,8 +194,8 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
       fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
       ruta_Data=fs.location
 
-      add_tk_iniciales ={'Nombre':'TANQUE....',
-          'Descriptor':'EJEMPLO TANQUE DE 10000 BARRILES',
+      add_tk_iniciales ={'Nombre':'',
+          'Descriptor':'',
           'id_patioTanque':patio,}
 
       #print(add_tk_iniciales)
@@ -679,9 +679,9 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
             return redirect('/sacvc/logout')
 
 class usuariosedit(UpdateView):
-  model = usuario
+  model = UserProfile
   template_name = 'acq/edit_user/edit_user.html'
-  fields = ['first_name', 'last_name', 'email', 'password']
+  fields = ['user','patios']
   success_url = reverse_lazy('uacq:list_user' )
 
   def get(self, request, *args, **kwargs):
@@ -751,7 +751,7 @@ class usuariosdelete(DeleteView):
              return redirect('/sacvc/logout')
 
 class usuariodetail(DetailView):
-        model = usuario
+        model = UserProfile
         template_name = 'acq/detail_user/detail_user.html'
 
         def get(self, request, *args, **kwargs):

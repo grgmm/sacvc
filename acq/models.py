@@ -31,9 +31,6 @@ class PatioTanque(models.Model):
 
        return '%s' % (self.Nombre,)
 
-
-
-
 class UserProfile(models.Model):
     user = models.OneToOneField(
         User,
@@ -44,10 +41,7 @@ class UserProfile(models.Model):
 
 
     def __str__(self):
-        return "%s Usuariololin" % self.user.username
-
-
-
+        return "%s" % self.user.username
 
 @receiver(post_save, sender=User)
 def create_profile_handler(sender, instance, created, **kwargs):
