@@ -697,10 +697,14 @@ class usuariosedit(UpdateView):
 
               return redirect('/sacvc/Menu')
           else:
+
+
                return super(usuariosedit, self).get(request, *args, **kwargs)
 
       else:
           return redirect('/sacvc/logout')
+
+
 
 class usuariosadd(CreateView):
     model = usuario
@@ -771,6 +775,21 @@ class usuariodetail(DetailView):
 
             else:
                 return redirect('/sacvc/logout')
+
+
+        def get_context_data(self, **kwargs):
+              context = super().get_context_data(**kwargs)
+              qs = self.object.patios.all()
+              patiosuser=[]
+
+              for patio_inst in qs:
+                  patiosuser.append(patio_inst.Nombre)
+              print(patiosuser)
+              context['patiosuser']=patiosuser
+              #context=patiosuser
+
+
+              return context
 
 
 def tanquesGrupo(request):

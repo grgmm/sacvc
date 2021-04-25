@@ -18,40 +18,55 @@
 
    		{% csrf_token %}
 
+  		{{ form.non_field_errors }}
+
+  		{% for hidden_field in form.hidden_fields %}
+    		{{ hidden_field.errors }}
+    		{{ hidden_field }}
+		{% endfor %}
+
 
    		<div >
   			<table id="ventana1" border="1">
-
 							<tr>
 								<td class="etiqueta">username</td>
-								<td class="dato">{{ object.user.username }}</td>
+								<td class="dato">{{form.user.pk }}</td>
 							</tr>
 
       				<tr>
         				<td class="etiqueta">nombres</td>
-								<td class="dato">{{ object.user.first_name }}</td>
+								<td class="dato">{{ form.user.User.first_name }}</td>
 							</tr>
 
 							<tr>
 								<td class="etiqueta">apellidos</td>
-								<td class="dato">{{ object.user.last_name }}</td>
+								<td class="dato">{{ form.user.Userlast_name }}</td>
 							</tr>
 
 							<tr>
 									<td class="etiqueta">email</td>
-									<td class="dato">{{ object.user.email }}</td>
+									<td class="dato">{{form.user.User.email }}</td>
 							<tr>
 
 								<td class="etiqueta">password</td>
-								<td class="dato">{{ object.user.password }}</td>
+								<td class="dato">{{ form.user.User.password }}</td>
 
 							</tr>
-							<tr>
 
-								<td class="etiqueta">patios</td>
-								<td class="dato">{{ object.patios }}</td>
+					<tr>
 
-							</tr>
+						<td class="etiqueta">patios</td>
+						<td class="dato">{{ form.patios}}</td>
+
+					</tr>
+
+
+										<tr>
+
+											<td class="etiqueta">patios</td>
+
+										</tr>
+
 
 
 
