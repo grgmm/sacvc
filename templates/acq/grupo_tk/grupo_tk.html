@@ -18,14 +18,18 @@
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
-			<table id="tablaExterna">		
-			
-			<!-- 
+			<table id="tablaExterna">
+					
+			<!-- https://docs.djangoproject.com/en/3.2/ref/templates/builtins/ -->
 			{% for tk in object_list %}
-				<!-- Aqui desplegare la tabla -->	
-			{% endfor %}	
-			 -->		
-		
+			
+				<tr>
+					<td>{{ tk.Nombre }}</td>
+					<td>{{ tk.id}}</td>
+				</tr>
+				
+			{% endfor %}
+		<!-- 
 				<tr>
 					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
 					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
@@ -37,6 +41,7 @@
 					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
 					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
 				</tr>		
+			 -->			
 			</table>
 	</div>
 {% endblock %}

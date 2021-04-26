@@ -772,13 +772,6 @@ class usuariodetail(DetailView):
             else:
                 return redirect('/sacvc/logout')
 
-
-def tanquesGrupo(request):
-    return render(request,'acq/grupo_tk/grupo_tk.html')
-
-
-
-
 class grupo_tk(ListView):
   #vista de grupo de tanques en modo operación
   model = Tk
