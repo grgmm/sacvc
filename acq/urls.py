@@ -31,6 +31,7 @@ from .views import (
     usuariosdelete,
     usuariodetail,
     grupo_tk,
+    edit_patio_user
     )
 
 
@@ -84,6 +85,9 @@ urlpatterns = [
     url(r'^list_user/$', usuarioslist.as_view(), name = "list_user"), #Probada con módulo de prueba teste_url_simples
 
     url(r'^edit_user/(?P<pk>\d+)$', usuariosedit.as_view(), name='edit_user'),
+
+    url(r'^edit_patio_user/(?P<pk>\d+)$', edit_patio_user.as_view(), name='edit_patio_user'),
+
 
     url(r'^add_user/', usuariosadd.as_view(), name='add_user'),
 
