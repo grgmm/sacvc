@@ -2,6 +2,10 @@
 {% load static %}
   {% block title %}Usuario: {{user.username}} {% endblock %}
 
+
+
+
+
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/detail.css' %}">
 <div id="ventana">
@@ -14,31 +18,46 @@
 				<tr>
 					<!-- Nombre de usuario-->
 					<td class="etiqueta">Usuario:</td>
-					<td class="dato">{{object.username}}</td>
+					<td class="dato">{{object.user.username}}</td>
 				</tr>
 
 				<tr>
 					<!-- id de usuario -->
 					<td class="etiqueta">Id del Usuario:</td>
-					<td class="dato">{{object.pk}}</td>
+					<td class="dato">{{object.user.pk}}</td>
 				</tr>
 				<tr>
 					<!-- correo de usuario-->
 					<td class="etiqueta">Email del Usuario:</td>
-					<td class="dato">{{object.email}}</td>
+					<td class="dato">{{object.user.email}}</td>
 				</tr>
 
         <tr>
           <!-- correo de usuario-->
           <td class="etiqueta">Nombres:</td>
-          <td class="dato">{{object.first_name}}</td>
+          <td class="dato">{{object.user.first_name}}</td>
         </tr>
 
         <tr>
           <!-- correo de usuario-->
           <td class="etiqueta">Apellidos:</td>
-          <td class="dato">{{object.last_name}}</td>
+          <td class="dato">{{object.user.last_name}}</td>
         </tr>
+
+
+
+        <tr>
+          <!-- SE REQUIERE ITERAR AQUI PARA DETERMINAR LOS PATIOS ASIGNADOS AL USUARIO-->
+
+
+          <td class="etiqueta">Patios:</td>
+
+
+
+          <td class="dato">{{patiosuser}}</td>
+        </tr>
+
+
 
 
 

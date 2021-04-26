@@ -194,8 +194,8 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
       fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
       ruta_Data=fs.location
 
-      add_tk_iniciales ={'Nombre':'TANQUE....',
-          'Descriptor':'EJEMPLO TANQUE DE 10000 BARRILES',
+      add_tk_iniciales ={'Nombre':'',
+          'Descriptor':'',
           'id_patioTanque':patio,}
 
       #print(add_tk_iniciales)
@@ -678,10 +678,14 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
         else:
             return redirect('/sacvc/logout')
 
+
+
+
+
 class usuariosedit(UpdateView):
   model = usuario
   template_name = 'acq/edit_user/edit_user.html'
-  fields = ['first_name', 'last_name', 'email', 'password']
+  fields = ['username','first_name', 'last_name', 'email','password']
   success_url = reverse_lazy('uacq:list_user' )
 
   def get(self, request, *args, **kwargs):
@@ -697,10 +701,44 @@ class usuariosedit(UpdateView):
 
               return redirect('/sacvc/Menu')
           else:
+
+
                return super(usuariosedit, self).get(request, *args, **kwargs)
 
       else:
           return redirect('/sacvc/logout')
+
+
+
+
+
+class edit_patio_user(UpdateView):
+  model = UserProfile
+  template_name = 'acq/edit_user/edit_patio_user.html'
+  fields = ['user','patios']
+  success_url = reverse_lazy('uacq:list_user' )
+
+  def get(self, request, *args, **kwargs):
+      if request.user.is_authenticated:
+
+          filtro_usuario = Group.objects.filter(user = request.user)
+          for g in filtro_usuario:
+  # this should print all group names for the user
+                  print(g.name)
+
+          if (not g.name =='supervisores'):
+              print('Usuario sin Perfil')
+
+              return redirect('/sacvc/Menu')
+          else:
+
+
+               return super(edit_patio_user, self).get(request, *args, **kwargs)
+
+      else:
+          return redirect('/sacvc/logout')
+
+
 
 class usuariosadd(CreateView):
     model = usuario
@@ -751,7 +789,7 @@ class usuariosdelete(DeleteView):
              return redirect('/sacvc/logout')
 
 class usuariodetail(DetailView):
-        model = usuario
+        model = UserProfile
         template_name = 'acq/detail_user/detail_user.html'
 
         def get(self, request, *args, **kwargs):
@@ -772,6 +810,30 @@ class usuariodetail(DetailView):
             else:
                 return redirect('/sacvc/logout')
 
+<<<<<<< HEAD
+=======
+
+        def get_context_data(self, **kwargs):
+              context = super().get_context_data(**kwargs)
+              qs = self.object.patios.all()
+              patiosuser=[]
+
+              for patio_inst in qs:
+                  patiosuser.append(patio_inst.Nombre)
+              context['patiosuser']=patiosuser
+              #context=patiosuser
+
+
+              return context
+
+
+def tanquesGrupo(request):
+    return render(request,'acq/grupo_tk/grupo_tk.html')
+
+
+
+
+>>>>>>> branch 'feature/sprint_16' of https://github.com/grgmm/sacvc.git
 class grupo_tk(ListView):
   #vista de grupo de tanques en modo operación
   model = Tk

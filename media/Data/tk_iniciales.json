@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"Nombre": "TANQUE....", "Descriptor": "EJEMPLO TANQUE DE 10000 BARRILES", "id_patioTanque": "2"}
+=======
+{"Nombre": "", "Descriptor": "", "id_patioTanque": "1"}
+>>>>>>> branch 'feature/sprint_16' of https://github.com/grgmm/sacvc.git
