@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 @import url(animate.css);
 
 /* Basics */
@@ -10,15 +11,14 @@ html, body {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
 	top: 26%; /* mayor que height de la imagen*/
-	height: auto; 
-    overflow-x:hidden;
+	height: auto;
+	overflow-x: hidden;
 	width: 40%;
 	left: 30%; /*(100%-(width:24%))/2*/
 	background: #fff;
 	border-radius: 10px;
 	border: 1px solid #ccc;
 }
-
 
 table, th, td {
 	border: 1px solid black;
@@ -95,6 +95,26 @@ a {
 	right: 55%;
 	padding: 0.80rem 0;
 }
+
+/*Solo para vista edit_usr*/
+#usrModificar {
+	width: 20%; right : 10%;
+	padding: 0.7rem 0;
+	right: 10%;
+}
+
+#usrRegresar {
+	width: 20%;
+	right: 70%;
+	padding: 0.7rem 0;
+}
+
+#usrPatio {
+	width: 20%;
+	right: 40%;
+	padding: 0.7rem 0;
+}
+/******************************/
 
 .btn_control:hover {
 	text-decoration: none;

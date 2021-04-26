@@ -34,11 +34,9 @@
     			{% endfor %}
  	 		</table>
    		</div>
-		<button type="submit" class="btn_control">Modificar</button>
-		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
-		<a href="{% url 'uacq:edit_patio_user' object.pk %}" type="button" class="btn_control"> Patio-Usuario</a>
-
-
+		<button id="usrModificar"  type="submit" class="btn_control">Modificar</button>
+		<a id="usrRegresar" href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
+		<a id="usrPatio" href="{% url 'uacq:edit_patio_user' object.pk %}" type="button" class="btn_control"> Asignar Patio</a>
 	</form>
 </div>
 

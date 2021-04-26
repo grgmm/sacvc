@@ -810,8 +810,6 @@ class usuariodetail(DetailView):
             else:
                 return redirect('/sacvc/logout')
 
-<<<<<<< HEAD
-=======
 
         def get_context_data(self, **kwargs):
               context = super().get_context_data(**kwargs)
@@ -831,9 +829,6 @@ def tanquesGrupo(request):
     return render(request,'acq/grupo_tk/grupo_tk.html')
 
 
-
-
->>>>>>> branch 'feature/sprint_16' of https://github.com/grgmm/sacvc.git
 class grupo_tk(ListView):
   #vista de grupo de tanques en modo operación
   model = Tk
