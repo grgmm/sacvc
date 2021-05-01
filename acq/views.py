@@ -10,7 +10,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
-from django.views import View
+#from django.views import View
 from django.views.generic import View
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -37,13 +37,18 @@ from django.contrib.auth import logout
 from django.contrib.auth import login
 
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 from django.contrib.auth.models import User as usuario, Group
 
 from django.contrib.auth.forms import AuthenticationForm
 
 from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth.views import PasswordChangeView
+
+
+from django.contrib.auth import views as auth_views
 
 def actualizar(request):
 
@@ -248,7 +253,7 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
 
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs) #OJO EVALUAR POSIBLE ELIMINACION
 
         fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
         ruta_Data=fs.location
@@ -679,16 +684,17 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
             return redirect('/sacvc/logout')
 
 
-
-
-
 class usuariosedit(UpdateView):
   model = usuario
   template_name = 'acq/edit_user/edit_user.html'
-  fields = ['username','first_name', 'last_name', 'email','password']
+  fields = ['username','first_name', 'last_name', 'email']
   success_url = reverse_lazy('uacq:list_user' )
 
+
+
   def get(self, request, *args, **kwargs):
+
+
       if request.user.is_authenticated:
 
           filtro_usuario = Group.objects.filter(user = request.user)
@@ -705,10 +711,9 @@ class usuariosedit(UpdateView):
 
                return super(usuariosedit, self).get(request, *args, **kwargs)
 
+
       else:
           return redirect('/sacvc/logout')
-
-
 
 
 
@@ -833,4 +838,31 @@ class grupo_tk(ListView):
   #vista de grupo de tanques en modo operación
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')
-  template_name = 'acq/grupo_tk/grupo_tk.html'
+  form = 'acq/grupo_tk/grupo_tk.html'
+
+
+
+
+from .forms.acqforms import users_cambio_clave_form
+
+class Cambiar_Clave(FormView):
+
+  template_name = 'acq/edit_user/cambiar_clave.html'
+  success_url = reverse_lazy('uacq:list_user' )
+  form_class = users_cambio_clave_form
+
+
+  def form_valid(self, form):
+      print(lolito)
+      # This method is called when valid form data has been POSTed.
+      # It should return an HttpResponse.
+      return super().form_valid(form)
+  #form_class = ClassOfTheForm
+
+  def get(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        context = self.get_context_data(**kwargs)
+        print (context['form'])
+        context['form'] = form
+        return self.render_to_response(context)
