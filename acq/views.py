@@ -50,6 +50,10 @@ from django.contrib.auth.views import PasswordChangeView
 
 from django.contrib.auth import views as auth_views
 
+#   [] {}
+
+
+
 def actualizar(request):
 
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
@@ -429,7 +433,6 @@ class TkUpdate(UpdateView):
          return(success_url)
 
          #return reverse_lazy('uacq:list_tf')
-
 
   def get(self, request, *args, **kwargs):
       if request.user.is_authenticated:
@@ -840,9 +843,6 @@ class grupo_tk(ListView):
   success_url = reverse_lazy('uacq:list_tf')
   form = 'acq/grupo_tk/grupo_tk.html'
 
-
-
-
 from .forms.acqforms import users_cambio_clave_form
 
 class Cambiar_Clave(FormView):
@@ -852,17 +852,48 @@ class Cambiar_Clave(FormView):
   form_class = users_cambio_clave_form
 
 
-  def form_valid(self, form):
-      print(lolito)
-      # This method is called when valid form data has been POSTed.
-      # It should return an HttpResponse.
-      return super().form_valid(form)
-  #form_class = ClassOfTheForm
+  def post(self, request, *args, **kwargs):
 
-  def get(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        context = self.get_context_data(**kwargs)
-        print (context['form'])
-        context['form'] = form
-        return self.render_to_response(context)
+    #self.obj = self.get_object()
+
+    form_class = self.get_form_class()
+    form = self.get_form(form_class)
+    #print(form)
+    context = super(Cambiar_Clave, self).get_context_data(**kwargs)
+    #context = self.get_context_data(**kwargs)
+    #print (context['form']) #ojo
+    print(context)
+
+    context['form'] = form
+
+    request.POST = request.POST.copy()
+
+    print(request.POST['clave'])
+    print(request.POST['reclave'])
+
+
+
+    if ((request.POST['clave']) == (request.POST['reclave'])):
+            clave_valida = str(request.POST['reclave'])
+            print('CLAVE VALIDA')
+
+            u = usuario.objects.get(pk=context['pk'])
+            u.set_password(clave_valida)
+            u.save()
+            return redirect('/sacvc/list_user')
+
+    else:
+            print('LAS CLAVES NO COINCIDEN')
+            clave_valida=''
+
+    print(clave_valida)
+
+
+    return self.render_to_response(context)
+
+    def form_valid(self, form):   #OJO VALIDAR APLICACIÓN DE ESTA PARTE
+         print('Datos no Válidos')
+         # This method is called when valid form data has been POSTed.
+         # It should return an HttpResponse.
+         return super().form_valid(form)
+     #form_class = ClassOfTheForm

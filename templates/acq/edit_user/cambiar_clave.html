@@ -2,10 +2,11 @@
 
 {% block content %}
 
-<h1>The form element</h1>
+<h1>Nueva Clave Usuario</h1>
 
 
-<form  method="get">
+<form  method="post">
+  {% csrf_token %}
 
   {{form.as_ul}}
 
