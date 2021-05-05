@@ -6,7 +6,6 @@ from django.urls import path
 from django.conf.urls import url
 
 
-
 from .views import (
     patiotanquelist,
     PatiotanqueAdd,
@@ -31,7 +30,7 @@ from .views import (
     usuariosdelete,
     usuariodetail,
     grupo_tk,
-    edit_patio_user
+    edit_patio_user,
     )
 
 

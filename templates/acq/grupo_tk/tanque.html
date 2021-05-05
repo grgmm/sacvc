@@ -1,22 +1,25 @@
 
 {% load static %}
-<label class="tag">Tanque1</label>
-<div>
-	<p><a href=" "><img class="img" src="{% static "recursos/imagenes/tanque.png" %}"></a></p>
-		<table id="tablaInterna">
-			<tr>
-				<td>
-					<label class="variable">TOV:</label>
-					<p class="valor">VARIABLE1</p>
-				</td>
-					<br><br><br>
-			</tr>
+						
+<div class="celda">
+	<a href=" ">
+		<p id="tanque">{{ tk.Nombre }}</p>
+		<img class="img" src="{% static "recursos/imagenes/tanque.png" %}">
+	</a>
+	<table id="tablaInterna">
+		<tr>
+			<br><br><br>
+			<td>
+				<label class="variable">TOV:</label>
+				<p class="valor">VARIABLE1</p>
+			</td>
+		</tr>
 
-			<tr>
-				<td>
-					<label class="variable">NSV:</label>
-					<p class="valor">VARIABLE2</p>
-				</td>
-			</tr>
-		</table>
+		<tr>
+			<td>
+				<label class="variable">NSV:</label>
+				<p class="valor">VARIABLE2</p>
+			</td>
+		</tr>
+	</table>
 </div>

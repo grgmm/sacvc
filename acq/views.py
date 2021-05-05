@@ -820,8 +820,6 @@ class usuariodetail(DetailView):
                   patiosuser.append(patio_inst.Nombre)
               context['patiosuser']=patiosuser
               #context=patiosuser
-
-
               return context
 
 
@@ -834,3 +832,5 @@ class grupo_tk(ListView):
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/grupo_tk/grupo_tk.html'
+  
+  

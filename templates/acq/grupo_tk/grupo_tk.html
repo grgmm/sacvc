@@ -1,6 +1,7 @@
 
 {% extends 'acq/base.html' %} 
 {% load static %}
+{% load mathfilters %}
 {% block title %}Grupo de tanques{% endblock %} 
 
 {% block content %}
@@ -18,30 +19,46 @@
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
+			{% with numerator=5 denominator=3 %}
+				nro_filas={{ object_list.count|floatformat:"0"|div:3 }} <!-- pip install django-mathfilters -->
+			{% endwith %}
+			
 			<table id="tablaExterna">
 					
-			<!-- https://docs.djangoproject.com/en/3.2/ref/templates/builtins/ -->
-			{% for tk in object_list %}
-			
-				<tr>
-					<td>{{ tk.Nombre }}</td>
-					<td>{{ tk.id}}</td>
-				</tr>
+				<!-- https://docs.djangoproject.com/en/3.2/ref/templates/builtins/ -->
+					
 				
-			{% endfor %}
-		<!-- 
-				<tr>
-					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
-					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
-					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
-				</tr>			
-			
-				<tr>
-					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
-					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
-					<td>{% include "acq/grupo_tk/tanque.html" %}</td>
-				</tr>		
-			 -->			
+					{% for tk in object_list %}
+					
+						<!-- Primera fila -->
+						{% if forloop.counter <= 3 %}
+							{% if forloop.counter == 1 %}	
+								<tr>
+							{% endif %}
+							<td>
+								{% include "acq/grupo_tk/tanque.html" %}	
+							</td>
+							{% if forloop.counter == 3 %}
+								</tr>
+							{% endif %}	
+						{% endif %}
+						
+						<!-- Segunda fila -->
+						{% if forloop.counter > 3 and forloop.counter <= 6 %}
+							{% if forloop.counter == 4 %}	
+								<tr>
+							{% endif %}
+							<td>
+								{% include "acq/grupo_tk/tanque.html" %}	
+							</td>
+							{% if forloop.counter == 6 %}
+								</tr>
+							{% endif %}	
+						{% endif %}
+						
+						
+					{% endfor %}
+				</tr>
 			</table>
 	</div>
 {% endblock %}

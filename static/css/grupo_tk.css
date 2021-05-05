@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@import url(animate.css);
+@import url("animate.css");
 
 /* Basics */
 html, body {
@@ -12,20 +12,19 @@ html, body {
 	/*posicion respecto a la esquina superior izquierda de body*/
 	top: 10%; /* mayor que height de la imagen*/
 	left: 5%; /*(100%-(width:24%))/2*/
-	height: auto; 
-    overflow-x:hidden;
-	width: 85%;
+	height: auto;
+	overflow-x: hidden;
+	width: 90%;
 	background-color: white;
 	border-radius: 10px;
 }
+
 /*Dimensiones y posicion de la imagen*/
 .img {
 	float: left;
-	padding-top: 3%;
-	padding-left: 10%;
-	padding-bottom:3%;
 	width: 50%;
-	height: 70%;
+	height: 80%;
+	background-color: gray;
 }
 
 #tablaExterna {
@@ -42,29 +41,41 @@ html, body {
 	width: 33%;
 }
 
-#tablaInterna {
-	margin-top: 0%;
-}
-
-#tablaInterna td{
+#tablaInterna td {
 	border: none;
 }
-
-p.valor {
-	margin-left: 10%;
-	margin-bottom: 1rem;
-	font-size: 1rem;
+/*
+.celda {
+	height: 100%;
+	width: auto;
 }
-
+*/
 label {
 	color: #117a8b;
 	display: inline-block;
 	border-radius: 10px;
-	font-size: 1.2rem;
+	font-size: 1.5rem;
 	font-weight: bold;
-	margin-left: 10%;
-	margin-bottom: 0.2rem;
 	background-color: white;
+}
+
+label, .valor{
+	margin-left: 5%;
+	font-weight: bold;
+	font-size: 1.4rem;
+	
+}
+
+.valor{
+	margin-bottom: 3%;
+}
+
+#tanque {
+	color: #117a8b;
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-left: 5%;
+	margin-bottom: 2%;
 }
 
 label[for=encabezado] {
@@ -82,12 +93,4 @@ label[for=encabezado] {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	text-align: center;
-}
-
-.btn_salir1 {
-	background-color: #138496;
-	color: white; /*color de texto del link*/
-	margin-left: 1rem;
-	padding: 0.7rem 0.7rem;
-	border-radius: 0.4rem;
 }
