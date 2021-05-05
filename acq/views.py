@@ -749,29 +749,51 @@ class edit_patio_user(UpdateView):
 
 
 class usuariosadd(CreateView):
-    model = usuario
-    fields = ['username','first_name','last_name', 'password', 'email' ]
-    template_name = 'acq/add_user/add_user.html'
-    success_url = reverse_lazy('uacq:list_user')
+      model = usuario
+      fields = ['username','first_name','last_name', 'password', 'email' ]
+      template_name = 'acq/add_user/add_user.html'
+      success_url = reverse_lazy('uacq:list_user')
 
-    def get(self, request, *args, **kwargs):
-         if request.user.is_authenticated:
 
-             filtro_usuario = Group.objects.filter(user = request.user)
-             for g in filtro_usuario:
-     # this should print all group names for the user
-                     print(g.name)
+      def get(self, request, *args, **kwargs):
+           if request.user.is_authenticated:
 
-             if (not g.name =='supervisores'):
-                 print('Usuario sin Perfil')
+               filtro_usuario = Group.objects.filter(user = request.user)
+               for g in filtro_usuario:
+       # this should print all group names for the user
+                       print(g.name)
 
-                 return redirect('/sacvc/Menu')
-             else:
-                  return super(usuariosadd, self).get(request, *args, **kwargs)
+               if (not g.name =='supervisores'):
+                   print('Usuario sin Perfil')
 
-         else:
-             return redirect('/sacvc/logout')
+                   return redirect('/sacvc/Menu')
+               else:
 
+
+                    return super(usuariosadd, self).get(request, *args, **kwargs)
+
+           else:
+               return redirect('/sacvc/logout')
+
+
+      def post(self, request, *args, **kwargs):
+
+            request.POST = request.POST.copy()
+            #print(request.POST['first_name'])
+            #print(request.POST['last_name'])
+            if  (request.POST['first_name'])=='' or (request.POST['last_name']==''):
+
+                mensajes = 'RELLENE LOS CAMPOS REQUERIDOS'
+                #print(mensajes)
+
+
+
+                return redirect('/sacvc/add_user')
+
+            else:
+
+
+                return super(usuariosadd, self).post(request, **kwargs)
 
 
 class usuariosdelete(DeleteView):
@@ -845,6 +867,8 @@ class grupo_tk(ListView):
   success_url = reverse_lazy('uacq:list_tf')
   form = 'acq/grupo_tk/grupo_tk.html'
 
+
+
 from .forms.acqforms import users_cambio_clave_form
 
 class Cambiar_Clave(FormView):
@@ -864,7 +888,7 @@ class Cambiar_Clave(FormView):
     context = super(Cambiar_Clave, self).get_context_data(**kwargs)
     #context = self.get_context_data(**kwargs)
     #print (context['form']) #ojo
-    print(context)
+    #print(context)
 
     context['form'] = form
 
@@ -877,9 +901,12 @@ class Cambiar_Clave(FormView):
             u = usuario.objects.get(pk=context['pk'])
             u.set_password(clave_valida)
             u.save()
+
+            context['user']= u
             return redirect('/sacvc/list_user')
 
     else:
+            context['mensajes'] = 'LAS CLAVES NO COINCIDEN'
             print('LAS CLAVES NO COINCIDEN')
             clave_valida=''
 

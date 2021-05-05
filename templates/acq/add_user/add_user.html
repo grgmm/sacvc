@@ -31,14 +31,13 @@
       				</tr>
     			{% endfor %}
  	 		</table>
-				<input type="radio" id="operativos" name="operativos" value="Operativos">
-				<label for="male">Operativos</label><br>
-				<input type="radio" id="supervisores" name="supervisores" value="Supervisores">
-				<label for="female">Supervisores</label><br>
-   		</div>
+			</div>
 		<button type="submit" class="btn_control">Agregar</button>
 		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
 	</form>
 </div>
+
+<p> {{mensajes}} </p>
+
 
 {% endblock %}
