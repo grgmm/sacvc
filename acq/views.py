@@ -750,7 +750,7 @@ class edit_patio_user(UpdateView):
 
 class usuariosadd(CreateView):
     model = usuario
-    fields = ['username','first_name','last_name','password', 'email']
+    fields = ['username','first_name','last_name', 'password', 'email' ]
     template_name = 'acq/add_user/add_user.html'
     success_url = reverse_lazy('uacq:list_user')
 
@@ -771,6 +771,8 @@ class usuariosadd(CreateView):
 
          else:
              return redirect('/sacvc/logout')
+
+
 
 class usuariosdelete(DeleteView):
     model = usuario
@@ -867,11 +869,6 @@ class Cambiar_Clave(FormView):
     context['form'] = form
 
     request.POST = request.POST.copy()
-
-    print(request.POST['clave'])
-    print(request.POST['reclave'])
-
-
 
     if ((request.POST['clave']) == (request.POST['reclave'])):
             clave_valida = str(request.POST['reclave'])
