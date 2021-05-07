@@ -36,7 +36,9 @@ from django.db.models.signals import post_save
 from django.contrib.auth import logout
 from django.contrib.auth import login
 
+
 from django.contrib.auth import authenticate
+
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 from django.contrib.auth.models import User as usuario, Group
@@ -663,7 +665,6 @@ def welcome(request):
     return redirect('/sacvc/logout')
 
 class usuarioslist(ListView):  #VALIDADO PRELIMINAR
-     #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = usuario
     template_name = 'acq/list_user/list_user.html'
@@ -690,7 +691,7 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
 class usuariosedit(UpdateView):
   model = usuario
   template_name = 'acq/edit_user/edit_user.html'
-  fields = ['username','first_name', 'last_name', 'email']
+  fields = ['username','first_name', 'last_name', 'email', 'groups']
   success_url = reverse_lazy('uacq:list_user' )
 
 
@@ -822,7 +823,36 @@ class usuariosdelete(DeleteView):
 
 class usuariodetail(DetailView):
         model = UserProfile
+        fields= ['patios']
         template_name = 'acq/detail_user/detail_user.html'
+
+
+        def get_context_data(self, **kwargs):
+
+            context = super().get_context_data(**kwargs)
+            #print(context)
+            print(self.object.pk) #el objeto de este Detailview es un Userprofile (creado en model.py)
+            # que a su vez es una extensión del modelo User de Django.
+            filtro_usuario_grupos = Group.objects.filter(user = self.object.pk)
+
+            for g in filtro_usuario_grupos:
+        # this should print all group names for the user
+                    print(g.name)
+
+
+                    context['grupos'] =g.name
+                    print(context)
+            qs = self.object.patios.all()
+            patiosuser=[]
+
+
+            for patio_inst in qs:
+                patiosuser.append(patio_inst.Nombre)
+                context['patiosuser']=patiosuser
+            print(patiosuser)
+
+            return context
+
 
         def get(self, request, *args, **kwargs):
             if request.user.is_authenticated:
@@ -843,22 +873,11 @@ class usuariodetail(DetailView):
                 return redirect('/sacvc/logout')
 
 
-        def get_context_data(self, **kwargs):
-              context = super().get_context_data(**kwargs)
-              qs = self.object.patios.all()
-              patiosuser=[]
-
-              for patio_inst in qs:
-                  patiosuser.append(patio_inst.Nombre)
-              context['patiosuser']=patiosuser
-              #context=patiosuser
 
 
-              return context
 
-
-def tanquesGrupo(request):
-    return render(request,'acq/grupo_tk/grupo_tk.html')
+#def tanquesGrupo(request):
+    #return render(request,'acq/grupo_tk/grupo_tk.html') #PRUEBAS DE JOSE GONZALEZ
 
 
 class grupo_tk(ListView):
