@@ -1,9 +1,7 @@
 
 {% extends 'acq/base.html' %} 
 {% load static %}
-{% load mathfilters %}
 {% block title %}Grupo de tanques{% endblock %} 
-
 {% block content %}
 <!-- 
 	{% block javascript %}
@@ -19,29 +17,35 @@
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
-			<!--pip install django-mathfilters
-			{% with numero1=5 numero2=3 %}
-				n_ff={{ object_list.count|floatformat:"0"|div:3 }} 
-				n_fi={{ object_list.count|floatformat:"0"|intdiv:3 }} 
-				n_fr={{ object_list.count|floatformat:"0"|mod:3 }}
-			{% endwith %}
-			 -->
-			
-			<table id="tablaExterna">
-					
-				<!-- https://docs.djangoproject.com/en/3.2/ref/templates/builtins/ -->
-					
+			<table id="tablaExterna">	
+				<tr>
 					{% for tk in object_list %}
-						{% if forloop.counter == 1 or forloop.counter == 4 or forloop.counter == 7 or forloop.counter == 10 %}
-							<tr>
-						{% endif %}		
-						<td >
-								{% include "acq/grupo_tk/tanque.html" %}
-						</td>
-						{% if forloop.counter == 3 or forloop.counter == 6 or forloop.counter == 9 or forloop.counter == 12 %}
-							</tr>
-						{% endif %}	
+						<td>
+ 							<div class="div_celda">
+								<a href=" ">
+									<p id="tanque">{{ tk.Nombre }}</p>
+									<img class="img" src="{% static "recursos/imagenes/tanque.svg" %}">
+								</a>
+								<table id="tablaInterna">
+									<tr>
+										<br><br><br>
+										<td>
+											<label class="variable">TOV:</label>
+											<p class="valor">VARIABLE1</p>
+										</td>
+									</tr>
+
+									<tr>
+										<td>
+											<label class="variable">NSV:</label>
+											<p class="valor">VARIABLE2</p>
+										</td>
+									</tr>
+								</table>
+							</div>
+							{% cycle '' '' '</td></tr><tr>' %}
 					{% endfor %}
+				</tr>
 			</table>						
 	</div>
 {% endblock %}
