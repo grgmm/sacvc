@@ -3,14 +3,7 @@
 {% load static %}
 {% block title %}Grupo de tanques{% endblock %} 
 {% block content %}
-<!-- 
-	{% block javascript %}
- 		 <script src="{% static 'js/tanqueGrupo.js' %}"></script>
-  	 <script src="{% static 'js/jquery-3.5.0.js' %}"></script>
-	{% endblock %}
- -->
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
-	
 	<div id="ventana">
 			{% csrf_token %}
 			<p>
@@ -34,7 +27,6 @@
 											<p class="valor">VARIABLE1</p>
 										</td>
 									</tr>
-
 									<tr>
 										<td>
 											<label class="variable">NSV:</label>

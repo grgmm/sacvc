@@ -22,9 +22,7 @@ html, body {
 /*Dimensiones y posicion de la imagen*/
 .img {
 	float: left;
-	width: 50%;
-	height: 80%;
-	background-color: gray;
+	max-height: 12rem;
 }
 
 #tablaExterna {
@@ -33,19 +31,6 @@ html, body {
 	height: 80%;
 	margin: 0 auto;
 	margin-bottom: 2rem;
-}
-
-#tablaExterna td{
-	border: 1px solid white;
-}
-
-tablaExterna tr{
-	height: 100px;
-}
-
-
-#tablaInterna td {
-	border: none;
 }
 
 
