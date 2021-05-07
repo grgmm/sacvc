@@ -19,46 +19,31 @@
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
-			{% with numerator=5 denominator=3 %}
-				nro_filas={{ object_list.count|floatformat:"0"|div:3 }} <!-- pip install django-mathfilters -->
+			<!--pip install django-mathfilters
+			{% with numero1=5 numero2=3 %}
+				n_ff={{ object_list.count|floatformat:"0"|div:3 }} 
+				n_fi={{ object_list.count|floatformat:"0"|intdiv:3 }} 
+				n_fr={{ object_list.count|floatformat:"0"|mod:3 }}
 			{% endwith %}
+			 -->
 			
 			<table id="tablaExterna">
 					
 				<!-- https://docs.djangoproject.com/en/3.2/ref/templates/builtins/ -->
 					
-				
 					{% for tk in object_list %}
-					
-						<!-- Primera fila -->
-						{% if forloop.counter <= 3 %}
-							{% if forloop.counter == 1 %}	
-								<tr>
-							{% endif %}
-							<td>
-								{% include "acq/grupo_tk/tanque.html" %}	
-							</td>
-							{% if forloop.counter == 3 %}
-								</tr>
-							{% endif %}	
-						{% endif %}
-						
-						<!-- Segunda fila -->
-						{% if forloop.counter > 3 and forloop.counter <= 6 %}
-							{% if forloop.counter == 4 %}	
-								<tr>
-							{% endif %}
-							<td>
-								{% include "acq/grupo_tk/tanque.html" %}	
-							</td>
-							{% if forloop.counter == 6 %}
-								</tr>
-							{% endif %}	
-						{% endif %}
-						
-						
+						{% if forloop.counter == 1 or forloop.counter == 4 or forloop.counter == 7 or forloop.counter == 10 %}
+							<tr>
+						{% endif %}		
+						<td >
+								{% include "acq/grupo_tk/tanque.html" %}
+						</td>
+						{% if forloop.counter == 3 or forloop.counter == 6 or forloop.counter == 9 or forloop.counter == 12 %}
+							</tr>
+						{% endif %}	
 					{% endfor %}
-				</tr>
-			</table>
+			</table>						
 	</div>
 {% endblock %}
+
+

@@ -10,9 +10,7 @@
 	<p>
 		<!-- Encabezado-->
 		<label for="encabezado">Editar Usuario</label>
-  <p>
-
-
+  </p>
 
 	<form method="post">
 
@@ -33,14 +31,16 @@
       				</tr>
     			{% endfor %}
  	 		</table>
+
    		</div>
+
 		<button id="usrModificar"  type="submit" class="btn_control">Modificar</button>
-		<a id="usrRegresar" href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
 		<a id="usrPatio" href="{% url 'uacq:edit_patio_user' object.pk %}" type="button" class="btn_control"> Asignar Patio</a>
+
+		<a id=algo href="{% url 'uacq:cambiar_clave' object.pk %}" type="button" class="btn_control"> Cambiar-Clave</a>
+
+
 	</form>
 </div>
-
-
-
 
 {% endblock %}

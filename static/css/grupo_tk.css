@@ -15,7 +15,7 @@ html, body {
 	height: auto;
 	overflow-x: hidden;
 	width: 90%;
-	background-color: white;
+	background-color: none;
 	border-radius: 10px;
 }
 
@@ -35,28 +35,28 @@ html, body {
 	margin-bottom: 2rem;
 }
 
-#tablaExterna td {
-	/*border: 1px solid #117a8b;*/
-	height: 40%;
-	width: 33%;
+#tablaExterna td{
+	border: 1px solid white;
 }
+
+tablaExterna tr{
+	height: 100px;
+}
+
 
 #tablaInterna td {
 	border: none;
 }
-/*
-.celda {
-	height: 100%;
-	width: auto;
-}
-*/
+
+
+
 label {
-	color: #117a8b;
+	color: white;
 	display: inline-block;
 	border-radius: 10px;
 	font-size: 1.5rem;
 	font-weight: bold;
-	background-color: white;
+	/*background-color: white;*/
 }
 
 label, .valor{
@@ -71,7 +71,7 @@ label, .valor{
 }
 
 #tanque {
-	color: #117a8b;
+	color: white;
 	font-size: 1.5rem;
 	font-weight: bold;
 	margin-left: 5%;
