@@ -873,22 +873,16 @@ class usuariodetail(DetailView):
                 return redirect('/sacvc/logout')
 
 
-
-
-
-#def tanquesGrupo(request):
-    #return render(request,'acq/grupo_tk/grupo_tk.html') #PRUEBAS DE JOSE GONZALEZ
-
-
 class grupo_tk(ListView):
   #vista de grupo de tanques en modo operación
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')
-  form = 'acq/grupo_tk/grupo_tk.html'
+  template_name = 'acq/grupo_tk/grupo_tk_2.html'
 
 
 
-from .forms.acqforms import users_cambio_clave_form
+from .forms.acqforms import users_cambio_clave_form # OJO interesante metodo para
+#gestionar los formularios desde un unico archivo que luego se importa
 
 class Cambiar_Clave(FormView):
 
@@ -940,3 +934,18 @@ class Cambiar_Clave(FormView):
          # It should return an HttpResponse.
          return super().form_valid(form)
      #form_class = ClassOfTheForm
+
+
+
+
+
+
+
+
+
+
+class grupo_tk_test_MM(ListView):
+  #vista de grupo de tanques en modo operación
+  model = Tk
+  success_url = reverse_lazy('uacq:list_tf')
+  template_name = 'acq/grupo_tk/grupo_tk_MM.html'
