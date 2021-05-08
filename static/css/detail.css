@@ -9,7 +9,7 @@ html, body {
 #ventana {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
-	top: 26%; /* mayor que height de la imagen*/
+	top: 20%; /* mayor que height de la imagen*/
 	height: auto; 
     overflow-x:hidden;
 	width: 40%;

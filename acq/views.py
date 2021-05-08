@@ -52,10 +52,6 @@ from django.contrib.auth.views import PasswordChangeView
 
 from django.contrib.auth import views as auth_views
 
-#   [] {}
-
-
-
 def actualizar(request):
 
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
@@ -68,8 +64,6 @@ class current_data(ListView):
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
-
-
 
 class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
      #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
@@ -873,33 +867,11 @@ class usuariodetail(DetailView):
                 return redirect('/sacvc/logout')
 
 
-        def get_context_data(self, **kwargs):
-              context = super().get_context_data(**kwargs)
-              qs = self.object.patios.all()
-              patiosuser=[]
-
-              for patio_inst in qs:
-                  patiosuser.append(patio_inst.Nombre)
-              context['patiosuser']=patiosuser
-              #context=patiosuser
-              return context
-
-
-def tanquesGrupo(request):
-    return render(request,'acq/grupo_tk/grupo_tk.html')
-
-
-
-
 class grupo_tk(ListView):
   #vista de grupo de tanques en modo operación
   model = Tk
-  paginate_by = 6                                       
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/grupo_tk/grupo_tk.html'
-  form = 'acq/grupo_tk/grupo_tk.html'
-
-
 
 
 from .forms.acqforms import users_cambio_clave_form # OJO interesante metodo para
@@ -913,9 +885,7 @@ class Cambiar_Clave(FormView):
 
 
   def post(self, request, *args, **kwargs):
-
     #self.obj = self.get_object()
-
     form_class = self.get_form_class()
     form = self.get_form(form_class)
     #print(form)
@@ -946,7 +916,6 @@ class Cambiar_Clave(FormView):
 
     print(clave_valida)
 
-
     return self.render_to_response(context)
 
     def form_valid(self, form):   #OJO VALIDAR APLICACIÓN DE ESTA PARTE
@@ -955,18 +924,3 @@ class Cambiar_Clave(FormView):
          # It should return an HttpResponse.
          return super().form_valid(form)
      #form_class = ClassOfTheForm
-
-
-
-
-
-
-
-
-
-
-class grupo_tk_test_MM(ListView):
-  #vista de grupo de tanques en modo operación
-  model = Tk
-  success_url = reverse_lazy('uacq:list_tf')
-  template_name = 'acq/grupo_tk/grupo_tk_MM.html'

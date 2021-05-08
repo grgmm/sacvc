@@ -35,11 +35,9 @@
    		</div>
 
 		<button id="usrModificar"  type="submit" class="btn_control">Modificar</button>
+		<a id=usrRegresar href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
 		<a id="usrPatio" href="{% url 'uacq:edit_patio_user' object.pk %}" type="button" class="btn_control"> Asignar Patio</a>
-
-		<a id=cambiarid1 href="{% url 'uacq:cambiar_clave' object.pk %}" type="button" class="btn"> Cambiar-Clave</a>
-
-		<a id=camiarid2 href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
+		<a id=usrClave href="{% url 'uacq:cambiar_clave' object.pk %}" type="button" class="btn_control"> Cambiar-Clave</a>
 
 	</form>
 </div>

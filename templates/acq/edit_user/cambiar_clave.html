@@ -1,23 +1,13 @@
 {% extends "acq/base.html" %}
 
 {% block content %}
-
+<div id="ventana">
 <h1>Nueva Clave Usuario {{user.first_name}} {{user.last_name}}  </h1>
-
-
 <form  method="post">
-  {% csrf_token %}
-
-  {{form.as_ul}}
-
-
-  <input type="submit" value="Aceptar">
-</form>
-
-<p> Clic en Aceptar para establecer la nueva contraseña del usuario </p>
-<p> {{mensajes}} </p>
-
-
-
-
+	{% csrf_token %}
+	{{form.as_table}}
+		<input type="submit" value="Aceptar">
+	</form>
+	<p> Clic en Aceptar para establecer la nueva contraseña del usuario </p>
+	<p> {{mensajes}} </p>
 {% endblock %}

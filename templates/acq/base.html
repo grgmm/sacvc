@@ -22,8 +22,9 @@
 
 <body id="pagina">
 	{% block content %} {% endblock %}
+	
 	{% block pagination %}
-  {% if is_paginated %}
+  	{% if is_paginated %}
       <div class="pagination">
           <span class="page-links">
               {% if page_obj.has_previous %}
@@ -37,8 +38,9 @@
               {% endif %}
           </span>
       </div>
-  {% endif %}
-{% endblock %} 
+  	{% endif %}
+	{% endblock %} 
+
 </body>
 
 <footer  id=piepagina>

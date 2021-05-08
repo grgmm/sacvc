@@ -9,39 +9,23 @@
 <div id="ventana">
 	<p>
 		<!-- Encabezado-->
-		<label for="encabezado">Editar Usuario</label>
+		<label for="encabezado">Asignar Patios a Usuario</label>
   <p>
-
 	<form method="post">
-
    		{% csrf_token %}
-
-
-
-
    		<div >
   			<table id="ventana1" border="1">
-
-					{% for field in form %}
+				{% for field in form %}
 					<tr>
-
 						<td class="etiqueta">{{field.name }}</td>
 						<td class="dato">{{field }}</td>
-
 					</tr>
-
-
-
-			{% endfor %}
-
-
-
+				{% endfor %}
  	 		</table>
    		</div>
 		<button type="submit" class="btn_control">Modificar</button>
-		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
+		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control">Regresar</a>
 
 	</form>
 </div>
-
 {% endblock %}

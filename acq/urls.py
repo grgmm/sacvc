@@ -32,7 +32,6 @@ from .views import (
     grupo_tk,
     edit_patio_user,
     Cambiar_Clave,
-    grupo_tk_test_MM,
     )
 
 app_name = 'sacvc'
@@ -97,7 +96,5 @@ urlpatterns = [
     url(r'^grupo_tk/', grupo_tk.as_view(), name='grupo_tk'), #Probada con módulo de prueba teste_url_simples
 
     url(r'^cambiar_clave/(?P<pk>\d+)$', Cambiar_Clave.as_view(), name='cambiar_clave'), #Probada con módulo de prueba teste_url_simples
-
-    url(r'^grupo_tk_test_MM/', grupo_tk_test_MM.as_view(), name='grupo_tk_test_MM'),
 
 ]

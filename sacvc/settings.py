@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'acq.apps.AcqConfig',
     'crispy_forms',
-    'mathfilters'
 
 ]
 

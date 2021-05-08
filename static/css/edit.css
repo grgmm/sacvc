@@ -10,7 +10,7 @@ html, body {
 #ventana {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
-	top: 26%; /* mayor que height de la imagen*/
+	top: 15%; /* mayor que height de la imagen*/
 	height: auto;
 	overflow-x: hidden;
 	width: 40%;
@@ -98,20 +98,27 @@ a {
 
 /*Solo para vista edit_usr*/
 #usrModificar {
-	width: 20%; right : 10%;
+	width: 22%; 
+	right : 3%;
 	padding: 0.7rem 0;
-	right: 10%;
 }
 
 #usrRegresar {
-	width: 20%;
-	right: 70%;
+	width: 22%;
+	right: 27%;
 	padding: 0.7rem 0;
 }
 
+
 #usrPatio {
-	width: 20%;
-	right: 40%;
+	width: 22%;
+	right: 51%;
+	padding: 0.7rem 0;
+}
+
+#usrClave{
+	width: 22%;
+	right: 75%;
 	padding: 0.7rem 0;
 }
 /******************************/
