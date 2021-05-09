@@ -148,7 +148,6 @@ class PatiotanqueDetail(DetailView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
                     print(g.name)
 
             if (not g.name =='supervisores'):
@@ -172,7 +171,6 @@ class PatiotanqueUpdate(UpdateView):
 
           filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
-  # this should print all group names for the user
                   print(g.name)
 
           if (not g.name =='supervisores'):
@@ -203,28 +201,22 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
           'Descriptor':'',
           'id_patioTanque':patio,}
 
-      #print(add_tk_iniciales)
-
 
       try:
             with fs.open(ruta_Data+'/tk_iniciales.json', mode= 'w') as file:
-                #with open ('/home/morenomx/solucionesweb/sacvc/valoresbasicos.json','w') as file1: #abre un archivo json (cambiar por ruta simbólica)
 
                 file.write(json.dumps(add_tk_iniciales)) #Data en cache
       except:
                 print("Error inesperado:", sys.exc_info()[0])
 
 
-      #print(filtro)
       return(filtro)
-
 
     def get(self, request, *args, **kwargs):
           if request.user.is_authenticated:
 
               filtro_usuario = Group.objects.filter(user = request.user)
               for g in filtro_usuario:
-      # this should print all group names for the user
                       print(g.name)
 
               if (not g.name =='supervisores'):
@@ -303,7 +295,7 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
 
     @receiver(post_save, sender=Tk)  #CREA LA SEÑAL DE GUARDADO
     def create_Tk(sender, instance, created, **kwargs):#FUNCION QUE CAPTURA LA SEÑAL DE GUARDADO DE TK Y TRABAJA CON ESA INSTANCIA DE TK
-        #INICIALIZA EL TANQUE CON SUS PARAMETROS (PT,LT,TT, TOV) #FALTA INCLUIR ENTRE OTROS LTA, AYS.
+        #INICIALIZA EL TANQUE CON SUS PARAMETROS (PT,LT,TT, TOV) #FALTA INCLUIR AYS, NSV, ENTRE OTROS.
         if created:
             qtk= Tk.objects.count()
             Analogico.objects.create(Nombre= instance.Nombre+'_lt' ,
@@ -490,7 +482,6 @@ class Validar_Tct(UpdateView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
                     print(g.name)
 
             if (not g.name =='supervisores'):
@@ -572,7 +563,6 @@ def Valores_Actuales(request):
        data_fr = {}
        with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode = 'r') as data_file_r:
            data_fr = json.loads(data_file_r.read())
-       #print(data_fr)
            #INSTANCIANDO tk,tag
 
        TAG=Tag.objects.get(pk=data_fr['IDTAG'])
@@ -590,12 +580,6 @@ def Valores_Actuales(request):
        'TT':'5000',
        'TOV':'2000',
         }
-       #data={'TK':TK.Nombre,'TAG':TAG.Nombre, 'TAG_VALUE':str(TAG_VALUE), 'TIMESTAMP':TIMESTAMP}
-           #print(data_fr)
-       #print(data)
-
-       # just return a JsonResponse
-      # return JsonResponse(data_fr)
        return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data})
 
 class Menu(View): #VALIDADO PRELIMINAR
@@ -713,8 +697,6 @@ class usuariosedit(UpdateView):
       else:
           return redirect('/sacvc/logout')
 
-
-
 class edit_patio_user(UpdateView):
   model = UserProfile
   template_name = 'acq/edit_user/edit_patio_user.html'
@@ -726,7 +708,6 @@ class edit_patio_user(UpdateView):
 
           filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
-  # this should print all group names for the user
                   print(g.name)
 
           if (not g.name =='supervisores'):
@@ -755,7 +736,6 @@ class usuariosadd(CreateView):
 
                filtro_usuario = Group.objects.filter(user = request.user)
                for g in filtro_usuario:
-       # this should print all group names for the user
                        print(g.name)
 
                if (not g.name =='supervisores'):
@@ -774,22 +754,15 @@ class usuariosadd(CreateView):
       def post(self, request, *args, **kwargs):
 
             request.POST = request.POST.copy()
-            #print(request.POST['first_name'])
-            #print(request.POST['last_name'])
             if  (request.POST['first_name'])=='' or (request.POST['last_name']==''):
 
                 mensajes = 'RELLENE LOS CAMPOS REQUERIDOS'
-                #print(mensajes)
-
-
 
                 return redirect('/sacvc/add_user')
 
             else:
 
-
                 return super(usuariosadd, self).post(request, **kwargs)
-
 
 class usuariosdelete(DeleteView):
     model = usuario
@@ -802,7 +775,6 @@ class usuariosdelete(DeleteView):
 
              filtro_usuario = Group.objects.filter(user = request.user)
              for g in filtro_usuario:
-     # this should print all group names for the user
                      print(g.name)
 
              if (not g.name =='supervisores'):
@@ -820,20 +792,14 @@ class usuariodetail(DetailView):
         fields= ['patios']
         template_name = 'acq/detail_user/detail_user.html'
 
-
         def get_context_data(self, **kwargs):
 
             context = super().get_context_data(**kwargs)
-            #print(context)
             print(self.object.pk) #el objeto de este Detailview es un Userprofile (creado en model.py)
-            # que a su vez es una extensión del modelo User de Django.
             filtro_usuario_grupos = Group.objects.filter(user = self.object.pk)
 
             for g in filtro_usuario_grupos:
-        # this should print all group names for the user
                     print(g.name)
-
-
                     context['grupos'] =g.name
                     print(context)
             qs = self.object.patios.all()
@@ -853,7 +819,6 @@ class usuariodetail(DetailView):
 
                 filtro_usuario = Group.objects.filter(user = request.user)
                 for g in filtro_usuario:
-        # this should print all group names for the user
                         print(g.name)
 
                 if (not g.name =='supervisores'):
@@ -890,9 +855,6 @@ class Cambiar_Clave(FormView):
     form = self.get_form(form_class)
     #print(form)
     context = super(Cambiar_Clave, self).get_context_data(**kwargs)
-    #context = self.get_context_data(**kwargs)
-    #print (context['form']) #ojo
-    #print(context)
 
     context['form'] = form
 
@@ -920,7 +882,4 @@ class Cambiar_Clave(FormView):
 
     def form_valid(self, form):   #OJO VALIDAR APLICACIÓN DE ESTA PARTE
          print('Datos no Válidos')
-         # This method is called when valid form data has been POSTed.
-         # It should return an HttpResponse.
          return super().form_valid(form)
-     #form_class = ClassOfTheForm

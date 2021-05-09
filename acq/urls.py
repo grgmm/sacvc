@@ -93,8 +93,8 @@ urlpatterns = [
 
     url(r'^detail_user/(?P<pk>\d+)$', usuariodetail.as_view(), name='detail_user'),
 
-    url(r'^grupo_tk/', grupo_tk.as_view(), name='grupo_tk'), #Probada con módulo de prueba teste_url_simples
+    url(r'^grupo_tk/', grupo_tk.as_view(), name='grupo_tk'),
 
-    url(r'^cambiar_clave/(?P<pk>\d+)$', Cambiar_Clave.as_view(), name='cambiar_clave'), #Probada con módulo de prueba teste_url_simples
+    url(r'^cambiar_clave/(?P<pk>\d+)$', Cambiar_Clave.as_view(), name='cambiar_clave'),
 
 ]
