@@ -1,6 +1,6 @@
-{% extends 'acq/base.html' %} 
-{% load static %} 
-{% block title %}Ambiente Operativo{% endblock %} 
+{% extends 'acq/base.html' %}
+{% load static %}
+{% block title %}Ambiente Operativo{% endblock %}
 
 {% block content %}
 	<link rel="stylesheet" href="{% static 'css/menu.css' %}">
@@ -8,17 +8,17 @@
 		<table id="tabla">
 			<tr>
 				<td>
-					<a href="#"> <br>VISTAS</br> 
-						<img src="{% static "recursos/iconos/vistas.jpg" %}" 
-							alt="VISTAS" name="sub_but" />
+						<img src="{% static "recursos/iconos/vistas.jpg" %}" />
+						<a href="{% url 'uacq:Menu_Vistas' %}"> <br>VISTAS</br>
+
 					</a>
 				</td>
 			</tr>
 			<tr>
-			
+
 				<td>
-					<a href="{% url 'uacq:logout' %}"> 
-						<img src="{% static "recursos/iconos/logout.jpg" %}" /><br>SALIR</br>
+					<a href="{% url 'uacq:logout' %}">
+						<img src="{% static "recursos/iconos/logout.jpg" %}"/> <br>SALIR</br>
 					</a>
 				</td>
 			</tr>
@@ -26,7 +26,6 @@
 	</div>
 {% endblock %}
 
-{% block footer %} 	
+{% block footer %}
 <!-- Sobreescribe el contenido del bloque -->
-{% endblock %}	
-
+{% endblock %}

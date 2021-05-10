@@ -3,14 +3,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque,Tct, Analogico, Digital, UserProfile
-#from datetime import timedelta, datetime
 from django.template.response import TemplateResponse
 from django.views.generic import ListView, FormView, TemplateView, RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
-#from django.views import View
 from django.views.generic import View
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -23,8 +21,6 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,  get_object_or_404
 import sys
-
-
 import csv
 from django.core.validators import DecimalValidator, ValidationError
 from django.core.exceptions import ValidationError
@@ -32,24 +28,14 @@ import pandas as pd
 from .validaciones import validar_parametro_tct as valida
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-
 from django.contrib.auth import logout
 from django.contrib.auth import login
-
-
 from django.contrib.auth import authenticate
-
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-
 from django.contrib.auth.models import User as usuario, Group
-
 from django.contrib.auth.forms import AuthenticationForm
-
 from django.contrib.auth.decorators import login_required
-
 from django.contrib.auth.views import PasswordChangeView
-
-
 from django.contrib.auth import views as auth_views
 
 def actualizar(request):
@@ -233,11 +219,8 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
     model = Tk
     fields = ['Nombre', 'Descriptor', 'id_patioTanque',]
     template_name = 'acq/add_tk/add_tk.html'
-    #success_url = reverse_lazy('uacq:list_tf')
 
     def get_success_url(self):
-             # if you are passing 'pk' from 'urls' to 'DeleteView' for company
-             # capture that 'pk' as companyid and pass it to 'reverse_lazy()' function
             print(self.object.id_patioTanque.pk)
 
             success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
@@ -349,8 +332,6 @@ class TkDelete(DeleteView):
     template_name = 'acq/del_tk/del_tk.html'
 
     def get_success_url(self):
-             # if you are passing 'pk' from 'urls' to 'DeleteView' for company
-             # capture that 'pk' as companyid and pass it to 'reverse_lazy()' function
             print(self.object.id_patioTanque.pk)
 
             success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
@@ -362,7 +343,6 @@ class TkDelete(DeleteView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
                     print(g.name)
 
             if (not g.name =='supervisores'):
@@ -381,8 +361,6 @@ class TkDetail(DetailView):
     fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'fecha_subida_tct']
 
     def get_success_url(self):
-             # if you are passing 'pk' from 'urls' to 'DeleteView' for company
-             # capture that 'pk' as companyid and pass it to 'reverse_lazy()' function
             print(self.object.id_patioTanque.pk)
 
             success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
@@ -393,7 +371,6 @@ class TkDetail(DetailView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
                     print(g.name)
 
             if (not g.name =='supervisores'):
@@ -410,24 +387,19 @@ class TkUpdate(UpdateView):
   model = Tk
   fields = ['Nombre', 'Descriptor',]
   template_name = 'acq/edit_tk/edit_tk.html'
-  #success_url = reverse_lazy('uacq:list_tk', kwargs={'pk': self.object.pk})
 
   def get_success_url(self):
-          # if you are passing 'pk' from 'urls' to 'DeleteView' for company
-          # capture that 'pk' as companyid and pass it to 'reverse_lazy()' function
          print(self.object.id_patioTanque.pk)
 
          success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
          return(success_url)
 
-         #return reverse_lazy('uacq:list_tf')
 
   def get(self, request, *args, **kwargs):
       if request.user.is_authenticated:
 
           filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
-  # this should print all group names for the user
                   print(g.name)
 
           if (not g.name =='supervisores'):
@@ -513,11 +485,9 @@ def integridad_TCT(request, pk):
 
   DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
   json_temp = []
-  #register_range=[]
 
   for i in range(0, len(DataFrame)):
 
-    #register_range.append(i)
     nivel_format=format(DataFrame.iloc[i]['nivel']).replace(',','.')
     volumen_format=format(DataFrame.iloc[i]['volumen']).replace(',','.')
 
@@ -636,10 +606,6 @@ class LogoutView(RedirectView): #VALIDADO PRELIMINAR
         return super(LogoutView, self).get(request, *args, **kwargs)
 
 def welcome(request):
-    #if request.user.is_authenticated:
-
-    # En otro caso redireccionamos al login
-        #return render(request, "acq/authent/welcome.html")
     return redirect('/sacvc/logout')
 
 class usuarioslist(ListView):  #VALIDADO PRELIMINAR
@@ -665,13 +631,11 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
         else:
             return redirect('/sacvc/logout')
 
-
 class usuariosedit(UpdateView):
   model = usuario
   template_name = 'acq/edit_user/edit_user.html'
   fields = ['username','first_name', 'last_name', 'email', 'groups']
   success_url = reverse_lazy('uacq:list_user' )
-
 
 
   def get(self, request, *args, **kwargs):
@@ -721,8 +685,6 @@ class edit_patio_user(UpdateView):
 
       else:
           return redirect('/sacvc/logout')
-
-
 
 class usuariosadd(CreateView):
       model = usuario
@@ -797,15 +759,12 @@ class usuariodetail(DetailView):
             context = super().get_context_data(**kwargs)
             print(self.object.pk) #el objeto de este Detailview es un Userprofile (creado en model.py)
             filtro_usuario_grupos = Group.objects.filter(user = self.object.pk)
-
             for g in filtro_usuario_grupos:
                     print(g.name)
                     context['grupos'] =g.name
                     print(context)
             qs = self.object.patios.all()
             patiosuser=[]
-
-
             for patio_inst in qs:
                 patiosuser.append(patio_inst.Nombre)
                 context['patiosuser']=patiosuser
@@ -838,6 +797,20 @@ class grupo_tk(ListView):
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/grupo_tk/grupo_tk.html'
 
+
+  def get(self, request, *args, **kwargs):
+    if request.user.is_authenticated:
+
+        instancia_usuario = UserProfile.objects.filter(user=request.user)
+        for g in instancia_usuario:
+# this should print all group names for the user
+            print(g.patios)
+
+        else:
+             return super(grupo_tk, self).get(request, *args, **kwargs)
+
+    else:
+        return redirect('/sacvc/logout')
 
 from .forms.acqforms import users_cambio_clave_form # OJO interesante metodo para
 #gestionar los formularios desde un unico archivo que luego se importa
@@ -883,3 +856,25 @@ class Cambiar_Clave(FormView):
     def form_valid(self, form):   #OJO VALIDAR APLICACIÓN DE ESTA PARTE
          print('Datos no Válidos')
          return super().form_valid(form)
+
+
+
+
+class Menu_Vistas(View): #VALIDADO PRELIMINAR
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            if usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
+                print('USUARIO CON PERFIL SUPERVISOR')
+                return render(request, "acq/menus/menu_vistas.html")
+
+            if usuario.objects.filter(pk=request.user.pk, groups__name='operativos').exists():
+                print('USUARIO CON PERFIL OPERADOR')
+                return render(request, "acq/menus/menu_vistas.html")
+
+            else:
+                return redirect('/sacvc/logout')
+
+        else:
+                return redirect('/sacvc/logout')

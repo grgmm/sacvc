@@ -32,6 +32,7 @@ from .views import (
     grupo_tk,
     edit_patio_user,
     Cambiar_Clave,
+    Menu_Vistas,
     )
 
 app_name = 'sacvc'
@@ -96,5 +97,8 @@ urlpatterns = [
     url(r'^grupo_tk/', grupo_tk.as_view(), name='grupo_tk'),
 
     url(r'^cambiar_clave/(?P<pk>\d+)$', Cambiar_Clave.as_view(), name='cambiar_clave'),
+
+    url(r'^Menu_Vistas/$', Menu_Vistas.as_view(), name='Menu_Vistas'),
+
 
 ]
