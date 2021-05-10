@@ -792,6 +792,7 @@ class usuariodetail(DetailView):
 class grupo_tk(ListView):
   #vista de grupo de tanques en modo operación
   model = Tk
+  paginate_by = 6
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/grupo_tk/grupo_tk.html'
 
