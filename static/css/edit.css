@@ -37,6 +37,10 @@ label {
 	font-size: 14px;
 }
 
+#botones{
+	margin-top: 25%;	
+}
+
 label[for=encabezado] {
 	border: 1px solid #c7d0d2;
 	background-color: #117a8b;
@@ -97,6 +101,7 @@ a {
 }
 
 /*Solo para vista edit_usr*/
+/*********************/
 #usrModificar {
 	width: 22%; 
 	right : 3%;

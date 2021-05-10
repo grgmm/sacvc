@@ -45,7 +45,6 @@ def actualizar(request):
       data_file.close()
    return JsonResponse(dataf)
 
-
 class current_data(ListView):
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')
@@ -772,7 +771,6 @@ class usuariodetail(DetailView):
 
             return context
 
-
         def get(self, request, *args, **kwargs):
             if request.user.is_authenticated:
 
@@ -821,7 +819,6 @@ class Cambiar_Clave(FormView):
   success_url = reverse_lazy('uacq:list_user' )
   form_class = users_cambio_clave_form
 
-
   def post(self, request, *args, **kwargs):
     #self.obj = self.get_object()
     form_class = self.get_form_class()
@@ -856,9 +853,6 @@ class Cambiar_Clave(FormView):
     def form_valid(self, form):   #OJO VALIDAR APLICACIÓN DE ESTA PARTE
          print('Datos no Válidos')
          return super().form_valid(form)
-
-
-
 
 class Menu_Vistas(View): #VALIDADO PRELIMINAR
 
