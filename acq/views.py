@@ -43,8 +43,6 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 from django.contrib.auth.models import User as usuario, Group
 
-from django.contrib.auth.forms import AuthenticationForm
-
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.views import PasswordChangeView
@@ -58,7 +56,6 @@ def actualizar(request):
       dataf = json.loads(data_file.read())
       data_file.close()
    return JsonResponse(dataf)
-
 
 class current_data(ListView):
   model = Tk
@@ -805,14 +802,12 @@ class usuariodetail(DetailView):
             qs = self.object.patios.all()
             patiosuser=[]
 
-
             for patio_inst in qs:
                 patiosuser.append(patio_inst.Nombre)
                 context['patiosuser']=patiosuser
             print(patiosuser)
 
             return context
-
 
         def get(self, request, *args, **kwargs):
             if request.user.is_authenticated:
@@ -847,7 +842,6 @@ class Cambiar_Clave(FormView):
   template_name = 'acq/edit_user/cambiar_clave.html'
   success_url = reverse_lazy('uacq:list_user' )
   form_class = users_cambio_clave_form
-
 
   def post(self, request, *args, **kwargs):
     #self.obj = self.get_object()
