@@ -759,15 +759,15 @@ class usuariodetail(DetailView):
             print(self.object.pk) #el objeto de este Detailview es un Userprofile (creado en model.py)
             filtro_usuario_grupos = Group.objects.filter(user = self.object.pk)
             for g in filtro_usuario_grupos:
-                    print(g.name)
+                    #print(g.name)
                     context['grupos'] =g.name
-                    print(context)
+                    #print(context)
             qs = self.object.patios.all()
             patiosuser=[]
             for patio_inst in qs:
                 patiosuser.append(patio_inst.Nombre)
                 context['patiosuser']=patiosuser
-            print(patiosuser)
+            #print(patiosuser)
 
             return context
 
@@ -788,28 +788,20 @@ class usuariodetail(DetailView):
             else:
                 return redirect('/sacvc/logout')
 
-
-class grupo_tk(ListView):
+from django.contrib.auth.mixins import LoginRequiredMixin
+class grupo_tk(LoginRequiredMixin, ListView):
   #vista de grupo de tanques en modo operación
   model = Tk
   paginate_by = 6
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/grupo_tk/grupo_tk.html'
+  login_url = '/sacvc/Menu'
+  redirect_field_name = '/sacvc/logout'
 
 
-  def get(self, request, *args, **kwargs):
-    if request.user.is_authenticated:
+  #####OJO QUEDE AQUI......
 
-        instancia_usuario = UserProfile.objects.filter(user=request.user)
-        for g in instancia_usuario:
-# this should print all group names for the user
-            print(g.patios)
 
-        else:
-             return super(grupo_tk, self).get(request, *args, **kwargs)
-
-    else:
-        return redirect('/sacvc/logout')
 
 from .forms.acqforms import users_cambio_clave_form # OJO interesante metodo para
 #gestionar los formularios desde un unico archivo que luego se importa
@@ -831,8 +823,8 @@ class Cambiar_Clave(FormView):
 
     request.POST = request.POST.copy()
 
-    if ((request.POST['clave']) == (request.POST['reclave'])):
-            clave_valida = str(request.POST['reclave'])
+    if ((request.POST['nueva_clave']) == (request.POST['repita_nueva_clave'])):
+            clave_valida = str(request.POST['repita_nueva_clave'])
             print('CLAVE VALIDA')
 
             u = usuario.objects.get(pk=context['pk'])
