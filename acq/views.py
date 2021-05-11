@@ -831,8 +831,8 @@ class Cambiar_Clave(FormView):
 
     request.POST = request.POST.copy()
 
-    if ((request.POST['clave']) == (request.POST['reclave'])):
-            clave_valida = str(request.POST['reclave'])
+    if ((request.POST['nueva_clave']) == (request.POST['repita_nueva_clave'])):
+            clave_valida = str(request.POST['repita_nueva_clave'])
             print('CLAVE VALIDA')
 
             u = usuario.objects.get(pk=context['pk'])
