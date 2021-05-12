@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 @import url(animate.css);
 
 /* Basics */
@@ -9,8 +10,9 @@ html, body {
 #ventana {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
-	top: 26%; /* mayor que height de la imagen*/
-	height: 46%; /*menor que 100%-height de la imagen*/
+	top: 15%; /* mayor que height de la imagen*/
+	height: auto;
+	overflow-x: hidden;
 	width: 40%;
 	left: 30%; /*(100%-(width:24%))/2*/
 	background: #fff;
@@ -27,11 +29,16 @@ table {
 	width: 90%;
 	margin: 0 auto;
 	margin-top: 5%;
+	margin-bottom: 20%;
 }
 
 label {
 	display: inline-block;
 	font-size: 14px;
+}
+
+#botones{
+	margin-top: 25%;	
 }
 
 label[for=encabezado] {
@@ -68,7 +75,7 @@ label[for=encabezado] {
 
 .btn_control {
 	position: absolute;
-	/*posicion respecto a la esquina inferior derecha  de ventanalogin*/
+	/*posicion respecto a la esquina inferior derecha  de ventana*/
 	bottom: 5%;
 	width: 30%;
 	font-size: 14px;
@@ -92,6 +99,34 @@ a {
 	right: 55%;
 	padding: 0.80rem 0;
 }
+
+/*Solo para vista edit_usr*/
+/*********************/
+#usrModificar {
+	width: 22%; 
+	right : 3%;
+	padding: 0.7rem 0;
+}
+
+#usrRegresar {
+	width: 22%;
+	right: 27%;
+	padding: 0.7rem 0;
+}
+
+
+#usrPatio {
+	width: 22%;
+	right: 51%;
+	padding: 0.7rem 0;
+}
+
+#usrClave{
+	width: 22%;
+	right: 75%;
+	padding: 0.7rem 0;
+}
+/******************************/
 
 .btn_control:hover {
 	text-decoration: none;

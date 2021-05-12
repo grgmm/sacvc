@@ -9,7 +9,10 @@
 <!--css add=edit-->
 
 <div id="ventana">
-	
+	<p>
+		<label for="encabezado">Agregar Tanque</label>
+	</p>
+<!--	<p>{{	patio}}</p>  PARA TRAER VARIABLE PROVENIENTE DE GET_CONTEXT EN LA VISTA add_tk.py-->
 
 	<form id="my_form" method="post">
    		{% csrf_token %}
@@ -26,19 +29,9 @@
     			{% endfor %}
  	 		</table>
    		</div>
+   		<!-- button 4.45rem/0.89 a 4.50rem/0.9 -->
 		<button type="submit" class="btn_control">Agregar</button>
-
-		<!--  Posible solucioa a sustituir boton por link
-		<a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;">Agregar</a>-->
-	</form>
-
-
-	<a class="btn_control" href="{% url 'uacq:list_tk' 	17  %}">Regresar</a>
-
-	<!--
-		<button class="btn_control" role="link" onclick="window.location='{% url 'uacq:list_tf' %}'">Regresar</button>
-		 -->
+		<a class="btn_control" href="{%url 'uacq:list_tk' patio%}">Regresar</a>	
 	</form>
 </div>
-
 {% endblock %}

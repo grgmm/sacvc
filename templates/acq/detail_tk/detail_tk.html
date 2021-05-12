@@ -16,7 +16,7 @@
 					<td class="etiqueta">Nombre:</td>
 					<td class="dato">{{tk.Nombre}}</td>
 				</tr>
-				
+
 				<tr>
 					<!-- Descriptor del tanque-->
 					<td class="etiqueta">Descriptor:</td>
@@ -29,6 +29,8 @@
 				</tr>
 			</table>
 		</div>
-		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
-</div>		
+		<!--<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a> -->
+    <a href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control"> Regresar</a>
+
+</div>
 {% endblock %}

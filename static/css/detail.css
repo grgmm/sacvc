@@ -9,8 +9,9 @@ html, body {
 #ventana {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
-	top: 26%; /* mayor que height de la imagen*/
-	height: 46%; /*menor que 100%-height de la imagen*/
+	top: 20%; /* mayor que height de la imagen*/
+	height: auto; 
+    overflow-x:hidden;
 	width: 40%;
 	left: 30%; /*(100%-(width:24%))/2*/
 	background: #fff;
@@ -27,6 +28,7 @@ table {
 	width: 90%;
 	margin: 0 auto;
 	margin-top: 5%;
+	margin-bottom: 20%;
 }
 
 label {

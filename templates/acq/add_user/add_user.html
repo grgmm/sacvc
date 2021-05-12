@@ -9,11 +9,11 @@
 <!--css add=edit-->
 
 <div id="ventana">
-	<p>	
+	<p>
 		<label for="encabezado">Agregar Usuario</label>
 	</p>
 
-	<form method="post" >  	
+	<form method="post" >
    		{% csrf_token %}
   		{{ form.non_field_errors }}
 
@@ -31,12 +31,13 @@
       				</tr>
     			{% endfor %}
  	 		</table>
-   		</div>
+			</div>
 		<button type="submit" class="btn_control">Agregar</button>
 		<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
 	</form>
 </div>
 
-{% endblock %}
+<p> {{mensajes}} </p>
 
- 
+
+{% endblock %}

@@ -1,0 +1,43 @@
+
+{% extends 'acq/base.html' %} 
+{% load static %}
+{% block title %}Grupo de tanques{% endblock %} 
+{% block content %}
+	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
+	<div id="ventana">
+			{% csrf_token %}
+			<p>
+				<!-- Encabezado -->
+				<label for="encabezado">PATIO DE TANQUES</label>
+			</p>
+			<table id="tablaExterna">	
+				<tr>
+					{% for tk in object_list %}
+						<td>
+							<a href=" ">
+								<p id="tanque">{{ tk.Nombre }}</p>
+								<img class="img" src="{% static "recursos/imagenes/tanque.svg" %}">
+							</a>
+							<table id="tablaInterna">
+								<tr>
+									<br><br><br>
+									<td>
+										<label class="variable">TOV:</label>
+										<p class="valor">VARIABLE1</p>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label class="variable">NSV:</label>
+										<p class="valor">VARIABLE2</p>
+									</td>
+								</tr>
+							</table>
+						{% cycle '' '' '</td></tr><tr>' %}
+					{% endfor %}
+				</tr>
+			</table>						
+	</div>
+{% endblock %}
+
+

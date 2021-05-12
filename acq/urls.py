@@ -6,7 +6,6 @@ from django.urls import path
 from django.conf.urls import url
 
 
-
 from .views import (
     patiotanquelist,
     PatiotanqueAdd,
@@ -30,8 +29,11 @@ from .views import (
     usuariosadd,
     usuariosdelete,
     usuariodetail,
+    grupo_tk,
+    edit_patio_user,
+    Cambiar_Clave,
+    Menu_Vistas,
     )
-
 
 app_name = 'sacvc'
 urlpatterns = [
@@ -84,10 +86,19 @@ urlpatterns = [
 
     url(r'^edit_user/(?P<pk>\d+)$', usuariosedit.as_view(), name='edit_user'),
 
+    url(r'^edit_patio_user/(?P<pk>\d+)$', edit_patio_user.as_view(), name='edit_patio_user'),
+
     url(r'^add_user/', usuariosadd.as_view(), name='add_user'),
 
     url(r'^del_user/(?P<pk>\d+)$', usuariosdelete.as_view(), name='del_user'),
 
     url(r'^detail_user/(?P<pk>\d+)$', usuariodetail.as_view(), name='detail_user'),
+
+    url(r'^grupo_tk/', grupo_tk.as_view(), name='grupo_tk'),
+
+    url(r'^cambiar_clave/(?P<pk>\d+)$', Cambiar_Clave.as_view(), name='cambiar_clave'),
+
+    url(r'^Menu_Vistas/$', Menu_Vistas.as_view(), name='Menu_Vistas'),
+
 
 ]

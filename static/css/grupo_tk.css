@@ -1,0 +1,81 @@
+@charset "UTF-8";
+
+@import url("animate.css");
+
+/* Basics */
+html, body {
+	background: linear-gradient(#334d50, #cbcaa5) fixed;
+}
+
+#ventana {
+	position: absolute;
+	/*posicion respecto a la esquina superior izquierda de body*/
+	top: 10%; /* mayor que height de la imagen*/
+	left: 5%; /*(100%-(width:24%))/2*/
+	height: auto;
+	overflow-x: hidden;
+	width: 90%;
+	background-color: none;
+	border-radius: 10px;
+}
+
+/*Dimensiones y posicion de la imagen*/
+.img {
+	float: left;
+	max-height: 12rem;
+}
+
+#tablaExterna {
+	margin-top: 40px;
+	width: 90%;
+	height: 80%;
+	margin: 0 auto;
+	margin-bottom: 2rem;
+}
+
+
+
+label {
+	color: white;
+	display: inline-block;
+	border-radius: 10px;
+	font-size: 1.5rem;
+	font-weight: bold;
+	/*background-color: white;*/
+}
+
+label, .valor{
+	margin-left: 5%;
+	font-weight: bold;
+	font-size: 1.4rem;
+	
+}
+
+.valor{
+	margin-bottom: 3%;
+}
+
+#tanque {
+	color: white;
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-left: 5%;
+	margin-bottom: 2%;
+}
+
+label[for=encabezado] {
+	background-color: #117a8b;
+	border: 1px solid #c7d0d2;
+	color: white;
+	border-radius: 10px;
+	width: 90%;
+	margin-top: 10px;
+	margin-left: 5%;
+	margin-bottom: 1%;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
