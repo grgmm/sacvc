@@ -18,6 +18,10 @@ from django.dispatch import receiver
 
 #MODELOS DE PATIO DE TANQUES
 
+
+
+
+
 class PatioTanque(models.Model):
 
     Nombre = models.CharField(max_length=30,unique=True)
@@ -50,21 +54,31 @@ def create_profile_handler(sender, instance, created, **kwargs):
     UserProfile.objects.create(user=instance)
 
 
+class AOR(models.Model):
+
+    id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE,verbose_name= _('Patio de Tanques'))
+    Nombre = models.CharField(max_length=30,null=True,unique=True)
+    Descriptor = models.CharField(max_length=120, default="", blank=True,)
+
+    def __str__(self):
+
+       return '%s,%s' % (self.Nombre, self.id_patioTanque)
+
 
 #MODELOS DE TANQUES
-
 class Tk(models.Model):
 
     id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE,verbose_name= _('Patio de Tanques'))
     Nombre = models.CharField(max_length=30,null=True,unique=True)
     Descriptor = models.CharField(max_length=120, default="", blank=True,)
+    id_aor = models.ForeignKey(AOR, on_delete=models.CASCADE,verbose_name= _('AREA'), blank=True,null=True)
 
     tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
 
     Descriptor_tct = models.CharField(max_length=120,default="",null=True, blank=True,)
     fecha_subida_tct = models.DateTimeField(null=True, blank = True, verbose_name= _('Subido El:'), )
     tctvalido= models.BooleanField(default=False, editable = False)
-    current_data = models.JSONField(null=True)
+    current_data = models.JSONField(null=True, blank=True,)
 
     TIPOTanque_CHOICES = [
     ('CV', 'Cilindrico Vertical'),
