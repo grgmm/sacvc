@@ -19,9 +19,6 @@ from django.dispatch import receiver
 #MODELOS DE PATIO DE TANQUES
 
 
-
-
-
 class PatioTanque(models.Model):
 
     Nombre = models.CharField(max_length=30,unique=True)
@@ -35,23 +32,7 @@ class PatioTanque(models.Model):
 
        return '%s' % (self.Nombre,)
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        primary_key=True,
-    )
-    patios = models.ManyToManyField(PatioTanque)
 
-
-    def __str__(self):
-        return "%s" % self.user.username
-
-@receiver(post_save, sender=User)
-def create_profile_handler(sender, instance, created, **kwargs):
-    if not created:
-        return
-    UserProfile.objects.create(user=instance)
 
 
 class AOR(models.Model):
@@ -63,6 +44,24 @@ class AOR(models.Model):
     def __str__(self):
 
        return '%s,%s' % (self.Nombre, self.id_patioTanque)
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    patios = models.ManyToManyField(PatioTanque)
+    aor = models.ManyToManyField(AOR)
+
+    def __str__(self):
+        return "%s" % self.user.username
+
+@receiver(post_save, sender=User)
+def create_profile_handler(sender, instance, created, **kwargs):
+    if not created:
+        return
+    UserProfile.objects.create(user=instance)
 
 
 #MODELOS DE TANQUES
