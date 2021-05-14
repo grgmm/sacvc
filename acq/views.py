@@ -216,7 +216,7 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
 class TkAdd(CreateView): #VALIDADO PRELIMINAR
     model = Tk
-    fields = ['Nombre', 'Descriptor', 'id_patioTanque',]
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque','id_aor',]
     template_name = 'acq/add_tk/add_tk.html'
 
     def get_success_url(self):
@@ -384,7 +384,7 @@ class TkDetail(DetailView):
 
 class TkUpdate(UpdateView):
   model = Tk
-  fields = ['Nombre', 'Descriptor',]
+  fields = ['Nombre', 'Descriptor','id_aor',]
   template_name = 'acq/edit_tk/edit_tk.html'
 
   def get_success_url(self):

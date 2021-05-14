@@ -11,21 +11,23 @@
 		</p>
 		<div>
 			<table>
+			
 				<tr>
-					<!-- Nombre de Tanque-->
 					<td class="etiqueta">Nombre:</td>
 					<td class="dato">{{tk.Nombre}}</td>
 				</tr>
 
 				<tr>
-					<!-- Descriptor del tanque-->
 					<td class="etiqueta">Descriptor:</td>
 					<td class="dato">{{tk.Descriptor}}</td>
 				</tr>
 				<tr>
-					<!-- Fecha TCT-->
 					<td class="etiqueta">Fecha de subida del archivo TCT:</td>
 					<td class="dato">{{ tk.fecha_subida_tct }}</td>
+				</tr>
+				<tr>
+					<td class="etiqueta">Area de procesos:</td>
+					<td class="dato">{{ tk.id_aor }}</td>
 				</tr>
 			</table>
 		</div>

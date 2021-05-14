@@ -71,7 +71,7 @@ class Tk(models.Model):
     id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE,verbose_name= _('Patio de Tanques'))
     Nombre = models.CharField(max_length=30,null=True,unique=True)
     Descriptor = models.CharField(max_length=120, default="", blank=True,)
-    id_aor = models.ForeignKey(AOR, on_delete=models.CASCADE,verbose_name= _('AREA'), blank=True,null=True)
+    id_aor = models.ForeignKey(AOR, on_delete=models.CASCADE,verbose_name= _('Area'), blank=True,null=True)
 
     tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
 
