@@ -633,7 +633,7 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
 class usuariosedit(UpdateView):
   model = usuario
   template_name = 'acq/edit_user/edit_user.html'
-  fields = ['username','first_name', 'last_name', 'email', 'groups']
+  fields = ['username','first_name', 'last_name', 'email', 'groups',]
   success_url = reverse_lazy('uacq:list_user' )
 
 
@@ -681,6 +681,33 @@ class edit_patio_user(UpdateView):
 
 
                return super(edit_patio_user, self).get(request, *args, **kwargs)
+
+      else:
+          return redirect('/sacvc/logout')
+
+
+
+class edit_aor_user(UpdateView):
+  model = UserProfile
+  template_name = 'acq/edit_user/edit_aor_user.html'
+  fields = ['user','aor']
+  success_url = reverse_lazy('uacq:list_user' )
+
+  def get(self, request, *args, **kwargs):
+      if request.user.is_authenticated:
+
+          filtro_usuario = Group.objects.filter(user = request.user)
+          for g in filtro_usuario:
+                  print(g.name)
+
+          if (not g.name =='supervisores'):
+              print('Usuario sin Perfil')
+
+              return redirect('/sacvc/Menu')
+          else:
+
+
+               return super(edit_aor_user, self).get(request, *args, **kwargs)
 
       else:
           return redirect('/sacvc/logout')

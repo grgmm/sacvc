@@ -33,6 +33,8 @@ from .views import (
     edit_patio_user,
     Cambiar_Clave,
     Menu_Vistas,
+    edit_aor_user,
+
     )
 
 app_name = 'sacvc'
@@ -100,5 +102,6 @@ urlpatterns = [
 
     url(r'^Menu_Vistas/$', Menu_Vistas.as_view(), name='Menu_Vistas'),
 
+    url(r'^edit_aor_user/(?P<pk>\d+)$', edit_aor_user.as_view(), name='edit_aor_user'),
 
 ]

@@ -12,7 +12,7 @@
 
 	<form method="post">
    		{% csrf_token %}
-<!-- 
+<!--
 	Verificar si esto cumple alguna funcion
   		{{ form.non_field_errors }}
 
@@ -34,7 +34,7 @@
 		<a id=usrRegresar href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
 		<a id="usrPatio" href="{% url 'uacq:edit_patio_user' object.pk %}" type="button" class="btn_control"> Asignar Patio</a>
 		<a id=usrClave href="{% url 'uacq:cambiar_clave' object.pk %}" type="button" class="btn_control"> Cambiar-Clave</a>
-
+	  <a id=usrlolo href="{% url 'uacq:edit_aor_user' object.pk %}" type="button" class="btn_control"> Cambiar-Area</a>
 	</form>
 </div>
 
