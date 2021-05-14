@@ -15,23 +15,22 @@
 	height: 40%;
 }
 
+#principal {
+	justify-content: center;
+  	align-items: center;
+	width: 60%;
+	margin:auto;
+	margin-top:1%; /*posiciona verticalmente*/
+   	overflow: auto;
+   	height: 31.2rem; /*para que la ultima fila se vea completa*/
+}
+
 /*ESTILOS PARA LA TABLA*/
 table {
 	text-align: center; 
 	border-collapse:collapse;
-	border-radius: 15px;
-	width: 70%;/*ajustar para resolucion mas baja*/
-	margin-top: 2rem;
-	margin-bottom: 1rem;
-	color: #212529;
-}
-
-/*para centrar*/
-#principal {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   width: auto;
+	width: 99.9%;/*para que ocupe el ancho del div*/
+				 /* no salga scrollbar abajo*/
 }
 
 th {
@@ -39,9 +38,11 @@ th {
 	color: white;
 	font-size:1.5em;
 	font-weight: bold;
-	border: black 2px solid;
 	height:3rem;
 	vertical-align: middle;
+}
+
+tbody{
 }
 
 /*estlos celda*/
@@ -50,6 +51,7 @@ td {
 	vertical-align: middle;
 	border: #338599 2px solid;
 }
+#principal thead th { position: sticky; top: 0; z-index: i; }
 
 #nombre_patio{
 	text-align: left; 

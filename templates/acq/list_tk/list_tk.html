@@ -1,8 +1,7 @@
 {% extends 'acq/base.html' %}
  {% load static %}
- 
- {% block title %}
- {% endblock %}
+
+{% block title %}Lista de tanques{% endblock %} 
 
 {% block content %}
  
@@ -10,20 +9,22 @@
 
 <div id="cuerpo">
 	<h2 class="titulo">Tanques de Almacenamiento de la instalación {{object_list.first.id_patioTanque.Nombre}}</h2>
-		<div>
-			<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control" >REGRESAR</a>
-
-    	<a href="{%url 'uacq:add_tk'%}" type="button" class="btn_control" name= "AGREGAR">AGREGAR TK </a>
-
-
-		</div>
-		<div id="principal">
-			<table class="table">
-				<!-- Encabezado de la tabla con tres columnas-->
-				<th>TANQUE</th>
-				<th>ACCIÓN</th>
-				<th>TABLA TCT</th>
-
+	<div>
+		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control" >REGRESAR</a>
+    		<a href="{%url 'uacq:add_tk'%}" type="button" class="btn_control" name= "AGREGAR">AGREGAR TK </a>
+	</div>
+		
+	<div id="principal">
+		<table>
+			<!-- Encabezado de la tabla con tres columnas-->
+			<thead>
+				<tr>
+					<th>TANQUE</th>
+					<th>ACCIÓN</th>
+					<th>TABLA TCT</th>
+					</tr>
+			</thead>
+			<tbody>
 				{% for tk in object_list %}
 					<tr>
 					<!-- Columna1=Nombre del TANQUE -->
@@ -44,8 +45,9 @@
 						</td>
 					</tr>
 				{% endfor %}
-			</table>
-		</div>
+			</tbody>
+		</table>
+	</div>
 </div>
 
 {% endblock %}
