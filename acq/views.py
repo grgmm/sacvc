@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.http import JsonResponse
-from .models import Tag, Tk, PatioTanque,Tct, Analogico, Digital, UserProfile, AOR
+from .models import Tag, Tk, PatioTanque, Tct, Analogico, Digital, UserProfile, AOR
 from django.template.response import TemplateResponse
 from django.views.generic import ListView, FormView, TemplateView, RedirectView
 from django.views.generic.detail import DetailView
@@ -37,6 +37,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import views as auth_views
+
+
+from django import forms
 
 def actualizar(request):
 
@@ -720,6 +723,7 @@ class usuariosadd(CreateView):
 
 
       def get(self, request, *args, **kwargs):
+           print(self.fields)
            if request.user.is_authenticated:
 
                filtro_usuario = Group.objects.filter(user = request.user)
@@ -923,8 +927,8 @@ class Aor_add(CreateView): #VALIDADO PRELIMINAR
 
 class Aor_edit(UpdateView):
   model = AOR
-  template_name = 'acq/edit_user/edit_user.html'
-  fields = ['Name','Descriptor','id_patioTanque']
+  template_name = 'acq/edit_aor/edit_aor.html'
+  fields = ['Nombre','Descriptor','id_patioTanque']
   success_url = reverse_lazy('uacq:list_user' )
 
 
@@ -1013,7 +1017,7 @@ class Aor_del(DeleteView):
 
 class Aor_detail(DetailView):
     model = AOR
-    template_name = 'acq/detail_tf/detail_tf.html'
+    template_name = 'acq/detail_aor/detail_aor.html'
 
 
     def get(self, request, *args, **kwargs):
@@ -1028,7 +1032,7 @@ class Aor_detail(DetailView):
 
                 return redirect('/sacvc/Menu')
             else:
-                 return super(PatiotanqueDetail, self).get(request, *args, **kwargs)
+                 return super(Aor_detail, self).get(request, *args, **kwargs)
 
         else:
             return redirect('/sacvc/logout')

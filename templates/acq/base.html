@@ -7,10 +7,9 @@
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
 <!-- El contenido fuera de los block es comun a todas las paginas -->
-<!-- El contenido den de los block es comun a todas las paginas 
+<!-- El contenido den de los block es comun a todas las paginas
 	mientras el block no se sobrescrito-->
-	
-<title>
+
 <title>
 	{% block title %}Titulo de la pestaña {% endblock %}
 	</title>
@@ -22,7 +21,7 @@
 
 <body id="pagina">
 	{% block content %} {% endblock %}
-	
+
 	{% block pagination %}
   	{% if is_paginated %}
       <div class="pagination">
@@ -39,7 +38,7 @@
           </span>
       </div>
   	{% endif %}
-	{% endblock %} 
+	{% endblock %}
 
 </body>
 
