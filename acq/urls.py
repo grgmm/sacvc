@@ -33,8 +33,11 @@ from .views import (
     edit_patio_user,
     Cambiar_Clave,
     Menu_Vistas,
-    edit_aor_user,
-
+    Aor_edit,
+    Aor_list,
+    Aor_detail,
+    Aor_del,
+    Aor_add,
     )
 
 app_name = 'sacvc'
@@ -102,6 +105,16 @@ urlpatterns = [
 
     url(r'^Menu_Vistas/$', Menu_Vistas.as_view(), name='Menu_Vistas'),
 
-    url(r'^edit_aor_user/(?P<pk>\d+)$', edit_aor_user.as_view(), name='edit_aor_user'),
+
+    url(r'^edit_aor_user/(?P<pk>\d+)$', Aor_edit.as_view(), name='edit_aor'),
+
+    url(r'^list_aor/(?P<pk>\d+)$', Aor_list.as_view(), name='list_aor'), #Probada con módulo de prueba teste_url_simples
+
+    url(r'^detail_aor/(?P<pk>\d+)$', Aor_detail.as_view(), name='detail_aor'), #Probada con módulo de prueba teste_url_complejas
+
+    url(r'^del_aor/(?P<pk>\d+)$', Aor_del.as_view(), name='del_aor'),
+
+    url(r'^add_aor/$', Aor_add.as_view(), name='add_aor'),
+
 
 ]

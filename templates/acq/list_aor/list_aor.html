@@ -1,0 +1,49 @@
+{% extends 'acq/base.html' %}
+ {% load static %}
+
+{% block title %}Lista de tanques{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+
+<div id="cuerpo">
+	<h2 class="titulo">Areas de Proceso de la instalación: {{object_list.first.id_patioTanque.Nombre}}</h2>
+	<div>
+		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control" >REGRESAR</a>
+    		<a href="{%url 'uacq:add_aor'%}" type="button" class="btn_control" name= "AGREGAR">AGREGAR AREA </a>
+	</div>
+
+	<div id="principal">
+		<table>
+			<!-- Encabezado de la tabla con tres columnas {{object_list.first.id_patioTanque.Nombre}}  -->
+			<thead>
+				<tr>
+					<th>AREA</th>
+					<th>DESCRIPCION</th>
+          <th>ACCION</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for area in object_list %}
+					<tr>
+					<!-- Columna1 Y 2=Nombre y descriptor del AREA -->
+						<td>{{ area.Nombre }}</td>
+            <td>{{ area.Descriptor }}</td>
+
+
+						<!-- Columna 3=links -->
+						<td>
+							<a href="{% url 'uacq:detail_aor' area.pk  %}" class="btn_tabla">Detalle</a>
+							<a href="{% url 'uacq:edit_aor' area.pk  %}" class="btn_tabla">Editar</a>
+							<a href="{% url 'uacq:del_aor' area.pk  %}" class="btn_tabla">Borrar</a>
+						</td>
+
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% endblock %}

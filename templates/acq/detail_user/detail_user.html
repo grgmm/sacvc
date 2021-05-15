@@ -20,11 +20,11 @@
 				<!-- id de usuario -->
 				<td class="etiqueta">Id del Usuario:</td>
 				<td class="dato">{{object.user.pk}}</td>
-			</tr>	
+			</tr>
 			<tr>
 				<!-- correo de usuario-->
 				<td class="etiqueta">Email del Usuario:</td>
-				<td class="dato">{{object.user.email}}</td>				
+				<td class="dato">{{object.user.email}}</td>
 			</tr>
         	<tr>
           		<!-- correo de usuario-->
@@ -46,6 +46,13 @@
           		<td class="etiqueta">Grupos :</td>
           		<td class="dato">{{grupos}}</td>
         	</tr>
+
+          </tr>
+          <tr>
+              <!-- correo de usuario-->
+              <td class="etiqueta">Area :</td>
+              <td class="dato">{{aoruser}}</td>
+          </tr>
 		</table>
 	</div>
 	<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
