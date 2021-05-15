@@ -1,21 +1,20 @@
 {% extends "acq/base.html" %}
 {% load static %}
-{% block title %}{% endblock %}
+{% block title %}Agregar Área de Proceso{% endblock %}
 
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+<link rel="stylesheet" href="{% static 'css/add.css' %}">
+<!--css add=edit-->
 
 <div id="ventana">
 	<p>
-		<!-- Encabezado -->
-		<label for="encabezado">Modificar Área de Proceso</label>
+		<label for="encabezado">Agregar Área de proceso</label>
 	</p>
-	<form method="post">
 
+	<form method="post">  	
    		{% csrf_token %}
-
   		{{ form.non_field_errors }}
 
   		{% for hidden_field in form.hidden_fields %}
@@ -32,13 +31,11 @@
       				</tr>
     			{% endfor %}
  	 		</table>
+   			<h2>{{usuario.pk}}</h2>
    		</div>
-		<button type="submit" class="btn_control">Modificar</button>
+		<button type="submit" class="btn_control">Agregar</button>
 		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
 	</form>
 </div>
-
-
-
 
 {% endblock %}

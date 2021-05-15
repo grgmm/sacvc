@@ -690,7 +690,7 @@ class edit_patio_user(UpdateView):
 
 
 
-class edit_aor_user(UpdateView):
+class Aor_user_edit(UpdateView):
   model = UserProfile
   template_name = 'acq/edit_user/edit_aor_user.html'
   fields = ['user','aor']
@@ -699,7 +699,7 @@ class edit_aor_user(UpdateView):
   def get(self, request, *args, **kwargs):
       if request.user.is_authenticated:
 
-          filtro_usuario = AOR.objects.filter(user = request.user)
+          filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
                   print(g.name)
 
@@ -710,7 +710,7 @@ class edit_aor_user(UpdateView):
           else:
 
 
-               return super(edit_aor_user, self).get(request, *args, **kwargs)
+               return super(Aor_user_edit, self).get(request, *args, **kwargs)
 
       else:
           return redirect('/sacvc/logout')
@@ -903,8 +903,8 @@ class Menu_Vistas(View): #VALIDADO PRELIMINAR
 
 class Aor_add(CreateView): #VALIDADO PRELIMINAR
     model = AOR
-    fields = ['Nombre', 'Descriptor',]
-    template_name = 'acq/add_tf/add_tf.html'
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque']
+    template_name = 'acq/add_aor/add_aor.html'
     success_url = reverse_lazy('uacq:list_tf')
 
     def get(self, request, *args, **kwargs):
@@ -920,7 +920,7 @@ class Aor_add(CreateView): #VALIDADO PRELIMINAR
 
                 return redirect('/sacvc/Menu')
             else:
-                 return super(PatiotanqueAdd, self).get(request, *args, **kwargs)
+                 return super(Aor_add, self).get(request, *args, **kwargs)
 
         else:
             return redirect('/sacvc/logout')
@@ -995,7 +995,7 @@ class Aor_list(ListView):  #VALIDADO PRELIMINAR
 class Aor_del(DeleteView):
     model = AOR
     success_url = reverse_lazy('uacq:list_tf')
-    template_name = 'acq/del_tf/del_tf.html'
+    template_name = 'acq/del_aor/del_aor.html'
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -1010,7 +1010,7 @@ class Aor_del(DeleteView):
 
                 return redirect('/sacvc/Menu')
             else:
-                 return super(PatiotanqueDelete, self).get(request, *args, **kwargs)
+                 return super(Aor_del, self).get(request, *args, **kwargs)
 
         else:
             return redirect('/sacvc/logout')

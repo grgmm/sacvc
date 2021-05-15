@@ -38,7 +38,7 @@ from .views import (
     Aor_detail,
     Aor_del,
     Aor_add,
-    )
+    Aor_user_edit,    )
 
 app_name = 'sacvc'
 urlpatterns = [
@@ -106,7 +106,7 @@ urlpatterns = [
     url(r'^Menu_Vistas/$', Menu_Vistas.as_view(), name='Menu_Vistas'),
 
 
-    url(r'^edit_aor_user/(?P<pk>\d+)$', Aor_edit.as_view(), name='edit_aor'),
+    url(r'^edit_aor_user/(?P<pk>\d+)$', Aor_user_edit.as_view(), name='edit_aor_user'),
 
     url(r'^list_aor/(?P<pk>\d+)$', Aor_list.as_view(), name='list_aor'), #Probada con módulo de prueba teste_url_simples
 
@@ -115,6 +115,8 @@ urlpatterns = [
     url(r'^del_aor/(?P<pk>\d+)$', Aor_del.as_view(), name='del_aor'),
 
     url(r'^add_aor/$', Aor_add.as_view(), name='add_aor'),
+
+    url(r'^edit_aor/(?P<pk>\d+)$', Aor_edit.as_view(), name='edit_aor'),
 
 
 ]
