@@ -17,7 +17,7 @@ p {
 	/*posicion respecto a la esquina superior izquierda de body*/
 	top: 26%; /* mayor que height de la imagen*/
 	height: 46%; /*menor que 100%-height de la imagen*/
-	width: 33%;
+	width: 40%;
 	left: 32%; /*(100%-(width:24%))/2*/
 	background: #fff;
 	border-radius: 10px;
@@ -76,7 +76,7 @@ label[for=encabezado] {
 	position: absolute;
 	/*posicion respecto a la esquina inferior derecha  de ventanalogin*/
 	bottom: 5%;
-	width: 30%;
+	width: 20%;
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -89,14 +89,23 @@ label[for=encabezado] {
 		rgba(255, 255, 255, .5);
 }
 
-button {
-	right: 15%;
+.imagen{
+	/*imagen a la izquierda y en el centro*/
+	position: absolute;
+	left: 0.3rem;
+	top: 0.4rem;
+	
+}
+
+/*para edit_tk, edit_tf, del_tk, del_tf*/
+#tk_modificar {
+	right: 20%;
 	padding: 0.7rem 0;
 }
 
-a {
-	right: 55%;
-	padding: 0.75rem 0;
+#tk_regresar {
+	right: 60%;
+	padding: 0.80rem 0;
 }
 
 .btn_control:hover {

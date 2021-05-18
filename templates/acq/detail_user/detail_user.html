@@ -1,6 +1,6 @@
 {% extends 'acq/base.html' %}
 {% load static %}
-  {% block title %}Usuario: {{user.username}} {% endblock %}
+{% block title %}Usuario: {{user.username}} {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/detail.css' %}">
@@ -48,6 +48,7 @@
         	</tr>
 		</table>
 	</div>
-	<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
+	<a href="{% url 'uacq:list_user' %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
 </div>
 {% endblock %}

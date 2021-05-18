@@ -12,7 +12,9 @@
 	<h2 class="titulo">Patios de Tanques o Terminales de
 		Almacenamiento</h2>
 		<div>
-			<a href="{%url 'uacq:add_tf'%}" type="button" class="btn_control">AGREGAR INSTALACIÓN</a>
+			<a href="{%url 'uacq:add_tf'%}" id="agregar" type="button" class="btn_control">
+				<img class="imagen" src="{% static "recursos/iconos/add24x24.png" %}"/>
+					AGREGAR INSTALACIÓN</a>
 		</div>
 		<div id="principal">
 			<table>
@@ -31,15 +33,21 @@
 						<td id="nombre_patio">{{ patio.Nombre }}</td>
 
 						<!-- Columna2=links -->
+						
 						<td>
-							<a href="{% url 'uacq:detail_tf' patio.pk  %}" class="btn_tabla">Detalle</a>
-							<a href="{% url 'uacq:edit_tf' patio.pk  %}" class="btn_tabla">Editar</a>
-							<a href="{% url 'uacq:del_tf' patio.pk  %}" class="btn_tabla">Borrar</a>
+							<a href="{% url 'uacq:detail_tf' patio.pk  %}" class="btn_tabla">
+							<img class="img_interna" src="{% static "recursos/iconos/consultar18X18.png" %}"/>Detalle</a>
+							<a href="{% url 'uacq:edit_tf' patio.pk  %}" class="btn_tabla">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Editar</a>
+							<a href="{% url 'uacq:del_tf' patio.pk  %}" class="btn_tabla">
+								<img class="img_interna" src="{% static "recursos/iconos/cancel18x18.png" %}"/>
+								Borrar</a>
 						</td>
 
 					<!-- Columna3=link a tanques del patio -->
 					<td>
-						<a href="{% url 'uacq:list_tk' patio.pk %}" class="btn_tabla">Tanques</a>
+						<a href="{% url 'uacq:list_tk' patio.pk %}" class="btn_tabla">
+						<img class="img_interna" src="{% static "recursos/iconos/tanque18x18.png" %}"/>Tanques</a>
 					</td>
 				 	</tr>
 				{% endfor %}

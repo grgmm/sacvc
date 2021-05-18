@@ -80,6 +80,27 @@ table, tr:nth-of-type(odd) {
 .btn_control{
 	padding: 0.7% 0.7%;
 	border-radius: 0.4rem;
+    padding-left: 2rem;	/*abre espacio al icono*/
+}
+
+.img_interna{
+	/*imagen a la izquierda y en el centro*/
+	position: relative;
+	left: 0.1rem;
+	top: 0.2rem;	
+	padding-right: 0.2rem;
+}
+
+#regresar{
+	position: absolute;
+	left: 3rem;
+	top:18rem;
+	
+}
+
+#agregar{
+	position: absolute;
+	left: 83rem;
 }
 
 .btn_tabla:hover, .btn_control:hover{

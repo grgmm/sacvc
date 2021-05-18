@@ -15,8 +15,10 @@
 			{% csrf_token %}
 			<p>	Esta seguro de eliminar el Usuario:</p>
 			<p>{{object.first_name}} {{object.last_name}} ?</p>
-			<button type="submit" class="btn_control">Si, Borrar</button>
-			<a href="{{ view.get_success_url }}" type="button" class="btn_control"> No, Regresar</a>
+			<button id="tk_modificar" type="submit" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/cancel24x24.png" %}"/>Borrar</button>
+			<a id="tk_regresar" href="{{ view.get_success_url }}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
 		<br>
 		</form>
 	</div>

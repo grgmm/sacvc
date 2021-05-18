@@ -1,6 +1,10 @@
 @charset "UTF-8";
 @import url(animate.css);
 
+html, body {
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+}
+
 /* Define presentacion de texto seleccionado*/
 ::selection {
 	color: #fff;
@@ -55,41 +59,31 @@
 }
 
 /**************************************/
-/*Estilos para pie de pagina*/
-#piepagina {
-	position: absolute;
-	bottom: 0px;
-	left: 0;
-	padding-top:1rem;
-	padding-right: 2rem;
-	padding-bottom: 1rem;
-	padding-left: 1rem;
-	width: 100%;
-	height:1.5rem;
-	/*
-	border-style: solid;
-	border-top-color: #338599;
-	border-width: 0.1rem;
-	*/
-	color: white;
-}
 
 .btn_salir, .btn_menu{
 	background-color: #138496; 
 	color: white; /*color de texto del link*/
 	position: absolute;
-	top: 0.3rem;
+	left: 1.5rem;
 	padding: 0.7rem 0.7%;
+	padding-left: 2.3rem;/*deja espacio para icono*/
 	border-radius: 0.4rem;
 	margin-left: 1rem;
 }
 
 .btn_salir{
-	right: 14rem;
+	top: 14rem;
 }
 
 .btn_menu{
-	right: 8rem;
+	top: 10rem;
+}
+
+.imagen{
+	/*imagen a la izquierda y en el centro*/
+	position: absolute;
+	left: 0.3rem;
+	top: 0.4rem;	
 }
 /**************************************/
 

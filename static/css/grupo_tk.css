@@ -22,6 +22,7 @@ html, body {
 /*Dimensiones y posicion de la imagen*/
 .img {
 	float: left;
+	margin-left:2rem; /*centra contenido de celdas*/
 	max-height: 12rem;
 }
 
@@ -32,9 +33,11 @@ html, body {
 	margin: 0 auto;
 	margin-bottom: 2rem;
 }
-
-
-
+/*
+tr td{
+	border: solid 2px;
+}
+*/
 label {
 	color: white;
 	display: inline-block;
@@ -59,8 +62,8 @@ label, .valor{
 	color: white;
 	font-size: 1.5rem;
 	font-weight: bold;
-	margin-left: 5%;
-	margin-bottom: 2%;
+	margin-top:2.5rem; 
+	margin-left: 2rem;
 }
 
 label[for=encabezado] {

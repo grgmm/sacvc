@@ -1,53 +1,51 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="{% static 'css/reset.css' %}">
-<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+		<link rel="stylesheet" href="{% static 'css/base.css' %}">
 
-<!-- El contenido fuera de los block es comun a todas las paginas -->
-<!-- El contenido den de los block es comun a todas las paginas 
-	mientras el block no se sobrescrito-->
+		<!-- El contenido fuera de los block es comun a todas las paginas -->
+		<!-- El contenido den de los block es comun a todas las paginas 
+			mientras el block no se sobrescrito-->
 	
-<title>
-<title>
-	{% block title %}Titulo de la pestaña {% endblock %}
+
+	<title>
+		{% block title %}Titulo de la pestaña {% endblock %}
 	</title>
 
-<div id="tituloPrincipal">
-	Sistema Automatizado de Cálculo de Volumen de Crudo
-</div >
-</head>
+	<div id="tituloPrincipal">
+		Sistema Automatizado de Cálculo de Volumen de Crudo
+	</div >
+	</head>
 
-<body id="pagina">
-	{% block content %} {% endblock %}
+	<body id="pagina">
+		<div  id=botones>
+ 			{% block footer %}
+  				<a href="{% url 'uacq:logout' %}" type="button" class="btn_salir"><img class="imagen" src="{% static "recursos/iconos/logoff24x24.png" %}"/>SALIR</a>
+  				<a href="{% url 'uacq:Menu' %}" type="button" class="btn_menu"><img class="imagen" src="{% static "recursos/iconos/menu24x24.png" %}"/>MENU</a>
+ 			{% endblock %}
+		</div>
+		{% block content %} {% endblock %}
 	
-	{% block pagination %}
-  	{% if is_paginated %}
-      <div class="pagination">
-          <span class="page-links">
-              {% if page_obj.has_previous %}
-                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-              {% endif %}
-              <span class="page-current">
-                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-              </span>
-              {% if page_obj.has_next %}
-                  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-              {% endif %}
-          </span>
-      </div>
-  	{% endif %}
-	{% endblock %} 
+		{% block pagination %}
+  			{% if is_paginated %}
+      			<div class="pagination">
+         			<span class="page-links">
+              			{% if page_obj.has_previous %}
+                  			<a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+              			{% endif %}
+              			<span class="page-current">
+                			Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              			</span>
+              			{% if page_obj.has_next %}
+                  			<a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+              			{% endif %}
+          			</span>
+      			</div>
+  			{% endif %}
+		{% endblock %} 
 
-</body>
-
-<footer  id=piepagina>
- 	{% block footer %}
-  	<a href="{% url 'uacq:logout' %}" type="button" class="btn_salir">SALIR</a>
-  	<a href="{% url 'uacq:Menu' %}" type="button" class="btn_menu">MENU</a>
- 	{% endblock %}
-</footer>
-
+	</body>
 </html>

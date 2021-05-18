@@ -12,16 +12,7 @@
 
 	<form method="post">
    		{% csrf_token %}
-<!-- 
-	Verificar si esto cumple alguna funcion
-  		{{ form.non_field_errors }}
-
-  		{% for hidden_field in form.hidden_fields %}
-    		{{ hidden_field.errors }}
-    		{{ hidden_field }}
-		{% endfor %}
- -->
-  		<table id="ventana1" border="1">
+  		<table>
     		{% for field in form.visible_fields %}
       			<tr>
         			<td class="etiqueta">{{ field.label_tag }}</td>
@@ -30,11 +21,14 @@
     		{% endfor %}
  	 	</table>
 
-		<button id="usrModificar"  type="submit" class="btn_control">Modificar</button>
-		<a id=usrRegresar href="{% url 'uacq:list_user' %}" type="button" class="btn_control"> Regresar</a>
-		<a id="usrPatio" href="{% url 'uacq:edit_patio_user' object.pk %}" type="button" class="btn_control"> Asignar Patio</a>
-		<a id=usrClave href="{% url 'uacq:cambiar_clave' object.pk %}" type="button" class="btn_control"> Cambiar-Clave</a>
-
+		<button id="usrModificar"  type="submit" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}"/>Modificar</button>
+		<a id=usrRegresar href="{% url 'uacq:list_user' %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
+		<a id="usrPatio" href="{% url 'uacq:edit_patio_user' object.pk %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/patio24x24.png" %}"/>Asignar Patio</a>
+		<a id=usrClave href="{% url 'uacq:cambiar_clave' object.pk %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/clave_modif24x24.png" %}"/>Cambiar clave</a>
 	</form>
 </div>
 

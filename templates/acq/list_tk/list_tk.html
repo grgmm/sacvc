@@ -10,8 +10,10 @@
 <div id="cuerpo">
 	<h2 class="titulo">Tanques de Almacenamiento de la instalación {{object_list.first.id_patioTanque.Nombre}}</h2>
 	<div>
-		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control" >REGRESAR</a>
-    		<a href="{%url 'uacq:add_tk'%}" type="button" class="btn_control" name= "AGREGAR">AGREGAR TK </a>
+		<a href="{% url 'uacq:list_tf' %}" id="regresar" type="button" class="btn_control" >
+		<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>REGRESAR</a>
+    		<a href="{%url 'uacq:add_tk'%}" id="agregar" type="button" class="btn_control">
+    		<img class="imagen" src="{% static "recursos/iconos/add24x24.png" %}"/>AGREGAR TK </a>
 	</div>
 		
 	<div id="principal">
@@ -32,9 +34,12 @@
 
 						<!-- Columna2=links -->
 						<td>
-							<a href="{% url 'uacq:detail_tk' tk.pk  %}" class="btn_tabla">Detalle</a>
-							<a href="{% url 'uacq:edit_tk' tk.pk  %}" class="btn_tabla">Editar</a>
-							<a href="{% url 'uacq:del_tk' tk.pk  %}" class="btn_tabla">Borrar</a>
+							<a href="{% url 'uacq:detail_tk' tk.pk  %}" class="btn_tabla">
+							<img class="img_interna" src="{% static "recursos/iconos/consultar18X18.png" %}"/>Detalle</a>
+							<a href="{% url 'uacq:edit_tk' tk.pk  %}" class="btn_tabla">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Editar</a>
+							<a href="{% url 'uacq:del_tk' tk.pk  %}" class="btn_tabla">
+								<img class="img_interna" src="{% static "recursos/iconos/cancel18x18.png" %}"/>Borrar</a>
 						</td>
 
 						<!-- Columna3-->

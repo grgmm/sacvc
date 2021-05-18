@@ -11,7 +11,8 @@
 <div id="cuerpo">
  <h2 class="titulo">Listado de Usuarios</h2>
    <div>
-     <a href="{%url 'uacq:add_user'%}" type="button" class="btn_control">AGREGAR USUARIO</a>
+     <a href="{%url 'uacq:add_user'%}" id="agregar" type="button" class="btn_control">
+				<img class="imagen" src="{% static "recursos/iconos/add24x24.png" %}"/>AGREGAR USUARIO</a>
    </div>
 	<div id="principal">
 		<table >
@@ -35,9 +36,12 @@
          			<td id="nombre_patio">{{ usuario.email }}</td>
 
          			<td id="tdBotones">
-           				<a href="{% url 'uacq:detail_user' usuario.pk  %}" class="btn_tabla">Detalle</a>
-           				<a href="{% url 'uacq:edit_user' usuario.pk  %}" class="btn_tabla">Editar</a>
-           				<a href="{% url 'uacq:del_user' usuario.pk  %}" class="btn_tabla">Borrar</a>
+           				<a href="{% url 'uacq:detail_user' usuario.pk  %}" class="btn_tabla">
+							<img class="img_interna" src="{% static "recursos/iconos/consultar18X18.png" %}"/>Detalle</a>
+           				<a href="{% url 'uacq:edit_user' usuario.pk  %}" class="btn_tabla">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Editar</a>
+           				<a href="{% url 'uacq:del_user' usuario.pk  %}" class="btn_tabla">
+								<img class="img_interna" src="{% static "recursos/iconos/cancel18x18.png" %}"/>Borrar</a>
          			</td>
 
        			{% endfor %}

@@ -31,8 +31,8 @@
 				</tr>
 			</table>
 		</div>
-		<!--<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a> -->
-    <a href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control"> Regresar</a>
+    <a href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
 
 </div>
 {% endblock %}

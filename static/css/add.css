@@ -70,7 +70,7 @@ label[for=encabezado] {
 	position: absolute;
 	/*posicion respecto a la esquina inferior derecha  de ventanalogin*/
 	bottom: 5%;
-	width: 30%;
+	width: 20%;
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
@@ -83,16 +83,23 @@ label[for=encabezado] {
 		rgba(255, 255, 255, .5);
 }
 
-button {
-	/*agregar*/
-	right: 15%;
-	padding: 0.830rem 0;
+.imagen{
+	/*imagen a la izquierda y en el centro*/
+	position: absolute;
+	left: 0.3rem;
+	top: 0.4rem;
+	
 }
 
-a {
-	/*regresar*/
-	right: 55%;
-	padding: 0.844rem 0;
+/*para edit_tk, edit_tf, del_tk, del_tf*/
+#tk_modificar {
+	right: 20%;
+	padding: 0.7rem 0;
+}
+
+#tk_regresar {
+	right: 60%;
+	padding: 0.80rem 0;
 }
 
 .btn_control:hover {
