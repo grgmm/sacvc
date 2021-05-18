@@ -10,7 +10,7 @@
 <div id="ventana">
 	<p>
 		<!-- Encabezado -->
-		<label for="encabezado">Modificar Área de proceso {{aor.Nombre}} </label>
+		<label for="encabezado">Modificar Área de Proceso</label>
 	</p>
 	<form method="post">
 
@@ -33,10 +33,8 @@
     			{% endfor %}
  	 		</table>
    		</div>
-		<button id="tk_modificar"  type="submit" class="btn_control">
-							<img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}"/>Modificar</button>
-		<a id="tk_regresar" href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control">
-							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
+		<button type="submit" class="btn_control">Modificar</button>
+		<a href="{% url 'uacq:list_tf' %}" type="button" class="btn_control"> Regresar</a>
 	</form>
 </div>
 

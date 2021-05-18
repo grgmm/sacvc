@@ -66,7 +66,7 @@ label[for=encabezado] {
 .btn_control {
 	position: absolute;
 	/*posicion respecto a la esquina inferior derecha  de ventana*/
-	bottom: 5%;
+	bottom: 10%;
 	width: 20%;
 	font-size: 14px;
 	font-weight: bold;
@@ -103,25 +103,32 @@ label[for=encabezado] {
 /*********************/
 #usrModificar {
 	width: 20%;
-	right: 2%;
+	right: 6%;
 	padding: 0.7rem 0;
 }
 
 #usrRegresar {
 	width: 20%;
-	right: 24%;
+	right: 39%;
 	padding: 0.7rem 0;
 }
 
 #usrPatio {
 	width: 24%;
-	right: 46%;
+	right: 72%;
 	padding: 0.7rem 0;
 }
 
 #usrClave {
+	bottom: 2%;
 	width: 24%;
-	right: 72%;
+	right: 17%;
+	padding: 0.7rem 0;
+}
+#usrArea {
+	bottom: 2%;
+	width: 24%;
+	right: 58%;
 	padding: 0.7rem 0;
 }
 /******************************/
