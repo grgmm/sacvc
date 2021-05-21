@@ -70,6 +70,7 @@ label[for=encabezado] {
 	width: 20%;
 	font-size: 14px;
 	font-weight: bold;
+	padding: 0.7rem 0;
 	color: white;
 	text-align: center;
 	color: white;
@@ -91,12 +92,12 @@ label[for=encabezado] {
 /*para edit_tk, edit_tf, del_tk, del_tf, cambiar_clave*/
 #tk_modificar {
 	right: 20%; 
-	padding: 0.7rem 0;
+	padding-left: 1.5rem;
 }
 
 #tk_regresar {
 	right: 60%;
-	padding: 0.80rem 0;
+	padding-left: 0.5rem;
 }
 
 /*Solo para vista edit_usr*/
