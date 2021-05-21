@@ -16,7 +16,7 @@
 			<p>{{object.Nombre}}</p>
 			<button id="tk_modificar" type="submit" class="btn_control">
 							<img class="imagen" src="{% static "recursos/iconos/cancel24x24.png" %}"/>Borrar</button>
-			<a id="tk_regresar" href="{{ view.get_success_url }}" type="button" class="btn_control">
+			<a id="tk_regresar" href="{% url 'uacq:list_aor' object.id_patioTanque.pk%}" type="button" class="btn_control">
 							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
 		<br>
 		</form>
