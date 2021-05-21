@@ -93,7 +93,7 @@ table, tr:nth-of-type(odd) {
 
 #regresar{
 	position: absolute;
-	left: 3rem;
+	left: 1.5rem; /*ver editar y salir en base.html*/
 	top:18rem;
 	
 }
