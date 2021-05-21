@@ -60,6 +60,10 @@ td {
 	width: 20%;
 }
 
+#botones_patio{
+	width: 80%;
+}
+
 /*color de fondo lineas pares*/
 tr:nth-of-type(even) {
 	background-color: rgb(255, 255, 255);
@@ -100,7 +104,7 @@ table, tr:nth-of-type(odd) {
 
 #agregar{
 	position: absolute;
-	left: 83rem;
+	left: 80%;
 }
 
 .btn_tabla:hover, .btn_control:hover{
