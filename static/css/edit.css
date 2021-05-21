@@ -105,32 +105,32 @@ label[for=encabezado] {
 #usrModificar {
 	width: 20%;
 	right: 6%;
-	padding: 0.7rem 0;
+	padding-left: 1.5rem;
 }
 
 #usrRegresar {
 	width: 20%;
-	right: 39%;
-	padding: 0.7rem 0;
+	right: 35%;
+	padding-left: 1rem;
 }
 
 #usrPatio {
 	width: 24%;
-	right: 72%;
-	padding: 0.7rem 0;
+	right: 66%;
+	padding-left: 1rem;
 }
 
 #usrClave {
-	bottom: 2%;
+	bottom: 1%;
 	width: 24%;
 	right: 17%;
-	padding: 0.7rem 0;
+	padding-left: 1rem;
 }
 #usrArea {
-	bottom: 2%;
+	bottom: 1%;
 	width: 24%;
 	right: 58%;
-	padding: 0.7rem 0;
+	padding-left: 1rem;
 }
 /******************************/
 .btn_control:hover {
