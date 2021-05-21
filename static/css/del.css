@@ -76,7 +76,7 @@ label[for=encabezado] {
 	position: absolute;
 	/*posicion respecto a la esquina inferior derecha  de ventanalogin*/
 	bottom: 5%;
-	width: 20%;
+	width: 25%;
 	font-size: 14px;
 	font-weight: bold;
 	padding: 0.7rem 0;
@@ -99,14 +99,15 @@ label[for=encabezado] {
 }
 
 /*para edit_tk, edit_tf, del_tk, del_tf*/
+
 #tk_modificar {
-	right: 20%;
-	padding-left: 0.5rem;
+	right: 17%;
+	padding-left: 1rem;
 }
 
 #tk_regresar {
-	right: 60%;
-	padding-left: 0.5rem;
+	right: 52%;
+	padding-left: 1rem;
 }
 
 .btn_control:hover {
