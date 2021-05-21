@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="{% static 'css/list.css' %}">
 
-<div id="cuerpo">
+<div>
  <h2 class="titulo">Listado de Usuarios</h2>
    <div>
      <a href="{%url 'uacq:add_user'%}" id="agregar" type="button" class="btn_control">
@@ -35,7 +35,7 @@
          			<td id="nombre_patio">{{ usuario.last_name }}</td>
          			<td id="nombre_patio">{{ usuario.email }}</td>
 
-         			<td id="tdBotones">
+         			<td id="botones_patio">
            				<a href="{% url 'uacq:detail_user' usuario.pk  %}" class="btn_tabla">
 							<img class="img_interna" src="{% static "recursos/iconos/consultar18X18.png" %}"/>Detalle</a>
            				<a href="{% url 'uacq:edit_user' usuario.pk  %}" class="btn_tabla">
