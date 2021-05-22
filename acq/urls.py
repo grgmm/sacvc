@@ -38,7 +38,8 @@ from .views import (
     Aor_detail,
     Aor_del,
     Aor_add,
-    Aor_user_edit,    )
+    Aor_user_edit,
+    detalle_tk,  )
 
 app_name = 'sacvc'
 urlpatterns = [
@@ -99,7 +100,6 @@ urlpatterns = [
 
     url(r'^detail_user/(?P<pk>\d+)$', usuariodetail.as_view(), name='detail_user'),
 
-    url(r'^grupo_tk/', grupo_tk.as_view(), name='grupo_tk'),
 
     url(r'^cambiar_clave/(?P<pk>\d+)$', Cambiar_Clave.as_view(), name='cambiar_clave'),
 
@@ -117,6 +117,14 @@ urlpatterns = [
     url(r'^add_aor/$', Aor_add.as_view(), name='add_aor'),
 
     url(r'^edit_aor/(?P<pk>\d+)$', Aor_edit.as_view(), name='edit_aor'),
+
+    ######################### VISTAS OPERATIVAS #######################
+
+    url(r'^grupo_tk/', grupo_tk.as_view(), name='grupo_tk'),
+
+
+    url(r'^detalle_tk/(?P<pk>\d+)$', detalle_tk.as_view(), name='detalle_tk'),
+
 
 
 ]
