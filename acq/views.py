@@ -41,6 +41,9 @@ from django.contrib.auth import views as auth_views
 
 from django import forms
 
+
+#[''] {})
+
 def actualizar(request):
 
    with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
@@ -828,6 +831,7 @@ class usuariodetail(DetailView):
             else:
                 return redirect('/sacvc/logout')
 
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 class grupo_tk(LoginRequiredMixin, ListView):
   #vista de grupo de tanques en modo operación
@@ -837,6 +841,23 @@ class grupo_tk(LoginRequiredMixin, ListView):
   template_name = 'acq/grupo_tk/grupo_tk.html'
   login_url = '/sacvc/Menu'
   redirect_field_name = '/sacvc/logout'
+
+  def get_queryset(self, *args, **kwargs):
+      usr_ins = UserProfile.objects.get(user = self.request.user)
+
+      qsaor= usr_ins.aor.all()
+      aoruser=[]
+
+      for aor_inst in qsaor:
+         aoruser.append(aor_inst.pk)
+
+
+      qs = super(grupo_tk, self).get_queryset()
+      filtro=qs.filter(id_aor__in=aoruser)
+      return filtro
+
+        #print(qs.filter(id_aor__exact=useraor))
+      #p=UserProfile.objects.get(user=self.request.user)
 
 from .forms.acqforms import users_cambio_clave_form # OJO interesante metodo para
 #gestionar los formularios desde un unico archivo que luego se importa
