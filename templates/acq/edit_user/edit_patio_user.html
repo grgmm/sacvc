@@ -23,15 +23,10 @@
 				{% endfor %}
  	 		</table>
    		</div>
-<<<<<<< HEAD
 		<button id="tk_modificar"   type="submit" class="btn_control">
 							<img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}"/>Modificar</button>
-		<a  id="tk_regresar" href="{% url 'uacq:list_user' %}" type="button" class="btn_control">
+		<a  id="tk_regresar" href="{% url 'uacq:edit_user' object.pk %}" type="button" class="btn_control">
 							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
-=======
-		<button type="submit" class="btn_control">Modificar</button>
-		<a href="{% url 'uacq:edit_user' object.pk %}" type="button" class="btn_control">Regresar</a>
->>>>>>> branch 'feature/sprint_17' of https://github.com/grgmm/sacvc.git
 
 	</form>
 </div>
