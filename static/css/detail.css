@@ -5,7 +5,7 @@
 	height: auto;
 	overflow-x: hidden;
 	width: 40%;
-	left: 30%; /*(100%-(width:24%))/2*/
+	left: 30%; /*(100%-(width:40%))/2*/
 	background: #fff;
 	border-radius: 10px;
 	border: 1px solid #ccc;
@@ -69,10 +69,10 @@ label[for=encabezado] {
 	right: 40%;
 	bottom: 5%;
 	width: 20%;
+	padding: 0.7rem 0;
+	padding-left: 1.5rem;
 	font-size: 14px;
 	font-weight: bold;
-	padding: 0.7rem 0;
-	padding-left: 1rem;
 	color: white;
 	text-align: center;
 	color: white;

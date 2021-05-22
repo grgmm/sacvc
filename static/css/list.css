@@ -77,12 +77,12 @@ table, tr:nth-of-type(odd) {
 /*Estilos para los link*/
 
 .btn_tabla{
-	padding: 1.5% 1%;
+	padding: 1.2% 1%;
 	border-radius: 0.4rem;
 }
 
 .btn_control{
-	padding: 0.7% 0.7%;
+	padding: 0.7% 0%;
 	border-radius: 0.4rem;
     padding-left: 2rem;	/*abre espacio al icono*/
 }
@@ -92,19 +92,28 @@ table, tr:nth-of-type(odd) {
 	position: relative;
 	left: 0.1rem;
 	top: 0.2rem;	
-	padding-right: 0.2rem;
+	padding-right: 1.5%;
+}
+
+.imagen{
+	/*imagen a la izquierda y en el centro*/
+	position: absolute;
+	left: 0.3rem;
+	top: 0.4rem;	
+	padding-right: 1.5%;	
 }
 
 #regresar{
 	position: absolute;
 	left: 1.5rem; /*ver editar y salir en base.html*/
-	top:18rem;
+	top:45%;
 	
 }
 
 #agregar{
 	position: absolute;
 	left: 85%;
+	top:33%;
 }
 
 .btn_tabla:hover, .btn_control:hover{

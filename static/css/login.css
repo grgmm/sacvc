@@ -70,10 +70,20 @@ input{
 }
 
 button[type=submit] {
-	height: 30px;
+	height: 35px;
 	position: absolute;
 	/*posicion respecto a la esquina inferior derecha  de ventanalogin*/
-	right: 35%;
+	right: 33%;
 	bottom: 5%;
-	width: 30%;
+	width: 34%;
+	padding-left: 24px;
+}
+
+.imagen{
+	/*imagen a la izquierda y en el centro*/
+	position: absolute;
+	left: 0.3rem;
+	top: 0.4rem;
+	padding-left: 5px;
+	
 }

@@ -13,7 +13,7 @@
 	<form method="post">
    		{% csrf_token %}
   		
-  		<table id="ventana1" border="1">
+  		<table border="1">
     		{% for field in form.visible_fields %}
       			<tr>
         			<td class="etiqueta">{{ field.label_tag }}</td>

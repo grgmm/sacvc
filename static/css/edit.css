@@ -20,7 +20,7 @@ table {
 	width: 90%;
 	margin: 0 auto;
 	margin-top: 5%;
-	margin-bottom: 20%;
+	margin-bottom: 25%;
 }
 
 label {
@@ -96,40 +96,40 @@ label[for=encabezado] {
 }
 
 #tk_regresar {
-	right: 57%;
+	left: 17%;
 	padding-left: 1rem;
 }
 
 /*Solo para vista edit_usr*/
 /*********************/
 #usrModificar {
-	width: 22%;
-	right: 6%;
+	width: 27%;
+	right: 3%;
 	padding-left: 1.9rem;
 }
 
 #usrRegresar {
-	width: 20%;
-	right: 35%;
+	width: 23%;
+	right: 32%;
 	padding-left: 1.3rem;
 }
 
 #usrPatio {
-	width: 24%;
-	right: 66%;
+	width: 29%;
+	left: 3%;
 	padding-left: 1.5rem;
 }
 
 #usrClave {
 	bottom: 1%;
-	width: 24%;
-	right: 17%;
+	width: 30%;
+	right: 13%;
 	padding-left: 1.7rem;
 }
 #usrArea {
 	bottom: 1%;
-	width: 24%;
-	right: 58%;
+	width: 30%;
+	left: 13%;
 	padding-left: 1.5rem;
 }
 /******************************/

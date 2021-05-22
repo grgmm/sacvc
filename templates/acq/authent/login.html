@@ -2,7 +2,6 @@
 {% load static %}
 {% block title %}Autenticación{% endblock %} 
 {% block content %}
-	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" href="{% static 'css/login.css' %}">
 	<img class="img" src="{% static "recursos/imagenes/tanques.jpg" %}">
 	
@@ -28,7 +27,8 @@
 						<p tabindex="2">{{ form.password }}</p></td>
 				</tr>
 			</table>
-			<button tabindex="3" type="submit" value="Login">Login</button>
+			<button tabindex="3" type="submit" value="Login">
+							<img class="imagen" src="{% static "recursos/iconos/login24x24.png" %}"/>Login</button>
 		</form>
 	</div>
 {% endblock %}
