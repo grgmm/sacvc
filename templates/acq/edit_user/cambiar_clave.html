@@ -20,7 +20,7 @@
       			</tr>
     		{% endfor %}
  	 	</table>
-		<!-- 
+		<!--
 		<div >
 			{{form.as_table}}
 		</div>
@@ -28,11 +28,11 @@
 		<p id="parrafo">
 		<button id="tk_modificar"  type="submit" class="btn_control">
 							<img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}"/>Modificar</button>
-		<a id="tk_regresar" href="{% url 'uacq:list_user' %}" type="button" class="btn_control">
+		<a id="tk_regresar" href="{% url 'uacq:edit_user' user.pk %}" type="button" class="btn_control">
 							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
 		</p>
 	</form>
-		
+
 </div>
 	<p> {{mensajes}} </p>
 {% endblock %}
