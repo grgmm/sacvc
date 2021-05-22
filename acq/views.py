@@ -37,9 +37,11 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import views as auth_views
-
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
+
+
+#[''] {})
 
 def actualizar(request):
 
@@ -828,15 +830,7 @@ class usuariodetail(DetailView):
             else:
                 return redirect('/sacvc/logout')
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-class grupo_tk(LoginRequiredMixin, ListView):
-  #vista de grupo de tanques en modo operación
-  model = Tk
-  paginate_by = 6
-  success_url = reverse_lazy('uacq:list_tf')
-  template_name = 'acq/grupo_tk/grupo_tk.html'
-  login_url = '/sacvc/Menu'
-  redirect_field_name = '/sacvc/logout'
+
 
 from .forms.acqforms import users_cambio_clave_form # OJO interesante metodo para
 #gestionar los formularios desde un unico archivo que luego se importa
@@ -1036,3 +1030,40 @@ class Aor_detail(DetailView):
 
         else:
             return redirect('/sacvc/logout')
+
+
+####################################################################################
+##    VISTAS OPERATIVAS            ####################################
+
+class grupo_tk(LoginRequiredMixin, ListView):
+  #vista de grupo de tanques en modo operación
+  model = Tk
+  paginate_by = 6
+  success_url = reverse_lazy('uacq:list_tf')
+  template_name = 'acq/grupo_tk/grupo_tk.html'
+  login_url = '/sacvc/Menu'
+  redirect_field_name = '/sacvc/logout'
+
+  def get_queryset(self, *args, **kwargs):
+      usr_ins = UserProfile.objects.get(user = self.request.user)
+
+      qsaor= usr_ins.aor.all()
+      aoruser=[]
+
+      for aor_inst in qsaor:
+         aoruser.append(aor_inst.pk)
+
+
+      qs = super(grupo_tk, self).get_queryset()
+      filtro=qs.filter(id_aor__in=aoruser)
+      return filtro
+
+        #print(qs.filter(id_aor__exact=useraor))
+      #p=UserProfile.objects.get(user=self.request.user)
+
+
+class detalle_tk(LoginRequiredMixin, DetailView):
+    model = Tk
+    template_name = 'acq/detalle_tk/detalle_tk.html'
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque','pk']
+    success_url= '/sacvc/grupo_tk/'
