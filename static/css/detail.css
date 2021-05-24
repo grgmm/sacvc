@@ -65,30 +65,31 @@ label[for=encabezado] {
 
 .btn_control {
 	position: absolute;
-	/*posicion respecto a la esquina inferior derecha  de ventanalogin*/
-	right: 40%;
+	/*posicion respecto al borde inferior*/
 	bottom: 5%;
-	width: 20%;
-	padding: 0.7rem 0;
-	padding-left: 1.5rem;
+	width: auto;
+	height: 34px; /*depende del alto del icono*/
+	padding-left: 4px; 
+	padding-right: 4px;
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
-	text-align: center;
-	color: white;
 	background-color: #117a8b;
-	border: 1px solid #66add6;
 	border-radius: 0.4rem;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, .3), inset 0 1px 0
-		rgba(255, 255, 255, .5);
+
+	/*centro el boton*/
+	margin-left: 50%;
+  	transform: translateX(-50%); /*hago coincidir centros de padre e hijo*/
+
+	/*alinacion flex del contenido*/
+	display: flex;
+   	align-items: center; /*alineacion vertical*/
+   	justify-content:center; /*alineacion horizontal*/
 }
 
 .imagen{
-	/*imagen a la izquierda y en el centro*/
-	position: absolute;
-	left: 0.3rem;
-	top: 0.4rem;
-	
+	padding-right: 4px;
+	float:left;		
 }
 
 .btn_control:hover {

@@ -70,20 +70,24 @@ input{
 }
 
 button[type=submit] {
-	height: 35px;
 	position: absolute;
-	/*posicion respecto a la esquina inferior derecha  de ventanalogin*/
-	right: 33%;
+	/*posicion respecto borde inferior*/
 	bottom: 5%;
-	width: 34%;
-	padding-left: 24px;
+	
+	/*dimensiones del boton*/
+	width: auto;
+	height: 34px; /*depende del alto del icono*/
+	
+	/*centro el boton*/
+	margin-left: 50%;
+  	transform: translateX(-50%); /*hago coincidir centros de padre e hijo*/
+	
+	/*alinacion flex del contenido*/
+	display: flex;
+   	align-items: center; /*alineacion vertical*/
+   	justify-content:center; /*alineacion horizontal*/
 }
 
 .imagen{
-	/*imagen a la izquierda y en el centro*/
-	position: absolute;
-	left: 0.3rem;
-	top: 0.4rem;
-	padding-left: 5px;
-	
+	float:left;
 }

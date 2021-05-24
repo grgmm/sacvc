@@ -65,10 +65,20 @@ html, body {
 	color: white; /*color de texto del link*/
 	position: absolute;
 	left: 1.5rem;
-	padding: 0.7rem 0.7%;
-	padding-left: 2.3rem;/*deja espacio para icono*/
+	
+	/*dimensiones del boton*/
 	border-radius: 0.4rem;
-	margin-left: 1rem;
+	width: auto;
+	height: 34px; /*depende del alto del icono*/
+	padding-left: 4px; 
+	padding-right: 4px;
+	
+	
+	
+	/*alinacion flex del contenido*/
+	display: flex;
+   	align-items: center; /*alineacion vertical*/
+   	justify-content:center; /*alineacion horizontal*/
 }
 
 .btn_salir{
@@ -80,10 +90,8 @@ html, body {
 }
 
 .imagen{
-	/*imagen a la izquierda y en el centro*/
-	position: absolute;
-	left: 0.3rem;
-	top: 0.4rem;	
+	padding-right: 4px;
+	float:left;	
 }
 /**************************************/
 

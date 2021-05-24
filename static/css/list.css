@@ -50,6 +50,7 @@ td {
 	height:3rem;
 	vertical-align: middle;
 	border: #338599 2px solid;
+	
 }
 #principal thead th { position: sticky; top: 0; z-index: i; }
 
@@ -77,30 +78,39 @@ table, tr:nth-of-type(odd) {
 /*Estilos para los link*/
 
 .btn_tabla{
-	padding: 1.2% 1%;
 	border-radius: 0.4rem;
-}
-
-.btn_control{
-	padding: 0.7% 0%;
-	border-radius: 0.4rem;
-    padding-left: 2rem;	/*abre espacio al icono*/
+	width: auto;
+	height: 50px; /*depende del alto del icono*/
+	padding-left: 4px; /*Ancho del icono+ 2 px*/
+	padding: 8px 4px;	
 }
 
 .img_interna{
 	/*imagen a la izquierda y en el centro*/
 	position: relative;
 	left: 0.1rem;
-	top: 0.2rem;	
-	padding-right: 1.5%;
+	top: 0.2rem;
+	padding-right: 4px;
+}
+
+.btn_control{
+	/*dimensiones del boton*/
+	border-radius: 0.4rem;
+	width: auto;
+	height: 34px; /*depende del alto del icono*/
+	padding-left: 4px; /*Ancho del icono+ 2 px*/
+	padding-right: 4px;
+	
+	/*alinacion flex del contenido*/
+	display: flex;
+   	align-items: center; /*alineacion vertical*/
+   	justify-content:center; /*alineacion horizontal*/
+	
 }
 
 .imagen{
-	/*imagen a la izquierda y en el centro*/
-	position: absolute;
-	left: 0.3rem;
-	top: 0.4rem;	
-	padding-right: 1.5%;	
+	padding-right: 4px;
+	float:left;	
 }
 
 #regresar{
@@ -139,7 +149,6 @@ table, tr:nth-of-type(odd) {
 .btn_tabla:not(:disabled) {
 	cursor: pointer;
 }
-
 
 a {
 	background-color: #138496; 
