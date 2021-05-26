@@ -671,6 +671,13 @@ class edit_patio_user(UpdateView):
   fields = ['user','patios']
   success_url = reverse_lazy('uacq:list_user' )
 
+  def get_success_url(self):    #OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
+                                 #DE REGRESO DE LA VISTA
+           #print(self.object.id_patioTanque.pk)
+
+           success_url=('/sacvc/edit_user/'+str(self.object.user.pk))
+           return(success_url)
+
   def get(self, request, *args, **kwargs):
       if request.user.is_authenticated:
 
@@ -696,7 +703,14 @@ class Aor_user_edit(UpdateView):
   model = UserProfile
   template_name = 'acq/edit_user/edit_aor_user.html'
   fields = ['user','aor']
-  success_url = reverse_lazy('uacq:list_user' )
+  success_url = reverse_lazy('uacq:list_user')
+
+  def get_success_url(self):    #OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
+                                #DE REGRESO DE LA VISTA
+          #print(self.object.id_patioTanque.pk)
+
+          success_url=('/sacvc/edit_user/'+str(self.object.user.pk))
+          return(success_url)
 
   def get(self, request, *args, **kwargs):
       if request.user.is_authenticated:
