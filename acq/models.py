@@ -33,12 +33,10 @@ class PatioTanque(models.Model):
        return '%s' % (self.Nombre,)
 
 
-
-
 class AOR(models.Model):
 
     id_patioTanque = models.ForeignKey(PatioTanque, on_delete=models.CASCADE,verbose_name= _('Patio de Tanques'))
-    Nombre = models.CharField(max_length=30,null=True,unique=True)
+    Nombre = models.CharField(max_length=30,null=True, unique=True)
     Descriptor = models.CharField(max_length=120, default="", blank=True,)
 
     def __str__(self):

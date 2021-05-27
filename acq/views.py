@@ -937,8 +937,15 @@ class Aor_edit(UpdateView):
   model = AOR
   template_name = 'acq/edit_aor/edit_aor.html'
   fields = ['Nombre','Descriptor','id_patioTanque']
-  success_url = reverse_lazy('uacq:list_user' )
 
+
+
+  def get_success_url(self):    #OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
+                                  #DE REGRESO DE LA VISTA
+            #print(self.object.id_patioTanque.pk)
+            print(self.object.id_patioTanque.pk)
+            success_url=('/sacvc/list_aor/'+str(self.object.id_patioTanque.pk))
+            return(success_url)
 
   def get(self, request, *args, **kwargs):
 
