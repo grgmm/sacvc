@@ -331,6 +331,15 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'C',
              etiqueta1='TOV',)
 
+            Analogico.objects.create(Nombre= instance.Nombre +'_ays',
+             Descriptor='PORCENTAJE DE AGUA Y SEDIMENTO '+ instance.Nombre,
+             Unidad= '%',
+             direccion=(qtk-1)*10+11,
+             id_Tk=instance,
+             direccion_campo= 100+(qtk-1)*10+11,
+             TipoVariable= 'C',
+             etiqueta1='TOV',)
+
 class TkDelete(DeleteView):
     model = Tk
     template_name = 'acq/del_tk/del_tk.html'
