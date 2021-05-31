@@ -37,6 +37,7 @@
 							<img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}"/>Modificar</button>
 		<a id="tk_regresar" href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control">
 							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
+	   					<a  href="{% url 'uacq:validar_tct' tk.pk%}">Validar TCT</a>
 	</form>
 </div>
 

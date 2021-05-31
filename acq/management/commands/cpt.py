@@ -21,6 +21,7 @@ class Command(BaseCommand):
        n=2
        iterando=0
        nivel_producto=0.0
+       agua_sedimento=0.0
        ruta_Data=fs.location   #RUTA DE BUFFER
        idtag_lt=0
        timestamp_lt=''
@@ -28,6 +29,7 @@ class Command(BaseCommand):
        Data_Basica_lt={}
        Data_Calculada_tov={}
        instance_tov={}
+       Presion_tk=0.0
        while i<=n:
 
 
@@ -86,18 +88,16 @@ class Command(BaseCommand):
                                         instance_tov = Tag.objects.get(id_Tk= idtk, etiqueta1='TOV')
                                         timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                                         Data_Calculada_tov  = {"IDTAG":str(instance_tov.pk),
-                                                   "TOV":str(tov),
-                                                   "LT":str(nivel_producto),
-                                                   "TIMESTAMP_TOV":timestamp_tov,
-                                                   "PT": str(Presion_tk),
-                                                   "TT": str(temperatura_producto),
+                                                   "TOV": str(tov),
+                                                   "LT": str(nivel_producto),
+                                                   "TIMESTAMP_TOV": timestamp_tov,
+                                                   "PT":  str(Presion_tk),
+                                                   "TT":  str(temperatura_producto),
+                                                   "AYS": str(agua_sedimento)
                                                    "INDEXADO": 0,
                                                    }
                                     else:
                                         print('VARIABLE BASICA FUERA DE RANGOS........')
-
-
-
 
 
                            if idtag_DC.etiqueta1=='pt':
@@ -114,15 +114,15 @@ class Command(BaseCommand):
 
 
                            if idtag_DC.etiqueta1=='lta':
-                                    idtag_tt=idtag_DC
+                                    idtag_lta=idtag_DC
                                     nivel_agua_libre=vb_PV
                                     idtk=idtag_DC.id_Tk
 
 
-
-
-
-
+                           if idtag_DC.etiqueta1=='ays':
+                                      idtag_ays=idtag_DC
+                                      agua_sedimento=vb_PV
+                                      idtk=idtag_DC.id_Tk
 
 
                           #INSTANCIANDO EL TAG TOV
