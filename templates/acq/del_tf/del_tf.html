@@ -3,22 +3,21 @@
 {% block title %}Borrar Usuario{% endblock %}
 
 {% block content %}
-	<link rel="stylesheet" href="{% static 'css/del.css' %}">
+	<link rel="stylesheet" href="{% static 'css/edit.css' %}">
 
 	<div id="ventana">
 		<p>
-			<label for="encabezado">Borrar instalación</label>
+			<label for="encabezado">Borrar Instalación</label>
 		</p>
 
 		<form  method="post">
 			{% csrf_token %}
-			<p>	Esta seguro de borrar la instalación:</p>
-			<p>{{object.Nombre}}</p> 
+			<p id="borrar">	Esta seguro de borrar la instalación: {{object.Nombre}}</p>
+			<br><br><br><br><br>
 			<button id="tk_modificar"  type="submit" class="btn_control">
-							<img class="imagen" src="{% static "recursos/iconos/cancel24x24.png" %}"/>Borrar</button>
+					<img class="imagen" src="{% static "recursos/iconos/cancel24x24.png" %}"/>Borrar</button>
 			<a id="tk_regresar"  href="{{ view.get_success_url }}" type="button" class="btn_control">
-							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
-		<br>
+					<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
 		</form>
 	</div>
 {% endblock %}

@@ -13,18 +13,8 @@
 		<label for="encabezado">Modificar Área de proceso {{aor.Nombre}} </label>
 	</p>
 	<form method="post">
-
    		{% csrf_token %}
-
-  		{{ form.non_field_errors }}
-
-  		{% for hidden_field in form.hidden_fields %}
-    		{{ hidden_field.errors }}
-    		{{ hidden_field }}
-		{% endfor %}
-
-   		<div >
-  			<table border="1">
+  			<table>
     			{% for field in form.visible_fields %}
       				<tr>
         				<td class="etiqueta">{{ field.label_tag }}</td>
@@ -32,16 +22,12 @@
       				</tr>
     			{% endfor %}
  	 		</table>
-   		</div>
 		<button id="tk_modificar"  type="submit" class="btn_control">
-							<img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}"/>Modificar</button>
+			<img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}"/>Modificar</button>
 		<a id="tk_regresar" href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control">
-							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
-	   					<a  href="{% url 'uacq:validar_tct' tk.pk%}">Validar TCT</a>
+			<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
+	   	<a id="tk_validar" href="{% url 'uacq:validar_tct' tk.pk%}" type="button" class="btn_control">
+	   		<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Validar TCT</a>
 	</form>
 </div>
-
-
-
-
 {% endblock %}

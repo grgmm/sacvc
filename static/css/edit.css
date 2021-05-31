@@ -1,7 +1,13 @@
+#borrar {
+	margin:1rem 3rem;
+	text-align: center;
+	font-size: 2rem;
+}
+
 #ventana {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
-	top: 15%; /* mayor que height de la imagen*/
+	top: 15%; 
 	height: auto;
 	overflow-x: hidden;
 	width: 40%;
@@ -65,7 +71,7 @@ label[for=encabezado] {
 
 .btn_control {
 	position: absolute;
-	/*posicion respecto a la esquina inferior derecha  de ventana*/
+	/*posicion respecto a la esquina inferior derecha  del contenedor*/
 	bottom: 10%;
 	/*dimensiones comunes de botones*/
 	height: 34px; /*depende del alto del icono*/
@@ -91,51 +97,46 @@ label[for=encabezado] {
 	float:left;	
 }
 
-/*para edit_tk, edit_tf, del_tk, del_tf, cambiar_clave*/
-#tk_modificar {
-	right: 17%; 
-	padding-left: 2rem;
-}
-
-#tk_regresar {
-	left: 17%;
+/*para edit_tk, edit_tf, del_tk, del_tf, cambiar_clave, edit_usr*/
+/*********************/
+#tk_modificar, #usrModificar {
+	/*posiciono el boton*/
+	left: 75%;	/*Centro del boton*/
+  	transform: translateX(-50%); 
 	padding-left: 1rem;
 }
 
-/*Solo para vista edit_usr*/
-/*********************/
-#usrModificar {
-	width: 25%;
+#tk_validar, #usrRegresar {
 	/*posiciono el boton*/
-	margin-left: 80%;	/*Centro del boton*/
-  	transform: translateX(-50%); 
+	left: 50%;	/*Centro del boton*/
+  	transform: translateX(-50%);  
+	padding-left: 1rem;
 }
 
-#usrRegresar {
-	width: 25%;
+#tk_regresar, #usrPatio {
 	/*posiciono el boton*/
-	margin-left: 50%;	/*Centro del boton*/
+	left: 25%;	/*Centro del boton*/
   	transform: translateX(-50%); 
-}
-
-#usrPatio {
-	width: 25%;
-	/*posiciono el boton*/
-	margin-left: 20%;	/*Centro del boton*/
-  	transform: translateX(-50%); 
+	padding-left: 1rem;
 }
 
 #usrClave {
 	bottom: 1%;
-	width: 25%;
-	margin-left: 66%;	/*Centro del boton*/
+	left: 66%;	/*Centro del boton*/
   	transform: translateX(-50%); 
+	padding-left: 1rem;
 }
 #usrArea {
 	bottom: 1%;
-	width: 25%;
-	margin-left: 33%;	/*Centro del boton*/
+	left: 33%;	/*Centro del boton*/
   	transform: translateX(-50%); 
+	padding-left: 1rem;
+}
+
+#detalle {
+	left: 50%;	/*Centro del boton*/
+  	transform: translateX(-50%); 
+	padding-left: 1rem;
 }
 /******************************/
 .btn_control:hover {

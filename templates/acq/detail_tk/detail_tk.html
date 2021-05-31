@@ -3,7 +3,7 @@
   {% block title %}{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
 <div id="ventana">
 		<p>
 			<!-- Encabezado -->
@@ -31,7 +31,7 @@
 				</tr>
 			</table>
 		</div>
-    <a href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control">
+    <a id="detalle" href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control">
 							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
 
 </div>

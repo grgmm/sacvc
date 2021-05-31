@@ -5,8 +5,7 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/add.css' %}">
-<!--css add=edit-->
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
 
 <div id="ventana">
 	<p>
@@ -16,11 +15,10 @@
 
 	<form id="my_form" method="post">
    		{% csrf_token %}
-  		{{ form.non_field_errors }}
 
 
    		<div >
-  			<table border="1">
+  			<table>
     			{% for field in form.visible_fields %}
       				<tr>
         				<td class="etiqueta">{{ field.label_tag }}</td>
