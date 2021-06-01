@@ -70,9 +70,8 @@ class Tk(models.Model):
     Descriptor = models.CharField(max_length=120, default="", blank=True,)
     id_aor = models.ForeignKey(AOR, on_delete=models.CASCADE,verbose_name= _('Area'), blank=True,null=True)
 
-    tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, validators=[FileExtensionValidator(allowed_extensions=['csv'])])
-
-    Descriptor_tct = models.CharField(max_length=120,default="",null=True, blank=True,)
+    tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, verbose_name= _('Archivo:'), validators=[FileExtensionValidator(allowed_extensions=['csv'])])
+    Descriptor_tct = models.CharField(max_length=120,default="",null=True, blank=True, verbose_name= _('Descriptor:'),)
     fecha_subida_tct = models.DateTimeField(null=True, blank = True, verbose_name= _('Subido El:'), )
     tctvalido= models.BooleanField(default=False, editable = False)
     current_data = models.JSONField(null=True, blank=True,)

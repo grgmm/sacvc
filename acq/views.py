@@ -440,15 +440,10 @@ class Validar_Tct(UpdateView):
         setattr(obj,'tctvalido', False)
         setattr(obj,'Descriptor_tct', '')
         setattr(obj,'fecha_subida_tct',None )
-
       else:
-
         TimestampTCT=fs.get_created_time(obj.tct_archivo.path)
-
         setattr(obj,'fecha_subida_tct',TimestampTCT)
-
       obj.save()
-
       return super(Validar_Tct, self).get(request, **kwargs)
 
 
