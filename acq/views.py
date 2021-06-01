@@ -322,23 +322,41 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'B',
              etiqueta1='lta',)
 
-            Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
-             Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
-             Unidad= 'BLS',
+            Analogico.objects.create(Nombre= instance.Nombre +'_ays',
+             Descriptor='PORCENTAJE DE AGUA Y SEDIMENTO '+ instance.Nombre,
+             Unidad= '%',
              direccion=(qtk-1)*10+9,
              id_Tk=instance,
              direccion_campo= 100+(qtk-1)*10+9,
              TipoVariable= 'C',
-             etiqueta1='TOV',)
+             etiqueta1='AYS',)
 
-            Analogico.objects.create(Nombre= instance.Nombre +'_ays',
-             Descriptor='PORCENTAJE DE AGUA Y SEDIMENTO '+ instance.Nombre,
-             Unidad= '%',
+            Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
+             Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
+             Unidad= 'BLS',
              direccion=(qtk-1)*10+11,
              id_Tk=instance,
              direccion_campo= 100+(qtk-1)*10+11,
              TipoVariable= 'C',
              etiqueta1='TOV',)
+
+            Analogico.objects.create(Nombre= instance.Nombre +'_GSV',
+             Descriptor='VOLUMEN BRUTO ESTANDAR DEL TANQUE '+ instance.Nombre,
+             Unidad= 'BLS',
+             direccion=(qtk-1)*10+13,
+             id_Tk=instance,
+             direccion_campo= 100+(qtk-1)*10+13,
+             TipoVariable= 'C',
+             etiqueta1='GSV',)
+
+            Analogico.objects.create(Nombre= instance.Nombre +'_NSV',
+             Descriptor='VOLUMEN NETO ESTANDAR DEL TANQUE '+ instance.Nombre,
+             Unidad= 'BLS',
+             direccion=(qtk-1)*10+15,
+             id_Tk=instance,
+             direccion_campo= 100+(qtk-1)*10+15,
+             TipoVariable= 'C',
+             etiqueta1='NSV',)
 
 class TkDelete(DeleteView):
     model = Tk
