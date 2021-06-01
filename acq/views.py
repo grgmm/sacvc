@@ -446,7 +446,6 @@ class Validar_Tct(UpdateView):
       obj.save()
       return super(Validar_Tct, self).get(request, **kwargs)
 
-
     def post(self, request, *args, **kwargs):
 
         self.obj = self.get_object()
