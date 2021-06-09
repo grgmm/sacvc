@@ -1,6 +1,6 @@
-{% extends 'acq/base.html' %} 
+{% extends 'acq/base.html' %}
 {% load static %}
-{% block title %}Grupo de tanques{% endblock %} 
+{% block title %}Grupo de tanques{% endblock %}
 {% block content %}
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
 	<div id="ventana">
@@ -9,7 +9,7 @@
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
-			<table id="tablaExterna">	
+			<table id="tablaExterna">
 				<tr>
 					{% for tk in object_list %}
 						<td>
@@ -21,22 +21,24 @@
 								<tr>
 									<br><br><br>
 									<td>
+
+
+
 										<label class="variable">TOV:</label>
-										<p class="valor">VARIABLE1</p>
+
+										<p class="valor">{{TOV}}</p>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<label class="variable">NSV:</label>
-										<p class="valor">VARIABLE2</p>
+										<p class="valor">{{NSV}}</p>
 									</td>
 								</tr>
 							</table>
 						{% cycle '' '' '</td></tr><tr>' %}
 					{% endfor %}
 				</tr>
-			</table>						
+			</table>
 	</div>
 {% endblock %}
-
-
