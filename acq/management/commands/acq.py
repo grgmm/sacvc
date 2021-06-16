@@ -31,7 +31,12 @@ class Command(BaseCommand):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
 
 
-        sock.connect((slaveip, slaveport)) #realiza la conexión
+        try:
+            sock.connect((slaveip, slaveport)) #realiza la conexión
+
+        except:
+             print("Sin conexión...reintentando", sys.exc_info()[0])
+             pass
 
 
         n=2 #100 iteraciones

@@ -63,11 +63,8 @@ class Command(BaseCommand):
                            vb_REG_1=data_fr['Data_Cruda'][jsonindice]['REGISTRO_1']
                            vb_REG_2=data_fr['Data_Cruda'][jsonindice]['REGISTRO_2']
                            vb_timestamp_DC=data_fr['Data_Cruda'][jsonindice]['TIMESTAMP']
-                           #vb_PV=FloatIeee754(int(vb_REG_1),int(vb_REG_2))
                            vb_PV=FloatIeee754(int(vb_REG_2), int(vb_REG_1))
                            print(vb_PV)
-                           #print(vb_PV)
-
 
 
                    #NIVEL MEDIDO CONVIRTIENDO EN DATA TIPO REAL LOS REGISTROS MODBUS PROVENIENTE DEL BUFFER DATA CRUDA
@@ -85,9 +82,12 @@ class Command(BaseCommand):
                                         volumenes=VOLUMENES(nivel_producto, idtk, ays)
                                         print(nivel_producto, volumenes)
                                         #print(nivel_producto, idtk, ays)
-                                        tov=volumenes['TOV']
-                                        gsv=volumenes['NSV']
-                                        nsv=volumenes['NSV']
+                                        try:
+                                            tov=volumenes['TOV']
+                                            gsv=volumenes['NSV']
+                                            nsv=volumenes['NSV']
+                                        except:
+                                            print("Error de parseo", sys.exc_info()[0], "occurred.")
 
 
                                         #print('Calculando TOV........')
