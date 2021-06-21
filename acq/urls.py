@@ -82,7 +82,7 @@ urlpatterns = [
 
     url(r'^data_actual/$', current_data.as_view(), name='current_data'), #LISTADO DE PATIOS DE TANQUES
 
-    url('Valores_Actuales/',views.Valores_Actuales, name='Valores_Actuales'),
+    #url('Valores_Actuales/',views.Valores_Actuales, name='Valores_Actuales'),
 
     url('login/',LoginView.as_view(), name='login'), #Probada con módulo de prueba teste_url_simples
 

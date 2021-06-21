@@ -45,10 +45,18 @@ from django import forms
 
 def actualizar(request):
 
-   with open ('/home/morenomx/solucionesweb/sacvc/datos.json', encoding='utf-8') as data_file: # OJO MEJORAR
-      dataf = json.loads(data_file.read())
-      data_file.close()
-   return JsonResponse(dataf)
+    fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+    ruta_Data=fs.location
+    try:
+          with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'r') as data_file:
+               dataf = json.loads(data_file.read())
+
+    except:
+              print("Error inesperado:", sys.exc_info()[0])
+
+
+
+    return JsonResponse(dataf)
 
 class current_data(ListView):
   model = Tk
@@ -322,23 +330,41 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'B',
              etiqueta1='lta',)
 
-            Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
-             Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
-             Unidad= 'BLS',
+            Analogico.objects.create(Nombre= instance.Nombre +'_ays',
+             Descriptor='PORCENTAJE DE AGUA Y SEDIMENTO '+ instance.Nombre,
+             Unidad= '%',
              direccion=(qtk-1)*10+9,
              id_Tk=instance,
              direccion_campo= 100+(qtk-1)*10+9,
              TipoVariable= 'C',
-             etiqueta1='TOV',)
+             etiqueta1='AYS',)
 
-            Analogico.objects.create(Nombre= instance.Nombre +'_ays',
-             Descriptor='PORCENTAJE DE AGUA Y SEDIMENTO '+ instance.Nombre,
-             Unidad= '%',
+            Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
+             Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
+             Unidad= 'BLS',
              direccion=(qtk-1)*10+11,
              id_Tk=instance,
              direccion_campo= 100+(qtk-1)*10+11,
              TipoVariable= 'C',
              etiqueta1='TOV',)
+
+            Analogico.objects.create(Nombre= instance.Nombre +'_GSV',
+             Descriptor='VOLUMEN BRUTO ESTANDAR DEL TANQUE '+ instance.Nombre,
+             Unidad= 'BLS',
+             direccion=(qtk-1)*10+13,
+             id_Tk=instance,
+             direccion_campo= 100+(qtk-1)*10+13,
+             TipoVariable= 'C',
+             etiqueta1='GSV',)
+
+            Analogico.objects.create(Nombre= instance.Nombre +'_NSV',
+             Descriptor='VOLUMEN NETO ESTANDAR DEL TANQUE '+ instance.Nombre,
+             Unidad= 'BLS',
+             direccion=(qtk-1)*10+15,
+             id_Tk=instance,
+             direccion_campo= 100+(qtk-1)*10+15,
+             TipoVariable= 'C',
+             etiqueta1='NSV',)
 
 class TkDelete(DeleteView):
     model = Tk
@@ -826,6 +852,8 @@ class usuariodetail(DetailView):
             for aor_inst in qsaor:
                 aoruser.append(aor_inst.Nombre)
                 context['aoruser']=aoruser
+
+
             #print(patiosuser)
 
             return context
@@ -1069,6 +1097,7 @@ class grupo_tk(LoginRequiredMixin, ListView):
   login_url = '/sacvc/Menu'
   redirect_field_name = '/sacvc/logout'
 
+
   def get_queryset(self, *args, **kwargs):
       usr_ins = UserProfile.objects.get(user = self.request.user)
 
@@ -1083,8 +1112,42 @@ class grupo_tk(LoginRequiredMixin, ListView):
       filtro=qs.filter(id_aor__in=aoruser)
       return filtro
 
-        #print(qs.filter(id_aor__exact=useraor))
-      #p=UserProfile.objects.get(user=self.request.user)
+  def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+      ruta_Data=fs.location
+      data_tk=''
+      if self.get_queryset:
+          filtro_tks=self.get_queryset()
+
+          try:
+              with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'r') as data_file:
+
+                  data_tk = json.loads(data_file.read())
+                  print(data_tk['IDTK'])
+
+
+          except:
+                  print("Error inesperado:", sys.exc_info()[0])
+
+
+
+          for tk_instance in filtro_tks:
+              print(tk_instance.Nombre)
+              #context['TOV'] = 300
+              #context['NSV'] = 280
+              if (tk_instance.pk == data_tk['IDTK']): #OJO QUEDE AQUI
+                print('paso')
+                context['IDTK'] =data_tk[0]
+                context['TOV']=data_tk['TOV']
+                context['NSV']=data_tk['NSV']
+          return context
+
+
+
+      else:
+
+        return redirect('/sacvc/logout')
 
 
 class detalle_tk(LoginRequiredMixin, DetailView):

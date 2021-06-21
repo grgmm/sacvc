@@ -26,12 +26,17 @@ class Command(BaseCommand):
         #Mensajes de encabezado en consola Python informativo.
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
         slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix.
-        slaveip= '192.168.1.34' #ip del esclavo para modbus TCP
+        slaveip= '192.168.1.53  ' #ip del esclavo para modbus TCP
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
 
 
-        sock.connect((slaveip, slaveport)) #realiza la conexión
+        try:
+            sock.connect((slaveip, slaveport)) #realiza la conexión
+
+        except:
+             print("Sin conexión...reintentando", sys.exc_info()[0])
+             pass
 
 
         n=2 #100 iteraciones
@@ -47,6 +52,8 @@ class Command(BaseCommand):
         k=0
         TKS={}
         Parametro_tk= ''
+        Pv0=0    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
+        Pv1=0
 
         while i<=n:
             if not Tk.objects.exists():
@@ -56,45 +63,37 @@ class Command(BaseCommand):
               for tk in Tk.objects.iterator(): #ITERNDO EN TANQUES EXISTENTES.
                 Data_Cruda={'Data_Cruda':[] }
                 for tag in Tag.objects.filter(id_Tk=tk.pk).iterator():#RECORRIENDO LOS TAGS DE CADA TANQUE
-                    Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
-                    Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
+                    #Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
+                    #Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
                     idtag = tag.pk  #Del mdelo Tag
-                    tag_addres = int(tag.direccion_campo)  #Del mdelo Tag
+                    tag_addres = int(tag.direccion_campo)-1#Del mdelo Tag
                     Current_Value=[idtag,Pv0,Pv1] #DATA PARA TRASNFERIR
+
                    #ESCRIBIR
-                    message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
+                    #message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
                     #Se construye el msj de escritura en el esclavo(SIMULACION)
-                    escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj al esclavo en el socket abierto.
+                    #escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj al esclavo en el socket abierto.
+
+
                     #Leer
-                    message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = tag_addres  , quantity= 3)
+                    message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = tag_addres  , quantity= 2)
                     #Construcción del msj de lectura desde el esclavo partiendo de la dirección mb configurada en el modelo Tag
                     leer = tcp.send_message(message2, sock)
                     #Se envia comando de lectura en el esclavo en el socket abierto.
                     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                    tag_instance =  Tag.objects.get(pk=leer[0]) #id extraido del paquete transferido
+                    tag_instance =  Tag.objects.get(pk=idtag) #id extraido del paquete transferido
 
 
-                    Data_Cruda_Temp={'IDTAG':leer[0],
-                    'REGISTRO_1':leer[1],
-                    'REGISTRO_2':leer[2],
+                    Data_Cruda_Temp={'IDTAG':idtag,
+                    'REGISTRO_1':leer[0],
+                    'REGISTRO_2':leer[1],
                     'TIMESTAMP': timestamp,
                     'INDEXADO':False
                     }
 
                     Data_Cruda['Data_Cruda'].append(Data_Cruda_Temp)
-                    print(Data_Cruda)
+                    #print(Data_Cruda)
                     #datacruda=json.dumps(Data_Cruda)
-
-                    tag_leido=Tag.objects.get(pk=leer[0])
-                    Prmtr_tk=tag_leido.etiqueta1
-
-                    prmtr_temp={"IDTK" +str(tag_leido.id_Tk.pk):str(tag_leido.id_Tk),
-                    "ID_" +Prmtr_tk :str(tag_leido.pk),
-                    "REGISTRO_1_" +Prmtr_tk:str(leer[1]),
-                    "REGISTRO_2_" +Prmtr_tk:str(leer[2]),
-                    "TIMESTAMP_" +Prmtr_tk: timestamp  }
-
-                    TKS=prmtr_temp #ojo
 
 
                 #tk = {"IDTK":tk_instance.pk,IDTAG":str(tag_instance.pk),"INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":0.000, "UNIDAD":(Analogico_instance.Unidad),"PARAMETRO_TK":tag_instance.etiqueta1, "INDEXADO": 0}
@@ -109,20 +108,20 @@ class Command(BaseCommand):
                 except:
                      print("Error inesperado:", sys.exc_info()[0])
 
-                try:
+                #try:
 
-                    with fs.open(ruta_Data+'/Valores_Tk.json', mode= 'w') as file2:
+                    #with fs.open(ruta_Data+'/Valores_Tk.json', mode= 'w') as file2:
 
-                            file2.write(json.dumps(Data_Cruda)) #Data en cache
-
-                            print(TKS)
+                            #file2.write(json.dumps(Data_Cruda)) #Data en cache
 
 
-                            tk.current_data = Data_Cruda #A Base de Datos
 
-                            tk.save()
-                except:
-                     print("Error inesperado:", sys.exc_info()[0])
+                tk.current_data = Data_Cruda #A Base de Datos
+
+                tk.save()
+                print('corriendo')
+                #except:
+                #print("Error inesperado:", sys.exc_info()[0])
 
 
         sock.close() #cierra la conexión
