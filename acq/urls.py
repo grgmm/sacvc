@@ -39,7 +39,7 @@ from .views import (
     Aor_del,
     Aor_add,
     Aor_user_edit,
-    detalle_tk,  )
+    detalle_tk,)
 
 app_name = 'sacvc'
 urlpatterns = [
@@ -75,6 +75,8 @@ urlpatterns = [
     url(r'^edit_tk/(?P<pk>\d+)$', TkUpdate.as_view(), name='edit_tk'), #Probada con módulo de prueba teste_url_complejas
 
     url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'), #Probada con módulo de prueba teste_url_complejas
+
+    #url(r'^validar_tct/(?P<pk>\d+)$', validar_tct_form, name='validar_tct'),
 
     url(r'^validar_tct/(?P<pk>\d+)$', Validar_Tct.as_view(), name='validar_tct'),
 

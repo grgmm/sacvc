@@ -425,6 +425,7 @@ class TkUpdate(UpdateView):
       else:
           return redirect('/sacvc/logout')
 
+
 class Validar_Tct(UpdateView):
     model = Tk
     template_name = 'acq/detail_tk/validar_tct.html'
