@@ -22,17 +22,15 @@ class Command(BaseCommand):
        iterando=0
        temperatura_producto=0.0
        nivel_producto=0.0
-       agua_sedimento=0.0
        ruta_Data=fs.location   #RUTA DE BUFFER
        idtag_lt=0
        timestamp_lt=''
        tov=0.00
-       Data_Basica_lt={}
        Data_Calculada_tov={}
        Data_Calculada={}
        instance_tov={}
        Presion_tk=0.0
-       ays=0.0
+       ays=10.0
        while i<=n:
 
 
@@ -47,8 +45,11 @@ class Command(BaseCommand):
 
 #INSTANCIAR EL TAG CALCULANDO SU VALOR REAL IEEE754 SOLO SI ES ANALOGICO
                for jsonindice in range(tagcount):
+                    #time.sleep(5)
 
                     idtag_DC=Tag.objects.get(pk=data_fr['Data_Cruda'][jsonindice]['IDTAG']) #id tag data cruda
+                    idtk_DC=idtag_DC.id_Tk
+
 
                     if Analogico.objects.filter(pk=idtag_DC).exists():
 
@@ -64,7 +65,6 @@ class Command(BaseCommand):
                            vb_REG_2=data_fr['Data_Cruda'][jsonindice]['REGISTRO_2']
                            vb_timestamp_DC=data_fr['Data_Cruda'][jsonindice]['TIMESTAMP']
                            vb_PV=FloatIeee754(int(vb_REG_2), int(vb_REG_1))
-                           print(vb_PV)
 
 
                    #NIVEL MEDIDO CONVIRTIENDO EN DATA TIPO REAL LOS REGISTROS MODBUS PROVENIENTE DEL BUFFER DATA CRUDA
@@ -74,18 +74,47 @@ class Command(BaseCommand):
                                     nivel_producto=vb_PV
                                     idtk=idtag_DC.id_Tk
 
+                                    volumenes=VOLUMENES(nivel_producto, idtk, ays)
+                                    print(volumenes, nivel_producto)
 
 
                                     if  (nivel_producto >= Analogico_DC.ValorMinimo and  nivel_producto<=Analogico_DC.ValorMaximo):
                                     #if nivel_producto in rango_valido_DC:  OJO REVISAR NO ESTA FUNCIONANDO
 
-                                        volumenes=VOLUMENES(nivel_producto, idtk, ays)
-                                        print(nivel_producto, volumenes)
                                         #print(nivel_producto, idtk, ays)
+
                                         try:
+                                            volumenes=VOLUMENES(nivel_producto, idtk, ays)
+                                            print(volumenes, nivel_producto)
                                             tov=volumenes['TOV']
                                             gsv=volumenes['NSV']
                                             nsv=volumenes['NSV']
+
+                                            instance_tov = Tag.objects.get(id_Tk= idtk, etiqueta1='TOV')
+                                            timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                                            instance_gsv = Tag.objects.get(id_Tk= idtk, etiqueta1='GSV')
+                                            timestamp_gsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                                            instance_nsv = Tag.objects.get(id_Tk= idtk, etiqueta1='NSV')
+                                            timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+
+                                            Data_Calculada  = {"IDTK":idtk_DC.pk,
+                                                       "TANQUE":idtk_DC.Nombre,
+                                                       "IDTOV":instance_tov.pk,
+                                                       "IDNSV":instance_nsv.pk,
+                                                       "IDGSV":instance_gsv.pk,
+                                                       "TOV": str(tov),
+                                                       "GSV": str(gsv),
+                                                       "NSV": str(nsv),
+                                                       "TIMESTAMP_TOV": timestamp_tov,
+                                                       "TIMESTAMP_GSV": timestamp_gsv,
+                                                       "TIMESTAMP_NSV": timestamp_nsv,
+                                                       "LT":  str(nivel_producto),    #basica
+                                                       "PT":  str(Presion_tk),      #basica
+                                                       "TT":  str(temperatura_producto),  #basica
+                                                       "AYS": str(ays),  #basica
+                                                       "INDEXADO": 0,
+                                                       }
+
                                         except:
                                             print("Error de parseo", sys.exc_info()[0], "occurred.")
 
@@ -97,28 +126,7 @@ class Command(BaseCommand):
                                         #print(nivel_producto)
                                         #print(tov)
                                         #print(nsv)
-                                        instance_tov = Tag.objects.get(id_Tk= idtk, etiqueta1='TOV')
-                                        timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                                        instance_gsv = Tag.objects.get(id_Tk= idtk, etiqueta1='GSV')
-                                        timestamp_gsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                                        instance_nsv = Tag.objects.get(id_Tk= idtk, etiqueta1='NSV')
-                                        timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
 
-                                        Data_Calculada  = {"IDTOV":str(instance_tov.pk),
-                                                   "IDNSV":str(instance_nsv.pk),
-                                                   "TOV": tov,
-                                                   "GSV": gsv,
-                                                   "NSV": nsv,
-                                                   "TIMESTAMP_TOV": timestamp_tov,
-                                                   "TIMESTAMP_GSV": timestamp_gsv,
-                                                   "TIMESTAMP_NSV": timestamp_nsv,
-                                                   "LT": nivel_producto,    #basica
-                                                   "PT":  Presion_tk,      #basica
-                                                   "TT":  temperatura_producto,  #basica
-                                                   "AYS":  agua_sedimento,  #basica
-                                                   "IDTK": idtk.pk,
-                                                   "INDEXADO": 0,
-                                                   }
                                     else:
                                         print('VARIABLE BASICA FUERA DE RANGOS........')
 
@@ -144,7 +152,7 @@ class Command(BaseCommand):
 
                            if idtag_DC.etiqueta1=='ays':
                                       idtag_ays=idtag_DC
-                                      agua_sedimento=vb_PV
+                                      ays=vb_PV
                                       idtk=idtag_DC.id_Tk
 
 
@@ -154,10 +162,6 @@ class Command(BaseCommand):
 
                                #GENERANDO BUEFFERS DE DATOS BASICOS Y DATOS CALCULADOS DE TK
 
-
-
-                    Data_Basica_lt={
-                                 }
 
 
 

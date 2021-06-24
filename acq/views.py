@@ -41,7 +41,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
 
 
-#[''] {})
+#[''] {}
 
 def actualizar(request):
 
@@ -1115,15 +1115,14 @@ class grupo_tk(LoginRequiredMixin, ListView):
       context = super().get_context_data(**kwargs)
       fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
       ruta_Data=fs.location
-      data_tk=''
       if self.get_queryset:
           filtro_tks=self.get_queryset()
 
           try:
               with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'r') as data_file:
 
-                  data_tk = json.loads(data_file.read())
-                  print(data_tk['IDTK'])
+                  data = json.loads(data_file.read())
+                  #print(data)
 
 
           except:
@@ -1132,14 +1131,19 @@ class grupo_tk(LoginRequiredMixin, ListView):
 
 
           for tk_instance in filtro_tks:
-              print(tk_instance.Nombre)
               #context['TOV'] = 300
               #context['NSV'] = 280
-              if (tk_instance.pk == data_tk['IDTK']): #OJO QUEDE AQUI
-                print('paso')
-                context['IDTK'] =data_tk[0]
-                context['TOV']=data_tk['TOV']
-                context['NSV']=data_tk['NSV']
+              print('iterando')
+              print(type(tk_instance.pk))
+              print(type(data['IDTK']))
+              if (tk_instance.pk == int(data['IDTK'])):
+                  print('paso')
+                  context = {"Data":[{"tanque":data["IDTK"], "Data_tk":data}]
+                            }
+
+
+                  print(context)
+
           return context
 
 

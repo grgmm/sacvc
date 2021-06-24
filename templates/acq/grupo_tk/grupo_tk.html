@@ -11,10 +11,14 @@
 			</p>
 			<table id="tablaExterna">
 				<tr>
-					{% for tk in object_list %}
+
+					{% for tk in Data %}
+
 						<td>
 							<a href=" ">
-								<p id="tanque">{{ tk.Nombre }}</p>
+								<p id="tanque">{{tk.Data_tk.TANQUE}}<nav>
+
+								</nav></p>
 								<img class="img" src="{% static "recursos/imagenes/tanque.svg" %}">
 							</a>
 							<table id="tablaInterna">
@@ -22,22 +26,21 @@
 									<br><br><br>
 									<td>
 
-
-
 										<label class="variable">TOV:</label>
 
-										<p class="valor">{{TOV}}</p>
+										<p class="valor">{{tk.Data_tk.TOV}}</p>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<label class="variable">NSV:</label>
-										<p class="valor">{{NSV}}</p>
+										<p class="valor">{{tk.Data_tk.NSV}}</p>
 									</td>
 								</tr>
 							</table>
 						{% cycle '' '' '</td></tr><tr>' %}
 					{% endfor %}
+
 				</tr>
 			</table>
 	</div>
