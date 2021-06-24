@@ -87,7 +87,6 @@ label[for=encabezado] {
 	font-size: 14px;
 	font-weight: bold;
 	color: white;
-	color: white;
 	background-color: #117a8b;
 	border-radius: 0.4rem;
 }
@@ -152,3 +151,38 @@ label[for=encabezado] {
 	background-image: -moz-linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
 	background-image: linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
 }
+
+/*barra de progreso*/
+
+#contenedor_barra,#barra{	
+  	height:2rem;
+	border-style:solid;
+	border-width:1px;
+	border-radius: 1rem;
+	border-color:white;	
+}
+
+#contenedor_barra{
+	/*posicion respecto a la esquina inferior derecha  del contenedor*/
+	position:absolute;
+	bottom: 21%;
+	width: 50%;
+	left:50%;
+  	transform: translateX(-50%); 
+}
+
+#barra{
+	width: 0%;	/*Progreso inicial alabrir pagina*/
+  	height: 2rem;
+	background-color: #117a8b;	
+  	text-align: center; /* To center it horizontally (if you want) */
+  	line-height: 2rem; /* To center it vertically */
+  	color:black; /*color del texto*/
+}
+
+
+
+.not-visible {
+    display: none;
+}
+
