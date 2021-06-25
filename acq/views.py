@@ -41,7 +41,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
 
 
-#[''] {}
+#[''] {}   «»»
 
 def actualizar(request):
 
@@ -1112,7 +1112,7 @@ class grupo_tk(LoginRequiredMixin, ListView):
       filtro=qs.filter(id_aor__in=aoruser)
       return filtro
 
-  def get_context_data(self, **kwargs):
+      ''' def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
       ruta_Data=fs.location
@@ -1152,6 +1152,7 @@ class grupo_tk(LoginRequiredMixin, ListView):
       else:
 
         return redirect('/sacvc/logout')
+      '''
 
 
 class detalle_tk(LoginRequiredMixin, DetailView):

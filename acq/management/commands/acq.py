@@ -116,10 +116,10 @@ class Command(BaseCommand):
 
 
 
-                tk.current_data = Data_Cruda #A Base de Datos
+                #tk.current_data = Data_Cruda #A Base de Datos
 
-                tk.save()
-                print('corriendo')
+                #tk.save()
+                print('Adquisción de Data Modbus Activa (Running)')
                 #except:
                 #print("Error inesperado:", sys.exc_info()[0])
 

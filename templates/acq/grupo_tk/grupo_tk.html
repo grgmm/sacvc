@@ -12,36 +12,43 @@
 			<table id="tablaExterna">
 				<tr>
 
-					{% for tk in Data %}
+					{% for tk in object_list %}
 
-						<td>
-							<a href=" ">
-								<p id="tanque">{{tk.Data_tk.TANQUE}}<nav>
+					<td>
+						<a href=" ">
+							<p id="tanque">{{tk.Nombre}}<nav>
 
-								</nav></p>
-								<img class="img" src="{% static "recursos/imagenes/tanque.svg" %}">
-							</a>
-							<table id="tablaInterna">
-								<tr>
-									<br><br><br>
-									<td>
+							</nav></p>
+							<img class="img" src="{% static "recursos/imagenes/tanque.svg" %}">
+						</a>
+						<table id="tablaInterna">
+							<tr>
+								<br><br>
+								<td>
 
-										<label class="variable">TOV:</label>
+									<label class="variable">TOV:</label>
 
-										<p class="valor">{{tk.Data_tk.TOV}}</p>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label class="variable">NSV:</label>
-										<p class="valor">{{tk.Data_tk.NSV}}</p>
-									</td>
-								</tr>
-							</table>
-						{% cycle '' '' '</td></tr><tr>' %}
-					{% endfor %}
+									<p class="valor">{{tk.current_data.TOV}}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label class="variable">NSV:</label>
+									<p class="valor">{{tk.current_data.TOV}}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label class="variable">LT:</label>
+									<p class="valor">{{tk.current_data.LT}}</p>
+								</td>
+							</tr>
 
-				</tr>
-			</table>
-	</div>
+						</table>
+					{% cycle '' '' '</td></tr><tr>' %}
+				{% endfor %}
+
+			</tr>
+		</table>
+</div>
 {% endblock %}

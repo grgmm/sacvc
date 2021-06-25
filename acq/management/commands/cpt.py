@@ -178,3 +178,8 @@ class Command(BaseCommand):
                        file2.write(json.dumps(Data_Calculada))
                except:
                     print("Error inesperado:", sys.exc_info()[0])
+
+               tk=Tk.objects.get(pk=idtag_DC.id_Tk.pk)
+               tk.current_data  = Data_Calculada #A Base de Datos
+
+               tk.save()
