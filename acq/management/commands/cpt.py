@@ -74,6 +74,7 @@ class Command(BaseCommand):
                                   idtag_pt=idtag_DC
                                   Presion_tk=vb_PV
                                   idtk=idtag_DC.id_Tk
+                                  Data_Calculada['PT']=Presion_tk
 
 
 
@@ -81,33 +82,38 @@ class Command(BaseCommand):
                                   idtag_tt=idtag_DC
                                   temperatura_producto=vb_PV
                                   idtk=idtag_DC.id_Tk
+                                  Data_Calculada['TT']=temperatura_producto
+
 
 
                            if idtag_DC.etiqueta1=='lta':
                                   idtag_lta=idtag_DC
                                   nivel_agua_libre=vb_PV
                                   idtk=idtag_DC.id_Tk
+                                  Data_Calculada['LTA']=nivel_agua_libre
 
 
                            if idtag_DC.etiqueta1=='ays':
                                     idtag_ays=idtag_DC
                                     ays=vb_PV
                                     idtk=idtag_DC.id_Tk
+                                    Data_Calculada['AYS']=ays
 
 
                            if idtag_DC.etiqueta1=='lt':
                                     idtag_lt=idtag_DC
                                     nivel_producto=vb_PV
                                     idtk=idtag_DC.id_Tk
+                                    Data_Calculada['LT']=nivel_producto
 
-                                    volumenes=VOLUMENES(nivel_producto, idtk, ays)
+
 
 
                                     if  (nivel_producto >= Analogico_DC.ValorMinimo and  nivel_producto<=Analogico_DC.ValorMaximo):
 
 
                                         try:
-                                            time.sleep(3)
+                                            time.sleep(2)
                                             volumenes=VOLUMENES(nivel_producto, idtk, ays)
                                             tov=volumenes['TOV']
                                             gsv=volumenes['NSV']
@@ -130,15 +136,13 @@ class Command(BaseCommand):
                                                        "NSV": str(nsv),
                                                        "TIMESTAMP_TOV": timestamp_tov,
                                                        "TIMESTAMP_GSV": timestamp_gsv,
-                                                       "TIMESTAMP_NSV": timestamp_nsv,
-                                                       "LT":  str(nivel_producto),    #basica
-                                                       "PT":  str(Tag.objects.get(etiqueta1='pt'),      #basica
-                                                       "TT":  str(temperatura_producto),  #basica
-                                                       "AYS": str(ays),  #basica
+                                                       "TIMESTAMP_NSV": timestamp_nsv,                                                         #basica
                                                        "INDEXADO": 0,
                                                        }
+                                            #print(Data_Calculada)
                                             Data_tanques_temp={idtag_DC.id_Tk.pk:Data_Calculada}
                                             Data_tanques.update(Data_tanques_temp)
+                                            print(Data_tanques)
 
 
 
