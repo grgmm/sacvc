@@ -7,6 +7,13 @@ html, body {
 	background: linear-gradient(#334d50, #cbcaa5) fixed;
 }
 
+#tanque{
+	color: white;
+	margin-left: 2rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
 #ventana {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
@@ -19,12 +26,6 @@ html, body {
 	border-radius: 10px;
 }
 
-/*Dimensiones y posicion de la imagen*/
-.img {
-	float: left;
-	margin-left:2rem; /*centra contenido de celdas*/
-	max-height: 12rem;
-}
 
 #tablaExterna {
 	margin-top: 40px;
@@ -33,37 +34,25 @@ html, body {
 	margin: 0 auto;
 	margin-bottom: 2rem;
 }
-/*
+
 tr td{
-	border: solid 2px;
+	/*border: solid 1px;*/
 }
-*/
+
 label {
 	color: white;
 	display: inline-block;
-	border-radius: 10px;
-	font-size: 1.5rem;
+}
+
+label, .nsv, .tov, #tanque{
 	font-weight: bold;
+	font-size: 1.4rem;
 	/*background-color: white;*/
 }
 
-label, .valor{
-	margin-left: 5%;
-	font-weight: bold;
-	font-size: 1.4rem;
+label, .nsv, .tov{
+	margin: 5% 15%;
 	
-}
-
-.valor{
-	margin-bottom: 3%;
-}
-
-#tanque {
-	color: white;
-	font-size: 1.5rem;
-	font-weight: bold;
-	margin-top:2.5rem; 
-	margin-left: 2rem;
 }
 
 label[for=encabezado] {
@@ -76,9 +65,64 @@ label[for=encabezado] {
 	margin-left: 5%;
 	margin-bottom: 1%;
 	text-align: center;
-	font-size: 24px;
-	font-weight: bold;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	text-align: center;
 }
+
+/*barra de progreso*/
+
+.contenedor{
+	margin-left:2rem;
+	float:left;
+	height: 200px; /*Ajusta el tamaño del contenedor y la imagen*/
+	width:200px;	
+	padding-left: 1rem;
+	
+	/*
+	border-style:solid;
+	border-width:1px;
+	border-radius: 0.4rem;	
+	border-color:black;
+	*/
+}
+
+#contenedor_barra, #barra{
+	height: 18px;
+	border-style:solid;
+	border-width:1px;
+	border-radius: 0.4rem;	
+	border-color:black;	
+}
+
+img{
+	float:right;
+	height: 100%;
+	width: auto;
+}
+
+#contenedor_barra{
+	position: relative;
+	top: 45%;
+	left:-45%;
+	width: 80%;
+	transform: rotate(-90deg);
+}
+
+#barra{
+	width: 0%;	/*Progreso inicial alabrir pagina*/
+  	background-color: black; 
+  	text-align: center; /* To center it horizontally (if you want) */
+  	line-height: 18px; /* To center it vertically */
+  	color: white; /*color del texto*/
+  	font-weight: bold;	
+  	font-size: 15px;
+}
+
+#mitexto{
+}
+
+.not-visible {
+    display: none;
+}
+

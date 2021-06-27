@@ -3,8 +3,13 @@
 {% block title %}Grupo de tanques{% endblock %}
 {% block content %}
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
+ 	<!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+   <script src={% static 'js/barra_tanque.js' %} defer></script>
+   <script src={% static 'js/refrescar.js' %}></script>
+   
 	<div id="ventana">
-			{% csrf_token %}
+			{% csrf_token %} 
 			<p>
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
@@ -13,26 +18,28 @@
 				<tr>
 					{% for tk in object_list %}
 						<td>
-							<a href=" ">
+							<a href=" " onclick="move()" type="button" >
 								<p id="tanque">{{ tk.Nombre }}</p>
-								<img class="img" src="{% static "recursos/imagenes/tanque.svg" %}">
+								
+								<div class="contenedor"> 
+									<img src="{% static "recursos/imagenes/tanque.png" %}">
+									<div id="contenedor_barra">
+										<div id="barra">0%</div>
+									</div>
+								</div>
 							</a>
 							<table id="tablaInterna">
 								<tr>
 									<br><br><br>
 									<td>
-
-
-
 										<label class="variable">TOV:</label>
-
-										<p class="valor">{{TOV}}</p>
+										<p class="tov">{{TOV}}</p>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<label class="variable">NSV:</label>
-										<p class="valor">{{NSV}}</p>
+										<p class="nsv">{{NSV}}</p>
 									</td>
 								</tr>
 							</table>
@@ -40,5 +47,6 @@
 					{% endfor %}
 				</tr>
 			</table>
+							<button onclick="move()">Click Me</button> 
 	</div>
 {% endblock %}

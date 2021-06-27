@@ -25,7 +25,7 @@ class Command(BaseCommand):
         print('\n' '\n' "Dirección los registros en los Esclavo Modbus a partir del 101 ")
         #Mensajes de encabezado en consola Python informativo.
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
-        slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix.
+        slaveport=502 #puertos validos por encima de 1024 en sistemas Linux Android Unix.
         slaveip= '192.168.1.53  ' #ip del esclavo para modbus TCP
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
@@ -76,7 +76,7 @@ class Command(BaseCommand):
 
 
                     #Leer
-                    message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = tag_addres  , quantity= 2)
+                    message2 = tcp.read_holding_registers(slave_id =slaveid, starting_address = tag_addres, quantity= 2)
                     #Construcción del msj de lectura desde el esclavo partiendo de la dirección mb configurada en el modelo Tag
                     leer = tcp.send_message(message2, sock)
                     #Se envia comando de lectura en el esclavo en el socket abierto.
