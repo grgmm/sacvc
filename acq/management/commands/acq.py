@@ -38,6 +38,7 @@ class Command(BaseCommand):
              print("Sin conexión...reintentando", sys.exc_info()[0])
              pass
 
+        print('Adquisción de Data Modbus Activa (Running)')
 
         n=2 #100 iteraciones
 
@@ -119,7 +120,6 @@ class Command(BaseCommand):
                 #tk.current_data = Data_Cruda #A Base de Datos
 
                 #tk.save()
-                print('Adquisción de Data Modbus Activa (Running)')
                 #except:
                 #print("Error inesperado:", sys.exc_info()[0])
 

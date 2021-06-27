@@ -10,21 +10,13 @@ import time
 
 def FloatIeee754(registro1,registro2):
 
-#def FloatIeee754(registro1,registro2):
-        print
+        #print
 
         if registro1 < 0:
-            #print('reg1 antes', registro1)
             registro1=(65535+registro1)+1
-            #print('reg2 despues', registro1)
 
         if registro2 < 0:
-            #print('reg2 antes', registro2)
             registro2=(65535+registro2)+1
-            #print('reg2 despues', registro2)
-
-
-        print(registro1, registro2)
 
 
 
