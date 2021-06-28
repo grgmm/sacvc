@@ -24,9 +24,9 @@ class Command(BaseCommand):
         print('\n' '\n' "Id del Esclavo 1 Modbus 11")
         print('\n' '\n' "Dirección los registros en los Esclavo Modbus a partir del 101 ")
         #Mensajes de encabezado en consola Python informativo.
-        slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
+        slaveid= 12 #ide del esclavo 0-247 segun Modbus doc
         slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix.
-        slaveip= '192.168.1.53  ' #ip del esclavo para modbus TCP
+        slaveip= '192.168.1.40' #ip del esclavo para modbus TCP
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
 

@@ -34,6 +34,25 @@ class Command(BaseCommand):
        Data_tanques={}
        Data_tanques_temp={}
        Data_Cruda={'Data_Cruda':[] }
+       instance_tov = 0
+       instance_nsv = 0
+       instance_gsv = 0
+       idtag_pt= 0
+       idtag_tt= 0
+       idtag_lta= 0
+       idtag_ays= 0
+       idtag_lt= 0
+       tov= 0
+       gsv= 0
+       nsv= 0
+       nivel_agua_libre= ''
+       timestamp_pt = ''
+       timestamp_tt = ''
+       timestamp_lta = ''
+       timestamp_ays = ''
+       timestamp_tov = ''
+       timestamp_gsv = ''
+       timestamp_nsv = ''
 
        print('MÓDULO DE CALCULO DE VOLUMENES ACTIVO, REVISAR SALIDA EN: /Data/Buffer_Datos_Calculados.json' )
 
@@ -51,125 +70,153 @@ class Command(BaseCommand):
 
 
 #INSTANCIAR EL TAG CALCULANDO SU VALOR REAL IEEE754 SOLO SI ES ANALOGICO
-               for jsonindice in range(tagcount):
+               for recorrido in range(tagcount):
 
-                    idtag_DC=Tag.objects.get(pk=data_fr['Data_Cruda'][jsonindice]['IDTAG']) #id tag data cruda
-                    idtk_DC=idtag_DC.id_Tk
+                    idtag_DC = Tag.objects.get(pk=data_fr['Data_Cruda'][recorrido]['IDTAG']) #id tag data cruda
+                    vb_REG_1=data_fr['Data_Cruda'][recorrido]['REGISTRO_1']
+                    vb_REG_2=data_fr['Data_Cruda'][recorrido]['REGISTRO_2']
+                    vb_timestamp_DC=data_fr['Data_Cruda'][recorrido]['TIMESTAMP']
+                    vb_PV=FloatIeee754(int(vb_REG_2), int(vb_REG_1))
 
+                    idtk = idtag_DC.id_Tk
 
-                    if Analogico.objects.filter(pk=idtag_DC).exists():
+                    #Tags= Analogico.objects.all()
+                    #tag_ins=Tags.filter(pk__exact=idtag_DC)
+                    tag_ins = Analogico.objects.get(pk=idtag_DC.pk)
 
-                           Analogico_DC =  Analogico.objects.get(pk=idtag_DC) #INSTANCIANDO LOS RANGOS DEL TAG
+                    print(tag_ins.etiqueta1)
+                    if (tag_ins.etiqueta1=='pt'):
 
-
-
-                           vb_REG_1=data_fr['Data_Cruda'][jsonindice]['REGISTRO_1']
-                           vb_REG_2=data_fr['Data_Cruda'][jsonindice]['REGISTRO_2']
-                           vb_timestamp_DC=data_fr['Data_Cruda'][jsonindice]['TIMESTAMP']
-                           vb_PV=FloatIeee754(int(vb_REG_2), int(vb_REG_1))
-
-
-                   #NIVEL MEDIDO CONVIRTIENDO EN DATA TIPO REAL LOS REGISTROS MODBUS PROVENIENTE DEL BUFFER DATA CRUDA
-                           if idtag_DC.etiqueta1=='pt':
-                                  idtag_pt=idtag_DC
-                                  Presion_tk=vb_PV
-                                  idtk=idtag_DC.id_Tk
-                                  Data_Calculada['PT']=Presion_tk
-
-
-
-                           if idtag_DC.etiqueta1=='tt':
-                                  idtag_tt=idtag_DC
-                                  temperatura_producto=vb_PV
-                                  idtk=idtag_DC.id_Tk
-                                  Data_Calculada['TT']=temperatura_producto
-
-
-
-                           if idtag_DC.etiqueta1=='lta':
-                                  idtag_lta=idtag_DC
-                                  nivel_agua_libre=vb_PV
-                                  idtk=idtag_DC.id_Tk
-                                  Data_Calculada['LTA']=nivel_agua_libre
-
-
-                           if idtag_DC.etiqueta1=='ays':
-                                    idtag_ays=idtag_DC
-                                    ays=vb_PV
-                                    idtk=idtag_DC.id_Tk
-                                    Data_Calculada['AYS']=ays
-
-
-                           if idtag_DC.etiqueta1=='lt':
-                                    idtag_lt=idtag_DC
-                                    nivel_producto=vb_PV
-                                    idtk=idtag_DC.id_Tk
-                                    Data_Calculada['LT']=nivel_producto
+                         Presion_tk = vb_PV
+                         idtag_pt = tag_ins.pk
+                         timestam_pt = vb_timestamp_DC
 
 
 
 
-                                    if  (nivel_producto >= Analogico_DC.ValorMinimo and  nivel_producto<=Analogico_DC.ValorMaximo):
 
 
-                                        try:
-                                            time.sleep(2)
-                                            volumenes=VOLUMENES(nivel_producto, idtk, ays)
-                                            tov=volumenes['TOV']
-                                            gsv=volumenes['NSV']
-                                            nsv=volumenes['NSV']
+                    if (tag_ins.etiqueta1=='tt'):
 
-                                            instance_tov = Tag.objects.get(id_Tk= idtk, etiqueta1='TOV')
-                                            timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                                            instance_gsv = Tag.objects.get(id_Tk= idtk, etiqueta1='GSV')
-                                            timestamp_gsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                                            instance_nsv = Tag.objects.get(id_Tk= idtk, etiqueta1='NSV')
-                                            timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                         temperatura_producto=vb_PV
+                         idtag_tt = tag_ins.pk
+                         timestam_tt = vb_timestamp_DC
 
-                                            Data_Calculada  = {"IDTK":idtk_DC.pk,
-                                                       "TANQUE":idtk_DC.Nombre,
+
+
+
+
+                    if (tag_ins.etiqueta1=='lta'):
+                              # if idtag_DC.etiqueta1=='lta':
+                         nivel_agua_libre=vb_PV
+                         idtag_lta = tag_ins.pk
+                         timestam_lta = vb_timestamp_DC
+
+
+
+                    if (tag_ins.etiqueta1=='ays'):
+                               #if idtag_DC.etiqueta1=='ays':
+                         ays=vb_PV
+                         idtag_ays = tag_ins.pk
+                         timestam_ays = vb_timestamp_DC
+
+
+
+                    if (tag_ins.etiqueta1=='lt'):
+
+                               #if idtag_DC.etiqueta1=='lt':
+                         nivel_producto=vb_PV
+                         idtag_lt = tag_ins.pk
+                         timestam_lt = vb_timestamp_DC
+                         print(nivel_producto)
+
+
+                         if  (nivel_producto >= tag_ins.ValorMinimo and  nivel_producto <= tag_ins.ValorMaximo):
+
+
+                                            try:
+                                                time.sleep(1)
+
+                                                volumenes=VOLUMENES(nivel_producto,ays)
+                                                tov=volumenes['TOV']
+                                                gsv=volumenes['GSV']
+                                                nsv=volumenes['NSV']
+
+                                                instance_tov = Tag.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='TOV')
+                                                timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                                                instance_gsv = Tag.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='GSV')
+                                                timestamp_gsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                                                instance_nsv = Tag.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='NSV')
+                                                timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+
+
+                                                #print(Data_Calculada)
+
+
+
+
+                                            except:
+                                                print("Error de parseo", sys.exc_info()[0], "occurred.")
+
+
+
+
+
+                         else:
+                                            print('VARIABLE BASICA FUERA DE RANGOS........')
+
+
+               Data_Calculada  = {                "TANQUE":tag_ins.id_Tk.pk,
                                                        "IDTOV":instance_tov.pk,
                                                        "IDNSV":instance_nsv.pk,
                                                        "IDGSV":instance_gsv.pk,
+                                                       "IDLT" : idtag_lt,
+                                                       "IDPT" : idtag_pt,
+                                                       "IDTT" : idtag_tt,
+                                                       "IDLTA" : idtag_lta,
+                                                       "IDAYS" : idtag_ays,
                                                        "TOV": str(tov),
                                                        "GSV": str(gsv),
                                                        "NSV": str(nsv),
+                                                       "LT":str(nivel_producto),
+                                                       "PT":str(Presion_tk),
+                                                       "TT":str(temperatura_producto),
+                                                       "LTA":str(nivel_agua_libre),
+                                                       "AYS":str(ays),
+                                                       "TIMESTAMP_lt":  timestamp_lt,
+                                                       "TIMESTAMP_pt":  timestamp_pt,
+                                                       "TIMESTAMP_tt":  timestamp_tt,
+                                                       "TIMESTAMP_lta": timestamp_lta,
+                                                       "TIMESTAMP_ays": timestamp_ays,
                                                        "TIMESTAMP_TOV": timestamp_tov,
                                                        "TIMESTAMP_GSV": timestamp_gsv,
-                                                       "TIMESTAMP_NSV": timestamp_nsv,                                                         #basica
+                                                       "TIMESTAMP_NSV": timestamp_nsv,
                                                        "INDEXADO": 0,
                                                        }
-                                            #print(Data_Calculada)
-                                            Data_tanques_temp={idtag_DC.id_Tk.pk:Data_Calculada}
-                                            Data_tanques.update(Data_tanques_temp)
-                                            print(Data_tanques)
+
+
+               print(Data_Calculada)
+               Data_tanques_temp={tag_ins.id_Tk.pk:Data_Calculada}
+               Data_tanques.update(Data_tanques_temp)
+                    #print(Data_tanques)
 
 
 
-                                        except:
-                                            print("Error de parseo", sys.exc_info()[0], "occurred.")
+               try:
+
+                   with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
+
+                            file2.write(json.dumps(Data_tanques)) #A archivo json
+               except:
+                   print("Error inesperado:", sys.exc_info()[0])
 
 
-
-
-                                    else:
-                                        print('VARIABLE BASICA FUERA DE RANGOS........')
-
-
-
-
-
-
-
-                           try:
-
-                               with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
-
-                                   file2.write(json.dumps(Data_tanques)) #A archivo json
-                           except:
-                                print("Error inesperado:", sys.exc_info()[0])
-
-               tk=Tk.objects.get(pk=idtag_DC.id_Tk.pk)
+               tk=Tk.objects.get(pk=tag_ins.id_Tk.pk)
                tk.current_data  = Data_Calculada #A Base de Datos
 
                tk.save()
+                           #idtk_DC_int=Analogico_DC.id_Tk
+
+                           #print(Data_tanques)
+
+#INSTANCIANDO LOS RANGOS DEL TAG
