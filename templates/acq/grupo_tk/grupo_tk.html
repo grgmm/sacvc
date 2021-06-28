@@ -5,8 +5,8 @@
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
  	<!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
-   <script src={% static 'js/barra_tanque.js' %} defer></script>
-   <script src={% static 'js/refrescar.js' %}></script>
+   <script src={% static 'js/barra_tanque.js' %}></script>
+   <!-- <script src={% static 'js/refrescar.js' %}></script> -->
    
 	<div id="ventana">
 			{% csrf_token %} 
@@ -17,9 +17,9 @@
 			<table id="tablaExterna">
 				<tr>
 					{% for tk in object_list %}
-						<td>
-							<a href=" " onclick="move()" type="button" >
-								<p id="tanque">{{ tk.Nombre }}</p>
+					<td>
+						<a href=" ">
+							<p id="tanque">{{tk.Nombre}}</p>
 								
 								<div class="contenedor"> 
 									<img src="{% static "recursos/imagenes/tanque.png" %}">
@@ -27,26 +27,35 @@
 										<div id="barra">0%</div>
 									</div>
 								</div>
-							</a>
-							<table id="tablaInterna">
-								<tr>
-									<br><br><br>
-									<td>
-										<label class="variable">TOV:</label>
-										<p class="tov">{{TOV}}</p>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label class="variable">NSV:</label>
-										<p class="nsv">{{NSV}}</p>
-									</td>
-								</tr>
-							</table>
-						{% cycle '' '' '</td></tr><tr>' %}
-					{% endfor %}
-				</tr>
-			</table>
-							<button onclick="move()">Click Me</button> 
-	</div>
+						</a>
+						<table id="tablaInterna">
+							<tr>
+								<br><br>
+								<td>
+
+									<label class="variable">TOV:</label>
+
+									<p class="tov">{{tk.current_data.TOV}}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label class="variable">NSV:</label>
+									<p class="nsv">{{tk.current_data.NSV}}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label class="variable">LT:</label>
+									<p class="lt">{{tk.current_data.LT}}</p>
+								</td>
+							</tr>
+
+						</table>
+					{% cycle '' '' '</td></tr><tr>' %}
+				{% endfor %}
+
+			</tr>
+		</table>
+</div>
 {% endblock %}

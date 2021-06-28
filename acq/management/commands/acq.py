@@ -25,8 +25,8 @@ class Command(BaseCommand):
         print('\n' '\n' "Dirección los registros en los Esclavo Modbus a partir del 101 ")
         #Mensajes de encabezado en consola Python informativo.
         slaveid= 11 #ide del esclavo 0-247 segun Modbus doc
-        slaveport=502 #puertos validos por encima de 1024 en sistemas Linux Android Unix.
-        slaveip= '192.168.1.53  ' #ip del esclavo para modbus TCP
+        slaveport=5002 #puertos validos por encima de 1024 en sistemas Linux Android Unix.
+        slaveip= '192.168.1.40' #ip del esclavo para modbus TCP
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #declara la conexión
 
@@ -38,6 +38,7 @@ class Command(BaseCommand):
              print("Sin conexión...reintentando", sys.exc_info()[0])
              pass
 
+        print('Adquisción de Data Modbus Activa (Running)')
 
         n=2 #100 iteraciones
 
@@ -116,10 +117,9 @@ class Command(BaseCommand):
 
 
 
-                tk.current_data = Data_Cruda #A Base de Datos
+                #tk.current_data = Data_Cruda #A Base de Datos
 
-                tk.save()
-                print('corriendo')
+                #tk.save()
                 #except:
                 #print("Error inesperado:", sys.exc_info()[0])
 

@@ -44,13 +44,13 @@ label {
 	display: inline-block;
 }
 
-label, .nsv, .tov, #tanque{
+label, .nsv, .tov, .lt, #tanque{
 	font-weight: bold;
 	font-size: 1.4rem;
 	/*background-color: white;*/
 }
 
-label, .nsv, .tov{
+label, .nsv, .tov, .lt{
 	margin: 5% 15%;
 	
 }

@@ -10,21 +10,13 @@ import time
 
 def FloatIeee754(registro1,registro2):
 
-#def FloatIeee754(registro1,registro2):
-        print
+        #print
 
         if registro1 < 0:
-            print('reg1 antes', registro1)
             registro1=(65535+registro1)+1
-            print('reg2 despues', registro1)
 
         if registro2 < 0:
-            print('reg2 antes', registro2)
             registro2=(65535+registro2)+1
-            print('reg2 despues', registro2)
-
-
-        print(registro1, registro2)
 
 
 
@@ -76,18 +68,35 @@ def VOLUMENES(nivel_medido, idtk, ays):
                      }
         #print(nivel_medido)
         #print(idtk)
-        if (Tct.objects.count() != 0) and (nivel_medido != 0 ):
-          filtro_tk_tct=Tct.objects.filter(id_tk=idtk).iterator()
-          for recorrido in filtro_tk_tct:
-            lt_tct=recorrido.Lt0
-            lt_tov=recorrido.Tov0
-            if lt_tct==nivel_medido:
-               tov=lt_tov
-               gsv=tov-10.0
-               nsv=gsv-10.0
-               volumenes  = {"TOV":tov,
-                       "NSV":nsv,
-                       "GSV":gsv, }
+        lolo=Tct.objects.all()
+        for lo in lolo:
+            if lo.Lt0==nivel_medido:
+                tov=lo.Tov0
+                gsv=tov-ays
+                nsv=gsv-ays
+                volumenes  = {"TOV":tov,
+                        "NSV":nsv,
+                        "GSV":gsv, }
             else:
                 pass
         return(volumenes)
+
+
+
+
+        #if (Tct.objects.all().count() != 0) and (nivel_medido != 0 ):
+         # filtro_tk_tct=Tct.objects.filter(id_tk=idtk).iterator()
+         # for recorrido in filtro_tk_tct:
+        #    lt_tct=recorrido.Lt0
+        #    lt_tov=recorrido.Tov0
+        #    if lt_tct==nivel_medido:
+            #   tov=lt_tov
+        #       gsv=tov-ays
+            #   nsv=gsv-ays
+        #       volumenes  = {"TOV":tov,
+        #               "NSV":nsv,
+        #               "GSV":gsv, }
+    #           pass
+    #        else:
+#                pass
+#        return(volumenes)
