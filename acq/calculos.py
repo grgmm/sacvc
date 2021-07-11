@@ -58,7 +58,7 @@ def FloatIeee754(registro1,registro2):
         return(round(fvalue,3))
         #return(fvalue1)
 
-def VOLUMENES(nivel_medido, idtk, ays):
+def VOLUMENES(nivel_medido, ays):
         lt_tct=0
         lt_t0v=0
         tov=0
@@ -75,8 +75,8 @@ def VOLUMENES(nivel_medido, idtk, ays):
                 gsv=tov-ays
                 nsv=gsv-ays
                 volumenes  = {"TOV":tov,
-                        "NSV":nsv,
-                        "GSV":gsv, }
+                        "NSV":round(nsv,3),
+                        "GSV":round(gsv,3), }
             else:
                 pass
         return(volumenes)

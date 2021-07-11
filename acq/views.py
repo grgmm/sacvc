@@ -41,10 +41,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
 
 
-#[''] {}   «»»
 
+#abre un archivo json en modo lectura
 def actualizar(request):
-
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
     ruta_Data=fs.location
     try:
@@ -53,9 +52,6 @@ def actualizar(request):
 
     except:
               print("Error inesperado:", sys.exc_info()[0])
-
-
-
     return JsonResponse(dataf)
 
 class current_data(ListView):
