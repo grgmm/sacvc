@@ -78,7 +78,7 @@
 		"LT_CRITICA": false,
 		"PT_NORMAL": true,
 		"PT_URGENTE": false,
-		"PT_CRITICA": true,
+		"PT_CRITICA": false,
 		"TT_NORMAL": false,
 		"TT_URGENTE": false,
 		"TT_CRITICA": true,

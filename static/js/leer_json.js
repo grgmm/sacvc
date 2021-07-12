@@ -3,6 +3,11 @@
 flag_id = false; //Codigo que sera ejecutado solo al cargar la pagina
 ntanq = 0;//numero de tanques
 datos_anterior = null; //Copia de data json de la ultima actualizacion de la vista
+flag_blink = false;
+flag_lt_critica = [];
+flag_lt_urgente = [];
+flag_lt_normal = [];
+
 
 function mi_funcion() {
 	var refresca = $.ajax({
@@ -21,6 +26,7 @@ function mi_funcion() {
 			//obtengo el numero de tanques
 			for (var tk in datos) {
 				ntanq++;
+
 			}
 			//Renonbro los selectores id en tiempo de vuelo
 			generar_ids("tanque");
@@ -43,6 +49,11 @@ function mi_funcion() {
 						var att = document.createAttribute("id");
 						att.value = id + contador.toString();
 						mi_id.setAttributeNode(att);
+
+						//genero los arrys de alarma	
+						flag_lt_critica[contador] = false;
+						flag_lt_urgente[contador] = false;
+						flag_lt_normal[contador] = false;
 					}
 				}
 			}
@@ -105,19 +116,36 @@ function mi_funcion() {
 			lt_normal = datos[idtk]["LT_NORMAL"];
 			lt_urgente = datos[idtk]["LT_URGENTE"];
 			lt_critica = datos[idtk]["LT_CRITICA"];
-			console.log(lt_urgente);
 			//Calculo de alarmas
+
+
 			if (lt_critica) {
+				flag_lt_critica[t] = !flag_lt_critica[t];
 				$("#barra" + tq).css('background', 'red');
-				$("#nivel" + tq).css('background', 'red');
+				$("#nivel" + tq).css('color', 'black');
+				if (flag_lt_critica[t]) {
+					$("#nivel" + tq).css('background', 'red');
+				} else {
+					$("#nivel" + tq).css('background', 'none');
+				}
 			}
 			if (lt_urgente) {
 				//nivel bajo
+				flag_lt_urgente[t] = !flag_lt_urgente[t];
 				$("#barra" + tq).css('background', 'yellow');
 				$("#nivel" + tq).css('background', 'yellow');
+				$("#nivel" + tq).css('color', 'black');
+				if (flag_lt_urgente[t]) {
+					$("#nivel" + tq).css('background', 'yellow');
+				} else {
+					$("#nivel" + tq).css('background', 'none');
+				}
 			}
 			if (lt_normal) {
+				console.log(lt_normal);
 				//nivel normañ	
+				flag_lt_critica[t] = false;	
+				flag_lt_urgente[t] = false;
 				$("#barra" + tq).css('background', 'black');
 				$("#nivel" + tq).css('color', 'green');
 				$("#nivel" + tq).css('background', 'black');
