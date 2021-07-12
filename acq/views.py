@@ -290,75 +290,91 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
             Analogico.objects.create(Nombre= instance.Nombre+'_lt' ,
              Descriptor='NIVEL DEL TANQUE'+ instance.Nombre  ,
              Unidad= 'pie',
-             direccion=(qtk-1)*10+1,
+             direccion=(qtk-1)*16+1,
              id_Tk=instance,
              TipoVariable= 'B',
-             direccion_campo= 100+((qtk-1)*10+1),
-             etiqueta1='lt')
+             direccion_campo= 100+((qtk-1)*16+1),
+             etiqueta1='lt',
+             ValorMinimo=1.0,
+             ValorMaximomo=40.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_pt',
              Descriptor='PRESION DEL TANQUE'+ instance.Nombre,
              Unidad = 'psi',
-             direccion=(qtk-1)*10+3,
+             direccion=(qtk-1)*16+3,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*10+3,
+             direccion_campo= 100+(qtk-1)*16+3,
              TipoVariable= 'B',
-             etiqueta1='pt')
+             etiqueta1='pt',
+             ValorMinimo=1.0,
+             ValorMaximomo=1000.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_tt',
              Descriptor='TEMPERATURA DEL TANQUE'+ instance.Nombre,
              Unidad= 'F',
-             direccion=(qtk-1)*10+5,
+             direccion=(qtk-1)*16+5,
              id_Tk=instance,
              direccion_campo= 100+(qtk-1)*10+5,
              TipoVariable= 'B',
-             etiqueta1='tt')
+             etiqueta1='tt',
+             ValorMinimo=1.0,
+             ValorMaximomo=200.0,)
 
 
             Analogico.objects.create(Nombre= instance.Nombre +'_lta',
              Descriptor='NIVEL DE AGUA LIBRE '+ instance.Nombre,
              Unidad= 'pie',
-             direccion=(qtk-1)*10+7,
+             direccion=(qtk-1)*16+7,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*10+7,
+             direccion_campo= 100+(qtk-1)*16+7,
              TipoVariable= 'B',
-             etiqueta1='lta',)
+             etiqueta1='lta',
+             ValorMinimo=1.0,
+             ValorMaximomo=7.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_ays',
              Descriptor='PORCENTAJE DE AGUA Y SEDIMENTO '+ instance.Nombre,
              Unidad= '%',
-             direccion=(qtk-1)*10+9,
+             direccion=(qtk-1)*16+9,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*10+9,
+             direccion_campo= 100+(qtk-1)*16+9,
              TipoVariable= 'C',
-             etiqueta1='AYS',)
+             etiqueta1='AYS',
+             ValorMinimo=1.0,
+             ValorMaximomo=5.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
              Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
              Unidad= 'BLS',
-             direccion=(qtk-1)*10+11,
+             direccion=(qtk-1)*16+11,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*10+11,
+             direccion_campo= 100+(qtk-1)*16+11,
              TipoVariable= 'C',
-             etiqueta1='TOV',)
+             etiqueta1='TOV',
+             ValorMinimo=1.0,
+             ValorMaximomo=600000.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_GSV',
              Descriptor='VOLUMEN BRUTO ESTANDAR DEL TANQUE '+ instance.Nombre,
              Unidad= 'BLS',
-             direccion=(qtk-1)*10+13,
+             direccion=(qtk-1)*16+13,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*10+13,
+             direccion_campo= 100+(qtk-1)*16+13,
              TipoVariable= 'C',
-             etiqueta1='GSV',)
+             etiqueta1='GSV',
+             ValorMinimo=1.0,
+             ValorMaximomo=600000.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_NSV',
              Descriptor='VOLUMEN NETO ESTANDAR DEL TANQUE '+ instance.Nombre,
              Unidad= 'BLS',
-             direccion=(qtk-1)*10+15,
+             direccion=(qtk-1)*16+15,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*10+15,
+             direccion_campo= 100+(qtk-1)*16+15,
              TipoVariable= 'C',
-             etiqueta1='NSV',)
+             etiqueta1='NSV',
+             ValorMinimo=1.0,
+             ValorMaximomo=600000.0,)
 
 class TkDelete(DeleteView):
     model = Tk
