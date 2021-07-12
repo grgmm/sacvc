@@ -8,6 +8,25 @@ import sys
 import time
 
 
+def Alarmas(vp,ll,l,h,hh):
+    status={}
+    if (l < vp and vp < h):
+        status={'normal':True, 'critica': False, 'urgente': False}
+    else:
+        if (vp  > hh or vp  < ll):
+            status={'normal':False, 'critica': True,'urgente': False}
+        else:
+            status={'normal':False, 'critica': False,'urgente': True}
+
+    return status
+
+
+
+
+
+
+
+
 def FloatIeee754(registro1,registro2):
 
         #print
