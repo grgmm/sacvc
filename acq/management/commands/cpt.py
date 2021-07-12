@@ -1,7 +1,7 @@
 import json
 from django.core.management.base import BaseCommand
 from acq.models import Tk, Tag, Analogico
-from acq.calculos import VOLUMENES, FloatIeee754
+from acq.calculos import VOLUMENES, FloatIeee754, Alarmas
 from datetime import datetime
 import time
 from django.core.files.storage import FileSystemStorage
@@ -53,6 +53,12 @@ class Command(BaseCommand):
        timestamp_tov = ''
        timestamp_gsv = ''
        timestamp_nsv = ''
+       nsv_normal= ''
+       nsv_urgente=''
+       nsv_critica= ''
+
+
+
 
        print('MÓDULO DE CALCULO DE VOLUMENES ACTIVO, REVISAR SALIDA EN: /Data/Buffer_Datos_Calculados.json' )
 
@@ -84,15 +90,17 @@ class Command(BaseCommand):
                     #tag_ins=Tags.filter(pk__exact=idtag_DC)
                     tag_ins = Analogico.objects.get(pk=idtag_DC.pk)
 
+
                     if (tag_ins.etiqueta1=='pt'):
 
                          Presion_tk = vb_PV
                          idtag_pt = tag_ins.pk
                          timestam_pt = vb_timestamp_DC
 
-
-
-
+                         pt_estado=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                         pt_normal=pt_estado['normal']
+                         pt_urgente=pt_estado['urgente']
+                         pt_critica=pt_estado['critica']
 
 
                     if (tag_ins.etiqueta1=='tt'):
@@ -101,9 +109,10 @@ class Command(BaseCommand):
                          idtag_tt = tag_ins.pk
                          timestam_tt = vb_timestamp_DC
 
-
-
-
+                         tt_estado=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                         tt_normal=lt_estado['normal']
+                         tt_urgente=lt_estado['urgente']
+                         tt_critica=lt_estado['critica']
 
                     if (tag_ins.etiqueta1=='lta'):
                               # if idtag_DC.etiqueta1=='lta':
@@ -111,7 +120,10 @@ class Command(BaseCommand):
                          idtag_lta = tag_ins.pk
                          timestam_lta = vb_timestamp_DC
 
-
+                         lta_estado=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                         lta_normal=lta_estado['normal']
+                         lta_urgente=lta_estado['urgente']
+                         lta_critica=lta_estado['critica']
 
                     if (tag_ins.etiqueta1=='ays'):
                                #if idtag_DC.etiqueta1=='ays':
@@ -119,17 +131,27 @@ class Command(BaseCommand):
                          idtag_ays = tag_ins.pk
                          timestam_ays = vb_timestamp_DC
 
+                         ays_estado=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                         ays_normal=ays_estado['normal']
+                         ays_urgente=ays_estado['urgente']
+                         ays_critica=ays_estado['critica']
 
 
                     if (tag_ins.etiqueta1=='lt'):
 
-                               #if idtag_DC.etiqueta1=='lt':
                          nivel_producto=vb_PV
                          idtag_lt = tag_ins.pk
                          timestam_lt = vb_timestamp_DC
 
+                         lt_estado=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                         lt_normal=lt_estado['normal']
+                         lt_urgente=lt_estado['urgente']
+                         lt_critica=lt_estado['critica']
+
+
 
                          if  (nivel_producto >= tag_ins.ValorMinimo and  nivel_producto <= tag_ins.ValorMaximo):
+
 
 
                                             try:
@@ -140,47 +162,85 @@ class Command(BaseCommand):
                                                 gsv=volumenes['GSV']
                                                 nsv=volumenes['NSV']
 
-                                                instance_tov = Tag.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='TOV')
+
+
+                                                #instance_tov = Tag.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='TOV')
+                                                instance_tov = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='TOV')
                                                 timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                                                instance_gsv = Tag.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='GSV')
+                                                tov_estado=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
+                                                tov_normal=tov_estado['normal']
+                                                tov_urgente=tov_estado['urgente']
+                                                tov_critica=tov_estado['critica']
+
+
+                                                instance_gsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='GSV')
                                                 timestamp_gsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                                                instance_nsv = Tag.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='NSV')
+                                                gsv_estado=Alarmas(gsv, instance_gsv.LL, instance_gsv.L, instance_gsv.H, instance_gsv.HH)
+                                                gsv_normal=gsv_estado['normal']
+                                                gsv_urgente=gsv_estado['urgente']
+                                                gsv_critica=gsv_estado['critica']
+
+
+
+                                                instance_nsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='NSV')
                                                 timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-
-
-                                                #print(Data_Calculada)
-
-
+                                                nsv_estado=Alarmas(nsv, instance_nsv.LL, instance_nsv.L, instance_nsv.H, instance_nsv.HH)
+                                                nsv_normal=nsv_estado['normal']
+                                                nsv_urgente=nsv_estado['urgente']
+                                                nsv_critica=nsv_estado['critica']
 
 
                                             except:
                                                 print("Error de parseo", sys.exc_info()[0], "occurred.")
 
 
-
-
-
                          else:
                                             print('VARIABLE BASICA FUERA DE RANGOS........')
 
 
-               Data_Calculada  = {                "TANQUE":tag_ins.id_Tk,
-                                                       "IDTOV":instance_tov.pk,
-                                                       "IDNSV":instance_nsv.pk,
-                                                       "IDGSV":instance_gsv.pk,
+               Data_Calculada  = {                "TANQUE": tag_ins.id_Tk.Nombre, #OJO CORREGIR PARA QUE SALGA EL NOMBRE
+                                                       "IDTOV": instance_tov.pk,
+                                                       "IDNSV": instance_nsv.pk,
+                                                       "IDGSV": instance_gsv.pk,
                                                        "IDLT" : idtag_lt,
                                                        "IDPT" : idtag_pt,
                                                        "IDTT" : idtag_tt,
-                                                       "IDLTA" : idtag_lta,
-                                                       "IDAYS" : idtag_ays,
-                                                       "TOV": str(tov),
-                                                       "GSV": str(gsv),
-                                                       "NSV": str(nsv),
-                                                       "LT":str(nivel_producto),
-                                                       "PT":str(Presion_tk),
-                                                       "TT":str(temperatura_producto),
-                                                       "LTA":str(nivel_agua_libre),
-                                                       "AYS":str(ays),
+                                                       "IDLTA": idtag_lta,
+                                                       "IDAYS": idtag_ays,
+                                                       "TOV":   str(tov),
+                                                       "GSV":   str(gsv),
+                                                       "NSV":   str(nsv),
+                                                       "LT":    str(nivel_producto),
+                                                       "VALORMAXIMO": tag_ins.ValorMaximo,
+                                                       "VALORMINIMO": tag_ins.ValorMinimo,
+                                                       "PT":    str(Presion_tk),
+                                                       "TT":    str(temperatura_producto),
+                                                       "LTA":   str(nivel_agua_libre),
+                                                       "AYS":   str(ays),
+                                                       "LT_NORMAL":     lt_normal,
+                                                       "LT_URGENTE":    lt_urgente,
+                                                       "LT_CRITICA":    lt_critica,
+                                                       "PT_NORMAL":     pt_normal,
+                                                       "PT_URGENTE":    pt_urgente,
+                                                       "PT_CRITICA":    pt_critica,
+                                                       "TT_NORMAL":     tt_normal,
+                                                       "TT_URGENTE":    tt_urgente,
+                                                       "TT_CRITICA":    tt_critica,
+                                                       "LTA_NORMAL":    lta_normal,
+                                                       "LTA_URGENTE":   lta_urgente,
+                                                       "LTA_CRITICA":   lta_critica,
+                                                       "AYS_NORMAL":    ays_normal,
+                                                       "AYS_URGENTE":   ays_urgente,
+                                                       "AYS_CRITICA":   ays_critica,
+                                                       "TOV_NORMAL":    tov_normal,
+                                                       "TOV_URGENTE":   tov_urgente,
+                                                       "TOV_CRITICA":   tov_critica,
+                                                       "NSV_NORMAL":    nsv_normal,
+                                                       "NSV_URGENTE":   nsv_urgente,
+                                                       "NSV_CRITICA":   nsv_critica,
+                                                       "GSV_NORMAL":    gsv_normal,
+                                                       "GSV_URGENTE":   gsv_urgente,
+                                                       "GSV_CRITICA":   gsv_critica,
                                                        "TIMESTAMP_lt":  timestamp_lt,
                                                        "TIMESTAMP_pt":  timestamp_pt,
                                                        "TIMESTAMP_tt":  timestamp_tt,
@@ -189,14 +249,13 @@ class Command(BaseCommand):
                                                        "TIMESTAMP_TOV": timestamp_tov,
                                                        "TIMESTAMP_GSV": timestamp_gsv,
                                                        "TIMESTAMP_NSV": timestamp_nsv,
-                                                       "INDEXADO": 0,
+                                                       "INDEXADO":  0,
                                                        }
 
 
                print(Data_Calculada)
                Data_tanques_temp={tag_ins.id_Tk.pk:Data_Calculada}
                Data_tanques.update(Data_tanques_temp)
-                    #print(Data_tanques)
 
 
 
@@ -215,6 +274,5 @@ class Command(BaseCommand):
                tk.save()
                            #idtk_DC_int=Analogico_DC.id_Tk
 
-                           #print(Data_tanques)
 
 #INSTANCIANDO LOS RANGOS DEL TAG
