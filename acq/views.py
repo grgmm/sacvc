@@ -53,12 +53,12 @@ def actualizar(request):
     except:
               print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
-
+'''
 class current_data(ListView):
   model = Tk
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
-
+'''
 class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
      #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 

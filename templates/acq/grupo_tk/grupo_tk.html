@@ -3,11 +3,8 @@
 {% block title %}Grupo de tanques{% endblock %}
 {% block content %}
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
- 	<!-- jquery -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
-   <!-- <script src={% static 'js/refrescar_randon.js' %}></script> -->
-   	<script src={% static 'js/llamar_json.js' %}></script>
-   	<script src={% static 'js/barra_tanque.js' %}></script>
+   	<script src={% static 'js/jquery-3.6.0.min.js' %}></script>
+   	<script src={% static 'js/leer_json.js' %}></script>
    
 	<div id="ventana">
 			{% csrf_token %} 
@@ -43,15 +40,19 @@
 								<td>
 									<label class="variable">NSV:</label>
 									<!--<p class="nsv">{{tk.current_data.NSV}}</p>-->
-									<p id="nsv">--</p>
+									<p id="nsv" class="nsv">--</p>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<label class="variable">LT:</label>
 									<!--<p class="lt">{{tk.current_data.LT}}</p>-->
-									<p id="lt">--</p>
+									<p id="lt" class="lt">--</p>
 								</td>
+							</tr>
+							<tr>
+								<p id="cero" style="display: none;"></p>
+								<p id="span" style="display: none;"></p>
 							</tr>
 						</table>
 					{% cycle '' '' '</td></tr><tr>' %}
