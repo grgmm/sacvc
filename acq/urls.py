@@ -20,7 +20,7 @@ from .views import (
     Validar_Tct,
     integridad_TCT,
     guardar_TCT_BD,
-    current_data,
+    #current_data,
     LoginView,
     LogoutView,
     Menu,
@@ -80,7 +80,7 @@ urlpatterns = [
 
     url(r'^validar_tct/(?P<pk>\d+)$', Validar_Tct.as_view(), name='validar_tct'),
 
-    url(r'^data_actual/$', current_data.as_view(), name='current_data'), #LISTADO DE PATIOS DE TANQUES
+    #url(r'^data_actual/$', current_data.as_view(), name='current_data'), #LISTADO DE PATIOS DE TANQUES
 
     #url('Valores_Actuales/',views.Valores_Actuales, name='Valores_Actuales'),
 
