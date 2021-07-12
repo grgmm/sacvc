@@ -3,23 +3,31 @@
 {% block title %}Grupo de tanques{% endblock %}
 {% block content %}
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
+ 	<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+   <!-- <script src={% static 'js/refrescar_randon.js' %}></script> -->
+   	<script src={% static 'js/llamar_json.js' %}></script>
+   	<script src={% static 'js/barra_tanque.js' %}></script>
+   
 	<div id="ventana">
-			{% csrf_token %}
+			{% csrf_token %} 
 			<p>
 				<!-- Encabezado -->
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
 			<table id="tablaExterna">
 				<tr>
-
 					{% for tk in object_list %}
-
-					<td>
+					<td id="tanque">
 						<a href=" ">
-							<p id="tanque">{{tk.Nombre}}<nav>
-
-							</nav></p>
-							<img class="img" src="{% static "recursos/imagenes/tanque.svg" %}">
+							<p id="idtanque" class="idtanque">--</p>
+							<p id="nivel" class="nivel">---</p>
+								<div class="contenedor"> 
+									<img src="{% static "recursos/imagenes/tanque.png" %}">
+									<div id="contenedor_barra" class="contenedor_barra">
+										<div id="barra" class="barra">0%</div>
+									</div>
+								</div>
 						</a>
 						<table id="tablaInterna">
 							<tr>
@@ -27,28 +35,28 @@
 								<td>
 
 									<label class="variable">TOV:</label>
-
-									<p class="valor">{{tk.current_data.TOV}}</p>
+									<!--<p class="tov">{{tk.current_data.TOV}}</p>-->
+									<p id="tov" class="tov">--</p>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<label class="variable">NSV:</label>
-									<p class="valor">{{tk.current_data.TOV}}</p>
+									<!--<p class="nsv">{{tk.current_data.NSV}}</p>-->
+									<p id="nsv">--</p>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<label class="variable">LT:</label>
-									<p class="valor">{{tk.current_data.LT}}</p>
+									<!--<p class="lt">{{tk.current_data.LT}}</p>-->
+									<p id="lt">--</p>
 								</td>
 							</tr>
-
 						</table>
 					{% cycle '' '' '</td></tr><tr>' %}
-				{% endfor %}
-
-			</tr>
-		</table>
+					{% endfor %}
+				</tr>
+			</table>
 </div>
 {% endblock %}

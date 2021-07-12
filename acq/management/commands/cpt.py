@@ -90,7 +90,6 @@ class Command(BaseCommand):
                     #tag_ins=Tags.filter(pk__exact=idtag_DC)
                     tag_ins = Analogico.objects.get(pk=idtag_DC.pk)
 
-                    print(tag_ins.etiqueta1)
 
                     if (tag_ins.etiqueta1=='pt'):
 
@@ -104,8 +103,6 @@ class Command(BaseCommand):
                          pt_critica=pt_estado['critica']
 
 
-
-
                     if (tag_ins.etiqueta1=='tt'):
 
                          temperatura_producto=vb_PV
@@ -117,8 +114,6 @@ class Command(BaseCommand):
                          tt_urgente=lt_estado['urgente']
                          tt_critica=lt_estado['critica']
 
-
-
                     if (tag_ins.etiqueta1=='lta'):
                               # if idtag_DC.etiqueta1=='lta':
                          nivel_agua_libre=vb_PV
@@ -129,8 +124,6 @@ class Command(BaseCommand):
                          lta_normal=lta_estado['normal']
                          lta_urgente=lta_estado['urgente']
                          lta_critica=lta_estado['critica']
-
-
 
                     if (tag_ins.etiqueta1=='ays'):
                                #if idtag_DC.etiqueta1=='ays':
@@ -197,18 +190,8 @@ class Command(BaseCommand):
                                                 nsv_critica=nsv_estado['critica']
 
 
-
-
-                                                #print(Data_Calculada)
-
-
-
-
                                             except:
                                                 print("Error de parseo", sys.exc_info()[0], "occurred.")
-
-
-
 
 
                          else:
@@ -228,6 +211,8 @@ class Command(BaseCommand):
                                                        "GSV":   str(gsv),
                                                        "NSV":   str(nsv),
                                                        "LT":    str(nivel_producto),
+                                                       "VALORMAXIMO": tag_ins.ValorMaximo,
+                                                       "VALORMINIMO": tag_ins.ValorMinimo,
                                                        "PT":    str(Presion_tk),
                                                        "TT":    str(temperatura_producto),
                                                        "LTA":   str(nivel_agua_libre),
@@ -271,7 +256,6 @@ class Command(BaseCommand):
                print(Data_Calculada)
                Data_tanques_temp={tag_ins.id_Tk.pk:Data_Calculada}
                Data_tanques.update(Data_tanques_temp)
-                    #print(Data_tanques)
 
 
 
@@ -290,6 +274,5 @@ class Command(BaseCommand):
                tk.save()
                            #idtk_DC_int=Analogico_DC.id_Tk
 
-                           #print(Data_tanques)
 
 #INSTANCIANDO LOS RANGOS DEL TAG
