@@ -1,7 +1,7 @@
 import json
 from django.core.management.base import BaseCommand
 from acq.models import Tk, Tag, Analogico
-from acq.calculos import VOLUMENES, FloatIeee754, Alarmas
+from acq.calculos import VOLUMENES, FloatIeee754, Alarmas, Escalamiento
 from datetime import datetime
 import time
 from django.core.files.storage import FileSystemStorage
@@ -158,9 +158,11 @@ class Command(BaseCommand):
                                                 time.sleep(1)
 
                                                 volumenes=VOLUMENES(nivel_producto,ays)
-                                                tov=volumenes['TOV']
-                                                gsv=volumenes['GSV']
-                                                nsv=volumenes['NSV']
+                                                tov = volumenes['TOV']
+                                                gsv = volumenes['GSV']
+                                                nsv = volumenes['NSV']
+
+                                                porcentaje = Escalamiento(nivel_producto, tag_ins.ValorMinimo, tag_ins.ValorMaximo
 
 
 
@@ -213,6 +215,7 @@ class Command(BaseCommand):
                                                        "LT":    str(nivel_producto),
                                                        "VALORMAXIMO": tag_ins.ValorMaximo,
                                                        "VALORMINIMO": tag_ins.ValorMinimo,
+                                                       "LT_PORCENTAJE": porcentaje
                                                        "PT":    str(Presion_tk),
                                                        "TT":    str(temperatura_producto),
                                                        "LTA":   str(nivel_agua_libre),
