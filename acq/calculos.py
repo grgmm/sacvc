@@ -20,11 +20,9 @@ def Alarmas(vp,ll,l,h,hh):
 
     return status
 
-
-
-
-
-
+def Escalamiento(valormedido, minimo, maximo):
+    valorescalado = (100 * valormedido / (minimo - maximo))
+    return(round(valorescalado,2)
 
 
 def FloatIeee754(registro1,registro2):
