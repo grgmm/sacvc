@@ -1,12 +1,10 @@
-//https://www.w3schools.com/js/js_json_http.asp
-
 flag_id = false; //Codigo que sera ejecutado solo al cargar la pagina
 ntanq = 0;//numero de tanques
 datos_anterior = null; //Copia de data json de la ultima actualizacion de la vista
-flag_blink = false;
-flag_lt_critica = [];
-flag_lt_urgente = [];
-flag_lt_normal = [];
+flag_blink = false; //flag para parpadear alarmas
+flag_lt_critica = []; //alarmas criticas tomadas de json
+flag_lt_urgente = [];//alarmas urgentes tomadas de json
+//flag_lt_normal = [];
 
 
 function mi_funcion() {
@@ -16,8 +14,11 @@ function mi_funcion() {
 		type: 'get'
 	}).done(function (datos) {
 		configurar(datos);
-		actualizar_vista(datos);
-		manejar_alarmas(datos);
+		if (JSON.stringify(datos) != JSON.stringify(datos_anterior)) {
+			//solo se ejecuta si el json cambia
+			actualizar_vista(datos);
+			manejar_alarmas(datos);
+		}
 
 	})
 	function configurar(datos) {
@@ -26,7 +27,6 @@ function mi_funcion() {
 			//obtengo el numero de tanques
 			for (var tk in datos) {
 				ntanq++;
-
 			}
 			//Renonbro los selectores id en tiempo de vuelo
 			generar_ids("tanque");
@@ -53,7 +53,7 @@ function mi_funcion() {
 						//genero los arrys de alarma	
 						flag_lt_critica[contador] = false;
 						flag_lt_urgente[contador] = false;
-						flag_lt_normal[contador] = false;
+						//flag_lt_normal[contador] = false;
 					}
 				}
 			}
@@ -64,33 +64,32 @@ function mi_funcion() {
 	}
 
 	function actualizar_vista(datos) {
+		var t = 1;//EMPIEZO POR LA CELDA1 (TANQUE1)
+		var valormaximo;//valor del span
+		var lt; //valor del nivel actual
+		var valorminimo;
+		var nivel;
+		var lt_porcentaje;
 
-		if (JSON.stringify(datos) != JSON.stringify(datos_anterior)) {
-			var t = 1;//EMPIEZO POR LA CELDA1 (TANQUE1)
-			var valormaximo;//valor del span
-			var lt; //valor del nivel actual
-			var valorminimo;
-			var nivel;
-			var lt_porcentaje;
+		for (var tk in datos) {
+			var idtk = tk.toString(); //tomo el id del tanque, uno por celda
+			var tq = t.toString();
 
-			for (var tk in datos) {
-				var idtk = tk.toString(); //tomo el id del tanque, uno por celda
-				var tq = t.toString();
-				$("#idtanque" + tq).text(datos[idtk]["TANQUE"]);
-				$("#tov" + tq).text(datos[idtk]["TOV"]);
-				$("#nsv" + tq).text(datos[idtk]["NSV"]);
-				$("#lt" + tq).text(datos[idtk]["LT"]);
-				lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
-				lt = datos[idtk]["LT"];
+			$("#idtanque" + tq).text(datos[idtk]["TANQUE"]);
+			$("#tov" + tq).text(datos[idtk]["TOV"]);
+			$("#nsv" + tq).text(datos[idtk]["NSV"]);
+			$("#lt" + tq).text(datos[idtk]["LT"]);
+			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
+			lt = datos[idtk]["LT"];
 
-				nivel = document.getElementById("barra" + tq); //nivel en UI
-				nivel.style.width = lt_porcentaje + "%"; /*barra*/
-				$("#nivel" + tq).text(lt_porcentaje + "%");
-				t++ //paso a la celda siguiente (tanque)
-				datos_anterior = datos;//Evita actualizar datos innecesariamente
-			}
-			console.log("datos actualizados");
+			nivel = document.getElementById("barra" + tq); //nivel en UI
+			nivel.style.width = lt_porcentaje + "%"; //barra de progreso
+			$("#nivel" + tq).text(lt_porcentaje + "%");//Valor numerico del nivel
+			console.log(lt_porcentaje);
+			t++ //paso a la celda siguiente (tanque)
+			datos_anterior = datos;//Evita actualizar datos innecesariamente
 		}
+		console.log("datos actualizados");
 	}
 
 	function manejar_alarmas(datos) {
@@ -99,7 +98,7 @@ function mi_funcion() {
 		//todo en unidades de ingenieria
 		var valormaximo//valor del valormaximo
 		var valorminimo;
-		var lt_normal;
+		//var lt_normal;
 		var lt_urgente;
 		var lt_critica;
 		var idtk;//nro del tanque json
@@ -111,7 +110,7 @@ function mi_funcion() {
 			lt = datos[idtk]["LT"];
 			valorminimo = datos[idtk]["VALORMINIMO"];
 			valormaximo = datos[idtk]["VALORMAXIMO"];
-			lt_normal = datos[idtk]["LT_NORMAL"];
+			//lt_normal = datos[idtk]["LT_NORMAL"];
 			lt_urgente = datos[idtk]["LT_URGENTE"];
 			lt_critica = datos[idtk]["LT_CRITICA"];
 			//Calculo de alarmas
@@ -139,9 +138,9 @@ function mi_funcion() {
 					$("#nivel" + tq).css('background', 'none');
 				}
 			}
-			if (lt_normal) {
+			if (!lt_critica && !lt_urgente) {
 				//nivel normañ	
-				flag_lt_critica[t] = false;	
+				flag_lt_critica[t] = false;
 				flag_lt_urgente[t] = false;
 				$("#barra" + tq).css('background', 'black');
 				$("#nivel" + tq).css('color', 'green');
