@@ -21,15 +21,9 @@ class Command(BaseCommand):
         conf.SIGNED_VALUES = True  # No estoy seguro de su utilidad me lo copié del ejemplo.
         slaveid = 11  # ide del esclavo 0-247 segun Modbus doc
         slaveport = 5002  # puertos validos por encima de 1024 en sistemas Linux Android Unix.
-        
-        #Codigo temporal solo para desarrollo se usa localhost
-        #---------------------------------------
-        nombre_equipo = socket.gethostname()
-        #direccion_equipo = socket.gethostbyname(nombre_equipo)
-        #---------------------------------------------
-        
-        #slaveip = direccion_equipo  # ip del esclavo para modbus TCP 
-        slaveip = '192.168.1.40'  # ip del esclavo para modbus TCP
+
+
+       slaveip = '192.168.1.40'  # ip del esclavo para modbus TCP
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # declara la conexión
 

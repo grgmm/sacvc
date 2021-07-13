@@ -82,7 +82,7 @@ label[for=encabezado] {
 	margin-left:2rem;
 	float:left;
 	height: 200px; /*Ajusta el tamaño del contenedor y la imagen*/
-	width:200px;	
+	width:200px;
 	padding-left: 1rem;
 }
 
@@ -104,7 +104,7 @@ img{
 	color: black;
 	padding-top: 0.5rem;
 	padding-left: 0.5rem;
-	width: 17%;
+	width: 18%;
 	text-align: center;
 }
 

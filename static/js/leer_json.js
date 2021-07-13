@@ -71,6 +71,7 @@ function mi_funcion() {
 			var lt; //valor del nivel actual
 			var valorminimo;
 			var nivel;
+			var lt_porcentaje;
 
 			for (var tk in datos) {
 				var idtk = tk.toString(); //tomo el id del tanque, uno por celda
@@ -78,16 +79,13 @@ function mi_funcion() {
 				$("#idtanque" + tq).text(datos[idtk]["TANQUE"]);
 				$("#tov" + tq).text(datos[idtk]["TOV"]);
 				$("#nsv" + tq).text(datos[idtk]["NSV"]);
-				lt = datos[idtk]["LT"];
-				valorminimo = datos[idtk]["VALORMINIMO"];
-				valormaximo = datos[idtk]["VALORMAXIMO"];
-
-				//calculo nivel
-				var valor = (100 * (lt - valorminimo) / (valormaximo - valorminimo)).toFixed(2);
 				$("#lt" + tq).text(datos[idtk]["LT"]);
+				lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
+				lt = datos[idtk]["LT"];
+
 				nivel = document.getElementById("barra" + tq); //nivel en UI
-				nivel.style.width = valor + "%"; /*barra*/
-				$("#nivel" + tq).text(valor + "%");
+				nivel.style.width = lt_porcentaje + "%"; /*barra*/
+				$("#nivel" + tq).text(lt_porcentaje + "%");
 				t++ //paso a la celda siguiente (tanque)
 				datos_anterior = datos;//Evita actualizar datos innecesariamente
 			}
@@ -142,7 +140,6 @@ function mi_funcion() {
 				}
 			}
 			if (lt_normal) {
-				console.log(lt_normal);
 				//nivel normañ	
 				flag_lt_critica[t] = false;	
 				flag_lt_urgente[t] = false;
