@@ -24,7 +24,7 @@ class Command(BaseCommand):
         # puertos validos por encima de 1024 en sistemas Linux Android Unix.
         slaveport = 5002
 
-        slaveip = '192.168.1.40'  # ip del esclavo para modbus TCP
+        slaveip = '192.168.1.53'  # ip del esclavo para modbus TCP
 
         # declara la conexión
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -68,10 +68,11 @@ class Command(BaseCommand):
                         # Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
                         # Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
                         idtag = tag.pk  # Del mdelo Tag
-                        tag_addres = int(tag.direccion_campo) - \
-                            1  # Del mdelo Tag
+                        tag_addres = int(tag.direccion_campo)-1  # Del mdelo Tag
                         # DATA PARA TRASNFERIR
+                        #print(tag_addres)
                         Current_Value = [idtag, Pv0, Pv1]
+                        print(Current_Value)
 
                        # ESCRIBIR
                         # message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
@@ -93,8 +94,12 @@ class Command(BaseCommand):
                                            'REGISTRO_1': leer[0],
                                            'REGISTRO_2': leer[1],
                                            'TIMESTAMP': timestamp,
-                                           'INDEXADO': False
+                                           'INDEXADO': False,
+                                           'DIRECCIONCAMPO': tag.direccion_campo,
+                                           'TAG_ADDRES':    tag_addres,
+
                                            }
+                        print(Data_Cruda_Temp)
 
                         Data_Cruda['Data_Cruda'].append(Data_Cruda_Temp)
                         # print(Data_Cruda)

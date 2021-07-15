@@ -95,7 +95,7 @@ class Command(BaseCommand):
 
                          Presion_tk = vb_PV
                          idtag_pt = tag_ins.pk
-                         timestam_pt = vb_timestamp_DC
+                         timestamp_pt = vb_timestamp_DC
 
                          pt_estado=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
                          pt_normal=pt_estado['normal']
@@ -107,18 +107,18 @@ class Command(BaseCommand):
 
                          temperatura_producto=vb_PV
                          idtag_tt = tag_ins.pk
-                         timestam_tt = vb_timestamp_DC
+                         timestamp_tt = vb_timestamp_DC
 
                          tt_estado=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-                         tt_normal=lt_estado['normal']
-                         tt_urgente=lt_estado['urgente']
-                         tt_critica=lt_estado['critica']
+                         tt_normal=tt_estado['normal']
+                         tt_urgente=tt_estado['urgente']
+                         tt_critica=tt_estado['critica']
 
                     if (tag_ins.etiqueta1=='lta'):
                               # if idtag_DC.etiqueta1=='lta':
                          nivel_agua_libre=vb_PV
                          idtag_lta = tag_ins.pk
-                         timestam_lta = vb_timestamp_DC
+                         timestamp_lta = vb_timestamp_DC
 
                          lta_estado=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
                          lta_normal=lta_estado['normal']
@@ -129,7 +129,7 @@ class Command(BaseCommand):
                                #if idtag_DC.etiqueta1=='ays':
                          ays=vb_PV
                          idtag_ays = tag_ins.pk
-                         timestam_ays = vb_timestamp_DC
+                         timestamp_ays = vb_timestamp_DC
 
                          ays_estado=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
                          ays_normal=ays_estado['normal']
@@ -142,12 +142,13 @@ class Command(BaseCommand):
                          nivel_producto=vb_PV
                          idtag_lt = tag_ins.pk
                          lt_unidad = tag_ins.Unidad
-                         timestam_lt = vb_timestamp_DC
+                         timestamp_lt = vb_timestamp_DC
 
                          lt_estado=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
                          lt_normal=lt_estado['normal']
                          lt_urgente=lt_estado['urgente']
                          lt_critica=lt_estado['critica']
+                         print(nivel_producto)
 
 
 

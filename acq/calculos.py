@@ -18,7 +18,7 @@ def Alarmas(vp,ll,l,h,hh):
     return status
 
 def Escalamiento(valormedido, minimo, maximo):
-    valorescalado = (100 * valormedido / (minimo - maximo))
+    valorescalado = (100 * valormedido / (maximo - minimo))
     return(round(valorescalado,2))
 
 
