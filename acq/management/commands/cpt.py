@@ -162,12 +162,14 @@ class Command(BaseCommand):
                                                 gsv = volumenes['GSV']
                                                 nsv = volumenes['NSV']
 
-                                                porcentaje = Escalamiento(nivel_producto, tag_ins.ValorMinimo, tag_ins.ValorMaximo
+                                                porcentaje = Escalamiento(nivel_producto, tag_ins.ValorMinimo, tag_ins.ValorMaximo)
+
 
 
 
                                                 #instance_tov = Tag.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='TOV')
                                                 instance_tov = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='TOV')
+
                                                 timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                                                 tov_estado=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
                                                 tov_normal=tov_estado['normal']
@@ -215,7 +217,7 @@ class Command(BaseCommand):
                                                        "LT":    str(nivel_producto),
                                                        "VALORMAXIMO": tag_ins.ValorMaximo,
                                                        "VALORMINIMO": tag_ins.ValorMinimo,
-                                                       "LT_PORCENTAJE": porcentaje
+                                                       "LT_PORCENTAJE": porcentaje,
                                                        "PT":    str(Presion_tk),
                                                        "TT":    str(temperatura_producto),
                                                        "LTA":   str(nivel_agua_libre),

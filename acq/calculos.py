@@ -1,12 +1,9 @@
-
-
 # OBTENER TOV A TRAVES DEL NIVEL MEDIDO
 from .models import Tag, Tk, Tct
 import numpy as np
 import struct
 import sys
 import time
-
 
 def Alarmas(vp,ll,l,h,hh):
     status={}
@@ -22,7 +19,7 @@ def Alarmas(vp,ll,l,h,hh):
 
 def Escalamiento(valormedido, minimo, maximo):
     valorescalado = (100 * valormedido / (minimo - maximo))
-    return(round(valorescalado,2)
+    return(round(valorescalado,2))
 
 
 def FloatIeee754(registro1,registro2):
