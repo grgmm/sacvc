@@ -16,13 +16,15 @@ html, body {
 	position: absolute;
 	/*posicion respecto a la esquina superior izquierda de body*/
 	top: 10%; /* mayor que height de la imagen*/
-	left: 5%; /*(100%-(width:24%))/2*/
+	left: 3%; /*(100%-(width:24%))/2*/
 	height: auto;
 	overflow-x: hidden;
-	width: 90%;
+	width: 94%;
 	background-color: none;
 	border-radius: 10px;
 }
+
+
 
 #tablaExterna {
 	margin-top: 40px;
@@ -30,6 +32,10 @@ html, body {
 	height: 80%;
 	margin: 0 auto;
 	margin-bottom: 2rem;
+}
+
+#tablaInterna{
+//width: 30%;
 }
 
 tr td{
@@ -42,23 +48,18 @@ label {
 	display: inline-block;
 }
 
-label, #nsv, #tov, #lt, #tanque{
+label, .nsv, .tov, .lt, .tanque, .nivel{
 	font-weight: bold;
-	font-size: 1.4rem;
-}
-
-p{
-	font-weight: bold;
-	font-size: 1.4rem;	
+	font-size: 1.3rem;	
 }
 
 .idtanque{
 	color: white;
+	font-size: 1.4rem;
 }
 
-label, .nsv, .tov, .lt{
-	margin: 2% 15%;
-	
+label, .nsv, .tov, .lt, .tanque{
+	margin: 2% 0%;
 }
 
 label[for=encabezado] {

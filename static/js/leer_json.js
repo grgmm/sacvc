@@ -75,9 +75,9 @@ function mi_funcion() {
 			var tq = t.toString();
 
 			$("#idtanque" + tq).text(datos[idtk]["TANQUE"]);
-			$("#tov" + tq).text(datos[idtk]["TOV"]);
-			$("#nsv" + tq).text(datos[idtk]["NSV"]);
-			$("#lt" + tq).text(datos[idtk]["LT"]);
+			$("#tov" + tq).text(datos[idtk]["TOV"]+" "+datos[idtk]["TOV_UNIDAD"]);
+			$("#nsv" + tq).text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
+			$("#lt" + tq).text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
 			lt = datos[idtk]["LT"];
 

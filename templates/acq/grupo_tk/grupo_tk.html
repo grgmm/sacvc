@@ -26,33 +26,26 @@
 									</div>
 								</div>
 						</a>
-						<table id="tablaInterna">
+						<table class="tablaInterna">
 							<tr>
 								<br><br>
 								<td>
 
 									<label class="variable">TOV:</label>
-									<!--<p class="tov">{{tk.current_data.TOV}}</p>-->
 									<p id="tov" class="tov">--</p>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<label class="variable">NSV:</label>
-									<!--<p class="nsv">{{tk.current_data.NSV}}</p>-->
 									<p id="nsv" class="nsv">--</p>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<label class="variable">LT:</label>
-									<!--<p class="lt">{{tk.current_data.LT}}</p>-->
 									<p id="lt" class="lt">--</p>
 								</td>
-							</tr>
-							<tr>
-								<p id="cero" style="display: none;"></p>
-								<p id="span" style="display: none;"></p>
 							</tr>
 						</table>
 					{% cycle '' '' '</td></tr><tr>' %}
