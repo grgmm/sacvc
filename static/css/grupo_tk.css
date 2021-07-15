@@ -57,7 +57,7 @@ p{
 }
 
 label, .nsv, .tov, .lt{
-	margin: 5% 15%;
+	margin: 2% 15%;
 	
 }
 
@@ -82,7 +82,7 @@ label[for=encabezado] {
 	margin-left:2rem;
 	float:left;
 	height: 200px; /*Ajusta el tamaño del contenedor y la imagen*/
-	width:200px;	
+	width:200px;
 	padding-left: 1rem;
 }
 
@@ -102,10 +102,11 @@ img{
 
 .nivel{
 	color: black;
-	padding-top: 0.5rem;
-	padding-left: 0.5rem;
-	width: 17%;
+	width: 22%;
 	text-align: center;
+	height: 1.5rem;
+	margin-top: 0.3rem;
+	padding-top: 0.3rem;
 }
 
 .contenedor_barra{

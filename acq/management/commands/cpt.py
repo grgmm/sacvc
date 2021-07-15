@@ -141,6 +141,7 @@ class Command(BaseCommand):
 
                          nivel_producto=vb_PV
                          idtag_lt = tag_ins.pk
+                         lt_unidad = tag_ins.Unidad
                          timestam_lt = vb_timestamp_DC
 
                          lt_estado=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
@@ -170,11 +171,14 @@ class Command(BaseCommand):
                                                 #instance_tov = Tag.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='TOV')
                                                 instance_tov = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='TOV')
 
+
                                                 timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                                                 tov_estado=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
                                                 tov_normal=tov_estado['normal']
                                                 tov_urgente=tov_estado['urgente']
                                                 tov_critica=tov_estado['critica']
+                                                tov_unidad = instance_tov.Unidad
+
 
 
                                                 instance_gsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='GSV')
@@ -183,6 +187,7 @@ class Command(BaseCommand):
                                                 gsv_normal=gsv_estado['normal']
                                                 gsv_urgente=gsv_estado['urgente']
                                                 gsv_critica=gsv_estado['critica']
+                                                gsv_unidad = instance_gsv.Unidad
 
 
 
@@ -192,6 +197,7 @@ class Command(BaseCommand):
                                                 nsv_normal=nsv_estado['normal']
                                                 nsv_urgente=nsv_estado['urgente']
                                                 nsv_critica=nsv_estado['critica']
+                                                nsv_unidad = instance_nsv.Unidad
 
 
                                             except:
@@ -212,9 +218,13 @@ class Command(BaseCommand):
                                                        "IDLTA": idtag_lta,
                                                        "IDAYS": idtag_ays,
                                                        "TOV":   str(tov),
+                                                       "TOV_UNIDAD":    tov_unidad ,
                                                        "GSV":   str(gsv),
+                                                       "GSV_UNIDAD":    gsv_unidad ,
                                                        "NSV":   str(nsv),
+                                                       "NSV_UNIDAD":    nsv_unidad ,
                                                        "LT":    str(nivel_producto),
+                                                       "LT_UNIDAD":    lt_unidad ,
                                                        "VALORMAXIMO": tag_ins.ValorMaximo,
                                                        "VALORMINIMO": tag_ins.ValorMinimo,
                                                        "LT_PORCENTAJE": porcentaje,
@@ -258,10 +268,10 @@ class Command(BaseCommand):
                                                        }
 
 
-               print(Data_Calculada)
+
                Data_tanques_temp={tag_ins.id_Tk.pk:Data_Calculada}
                Data_tanques.update(Data_tanques_temp)
-
+               print(Data_tanques)
 
 
                try:
