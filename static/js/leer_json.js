@@ -1,8 +1,6 @@
 flag_configurar = false; //Codigo que sera ejecutado solo al cargar o refrescar la pagina
 ntanq = 0;//numero de tanques
 datos_anterior = null; //Copia de json de ultimo refresh
-//flag_lt_critica = []; //flag para on/off cuando la alarma esta activa
-//flag_lt_urgente = [];//flag para on/off cuando la alarma esta activa
 flag_alarma=false;
 
 function mi_funcion() {
@@ -18,6 +16,7 @@ function mi_funcion() {
 			//solo se ejecuta si el json cambia
 			actualizar_vista(datos);
 		}
+		//debe actualizarse cada refresh para que pueda existir el blinking
 		manejar_alarmas(datos);
 	})
 	function configurar(datos) {
@@ -48,10 +47,6 @@ function mi_funcion() {
 						var att = document.createAttribute("id");
 						att.value = id + contador.toString();
 						mi_id.setAttributeNode(att);
-
-						//genero los arrys de alarma	
-						//flag_lt_critica[contador] = false;
-						//flag_lt_urgente[contador] = false;
 					}
 				}
 			}
@@ -65,7 +60,6 @@ function mi_funcion() {
 		//solo se ejecuta si el json cambia
 		var t = 1;//EMPIEZO POR LA CELDA1 (TANQUE1)
 		var valormaximo;//valor del span
-		var lt; //valor del nivel actual
 		var valorminimo;
 		var nivel;
 		var lt_porcentaje;
@@ -79,14 +73,12 @@ function mi_funcion() {
 			$("#nsv" + tq).text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
 			$("#lt" + tq).text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
-			lt = datos[idtk]["LT"];
-
 			nivel = document.getElementById("barra" + tq); //nivel en UI
 			nivel.style.width = lt_porcentaje + "%"; //barra de progreso
 			$("#nivel" + tq).text(lt_porcentaje + "%");//Valor numerico del nivel
 			t++ //paso a la celda siguiente (tanque)
-			datos_anterior = datos;//Evita actualizar datos innecesariamente
 		}
+		datos_anterior = datos;//Evita actualizar datos innecesariamente
 		console.log("datos actualizados");
 	}
 
@@ -102,18 +94,14 @@ function mi_funcion() {
 		for (var tk in datos) {
 			idtk = tk.toString(); //tomo el id del tanque, uno por celda
 			tq = t.toString();
-			lt = datos[idtk]["LT"];
-			//lt_normal = datos[idtk]["LT_NORMAL"];
 			lt_urgente = datos[idtk]["LT_URGENTE"];
 			lt_critica = datos[idtk]["LT_CRITICA"];
 
 			//Calculo de alarmas
 			if (lt_critica) {
-				//flag_lt_critica[t] = !flag_lt_critica[t];
 				$("#barra" + tq).css('background', 'red');//color de barra
 				$("#nivel" + tq).css('background', 'red');//color de fondo de la fuente
 				$("#nivel" + tq).css('color', 'black');//color de fuente
-				//if (flag_lt_critica[t]) {
 				if (flag_alarma) {
 					//on
 					$("#nivel" + tq).css('background', 'red');
@@ -123,24 +111,38 @@ function mi_funcion() {
 				}
 			} else {
 				if (lt_urgente) {
-					//flag_lt_urgente[t] = !flag_lt_urgente[t];
 					$("#barra" + tq).css('background', 'yellow');//color de barra
 					$("#nivel" + tq).css('background', 'yellow');//color de fondo de la fuente
 					$("#nivel" + tq).css('color', 'black');//color de fuente
-					//if (flag_lt_urgente[t]) {
 					if (flag_alarma) {
 						$("#nivel" + tq).css('background', 'yellow');
 					} else {
 						$("#nivel" + tq).css('background', 'none');
 					}
 				} else {
-					//flag_lt_critica[t] = false;
-					//flag_lt_urgente[t] = false;
 					$("#barra" + tq).css('background', 'black');
 					$("#nivel" + tq).css('color', 'green');
 					$("#nivel" + tq).css('background', 'black');
 				}
 			}
+			/*para el caso donde lt_porcentaje no contiene un numero;
+			Debemos definir un color en la barra y el fondo del valor*/
+			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
+			nivel = document.getElementById("barra" + tq);
+			console.log(parseFloat(lt_porcentaje)); //nivel en UI
+			console.log(typeof (parseFloat(lt_porcentaje)));
+			//console.log(typeof (parseFloat(lt_porcentaje).toString()));
+
+			if(parseFloat(lt_porcentaje).toString()=="NaN"){
+				lt_porcentaje="--.--"
+				nivel.style.width = "100" + "%"; //barra de progreso
+				$("#barra" + tq).css('background', 'gray');//color de barra
+				$("#nivel" + tq).css('background', 'gray');//color de fondo de la fuente
+				$("#nivel" + tq).css('color', 'black');
+			}
+			nivel.style.width = lt_porcentaje + "%"; //barra de progreso
+			$("#nivel" + tq).text(lt_porcentaje + "%");//Valor numerico del nivel
+
 			t++ //paso a la celda siguiente (tanque)
 		}
 		flag_alarma=!flag_alarma;

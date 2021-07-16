@@ -228,7 +228,7 @@ class Command(BaseCommand):
                                                        "LT_UNIDAD":    lt_unidad ,
                                                        "VALORMAXIMO": tag_ins.ValorMaximo,
                                                        "VALORMINIMO": tag_ins.ValorMinimo,
-                                                       "LT_PORCENTAJE": porcentaje,
+                                                       "LT_PORCENTAJE": str(porcentaje),
                                                        "PT":    str(Presion_tk),
                                                        "TT":    str(temperatura_producto),
                                                        "LTA":   str(nivel_agua_libre),
