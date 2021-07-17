@@ -251,8 +251,8 @@ class Digital(Tag):
 
 
 class Analogico(Tag):
-  ValorMinimo = models.FloatField(default= 1.0)
-  ValorMaximo = models.FloatField(default= 2.0)
+  ValorMinimo = models.FloatField(default= 0.0)
+  ValorMaximo = models.FloatField(default= 20.0)
   Unidad = models.CharField(max_length= 5)
 
   HH_Habilitar= models.BooleanField(default = True)
@@ -264,10 +264,10 @@ class Analogico(Tag):
 
   ValorInicial = models.FloatField(default=1.0)
 
-  HH = models.FloatField(default=1.0)
-  H = models.FloatField(default=1.0)
-  LL= models.FloatField(default=1.0)
-  L = models.FloatField(default=1.0)
+  HH = models.FloatField(default=18.0)
+  H = models.FloatField(default=16.0)
+  LL= models.FloatField(default=4.0)
+  L = models.FloatField(default=6.0)
   Histeresis= models.FloatField(default=1.0)
   ROC= models.FloatField(default=1.0)
 

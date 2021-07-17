@@ -289,14 +289,14 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
             qtk= Tk.objects.count()
             Analogico.objects.create(Nombre= instance.Nombre+'_lt' ,
              Descriptor='NIVEL DEL TANQUE'+ instance.Nombre  ,
-             Unidad= 'pie',
+             Unidad= 'm',
              direccion=(qtk-1)*16+1,
              id_Tk=instance,
              TipoVariable= 'B',
              direccion_campo= 100+((qtk-1)*16+1),
              etiqueta1='lt',
-             ValorMinimo=1.0,
-             ValorMaximomo=40.0,)
+             ValorMinimo=0.0,
+             ValorMaximo=19.22,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_pt',
              Descriptor='PRESION DEL TANQUE'+ instance.Nombre,
@@ -307,18 +307,18 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'B',
              etiqueta1='pt',
              ValorMinimo=1.0,
-             ValorMaximomo=1000.0,)
+             ValorMaximo=1000.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_tt',
              Descriptor='TEMPERATURA DEL TANQUE'+ instance.Nombre,
              Unidad= 'F',
              direccion=(qtk-1)*16+5,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*10+5,
+             direccion_campo= 100+(qtk-1)*16+5,
              TipoVariable= 'B',
              etiqueta1='tt',
              ValorMinimo=1.0,
-             ValorMaximomo=200.0,)
+             ValorMaximo=200.0,)
 
 
             Analogico.objects.create(Nombre= instance.Nombre +'_lta',
@@ -330,7 +330,7 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'B',
              etiqueta1='lta',
              ValorMinimo=1.0,
-             ValorMaximomo=7.0,)
+             ValorMaximo=7.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_ays',
              Descriptor='PORCENTAJE DE AGUA Y SEDIMENTO '+ instance.Nombre,
@@ -341,7 +341,7 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'C',
              etiqueta1='AYS',
              ValorMinimo=1.0,
-             ValorMaximomo=5.0,)
+             ValorMaximo=5.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
              Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
@@ -352,7 +352,7 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'C',
              etiqueta1='TOV',
              ValorMinimo=1.0,
-             ValorMaximomo=600000.0,)
+             ValorMaximo=600000.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_GSV',
              Descriptor='VOLUMEN BRUTO ESTANDAR DEL TANQUE '+ instance.Nombre,
@@ -363,7 +363,7 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'C',
              etiqueta1='GSV',
              ValorMinimo=1.0,
-             ValorMaximomo=600000.0,)
+             ValorMaximo=600000.0,)
 
             Analogico.objects.create(Nombre= instance.Nombre +'_NSV',
              Descriptor='VOLUMEN NETO ESTANDAR DEL TANQUE '+ instance.Nombre,
@@ -374,7 +374,7 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'C',
              etiqueta1='NSV',
              ValorMinimo=1.0,
-             ValorMaximomo=600000.0,)
+             ValorMaximo=600000.0,)
 
 class TkDelete(DeleteView):
     model = Tk

@@ -18,7 +18,11 @@ def Alarmas(vp,ll,l,h,hh):
     return status
 
 def Escalamiento(valormedido, minimo, maximo):
-    valorescalado = (100 * valormedido / (maximo - minimo))
+    if (maximo-minimo) != 0:
+        valorescalado = (100 * valormedido / (maximo - minimo))
+    else:
+        valorescalado = 0
+
     return(round(valorescalado,2))
 
 
@@ -78,21 +82,23 @@ def VOLUMENES(nivel_medido, ays):
         tov=0
         gsv=0
         nsv=0
-        volumenes = {
-                     }
-        #print(nivel_medido)
-        #print(idtk)
-        lolo=Tct.objects.all()
-        for lo in lolo:
-            if lo.Lt0==nivel_medido:
-                tov=lo.Tov0
-                gsv=tov-ays
-                nsv=gsv-ays
-                volumenes  = {"TOV":tov,
+        volumenes={"TOV":0,
+        "NSV":0,
+        "GSV":0, }
+
+        q=Tct.objects.all()
+
+
+        for fila in q:
+                if fila.Lt0==nivel_medido:
+                    tov=fila.Tov0
+                    gsv=tov-ays
+                    nsv=gsv-ays
+                    volumenes  = {"TOV":tov,
                         "NSV":round(nsv,3),
                         "GSV":round(gsv,3), }
-            else:
-                pass
+
+
         return(volumenes)
 
 
