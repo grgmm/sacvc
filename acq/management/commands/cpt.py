@@ -73,6 +73,7 @@ class Command(BaseCommand):
        gsv_critica=''
        gsv_urgente= ''
        gsv_normal= ''
+       data_fr= ''
        tagcount= 1
        Data_Calculada  = {                                    "TANQUE":        "",
                                                               "LT":            "",
