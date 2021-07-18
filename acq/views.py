@@ -39,6 +39,8 @@ from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
+from acq.calculos import Settings_Alarmas
+
 
 
 
@@ -286,7 +288,45 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
     def create_Tk(sender, instance, created, **kwargs):#FUNCION QUE CAPTURA LA SEÑAL DE GUARDADO DE TK Y TRABAJA CON ESA INSTANCIA DE TK
         #INICIALIZA EL TANQUE CON SUS PARAMETROS (PT,LT,TT, TOV) #FALTA INCLUIR AYS, NSV, ENTRE OTROS.
         if created:
+    ###INICIALIZANDO VALORES DE MINIMOS Y MAXIMOS Y CALCULOS DE SETTING DE ALARMAS PREDEFINIDOS
+            lt_minimo=0.0
+            lt_maximo=19.226
+            lt_alarmas=Settings_Alarmas(lt_maximo,lt_minimo)
+
+            pt_minimo=0.0
+            pt_maximo=1000.0
+            pt_alarmas=Settings_Alarmas(pt_maximo, pt_minimo)
+
+            tt_minimo=0.0
+            tt_maximo=200.0
+            tt_alarmas=Settings_Alarmas(tt_maximo, pt_minimo)
+
+            ays_minimo=0.0
+            ays_maximo=5.0
+            ays_alarmas=Settings_Alarmas(ays_maximo, ays_minimo)
+
+            lta_minimo=0.0
+            lta_maximo=7.0
+            lta_alarmas=Settings_Alarmas(lta_maximo, lta_minimo)
+
+            TOV_minimo=0.0
+            TOV_maximo=650000.0
+            TOV_alarmas=Settings_Alarmas(TOV_maximo, TOV_minimo)
+
+            GSV_minimo=0.0
+            GSV_maximo=650000.0
+            GSV_alarmas=Settings_Alarmas(GSV_maximo, GSV_minimo)
+
+            NSV_minimo=0.0
+            NSV_maximo=650000.0
+            NSV_alarmas=Settings_Alarmas(NSV_maximo, NSV_minimo)
+
+
+
             qtk= Tk.objects.count()
+
+####CREANDO PARAMETROS DE TANQUES DE FORMA AUTOMATICA
+
             Analogico.objects.create(Nombre= instance.Nombre+'_lt' ,
              Descriptor='NIVEL DEL TANQUE'+ instance.Nombre  ,
              Unidad= 'm',
@@ -295,8 +335,13 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              TipoVariable= 'B',
              direccion_campo= 100+((qtk-1)*16+1),
              etiqueta1='lt',
-             ValorMinimo=0.0,
-             ValorMaximo=19.22,)
+             ValorMinimo=lt_minimo,
+             ValorMaximo=lt_maximo,
+             LL = lt_alarmas['ll'],
+             L =  lt_alarmas['l'],
+             H =  lt_alarmas['h'],
+             HH = lt_alarmas['hh'],
+             )
 
             Analogico.objects.create(Nombre= instance.Nombre +'_pt',
              Descriptor='PRESION DEL TANQUE'+ instance.Nombre,
@@ -306,20 +351,29 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              direccion_campo= 100+(qtk-1)*16+3,
              TipoVariable= 'B',
              etiqueta1='pt',
-             ValorMinimo=1.0,
-             ValorMaximo=1000.0,)
+             ValorMinimo=pt_maximo,
+             ValorMaximo=pt_minimo,
+             LL = pt_alarmas['ll'],
+             L =  pt_alarmas['l'],
+             H =  pt_alarmas['h'],
+             HH = pt_alarmas['hh'],
+             )
 
             Analogico.objects.create(Nombre= instance.Nombre +'_tt',
              Descriptor='TEMPERATURA DEL TANQUE'+ instance.Nombre,
-             Unidad= 'F',
+             Unidad= 'f',
              direccion=(qtk-1)*16+5,
              id_Tk=instance,
              direccion_campo= 100+(qtk-1)*16+5,
              TipoVariable= 'B',
              etiqueta1='tt',
-             ValorMinimo=1.0,
-             ValorMaximo=200.0,)
-
+             ValorMinimo=tt_maximo,
+             ValorMaximo=tt_minimo,
+             LL = tt_alarmas['ll'],
+             L =  tt_alarmas['l'],
+             H =  tt_alarmas['h'],
+             HH = tt_alarmas['hh'],
+              )
 
             Analogico.objects.create(Nombre= instance.Nombre +'_lta',
              Descriptor='NIVEL DE AGUA LIBRE '+ instance.Nombre,
@@ -329,8 +383,13 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              direccion_campo= 100+(qtk-1)*16+7,
              TipoVariable= 'B',
              etiqueta1='lta',
-             ValorMinimo=1.0,
-             ValorMaximo=7.0,)
+             ValorMinimo=lta_maximo,
+             ValorMaximo=lta_minimo,
+             LL = lta_alarmas['ll'],
+             L =  lta_alarmas['l'],
+             H =  lta_alarmas['h'],
+             HH = lta_alarmas['hh'],
+              )
 
             Analogico.objects.create(Nombre= instance.Nombre +'_ays',
              Descriptor='PORCENTAJE DE AGUA Y SEDIMENTO '+ instance.Nombre,
@@ -340,41 +399,61 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
              direccion_campo= 100+(qtk-1)*16+9,
              TipoVariable= 'C',
              etiqueta1='AYS',
-             ValorMinimo=1.0,
-             ValorMaximo=5.0,)
+             ValorMinimo=ays_maximo,
+             ValorMaximo=ays_minimo,
+             LL = ays_alarmas['ll'],
+             L =  ays_alarmas['l'],
+             H =  ays_alarmas['h'],
+             HH = ays_alarmas['hh'],
+              )
 
             Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
              Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
-             Unidad= 'BLS',
+             Unidad= 'bls',
              direccion=(qtk-1)*16+11,
              id_Tk=instance,
              direccion_campo= 100+(qtk-1)*16+11,
              TipoVariable= 'C',
              etiqueta1='TOV',
-             ValorMinimo=1.0,
-             ValorMaximo=600000.0,)
+             ValorMinimo=TOV_maximo,
+             ValorMaximo=TOV_minimo,
+             LL = TOV_alarmas['ll'],
+             L =  TOV_alarmas['l'],
+             H =  TOV_alarmas['h'],
+             HH = TOV_alarmas['hh'],
+             )
 
             Analogico.objects.create(Nombre= instance.Nombre +'_GSV',
              Descriptor='VOLUMEN BRUTO ESTANDAR DEL TANQUE '+ instance.Nombre,
-             Unidad= 'BLS',
+             Unidad= 'bls',
              direccion=(qtk-1)*16+13,
              id_Tk=instance,
              direccion_campo= 100+(qtk-1)*16+13,
              TipoVariable= 'C',
              etiqueta1='GSV',
-             ValorMinimo=1.0,
-             ValorMaximo=600000.0,)
+             ValorMinimo=GSV_maximo,
+             ValorMaximo=GSV_minimo,
+             LL = GSV_alarmas['ll'],
+             L =  GSV_alarmas['l'],
+             H =  GSV_alarmas['h'],
+             HH = GSV_alarmas['hh'],
+             )
 
             Analogico.objects.create(Nombre= instance.Nombre +'_NSV',
              Descriptor='VOLUMEN NETO ESTANDAR DEL TANQUE '+ instance.Nombre,
-             Unidad= 'BLS',
+             Unidad= 'bls',
              direccion=(qtk-1)*16+15,
              id_Tk=instance,
              direccion_campo= 100+(qtk-1)*16+15,
              TipoVariable= 'C',
              etiqueta1='NSV',
-             ValorMinimo=1.0,
-             ValorMaximo=600000.0,)
+             ValorMinimo=NSV_maximo,
+             ValorMaximo=NSV_minimo,
+             LL = NSV_alarmas['ll'],
+             L =  NSV_alarmas['l'],
+             H =  NSV_alarmas['h'],
+             HH = NSV_alarmas['hh'],
+             )
 
 class TkDelete(DeleteView):
     model = Tk

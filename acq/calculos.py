@@ -102,6 +102,26 @@ def VOLUMENES(nivel_medido, ays):
         return(volumenes)
 
 
+def Settings_Alarmas(ValorMaximo,ValorMinimo):
+    """ settings inicial de alarmas basado en los valores minimo y maximo del parámetro
+    correspondiete, (5% para LL, 10% para L, 90% para H y 100% para HH)
+    """
+
+    LL=((ValorMaximo - ValorMinimo)*5/100)
+    L=((ValorMaximo - ValorMinimo)*10/100)
+    H=((ValorMaximo - ValorMinimo)*90/100)
+    HH=((ValorMaximo - ValorMinimo)*95/100)
+    settings_alarmas = {"ll":LL,
+        "l":L,
+        "h":H,
+        'hh':HH, }
+
+
+
+    return settings_alarmas
+
+
+
 
 
         #if (Tct.objects.all().count() != 0) and (nivel_medido != 0 ):

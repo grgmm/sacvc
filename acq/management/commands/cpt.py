@@ -240,9 +240,6 @@ class Command(BaseCommand):
                              porcentaje = Escalamiento(nivel_producto, tag_ins.ValorMinimo, tag_ins.ValorMaximo)
                              print(porcentaje)
 
-
-
-
                              instance_tov = Analogico.objects.get(id_Tk = tag_ins.id_Tk.pk, etiqueta1='TOV')
 
 
@@ -252,8 +249,6 @@ class Command(BaseCommand):
                              tov_urgente=tov_estado['urgente']
                              tov_critica=tov_estado['critica']
                              tov_unidad = instance_tov.Unidad
-
-
 
 
                              instance_gsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='GSV')
@@ -346,7 +341,7 @@ class Command(BaseCommand):
 
                Data_tanques_temp={tag_ins.id_Tk.pk:Data_Calculada}
                Data_tanques.update(Data_tanques_temp)
-               #print(Data_tanques)
+               print(Data_tanques)
 
 
                try:
