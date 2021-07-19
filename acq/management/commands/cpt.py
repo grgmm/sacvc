@@ -1,6 +1,6 @@
 import json
 from django.core.management.base import BaseCommand
-from acq.models import Tk, Tag, Analogico
+from acq.models import Tk, Tag, Analogico, Tct
 from acq.calculos import VOLUMENES, FloatIeee754, Alarmas, Escalamiento
 from datetime import datetime
 import time
@@ -14,6 +14,13 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
        timestamp=""
        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+
+
+
+
+
+
+
 
        # CALCULAR TOV PARTIENDO DEL NIVEL MEDIDO PROVENIENTE DEL MODULO DE ADQUISICION ACQ
 
@@ -227,20 +234,22 @@ class Command(BaseCommand):
                          lt_normal=lt_estado['normal']
                          lt_urgente=lt_estado['urgente']
                          lt_critica=lt_estado['critica']
-                         print(lt_estado)
+                         #print(lt_estado)
 
 
                          try:
                              time.sleep(1)
 
                              volumenes=VOLUMENES(nivel_producto,ays)
-                             print(volumenes)
+                             #print(volumenes)
                              tov = volumenes['TOV']
                              gsv = volumenes['GSV']
                              nsv = volumenes['NSV']
 
+
+
                              porcentaje = Escalamiento(nivel_producto, tag_ins.ValorMinimo, tag_ins.ValorMaximo)
-                             print(porcentaje)
+                             #print(porcentaje)
 
                              instance_tov = Analogico.objects.get(id_Tk = tag_ins.id_Tk.pk, etiqueta1='TOV')
 

@@ -48,6 +48,7 @@ from acq.calculos import Settings_Alarmas
 def actualizar(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
     ruta_Data=fs.location
+    dataf= {}
     try:
           with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'r') as data_file:
                dataf = json.loads(data_file.read())

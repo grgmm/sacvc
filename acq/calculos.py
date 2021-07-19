@@ -77,8 +77,6 @@ def FloatIeee754(registro1,registro2):
         #return(fvalue1)
 
 def VOLUMENES(nivel_medido, ays):
-        lt_tct=0
-        lt_t0v=0
         tov=0
         gsv=0
         nsv=0
@@ -89,14 +87,37 @@ def VOLUMENES(nivel_medido, ays):
         q=Tct.objects.all()
 
 
-        for fila in q:
-                if fila.Lt0==nivel_medido:
-                    tov=fila.Tov0
-                    gsv=tov-ays
-                    nsv=gsv-ays
-                    volumenes  = {"TOV":tov,
-                        "NSV":round(nsv,3),
-                        "GSV":round(gsv,3), }
+        first_reg=Tct.objects.all().first()
+        last_reg=Tct.objects.all().last()
+
+        if nivel_medido > last_reg.Lt0:
+            tov=last_reg.Tov0
+            gsv=tov-ays
+            nsv=gsv-ays
+            volumenes  = {"TOV":tov,
+                "NSV":round(nsv,3),
+                "GSV":round(gsv,3), }
+        else:
+            if nivel_medido < first_reg.Lt0:
+                tov=first_reg.Tov0
+                gsv=tov-ays
+                nsv=gsv-ays
+                volumenes  = {"TOV":tov,
+                    "NSV":round(nsv,3),
+                    "GSV":round(gsv,3), }
+            else:
+
+
+
+
+                for fila in q:
+                        if fila.Lt0==nivel_medido:
+                            tov=fila.Tov0
+                            gsv=tov-ays
+                            nsv=gsv-ays
+                            volumenes  = {"TOV":tov,
+                                "NSV":round(nsv,3),
+                                "GSV":round(gsv,3), }
 
 
         return(volumenes)
