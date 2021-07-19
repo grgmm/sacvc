@@ -1201,51 +1201,63 @@ class grupo_tk(LoginRequiredMixin, ListView):
       filtro=qs.filter(id_aor__in=aoruser)
       return filtro
 
-      ''' def get_context_data(self, **kwargs):
-      context = super().get_context_data(**kwargs)
-      fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
-      ruta_Data=fs.location
-      if self.get_queryset:
-          filtro_tks=self.get_queryset()
-
-          try:
-              with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'r') as data_file:
-
-                  data = json.loads(data_file.read())
-                  #print(data)
-
-
-          except:
-                  print("Error inesperado:", sys.exc_info()[0])
-
-
-
-          for tk_instance in filtro_tks:
-              #context['TOV'] = 300
-              #context['NSV'] = 280
-              print('iterando')
-              print(type(tk_instance.pk))
-              print(type(data['IDTK']))
-              if (tk_instance.pk == int(data['IDTK'])):
-                  print('paso')
-                  context = {"Data":[{"tanque":data["IDTK"], "Data_tk":data}]
-                            }
-
-
-                  print(context)
-
-          return context
-
-
-
-      else:
-
-        return redirect('/sacvc/logout')
-      '''
 
 
 class detalle_tk(LoginRequiredMixin, DetailView):
     model = Tk
     template_name = 'acq/detalle_tk/detalle_tk.html'
-    fields = ['Nombre', 'Descriptor', 'id_patioTanque','pk']
+    fields = ['Nombre', 'Descriptor', 'id_patioTanque','pk', 'current_data',]
     success_url= '/sacvc/grupo_tk/'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+        ruta_Data=fs.location
+
+        DataTk= self.object.current_data
+        idtk=(str(self.object.pk))
+        Nombretk=self.object.Nombre
+        Descriptortk= self.object.Descriptor
+        Aortk= self.object.id_aor
+        instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
+        tovmaximo=instov.ValorMaximo
+        tovminimo=instov.ValorMinimo
+        print(tovmaximo)
+
+
+
+
+
+         #print(DataTk)
+        DataTk_temp= {}
+
+        #print(self.objec)
+
+        """if (DataTk_temp[idtk]== ):
+            print('PASO')"""
+
+        try:
+            with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode ='r') as data_file:
+                DataTk_temp = json.loads(data_file.read())
+
+                for item in DataTk_temp.keys():
+
+                    if idtk == item:
+                        context['Nombre']=Nombretk
+                        context['Descriptor']=Descriptortk
+                        context['Aor']=Aortk
+                        context['TOV_MAXIMO']=tovmaximo
+                        context['TOV_MINIMO']=tovminimo
+
+
+                        context['Data']=DataTk_temp[idtk]
+
+
+
+        except:
+            print("Error inesperado:", sys.exc_info()[0])
+
+        print(context)
+        return context

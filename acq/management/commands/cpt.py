@@ -75,6 +75,7 @@ class Command(BaseCommand):
        gsv_normal= ''
        data_fr= ''
        tagcount= 1
+       idtag_DC=1
        Data_Calculada  = {                                    "TANQUE":        "",
                                                               "LT":            "",
                                                               "LT_PORCENTAJE": "",
@@ -355,7 +356,7 @@ class Command(BaseCommand):
 
 
                tk=Tk.objects.get(pk=tag_ins.id_Tk.pk)
-               tk.current_data  = Data_Calculada #A Base de Datos
+               tk.current_data  = Data_tanques #A Base de Datos
 
                tk.save()
                            #idtk_DC_int=Analogico_DC.id_Tk
