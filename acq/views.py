@@ -43,12 +43,12 @@ from acq.calculos import Settings_Alarmas
 
 
 
-
 #abre un archivo json en modo lectura
 def actualizar(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
     ruta_Data=fs.location
     dataf= {}
+
     try:
           with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'r') as data_file:
                dataf = json.loads(data_file.read())
@@ -62,7 +62,7 @@ class current_data(ListView):
   success_url = reverse_lazy('uacq:list_tf')
   template_name = 'acq/current_data/current_data.html'
 '''
-class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
+class patiotanquelist(ListView):
      #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = PatioTanque
@@ -74,8 +74,8 @@ class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
-                    print(g.name)
+                print(g.name)
+    # Grupos a los que el usuario pertence
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -87,7 +87,7 @@ class patiotanquelist(ListView):  #VALIDADO PRELIMINAR
         else:
             return redirect('/sacvc/logout')
 
-class PatiotanqueAdd(CreateView): #VALIDADO PRELIMINAR
+class PatiotanqueAdd(CreateView):
     model = PatioTanque
     fields = ['Nombre', 'Descriptor',]
     template_name = 'acq/add_tf/add_tf.html'
@@ -98,8 +98,7 @@ class PatiotanqueAdd(CreateView): #VALIDADO PRELIMINAR
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -123,8 +122,7 @@ class PatiotanqueDelete(DeleteView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -145,7 +143,7 @@ class PatiotanqueDetail(DetailView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -168,7 +166,7 @@ class PatiotanqueUpdate(UpdateView):
 
           filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
-                  print(g.name)
+              print(g.name)
 
           if (not g.name =='supervisores'):
               print('Usuario sin Perfil')
@@ -187,7 +185,6 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
     def get_queryset(self):
       qs = super(tklist, self).get_queryset()
-      #print(qs)
       filtro= qs.filter(id_patioTanque__exact=self.kwargs['exp'])
       patio=self.kwargs['exp']
 
@@ -214,7 +211,7 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
 
               filtro_usuario = Group.objects.filter(user = request.user)
               for g in filtro_usuario:
-                      print(g.name)
+                  print(g.name)
 
               if (not g.name =='supervisores'):
                   print('Usuario sin Perfil')
@@ -226,15 +223,13 @@ class tklist(ListView): #LISTADO TANQUES DE UN TERMINAL
           else:
               return redirect('/sacvc/logout')
 
-class TkAdd(CreateView): #VALIDADO PRELIMINAR
+class TkAdd(CreateView):
     model = Tk
     fields = ['Nombre', 'Descriptor', 'id_patioTanque','id_aor',]
     template_name = 'acq/add_tk/add_tk.html'
 
-    def get_success_url(self):    #OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
+    def get_success_url(self):    #ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
                                   #DE REGRESO DE LA VISTA
-            print(self.object.id_patioTanque.pk)
-
             success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
             return(success_url)
 
@@ -248,7 +243,6 @@ class TkAdd(CreateView): #VALIDADO PRELIMINAR
             with fs.open(ruta_Data+'/tk_iniciales.json', mode= 'r') as data_file:
 
                 self.initial = json.loads(data_file.read())
-                print(self.initial)
 
                 context['patio'] = (self.initial['id_patioTanque'])
 
@@ -461,7 +455,6 @@ class TkDelete(DeleteView):
     template_name = 'acq/del_tk/del_tk.html'
 
     def get_success_url(self):
-            print(self.object.id_patioTanque.pk)
 
             success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
             return(success_url)
@@ -472,7 +465,7 @@ class TkDelete(DeleteView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -490,7 +483,6 @@ class TkDetail(DetailView):
     fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'fecha_subida_tct']
 
     def get_success_url(self):
-            print(self.object.id_patioTanque.pk)
 
             success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
             return(success_url)
@@ -500,7 +492,7 @@ class TkDetail(DetailView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -518,7 +510,6 @@ class TkUpdate(UpdateView):
   template_name = 'acq/edit_tk/edit_tk.html'
 
   def get_success_url(self):
-         print(self.object.id_patioTanque.pk)
 
          success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
          return(success_url)
@@ -529,7 +520,7 @@ class TkUpdate(UpdateView):
 
           filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
-                  print(g.name)
+              print(g.name)
 
           if (not g.name =='supervisores'):
               print('Usuario sin Perfil')
@@ -578,7 +569,7 @@ class Validar_Tct(UpdateView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -600,7 +591,6 @@ def integridad_TCT(request, pk):
 
   try:
       obj = Tk.objects.get(pk=pk)
-      print(obj.fecha_subida_tct)
 
   except Tk.DoesNotExist:
     raise Http404("Tk no existe")
@@ -660,7 +650,6 @@ def Valores_Actuales(request):
            #INSTANCIANDO tk,tag
 
        TAG=Tag.objects.get(pk=data_fr['IDTAG'])
-       #print(TAG)
        idtk=TAG.id_Tk.pk
 
        TK=Tk.objects.get(pk=idtk)
@@ -676,7 +665,7 @@ def Valores_Actuales(request):
         }
        return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data':data})
 
-class Menu(View): #VALIDADO PRELIMINAR
+class Menu(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -699,7 +688,7 @@ class Menu(View): #VALIDADO PRELIMINAR
         else:
                 return redirect('/sacvc/logout')
 
-class LoginView(FormView): #VALIDADO PRELIMINAR
+class LoginView(FormView):
     form_class = AuthenticationForm
     template_name = "acq/authent/login.html"
     success_url =  reverse_lazy('sacvc:Menu')
@@ -709,7 +698,6 @@ class LoginView(FormView): #VALIDADO PRELIMINAR
     def dispatch(self, request, *args, **kwargs):
 
         if request.user.is_authenticated:
-            #print(request.user.is_authenticated)
 
             return HttpResponseRedirect('sacvc:Menu' )
             #return HttpResponseRedirect(self.get_success_url())
@@ -722,7 +710,7 @@ class LoginView(FormView): #VALIDADO PRELIMINAR
         login(self.request, form.get_user())
         return super(LoginView, self).form_valid(form)
 
-class LogoutView(RedirectView): #VALIDADO PRELIMINAR
+class LogoutView(RedirectView):
     pattern_name = 'sacvc:login'
 
     def get(self, request, *args, **kwargs):
@@ -732,7 +720,7 @@ class LogoutView(RedirectView): #VALIDADO PRELIMINAR
 def welcome(request):
     return redirect('/sacvc/logout')
 
-class usuarioslist(ListView):  #VALIDADO PRELIMINAR
+class usuarioslist(ListView):
 
     model = usuario
     template_name = 'acq/list_user/list_user.html'
@@ -742,8 +730,7 @@ class usuarioslist(ListView):  #VALIDADO PRELIMINAR
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -769,8 +756,7 @@ class usuariosedit(UpdateView):
 
           filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
-  # this should print all group names for the user
-                  print(g.name)
+              print(g.name)
 
           if (not g.name =='supervisores'):
               print('Usuario sin Perfil')
@@ -793,7 +779,6 @@ class edit_patio_user(UpdateView):
 
   def get_success_url(self):    #OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
                                  #DE REGRESO DE LA VISTA
-           #print(self.object.id_patioTanque.pk)
 
            success_url=('/sacvc/edit_user/'+str(self.object.user.pk))
            return(success_url)
@@ -803,7 +788,7 @@ class edit_patio_user(UpdateView):
 
           filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
-                  print(g.name)
+              print(g.name)
 
           if (not g.name =='supervisores'):
               print('Usuario sin Perfil')
@@ -827,7 +812,6 @@ class Aor_user_edit(UpdateView):
 
   def get_success_url(self):    #OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
                                 #DE REGRESO DE LA VISTA
-          #print(self.object.id_patioTanque.pk)
 
           success_url=('/sacvc/edit_user/'+str(self.object.user.pk))
           return(success_url)
@@ -837,7 +821,7 @@ class Aor_user_edit(UpdateView):
 
           filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
-                  print(g.name)
+              print(g.name)
 
           if (not g.name =='supervisores'):
               print('Usuario sin Perfil')
@@ -859,12 +843,11 @@ class usuariosadd(CreateView):
 
 
       def get(self, request, *args, **kwargs):
-           print(self.fields)
            if request.user.is_authenticated:
 
                filtro_usuario = Group.objects.filter(user = request.user)
                for g in filtro_usuario:
-                       print(g.name)
+                   print(g.name)
 
                if (not g.name =='supervisores'):
                    print('Usuario sin Perfil')
@@ -903,7 +886,7 @@ class usuariosdelete(DeleteView):
 
              filtro_usuario = Group.objects.filter(user = request.user)
              for g in filtro_usuario:
-                     print(g.name)
+                 print(g.name)
 
              if (not g.name =='supervisores'):
                  print('Usuario sin Perfil')
@@ -926,9 +909,7 @@ class usuariodetail(DetailView):
             filtro_usuario_grupos = Group.objects.filter(user = self.object.pk)
 
             for g in filtro_usuario_grupos:
-                    #print(g.name)
                     context['grupos'] =g.name
-                    #print(context)
             qs = self.object.patios.all()
             qsaor= self.object.aor.all()
             patiosuser=[]
@@ -944,8 +925,6 @@ class usuariodetail(DetailView):
                 context['aoruser']=aoruser
 
 
-            #print(patiosuser)
-
             return context
 
         def get(self, request, *args, **kwargs):
@@ -954,7 +933,7 @@ class usuariodetail(DetailView):
                 filtro_usuario = Group.objects.filter(user = request.user)
 
                 for g in filtro_usuario:
-                        print(g.name)
+                    print(g.name)
 
                 if (not g.name =='supervisores'):
                     print('Usuario sin Perfil')
@@ -981,7 +960,6 @@ class Cambiar_Clave(FormView):
     #self.obj = self.get_object()
     form_class = self.get_form_class()
     form = self.get_form(form_class)
-    #print(form)
     context = super(Cambiar_Clave, self).get_context_data(**kwargs)
 
     context['form'] = form
@@ -1004,7 +982,6 @@ class Cambiar_Clave(FormView):
             print('LAS CLAVES NO COINCIDEN')
             clave_valida=''
 
-    print(clave_valida)
 
     return self.render_to_response(context)
 
@@ -1012,7 +989,7 @@ class Cambiar_Clave(FormView):
          print('Datos no Válidos')
          return super().form_valid(form)
 
-class Menu_Vistas(View): #VALIDADO PRELIMINAR
+class Menu_Vistas(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -1031,7 +1008,7 @@ class Menu_Vistas(View): #VALIDADO PRELIMINAR
         else:
                 return redirect('/sacvc/logout')
 
-class Aor_add(CreateView): #VALIDADO PRELIMINAR
+class Aor_add(CreateView):
     model = AOR
     fields = ['Nombre', 'Descriptor', 'id_patioTanque']
     template_name = 'acq/add_aor/add_aor.html'
@@ -1042,8 +1019,7 @@ class Aor_add(CreateView): #VALIDADO PRELIMINAR
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -1064,7 +1040,6 @@ class Aor_edit(UpdateView):
 
   def get_success_url(self):    #OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
                                   #DE REGRESO DE LA VISTA
-            #print(self.object.id_patioTanque.pk)
             print(self.object.id_patioTanque.pk)
             success_url=('/sacvc/list_aor/'+str(self.object.id_patioTanque.pk))
             return(success_url)
@@ -1076,8 +1051,7 @@ class Aor_edit(UpdateView):
 
           filtro_usuario = Group.objects.filter(user = request.user)
           for g in filtro_usuario:
-  # this should print all group names for the user
-                  print(g.name)
+              print(g.name)
 
           if (not g.name =='supervisores'):
               print('Usuario sin Perfil')
@@ -1093,7 +1067,7 @@ class Aor_edit(UpdateView):
           return redirect('/sacvc/logout')
 
 
-class Aor_list(ListView):  #VALIDADO PRELIMINAR
+class Aor_list(ListView):
      #LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = AOR
@@ -1102,7 +1076,6 @@ class Aor_list(ListView):  #VALIDADO PRELIMINAR
 
     def get_queryset(self):
       qs = super(Aor_list, self).get_queryset()
-      #print(qs)
       filtro= qs.filter(id_patioTanque__exact=self.kwargs['pk'])
       patio=self.kwargs['pk']
 
@@ -1115,8 +1088,7 @@ class Aor_list(ListView):  #VALIDADO PRELIMINAR
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -1139,8 +1111,7 @@ class Aor_del(DeleteView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-    # this should print all group names for the user
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -1162,7 +1133,7 @@ class Aor_detail(DetailView):
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
-                    print(g.name)
+                print(g.name)
 
             if (not g.name =='supervisores'):
                 print('Usuario sin Perfil')
@@ -1203,7 +1174,6 @@ class grupo_tk(LoginRequiredMixin, ListView):
       return filtro
 
 
-
 class detalle_tk(LoginRequiredMixin, DetailView):
     model = Tk
     template_name = 'acq/detalle_tk/detalle_tk.html'
@@ -1225,19 +1195,9 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
         tovmaximo=instov.ValorMaximo
         tovminimo=instov.ValorMinimo
-        print(tovmaximo)
 
-
-
-
-
-         #print(DataTk)
         DataTk_temp= {}
 
-        #print(self.objec)
-
-        """if (DataTk_temp[idtk]== ):
-            print('PASO')"""
 
         try:
             with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode ='r') as data_file:
@@ -1255,10 +1215,7 @@ class detalle_tk(LoginRequiredMixin, DetailView):
 
                         context['Data']=DataTk_temp[idtk]
 
-
-
         except:
             print("Error inesperado:", sys.exc_info()[0])
 
-        print(context)
         return context
