@@ -42,7 +42,6 @@ from django import forms
 from acq.calculos import Settings_Alarmas
 
 
-
 #abre un archivo json en modo lectura
 def actualizar(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
