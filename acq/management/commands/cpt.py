@@ -352,7 +352,7 @@ class Command(BaseCommand):
 
                Data_tanques_temp={tag_ins.id_Tk.pk:Data_Calculada}
                Data_tanques.update(Data_tanques_temp)
-               print(Data_tanques)
+               #print(Data_tanques)
 
 
                try:
@@ -365,7 +365,7 @@ class Command(BaseCommand):
 
 
                tk=Tk.objects.get(pk=tag_ins.id_Tk.pk)
-               tk.current_data  = Data_tanques #A Base de Datos
+               tk.current_data  = Data_tanques[tag_ins.id_Tk.pk] #A Base de Datos
 
                tk.save()
                            #idtk_DC_int=Analogico_DC.id_Tk
