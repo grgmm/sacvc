@@ -1,0 +1,229 @@
+.titulo {
+	text-align: center;
+	font-size: 28px;
+	font-weight: bold;
+	color: #338599;
+	margin:auto;
+	margin-top: 0.5rem;
+	margin-bottom: 1rem;
+	padding: 0.5rem;
+	border: solid 0.2rem #338599;
+	border-radius: 0.4rem;
+	width: 80%;
+	text-transform: uppercase;
+}
+
+#ventana {
+	position: absolute;
+	/*posicion respecto a la esquina superior izquierda de body*/
+	top: 15%; /* mayor que height de la imagen*/
+	left: 10%; /*(100%-(width:24%))/2*/
+	height: 82%;
+	overflow-x: hidden;
+	width: 80%;
+	background-color:none;
+	border-radius: 0.4rem;
+	/*border-color:#000000;
+	border-width: 1px;
+	border-style: solid;*/
+}
+
+#barra_tanque{
+	position: absolute;
+	left: 1%;
+	border-radius: 0.4rem;
+	width: 34%;
+	height: 49%;
+	
+	/*border: solid 1px black;*/
+}
+
+#tanque{
+	color: white;
+	padding-left: 2rem;
+	padding-top: 4%;
+	padding-left: 10%;
+	font-size: 1.5rem;
+	font-weight: bold;
+	width: 80%;
+	height: 80%;
+	margin: 0 auto;
+	margin-top: 4%;
+
+	/*border: solid 1px black;*/
+}
+
+#data_sec{
+	position: absolute;
+	left: 36%;
+	border: solid 1px black;
+	border-radius: 0.4rem;
+	width: 63%;
+	height: 99.5%;
+}
+#data_pri{
+	position: absolute;
+	left: 1%;
+	top:50.5%;
+	border: solid 1px black;
+	border-radius: 0.4rem;
+	width: 34%;
+	height: 49%;
+}
+
+#tablaPri {
+	margin-top: 5px;
+	width: 80%;
+	height: 80%;
+	margin: 0 auto;
+	/*margin: 0 auto;*/
+	/*margin-bottom: 2rem;*/
+}
+
+th,tr td{
+	border: solid 1px;
+	border-color: black;
+}
+
+#idtanque{
+	color: white;
+	font-size: 1.4rem;
+}
+
+.etiqueta {
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	background-color: #117a8b;
+	margin-bottom: 0.4rem;
+	width: 10rem;
+	color: white;
+	padding-left: 0.5rem;
+}
+
+.dato {
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	width: 10rem;
+	color: black;
+	padding-left: 2rem;
+	border-radius: 0.4rem;
+}
+
+.btn_control {
+	/*dimensiones del boton*/
+	border-radius: 0.4rem;
+	width: auto;
+	height: 34px; /*depende del alto del icono*/
+	padding-left: 4px; /*Ancho del icono+ 2 px*/
+	padding-right: 4px;
+	/*alinacion flex del contenido*/
+	display: flex;
+   	align-items: center; /*alineacion vertical*/
+   	justify-content:center; /*alineacion horizontal*/
+}
+
+
+.btn_control:hover{
+	text-decoration: none;
+	background-color:#1cc1d9; /*fondo del link*/
+	font-size:1.1rem;
+	border-color: #000000;
+}
+
+
+#regresar{
+	position: absolute;
+	left: 1.5rem; /*ver editar y salir en base.html*/
+	top:45%;
+}
+
+a {
+	background-color: #138496; 
+	color: white; 
+	margin-left: 1rem;
+}
+
+#imagen{	
+	padding-right: 4px;
+	float:left;	
+}
+
+.btn_control:active {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#6ec2e8),
+		to(#b6e2ff));
+	background-image: -moz-linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
+	background-image: linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
+}
+
+img{
+	margin-left: 1rem;
+	float:right;
+	height: 100%;
+	width: auto;
+}
+
+#nivel{
+	color: black;
+	width: 30%;
+	text-align: center;
+	height: 1.5rem;
+	margin-top: 0.3rem;
+	padding-top: 0.3rem;
+	padding-bottom: 0.3rem;
+	border-radius: 0.4rem;
+}
+
+
+
+.variable{
+	padding-left: 1rem;;
+	color: white;
+	width: 35%;
+}
+
+.variable, .dato, #tanque, #nivel{
+	font-weight: bold;
+	font-size: 1.8rem;	
+}
+
+/*barra de progreso*/
+
+#contenedor{
+	margin-left:2rem;
+	float:left;
+	height: 200px; /*Ajusta el tamaño del contenedor y la imagen*/
+	padding-left: 1rem;
+}
+
+#contenedor_barra{
+	position: relative;
+	top: 45%;
+	left:-45%;
+	width: 70%;
+	transform: rotate(-90deg);
+	border-style:solid;
+	border-width:1px;
+	border-radius: 0.4rem;	
+	border-color:black;
+}
+
+#contenedor_barra, #barra{
+	height: 24px;
+	border-radius: 0.4rem;	
+	max-width: 106%; /*maximo recorrido*/
+}
+
+#barra{
+	width: 0%;	/*Progreso inicial alabrir pagina*/
+  	background-color: black; 
+  	text-align: center; /* To center it horizontally (if you want) */
+  	line-height: 18px; /* To center it vertically */
+  	color: white; /*color del texto*/
+  	font-weight: bold;	
+  	font-size: 0px;
+}
+
+.not-visible {
+    display: none;
+}
+

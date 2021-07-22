@@ -1,17 +1,61 @@
 {% extends 'acq/base.html' %}
 {% load static %}
-  {% block title %}{% endblock %}
+{% block title %}Detalle de tanque{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/edit.css' %}">
-<div id="ventana">
-		<p>
-			<!-- Encabezado -->
-			<label for="encabezado">Detalle del Tanque</label>
-		</p>
+<link rel="stylesheet" href="{% static 'css/detalle_tk.css' %}">
+<script src={% static 'js/jquery-3.6.0.min.js' %}></script>
+<script src={% static 'js/detalle_tk.js' %}></script>
+	<h2 class="titulo">DETALLE DEL TANQUE {{tk.Nombre}}</h2>
+	<div>
+		<a href="" id="regresar" type="button" class="btn_control" >
+			<img id="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>REGRESAR</a>
+	</div>
+
+	<div id="ventana">
+		<p id="nrotanque"  style="display:none;">{{tk.id}}</p>
+		<div id="barra_tanque">
+			<div id="tanque">
+				<!--<p id="idtanque" class="idtanque">{{tk.Nombre}}</p>-->
+				<p id="nivel">{{ Data.LT }}%</p>
+					<div id="contenedor"> 
+						<img src="{% static "recursos/imagenes/tanque.png" %}">
+						<div id="contenedor_barra">
+							<div id="barra">0%</div>
+						</div>
+					</div>
+			</div>
+		</div>	
+
+		<div id="data_pri">
+			<table id="tablaPri">
+				<tr><td class="variable">LT=</td><td class="dato">888888.888</td></tr>
+				<tr><td class="variable">TOV=</td><td class="dato">888888.888</td></tr>
+				<tr><td class="variable">NSV=</td><td class="dato">888888.888</td></tr>
+				<tr><td class="variable">GSV=</td><td class="dato">888888.888</td></tr>
+			</table>
+			
+		</div>
+		<div id="data_sec">
+			<!---de la BD-->
+			<p class="dato">Nombre: {{tk.Nombre}}</p>
+			<p class="dato">id: {{tk.id}}</p>
+			<p class="dato">Descriptor: {{tk.Descriptor}}</p>
+			<!---de json-->
+			<p class="dato">TOV: {{ Data.TOV }}</p>
+			<p class="dato">LT: {{ Data.LT }}</p>
+			<p class="dato">LT_URGENTE: {{ Data.LT_URGENTE }}</p>
+			
+			<p class="dato">AOR: {{Aor}}</p>
+			<p class="dato">TOV_MAXIMO: {{TOV_MAXIMO}}</p> <!--no es json-->
+
+		</div>
+	</div>
+	{% endblock %}
+		
+		<!--
 		<div>
 			<table>
-
 				<tr>
 					<td class="etiqueta">Nombre:</td>
 					<td class="dato">{{Nombre}}</td>
@@ -25,7 +69,7 @@
 					<td class="etiqueta">TOV:</td>
 					<td class="dato">{{ Data.TOV }}</td>
 				</tr>
-        <tr>
+        		<tr>
 					<td class="etiqueta">LT:</td>
 					<td class="dato">{{ Data.LT }}</td>
 				</tr>
@@ -33,14 +77,10 @@
 					<td class="etiqueta">Area de procesos:</td>
 					<td class="dato">{{ Aor}}</td>
 				</tr>
-        <tr>
-          <td class="etiqueta">TOV MAXIMO:</td>
-          <td class="dato">{{ TOV_MAXIMO}}</td>
-        </tr>
+        		<tr>
+          			<td class="etiqueta">TOV MAXIMO:</td>
+          			<td class="dato">{{ TOV_MAXIMO}}</td>
+        		</tr>
 			</table>
 		</div>
-
-							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
-
-</div>
-{% endblock %}
+	-->

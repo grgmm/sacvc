@@ -73,6 +73,7 @@ function mi_funcion() {
 			$("#nsv" + tq).text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
 			$("#lt" + tq).text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
+			console.log(t+"  "+idtk+"  "+lt_porcentaje)
 			nivel = document.getElementById("barra" + tq); //nivel en UI
 			nivel.style.width = lt_porcentaje + "%"; //barra de progreso
 			$("#nivel" + tq).text(lt_porcentaje + "%");//Valor numerico del nivel
@@ -129,9 +130,6 @@ function mi_funcion() {
 			Debemos definir un color en la barra y el fondo del valor*/
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
 			nivel = document.getElementById("barra" + tq);
-			console.log(parseFloat(lt_porcentaje)); //nivel en UI
-			console.log(typeof (parseFloat(lt_porcentaje)));
-			//console.log(typeof (parseFloat(lt_porcentaje).toString()));
 
 			if(parseFloat(lt_porcentaje).toString()=="NaN"){
 				lt_porcentaje="--.--"
