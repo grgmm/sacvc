@@ -1,0 +1,31 @@
+{% extends 'acq/base.html' %}
+{% load static %}
+{% block title %}Ambiente Operativo{% endblock %}
+
+{% block content %}
+	<link rel="stylesheet" href="{% static 'css/menu.css' %}">
+	<div id="container">
+		<table id="tabla">
+			<tr>
+				<td>
+					<a href="{% url 'uacq:Menu_Vistas' %}"> <br>VISTAS</br>
+						<img src="{% static "recursos/iconos/vistas128x128.png" %}" />
+					</a>
+				</td>
+			</tr>
+			<tr>
+			<tr><td><br></td></tr>
+
+				<td>
+					<a href="{% url 'uacq:logout' %}">
+						<img src="{% static "recursos/iconos/logout128x128.png" %}"/> <br>SALIR</br>
+					</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+{% endblock %}
+
+{% block footer %}
+<!-- Sobreescribe el contenido del bloque -->
+{% endblock %}

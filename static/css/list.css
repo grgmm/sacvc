@@ -1,0 +1,157 @@
+@charset "UTF-8";
+
+.titulo {
+	text-align: center;
+	font-size: 28px;
+	font-weight: bold;
+	color: #338599;
+	margin:auto;
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+	padding: 1rem;
+	border: solid 0.2rem #338599;
+	border-radius: 0.4rem;
+	width: 60%;
+	height: 40%;
+}
+
+#principal {
+	justify-content: center;
+  	align-items: center;
+	width: 70%;
+	margin:auto;
+	margin-top:1%; /*posiciona verticalmente*/
+   	overflow: auto;
+   	height: 31.2rem; /*para que la ultima fila se vea completa*/
+}
+
+/*ESTILOS PARA LA TABLA*/
+table {
+	text-align: center; 
+	border-collapse:collapse;
+	width: 99.9%;/*para que ocupe el ancho del div*/
+				 /* no salga scrollbar abajo*/
+}
+
+th {
+	background-color: #338599;
+	color: white;
+	font-size:16px;
+	font-weight: bold;
+	height:2rem;
+	vertical-align: middle;
+}
+
+tbody{
+}
+
+/*estlos celda*/
+td {
+	height:3rem;
+	vertical-align: middle;
+	border: #338599 2px solid;
+	
+}
+#principal thead th { position: sticky; top: 0; z-index: i; }
+
+#nombre_patio{
+	text-align: left; 
+	font-size: 14px;
+	padding-left: 0.5rem;
+	width: 10%;
+}
+
+#botones_patio{
+	width: 70%;
+}
+
+/*color de fondo lineas pares*/
+tr:nth-of-type(even) {
+	background-color: rgb(255, 255, 255);
+}
+
+/*color de fondo lineas inpares*/
+table, tr:nth-of-type(odd) {
+	background-color: #e5e5e5;
+}
+
+/*Estilos para los link*/
+
+.btn_tabla{
+	border-radius: 0.4rem;
+	width: auto;
+	height: 50px; /*depende del alto del icono*/
+	padding-left: 4px; /*Ancho del icono+ 2 px*/
+	padding: 8px 4px;	
+}
+
+.img_interna{
+	/*imagen a la izquierda y en el centro*/
+	position: relative;
+	left: 0.1rem;
+	top: 0.2rem;
+	padding-right: 4px;
+}
+
+.btn_control{
+	/*dimensiones del boton*/
+	border-radius: 0.4rem;
+	width: auto;
+	height: 34px; /*depende del alto del icono*/
+	padding-left: 4px; /*Ancho del icono+ 2 px*/
+	padding-right: 4px;
+	
+	/*alinacion flex del contenido*/
+	display: flex;
+   	align-items: center; /*alineacion vertical*/
+   	justify-content:center; /*alineacion horizontal*/
+	
+}
+
+.imagen{
+	padding-right: 4px;
+	float:left;	
+}
+
+#regresar{
+	position: absolute;
+	left: 1.5rem; /*ver editar y salir en base.html*/
+	top:45%;
+	
+}
+
+#agregar{
+	position: absolute;
+	left: 85%;
+	top:33%;
+}
+
+.btn_tabla:hover, .btn_control:hover{
+	text-decoration: none;
+	background-color:#1cc1d9; /*fondo del link*/
+	font-size:1.1rem;
+	border-color: #000000;
+}
+
+.btn_tabla:focus {
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+	background-color: #138496;
+	border-color: #117a8b;
+}
+
+.btn_tabla:disabled {
+	opacity: 0.65;
+	background-color: #117a8b;
+	border-color: #10707f;
+}
+
+.btn_tabla:not(:disabled) {
+	cursor: pointer;
+}
+
+a {
+	background-color: #138496; 
+	color: white; 
+	margin-left: 1rem;
+}

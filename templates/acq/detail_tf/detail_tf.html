@@ -1,0 +1,37 @@
+
+ {% extends 'acq/base.html' %}
+{% load static %}
+  {% block title %}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+<div id="ventana">
+		<p>
+			<!-- Encabezado -->
+			<label for="encabezado">Detalle del Patio de Tanques</label>
+		</p>
+		<div>
+			<table>
+
+				<tr>
+					<!-- id del Patio -->
+					<td class="etiqueta">Id:</td>
+					<td class="dato">{{patiotanque.pk}}</td>
+				</tr>
+				<tr>
+					<!-- Nombre del Patio -->
+					<td class="etiqueta">Nombre:</td>
+					<td class="dato">{{patiotanque.Nombre}}</td>
+				</tr>
+
+				<tr>
+					<!-- Descripcion-->
+					<td class="etiqueta">Descripcion:</td>
+					<td class="dato">{{ patiotanque.Descriptor}}</td>
+				</tr>
+			</table>
+		</div>
+		<a id="detalle" href="{% url 'uacq:list_tf' %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
+</div>		
+{% endblock %}

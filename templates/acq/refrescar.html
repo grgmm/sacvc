@@ -1,0 +1,42 @@
+{% extends 'acq/base.html' %}
+{% load static %}
+
+
+{% block javascript %}
+  <script src="{% static 'js/app.js' %}"></script>
+  <script src="{% static 'js/jquery-3.5.0.js' %}"></script>
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<h2>Parámetros de Tk's - Valores Actuales:</h2>
+
+
+       <table id="valores-actuales">
+
+
+    <th>TAG</th>
+    <th>TANQUE</th>
+    <th>INSTALACIÓN</th>
+    <th>Pv0</th>
+    <th>Pv1</th>
+    <th>VALOR(PV)</th>
+    <th>UNIDAD </th>
+    <th>DIRECCION</th>
+    <th>TIMESTAMP</th>
+
+
+  <tr>
+ <td id="id-tag"></td>
+
+
+     <td id="P-V"></td>
+
+   <td id="Time-stamp"></td>
+
+
+{% endblock %}

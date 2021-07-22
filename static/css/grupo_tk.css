@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+/* Basics */
+html, body {
+	background: linear-gradient(#334d50, #cbcaa5) fixed;
+}
+
+#tanque{
+	color: white;
+	margin-left: 2rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+#ventana {
+	position: absolute;
+	/*posicion respecto a la esquina superior izquierda de body*/
+	top: 10%; /* mayor que height de la imagen*/
+	left: 3%; /*(100%-(width:24%))/2*/
+	height: auto;
+	overflow-x: hidden;
+	width: 94%;
+	background-color: none;
+	border-radius: 0.4rem;
+}
+
+
+
+#tablaExterna {
+	margin-top: 40px;
+	width: 90%;
+	height: 80%;
+	margin: 0 auto;
+	margin-bottom: 2rem;
+}
+
+#tablaInterna{
+//width: 30%;
+}
+
+tr td{
+	//border: solid 1px;
+	//border-color: black;
+}
+
+label {
+	color: white;
+	display: inline-block;
+}
+
+label, .nsv, .tov, .lt, .tanque, .nivel{
+	font-weight: bold;
+	font-size: 1.3rem;	
+}
+
+.idtanque{
+	color: white;
+	font-size: 1.4rem;
+}
+
+label, .nsv, .tov, .lt, .tanque{
+	margin: 2% 0%;
+}
+
+label[for=encabezado] {
+	background-color: #117a8b;
+	border: 1px solid #c7d0d2;
+	color: white;
+	border-radius: 0.4rem;
+	width: 90%;
+	margin-top: 10px;
+	margin-left: 5%;
+	margin-bottom: 1%;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+/*barra de progreso*/
+
+.contenedor{
+	margin-left:2rem;
+	float:left;
+	height: 200px; /*Ajusta el tamaño del contenedor y la imagen*/
+	padding-left: 1rem;
+}
+
+.contenedor_barra{
+	height: 18px;
+	width: 100px;
+	border-style:solid;
+	border-width:1px;
+	border-radius: 0.4rem;	
+	border-color:black;
+}
+.contenedor_barra, .barra{
+	height: 18px;
+	border-radius: 0.4rem;	
+	max-width: 106%; /*maximo recorrido*/
+}
+
+img{
+	float:right;
+	height: 100%;
+	width: auto;
+}
+
+.nivel{
+	color: black;
+	width: 22%;
+	text-align: center;
+	height: 1.5rem;
+	margin-top: 0.3rem;
+	padding-top: 0.3rem;
+	border-radius: 0.4rem;
+}
+
+.contenedor_barra{
+	position: relative;
+	top: 45%;
+	left:-45%;
+	width: 80%;
+	transform: rotate(-90deg);
+}
+
+.barra{
+	width: 0%;	/*Progreso inicial alabrir pagina*/
+  	background-color: black; 
+  	text-align: center; /* To center it horizontally (if you want) */
+  	line-height: 18px; /* To center it vertically */
+  	color: white; /*color del texto*/
+  	font-weight: bold;	
+  	font-size: 0px;
+}
+
+#mitexto{
+}
+
+.not-visible {
+    display: none;
+}
+

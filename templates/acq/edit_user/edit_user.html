@@ -1,0 +1,37 @@
+{% extends "acq/base.html" %}
+{% load static %}
+{% block title %}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+<div id="ventana">
+	<p>
+		<!-- Encabezado-->
+		<label for="encabezado">Editar Usuario</label>
+  	</p>
+
+	<form method="post">
+   		{% csrf_token %}
+  		
+  		<table border="1">
+    		{% for field in form.visible_fields %}
+      			<tr>
+        			<td class="etiqueta">{{ field.label_tag }}</td>
+        			<td class="dato">{{ field }}</td>
+      			</tr>
+    		{% endfor %}
+ 	 	</table>
+
+		<button id="usrModificar" type="submit" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}"/>Modificar</button>
+		<a id=usrRegresar href="{% url 'uacq:list_user' %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
+		<a id="usrPatio" href="{% url 'uacq:edit_patio_user' object.pk %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/patio24x24.png" %}"/>Asignar Patio</a>
+		<a id=usrClave href="{% url 'uacq:cambiar_clave' object.pk %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/clave_modif24x24.png" %}"/>Cambiar clave</a>
+	  	<a id=usrArea href="{% url 'uacq:edit_aor_user' object.pk %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/avanzado24x24.png" %}"/>Asignar Area</a>
+	</form>
+</div>
+{% endblock %}

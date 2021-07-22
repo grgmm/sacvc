@@ -1,0 +1,40 @@
+
+  {% load static %}
+  {% block title %}  {% endblock %}
+
+  {% block content %}
+ 		<!--<script src="{% static 'js/apps2.js' %}"></script>-->
+    <script src="{% static 'js/app.js' %}"></script>
+
+  	 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+
+  <a href="{% url 'uacq:list_tf' %}" type="button" class="btn btn-info"> Regresar</a>
+  <h2>Valores Actuales</h2>
+
+
+<table id="valores-actuales">
+<thead>
+<th>ID</th> <th>TANQUE</th><th>TOV</th><th>NSV</th><th>LT</th>
+</thead>
+{% for tk in object_list %}
+<tbody id="datos-actuales">
+  <tr>
+    <!--
+<td> {{ tk.current_data.TANQUE}}</td>
+<td> {{ tk.current_data.TANQUE}}</td>
+<td> {{ tk.current_data.TOV}}</td>
+<td> {{ tk.current_data.NSV}}</td>
+<td> {{ tk.current_data.LT}}</td>
+-->
+<td id="id"></td>
+<td id="tanque"></td>
+<td id="tov"></td>
+<td id="nsv"></td>
+<td id="lt"></td>
+</tr>
+</tbody>
+ {% endfor %}
+
+ <h2>Patios de Tanque</h2>
+
+   {% endblock %}

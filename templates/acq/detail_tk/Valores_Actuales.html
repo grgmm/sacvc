@@ -1,0 +1,39 @@
+
+{% extends 'acq/base.html' %}
+{% load static %}
+{% block title %}Valores Actuales {% endblock %}
+
+{% block content %}
+
+{% block javascript %}
+   <script src="{% static 'js/apps2.js' %}"></script>
+   <script src="{% static 'js/jquery-3.5.0.js' %}"></script>
+{% endblock %}
+
+<table id="valores-actuales">
+
+  <th>TK </th> <th>  LT </th> <th> PT </th>  <th> TT </th> <th>  TOV </th>
+    <tr>
+
+   <a href="{% url 'uacq:list_tf'%}" type="button" class="btn btn-info"> Regresar</a>
+
+	<div id='datos-actuales'>
+   <td>
+     {{data.TK}}
+   </td>
+   <td>
+     {{data.LT}}
+   </td>
+   <td>
+      {{data.PT}}
+    </td>
+    <td>
+       {{data.TT}}
+     </td>
+     <td>
+        {{data.TOV}}
+      </td>
+
+    </div>
+
+ {% endblock %}

@@ -1,0 +1,37 @@
+{% extends "acq/base.html" %}
+{% load static %}
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+
+<div id="ventana">
+	<p>
+		<label for="encabezado">Agregar Tanque</label>
+	</p>
+<!--	<p>{{	patio}}</p>  PARA TRAER VARIABLE PROVENIENTE DE GET_CONTEXT EN LA VISTA add_tk.py-->
+
+	<form id="my_form" method="post">
+   		{% csrf_token %}
+
+
+   		<div >
+  			<table>
+    			{% for field in form.visible_fields %}
+      				<tr>
+        				<td class="etiqueta">{{ field.label_tag }}</td>
+        				<td class="dato">{{ field }}</td>
+      				</tr>
+    			{% endfor %}
+ 	 		</table>
+   		</div>
+   		<!-- button 4.45rem/0.89 a 4.50rem/0.9 -->
+		<button id="tk_modificar" type="submit" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/add24x24.png" %}"/>Agregar</button>
+		<a id="tk_regresar" class="btn_control" href="{%url 'uacq:list_tk' patio%}">
+							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>	
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'acq/base.html' %}
+{% load static %}
+  {% block title %}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+<div id="ventana">
+		<p>
+			<!-- Encabezado -->
+			<label for="encabezado">Detalle del Tanque</label>
+		</p>
+		<div>
+			<table>
+			
+				<tr>
+					<td class="etiqueta">Nombre:</td>
+					<td class="dato">{{tk.Nombre}}</td>
+				</tr>
+
+				<tr>
+					<td class="etiqueta">Descriptor:</td>
+					<td class="dato">{{tk.Descriptor}}</td>
+				</tr>
+				<tr>
+					<td class="etiqueta">Fecha de subida del archivo TCT:</td>
+					<td class="dato">{{ tk.fecha_subida_tct }}</td>
+				</tr>
+				<tr>
+					<td class="etiqueta">Area de procesos:</td>
+					<td class="dato">{{ tk.id_aor }}</td>
+				</tr>
+			</table>
+		</div>
+    <a id="detalle" href="{% url 'uacq:list_tk' object.id_patioTanque.pk %}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
+
+</div>
+{% endblock %}

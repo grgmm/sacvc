@@ -1,0 +1,188 @@
+#borrar {
+	margin:1rem 3rem;
+	text-align: center;
+	font-size: 2rem;
+}
+
+#ventana {
+	position: absolute;
+	/*posicion respecto a la esquina superior izquierda de body*/
+	top: 15%; 
+	height: auto;
+	overflow-x: hidden;
+	width: 40%;
+	left: 30%; /*(100%-(width:24%))/2*/
+	background: #fff;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+}
+
+table, th, td {
+	border: 1px solid black;
+	vertical-align: middle;
+}
+
+table {
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 5%;
+	margin-bottom: 25%;
+}
+
+label {
+	display: inline-block;
+	font-size: 14px;
+}
+
+label[for=encabezado] {
+	border: 1px solid #c7d0d2;
+	background-color: #117a8b;
+	color: white;
+	border-radius: 10px;
+	width: 90%;
+	margin-left: 5%;
+	margin-bottom: 2%;
+	margin-top: 4%;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.etiqueta {
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	background-color: #117a8b;
+	margin-bottom: 0.4rem;
+	width: 10rem;
+	color: white;
+	padding-left: 0.5rem;
+}
+
+.dato {
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	width: 10rem;
+	color: black;
+	padding-left: 2rem;
+	border-radius: 0.4rem;
+}
+
+.btn_control {
+	position: absolute;
+	/*posicion respecto a la esquina inferior derecha  del contenedor*/
+	bottom: 10%;
+	/*dimensiones comunes de botones*/
+	height: 34px; /*depende del alto del icono*/
+	padding-left: 4px; 
+	padding-right: 4px;
+	
+	/*alinacion flex del contenido*/
+	display: flex;
+   	align-items: center; /*alineacion vertical*/
+   	justify-content:center; /*alineacion horizontal*/
+	
+
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	background-color: #117a8b;
+	border-radius: 0.4rem;
+}
+
+.imagen{	
+	padding-right: 4px;
+	float:left;	
+}
+
+/*para edit_tk, edit_tf, del_tk, del_tf, cambiar_clave, edit_usr*/
+/*********************/
+#tk_modificar, #usrModificar {
+	/*posiciono el boton*/
+	left: 75%;	/*Centro del boton*/
+  	transform: translateX(-50%); 
+	padding-left: 1rem;
+}
+
+#tk_validar, #usrRegresar {
+	/*posiciono el boton*/
+	left: 50%;	/*Centro del boton*/
+  	transform: translateX(-50%);  
+	padding-left: 1rem;
+}
+
+#tk_regresar, #usrPatio {
+	/*posiciono el boton*/
+	left: 25%;	/*Centro del boton*/
+  	transform: translateX(-50%); 
+	padding-left: 1rem;
+}
+
+#usrClave {
+	bottom: 1%;
+	left: 66%;	/*Centro del boton*/
+  	transform: translateX(-50%); 
+	padding-left: 1rem;
+}
+#usrArea {
+	bottom: 1%;
+	left: 33%;	/*Centro del boton*/
+  	transform: translateX(-50%); 
+	padding-left: 1rem;
+}
+
+#detalle {
+	left: 50%;	/*Centro del boton*/
+  	transform: translateX(-50%); 
+	padding-left: 1rem;
+}
+/******************************/
+.btn_control:hover {
+	text-decoration: none;
+	background-color: #1cc1d9; /*fondo del link*/
+	font-size: 1.1rem;
+	border-color: #000000;
+}
+
+.btn_control:active {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#6ec2e8),
+		to(#b6e2ff));
+	background-image: -moz-linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
+	background-image: linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
+}
+
+/*barra de progreso*/
+
+#contenedor_barra,#barra{	
+  	height:2rem;
+	border-style:solid;
+	border-width:1px;
+	border-radius: 1rem;
+	border-color:white;	
+}
+
+#contenedor_barra{
+	/*posicion respecto a la esquina inferior derecha  del contenedor*/
+	position:absolute;
+	bottom: 21%;
+	width: 50%;
+	left:50%;
+  	transform: translateX(-50%); 
+}
+
+#barra{
+	width: 0%;	/*Progreso inicial alabrir pagina*/
+  	height: 2rem;
+	background-color: #117a8b;	
+  	text-align: center; /* To center it horizontally (if you want) */
+  	line-height: 2rem; /* To center it vertically */
+  	color:black; /*color del texto*/
+}
+
+
+
+.not-visible {
+    display: none;
+}
+

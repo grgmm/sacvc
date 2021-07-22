@@ -1,0 +1,24 @@
+{{% extends 'acq/base.html' %}
+{% load static %}
+{% block title %}Borar Usuario{% endblock %}
+
+{% block content %}
+	<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+
+	<div id="ventana">
+		<p>
+			<label for="encabezado">Borrar Tanque</label>
+		</p>
+
+		<form  method="post">
+			{% csrf_token %}
+			<p id="borrar">	Esta seguro de eliminar el Tanque: {{object.Nombre}}?</p>
+			<br><br><br><br><br>
+			<button id="tk_modificar" type="submit" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/cancel24x24.png" %}"/>Borrar</button>
+			<a id="tk_regresar" href="{{ view.get_success_url }}" type="button" class="btn_control">
+							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>Regresar</a>
+		<br>
+		</form>
+	</div>
+{% endblock %}
