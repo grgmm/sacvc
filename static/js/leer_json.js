@@ -64,7 +64,7 @@ function mi_funcion() {
 			$("#nsv" + idtk).text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
 			$("#lt" + idtk).text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
-			console.log("+idtk+"+lt_porcentaje)
+			console.log(idtk+" "+lt_porcentaje)
 			nivel = document.getElementById("barra" + idtk); //nivel en UI
 			nivel.style.width = lt_porcentaje + "%"; //barra de progreso
 			$("#nivel" + idtk).text(lt_porcentaje + "%");//Valor numerico del nivel
