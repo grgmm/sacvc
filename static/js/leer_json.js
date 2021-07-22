@@ -1,5 +1,4 @@
 flag_configurar = false; //Codigo que sera ejecutado solo al cargar o refrescar la pagina
-ntanq = 0;//numero de tanques
 datos_anterior = null; //Copia de json de ultimo refresh
 flag_alarma=false;
 
@@ -21,11 +20,6 @@ function mi_funcion() {
 	})
 	function configurar(datos) {
 		if (!flag_configurar) {
-			//Este codigo solo se ejecutara al cargar o refrescar la pagina
-			//obtengo el numero de tanques
-			for (var tk in datos) {
-				ntanq++;
-			}
 			//Renonbro los selectores id en tiempo de vuelo
 			generar_ids("tanque");
 			generar_ids("idtanque");
@@ -70,7 +64,7 @@ function mi_funcion() {
 			$("#nsv" + idtk).text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
 			$("#lt" + idtk).text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
-			console.log("+idtk+"  "+lt_porcentaje)
+			console.log("+idtk+"+lt_porcentaje)
 			nivel = document.getElementById("barra" + idtk); //nivel en UI
 			nivel.style.width = lt_porcentaje + "%"; //barra de progreso
 			$("#nivel" + idtk).text(lt_porcentaje + "%");//Valor numerico del nivel

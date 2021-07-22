@@ -9,7 +9,7 @@ function mi_funcion() {
 		type: 'get'
 	}).done(function (datos) {
 		if (JSON.stringify(datos) != JSON.stringify(datos_anterior)) {
-			idtk = document.getElementById("nrotanque");
+			idtk = document.getElementById("nrotanque").innerHTML;
 			console.log(idtk)
 			//solo se ejecuta si el json cambia
 			actualizar_vista(datos);
@@ -20,12 +20,10 @@ function mi_funcion() {
 
 	function actualizar_vista(datos) {
 		//solo se ejecuta si el json cambia
-		var t = 1;//EMPIEZO POR LA CELDA1 (TANQUE1)
 		var valormaximo;//valor del span
 		var valorminimo;
 		var nivel;
 		var lt_porcentaje;
-
 
 		idtk = document.getElementById("nrotanque").innerHTML; 
 		console.log("Nro de tanque "+idtk);
