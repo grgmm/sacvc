@@ -39,13 +39,12 @@ function mi_funcion() {
 			generar_ids("lt");
 
 			function generar_ids(id) {
-				var contador = 0;
-				for (var i = 0; i < ntanq; i++) {
-					contador++;
+				for (var tk in datos) {
+					var idtk = tk.toString();
 					var mi_id = document.getElementById(id);
 					if (mi_id != null) {
 						var att = document.createAttribute("id");
-						att.value = id + contador.toString();
+						att.value = id + idtk;
 						mi_id.setAttributeNode(att);
 					}
 				}
@@ -58,7 +57,6 @@ function mi_funcion() {
 
 	function actualizar_vista(datos) {
 		//solo se ejecuta si el json cambia
-		var t = 1;//EMPIEZO POR LA CELDA1 (TANQUE1)
 		var valormaximo;//valor del span
 		var valorminimo;
 		var nivel;
@@ -66,18 +64,16 @@ function mi_funcion() {
 
 		for (var tk in datos) {
 			var idtk = tk.toString(); //tomo el id del tanque, uno por celda
-			var tq = t.toString();
 
-			$("#idtanque" + tq).text(datos[idtk]["TANQUE"]);
-			$("#tov" + tq).text(datos[idtk]["TOV"]+" "+datos[idtk]["TOV_UNIDAD"]);
-			$("#nsv" + tq).text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
-			$("#lt" + tq).text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
+			$("#idtanque" + idtk).text(datos[idtk]["TANQUE"]);
+			$("#tov" + idtk).text(datos[idtk]["TOV"]+" "+datos[idtk]["TOV_UNIDAD"]);
+			$("#nsv" + idtk).text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
+			$("#lt" + idtk).text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
-			console.log(t+"  "+idtk+"  "+lt_porcentaje)
-			nivel = document.getElementById("barra" + tq); //nivel en UI
+			console.log("+idtk+"  "+lt_porcentaje)
+			nivel = document.getElementById("barra" + idtk); //nivel en UI
 			nivel.style.width = lt_porcentaje + "%"; //barra de progreso
-			$("#nivel" + tq).text(lt_porcentaje + "%");//Valor numerico del nivel
-			t++ //paso a la celda siguiente (tanque)
+			$("#nivel" + idtk).text(lt_porcentaje + "%");//Valor numerico del nivel
 		}
 		datos_anterior = datos;//Evita actualizar datos innecesariamente
 		console.log("datos actualizados");
@@ -90,58 +86,54 @@ function mi_funcion() {
 		var lt_urgente;
 		var lt_critica;
 		var idtk;//nro del tanque json
-		var tq//numero del tanque consecutivo
 
 		for (var tk in datos) {
 			idtk = tk.toString(); //tomo el id del tanque, uno por celda
-			tq = t.toString();
 			lt_urgente = datos[idtk]["LT_URGENTE"];
 			lt_critica = datos[idtk]["LT_CRITICA"];
 
 			//Calculo de alarmas
 			if (lt_critica) {
-				$("#barra" + tq).css('background', 'red');//color de barra
-				$("#nivel" + tq).css('background', 'red');//color de fondo de la fuente
-				$("#nivel" + tq).css('color', 'black');//color de fuente
+				$("#barra" + idtk).css('background', 'red');//color de barra
+				$("#nivel" + idtk).css('background', 'red');//color de fondo de la fuente
+				$("#nivel" + idtk).css('color', 'black');//color de fuente
 				if (flag_alarma) {
 					//on
-					$("#nivel" + tq).css('background', 'red');
+					$("#nivel" + idtk).css('background', 'red');
 				} else {
 					//off
-					$("#nivel" + tq).css('background', 'none');
+					$("#nivel" + idtk).css('background', 'none');
 				}
 			} else {
 				if (lt_urgente) {
-					$("#barra" + tq).css('background', 'yellow');//color de barra
-					$("#nivel" + tq).css('background', 'yellow');//color de fondo de la fuente
-					$("#nivel" + tq).css('color', 'black');//color de fuente
+					$("#barra" + idtk).css('background', 'yellow');//color de barra
+					$("#nivel" + idtk).css('background', 'yellow');//color de fondo de la fuente
+					$("#nivel" + idtk).css('color', 'black');//color de fuente
 					if (flag_alarma) {
-						$("#nivel" + tq).css('background', 'yellow');
+						$("#nivel" + idtk).css('background', 'yellow');
 					} else {
-						$("#nivel" + tq).css('background', 'none');
+						$("#nivel" + idtk).css('background', 'none');
 					}
 				} else {
-					$("#barra" + tq).css('background', 'black');
-					$("#nivel" + tq).css('color', 'green');
-					$("#nivel" + tq).css('background', 'black');
+					$("#barra" + idtk).css('background', 'black');
+					$("#nivel" + idtk).css('color', 'green');
+					$("#nivel" + idtk).css('background', 'black');
 				}
 			}
 			/*para el caso donde lt_porcentaje no contiene un numero;
 			Debemos definir un color en la barra y el fondo del valor*/
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
-			nivel = document.getElementById("barra" + tq);
+			nivel = document.getElementById("barra" + idtk);
 
 			if(parseFloat(lt_porcentaje).toString()=="NaN"){
 				lt_porcentaje="--.--"
 				nivel.style.width = "100" + "%"; //barra de progreso
-				$("#barra" + tq).css('background', 'gray');//color de barra
-				$("#nivel" + tq).css('background', 'gray');//color de fondo de la fuente
-				$("#nivel" + tq).css('color', 'black');
+				$("#barra" + idtk).css('background', 'gray');//color de barra
+				$("#nivel" + idtk).css('background', 'gray');//color de fondo de la fuente
+				$("#nivel" + idtk).css('color', 'black');
 			}
 			nivel.style.width = lt_porcentaje + "%"; //barra de progreso
-			$("#nivel" + tq).text(lt_porcentaje + "%");//Valor numerico del nivel
-
-			t++ //paso a la celda siguiente (tanque)
+			$("#nivel" + idtk).text(lt_porcentaje + "%");//Valor numerico del nivel
 		}
 		flag_alarma=!flag_alarma;
 	}
