@@ -33,32 +33,68 @@
 				<label for="encabezado">VARIABLES PRINCIPALES</label>
 			</p>
 			<table id="tablaPri">
-				<tr><td class="etiqueta">LT=</td><td id="lt" class="dato">---</td></tr>
-				<tr><td class="etiqueta">TOV=</td><td id="tov" class="dato">---</td></tr>
-				<tr><td class="etiqueta">NSV=</td><td id="nsv" class="dato">---</td></tr>
-				<tr><td class="etiqueta">GSV=</td><td id="gsv" class="dato">---</td></tr>
+				<tr><td class="etiqueta">LT:</td><td id="lt" class="dato">---</td></tr>
+				<tr><td class="etiqueta">TOV:</td><td id="tov" class="dato">---</td></tr>
+				<tr><td class="etiqueta">NSV:</td><td id="nsv" class="dato">---</td></tr>
+				<tr><td class="etiqueta">GSV:</td><td id="gsv" class="dato">---</td></tr>
 			</table>
 			
 		</div>
 
 		<div id="data_sec">
-			<table id="tablaSec">
-				<tr><td class="etiqueta">LT=</td><td id="nombre" class="dato">{{tk.Nombre}}</td></tr>
-				<tr><td class="etiqueta">TOV=</td><td id="descriptor" class="dato"> {{tk.Descriptor}}<</td></tr>
-				<tr><td class="etiqueta">NSV=</td><td id="aor" class="dato">{{Aor}}</td></tr>
-			</table>
-			<!---de la BD-->
+			<div class="der">
+				<p>
+					<label for="encabezado1">IDENTIFICACION</label>
+				</p>
+			
+					<table class="tablaDer">
+						<tr><td class="etiqueta">NOMBRE:</td><td id="nombre" class="dato">{{tk.Nombre}}</td></tr>
+						<tr><td class="etiqueta">DESCRIPTOR:</td><td id="descriptor" class="dato"> {{tk.Descriptor}}</td></tr>
+						<tr><td class="etiqueta">AOR:</td><td id="aor" class="dato">{{Aor}}</td></tr>
+					</table>
+				
+				<p>
+					<label for="encabezado1">VARIABLES COMPLEMENTARIAS</label>
+				</p>
+			
+				<table class="tablaDer">
+						<tr><td class="etiqueta">NOMBRE:</td><td id="nombre" class="dato">{{tk.Nombre}}</td></tr>
+						<tr><td class="etiqueta">DESCRIPTOR:</td><td id="descriptor" class="dato"> {{tk.Descriptor}}<</td></tr>
+						<tr><td class="etiqueta">AOR:</td><td id="aor" class="dato">{{Aor}}</td></tr>
+				</table>
+				<p>
+					<label for="encabezado1">ALARMAS</label>
+				</p>
+			
+				<table class="tablaDer">
+						<tr><td class="etiqueta">NOMBRE:</td><td id="nombre" class="dato">{{tk.Nombre}}</td></tr>
+						<tr><td class="etiqueta">DESCRIPTOR:</td><td id="descriptor" class="dato"> {{tk.Descriptor}}<</td></tr>
+						<tr><td class="etiqueta">AOR:</td><td id="aor" class="dato">{{Aor}}</td></tr>
+				</table>
+			
+			</div>
+			<p>
+				<label for="encabezado1">RANGOS DE OPERACION</label>
+			</p>
+			<p>
+				<label for="encabezado1">ALARMAS</label>
+			</p>
+			<p>
+				<label for="encabezado1">ALARMAS</label>
+			</p>
+			<br><br>
+			<!---de la BD-
 			<p class="dato">Nombre: {{tk.Nombre}}</p>
 			<p class="dato">id: {{tk.id}}</p>
 			<p class="dato">Descriptor: {{tk.Descriptor}}</p>
-			<!---de json-->
+			
 			<p class="dato">TOV: {{ Data.TOV }}</p>
 			<p class="dato">LT: {{ Data.LT }}</p>
 			<p class="dato">LT_URGENTE: {{ Data.LT_URGENTE }}</p>
 			
 			<p class="dato">AOR: {{Aor}}</p>
 			<p class="dato">TOV_MAXIMO: {{TOV_MAXIMO}}</p> <!--no es json-->
-
+			->
 		</div>
 	</div>
 	{% endblock %}

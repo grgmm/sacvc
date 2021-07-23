@@ -1190,7 +1190,7 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         idtk=(str(self.object.pk))
         Nombretk=self.object.Nombre
         Descriptortk= self.object.Descriptor
-        Aortk= self.object.id_aor
+        Aortk= self.object.id_aor.Nombre
         instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
         tovmaximo=instov.ValorMaximo
         tovminimo=instov.ValorMinimo
