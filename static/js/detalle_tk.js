@@ -10,7 +10,7 @@ function mi_funcion() {
 	}).done(function (datos) {
 		if (JSON.stringify(datos) != JSON.stringify(datos_anterior)) {
 			idtk = document.getElementById("nrotanque").innerHTML;
-			console.log(idtk)
+			console.log("miTanque "+idtk)
 			//solo se ejecuta si el json cambia
 			actualizar_vista(datos);
 		}
@@ -25,19 +25,20 @@ function mi_funcion() {
 		var nivel;
 		var lt_porcentaje;
 
-		idtk = document.getElementById("nrotanque").innerHTML; 
-		console.log("Nro de tanque "+idtk);
+		//console.log("Nro de tanque "+idtk);
 		//$("#idtanque").text(datos[idtk]["TANQUE"]);
 		lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
 		//console.log(idtk + "  " + lt_porcentaje)
 		nivel = document.getElementById("barra"); //nivel en UI
 		nivel.style.width = lt_porcentaje + "%"; //barra de progreso
 		$("#nivel").text(lt_porcentaje + "%");//Valor numerico del nivel
-		/*
+		console.log("dato "+datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
+		$("#lt").text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
 		$("#tov").text(datos[idtk]["TOV"]+" "+datos[idtk]["TOV_UNIDAD"]);
 		$("#nsv").text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
-		$("#lt").text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
-		*/
+		$("#gsv").text(datos[idtk]["GSV"]+" "+datos[idtk]["GSV_UNIDAD"]);
+		
+		
 		datos_anterior = datos;//Evita actualizar datos innecesariamente
 		console.log("datos actualizados");
 	}
