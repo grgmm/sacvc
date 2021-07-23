@@ -28,15 +28,25 @@
 		</div>	
 
 		<div id="data_pri">
+			<br><br>
+			<p>
+				<label for="encabezado">VARIABLES PRINCIPALES</label>
+			</p>
 			<table id="tablaPri">
-				<tr><td class="variable">LT=</td><td class="dato">888888.888</td></tr>
-				<tr><td class="variable">TOV=</td><td class="dato">888888.888</td></tr>
-				<tr><td class="variable">NSV=</td><td class="dato">888888.888</td></tr>
-				<tr><td class="variable">GSV=</td><td class="dato">888888.888</td></tr>
+				<tr><td class="etiqueta">LT=</td><td id="lt" class="dato">---</td></tr>
+				<tr><td class="etiqueta">TOV=</td><td id="tov" class="dato">---</td></tr>
+				<tr><td class="etiqueta">NSV=</td><td id="nsv" class="dato">---</td></tr>
+				<tr><td class="etiqueta">GSV=</td><td id="gsv" class="dato">---</td></tr>
 			</table>
 			
 		</div>
+
 		<div id="data_sec">
+			<table id="tablaSec">
+				<tr><td class="etiqueta">LT=</td><td id="nombre" class="dato">{{tk.Nombre}}</td></tr>
+				<tr><td class="etiqueta">TOV=</td><td id="descriptor" class="dato"> {{tk.Descriptor}}<</td></tr>
+				<tr><td class="etiqueta">NSV=</td><td id="aor" class="dato">{{Aor}}</td></tr>
+			</table>
 			<!---de la BD-->
 			<p class="dato">Nombre: {{tk.Nombre}}</p>
 			<p class="dato">id: {{tk.id}}</p>
