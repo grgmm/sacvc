@@ -109,6 +109,7 @@ function mi_funcion() {
 						$("#nivel" + idtk).css('background', 'none');
 					}
 				} else {
+					//Operamos sin alarma
 					$("#barra" + idtk).css('background', 'black');
 					$("#nivel" + idtk).css('color', 'green');
 					$("#nivel" + idtk).css('background', 'black');
