@@ -17,11 +17,6 @@ class Command(BaseCommand):
 
 
 
-
-
-
-
-
        # CALCULAR TOV PARTIENDO DEL NIVEL MEDIDO PROVENIENTE DEL MODULO DE ADQUISICION ACQ
 
 # -----------------------------------------------------------#
@@ -62,24 +57,14 @@ class Command(BaseCommand):
        timestamp_tov = ''
        timestamp_gsv = ''
        timestamp_nsv = ''
-       nsv_normal= ''
-       nsv_urgente=''
-       nsv_critica= ''
-       ays_normal=''
-       ays_critica=''
-       tov_unidad= ''
-       ays_urgente=''
+       nsv_alarma= ''
+       tov_alarma= ''
+       gsv_alarma= ''
+       tov_alarma= ''
+       ays_alarma=''
        gsv_unidad=''
        nsv_unidad=''
        porcentaje=''
-       tov_normal= ''
-       tov_urgente= ''
-       tov_critica= ''
-       tov_urgente= ''
-       gsv_urgente= ''
-       gsv_critica=''
-       gsv_urgente= ''
-       gsv_normal= ''
        data_fr= ''
        tagcount= 1
        idtag_DC=1
@@ -107,30 +92,14 @@ class Command(BaseCommand):
                                                               "TT":            "",
                                                               "LTA":           "",
                                                               "AYS":           "",
-                                                              "LT_NORMAL":     "",
-                                                              "LT_URGENTE":    "",
-                                                              "LT_CRITICA":    "",
-                                                              "PT_NORMAL":     "",
-                                                              "PT_URGENTE":    "",
-                                                              "PT_CRITICA":    "",
-                                                              "TT_NORMAL":     "",
-                                                              "TT_URGENTE":    "",
-                                                              "TT_CRITICA":    "",
-                                                              "LTA_NORMAL":    "",
-                                                              "LTA_URGENTE":   "",
-                                                              "LTA_CRITICA":   "",
-                                                              "AYS_NORMAL":    "",
-                                                              "AYS_URGENTE":   "",
-                                                              "AYS_CRITICA":   "",
-                                                              "TOV_NORMAL":    "",
-                                                              "TOV_URGENTE":   "",
-                                                              "TOV_CRITICA":   "",
-                                                              "NSV_NORMAL":    "",
-                                                              "NSV_URGENTE":   "",
-                                                              "NSV_CRITICA":   "",
-                                                              "GSV_NORMAL":    "",
-                                                              "GSV_URGENTE":   "",
-                                                              "GSV_CRITICA":   "",
+                                                              "LT_ALARMA":     "",
+                                                              "PT_ALARMA":     "",
+                                                              "TT_ALARMA":     "",
+                                                              "LTA_ALARMA":    "",
+                                                              "AYS_ALARMA":    "",
+                                                              "TOV_ALARMA":    "",
+                                                              "NSV_ALARMA":    "",
+                                                              "GSV_ALARMA":    "",
                                                               "TIMESTAMP_lt":  "",
                                                               "TIMESTAMP_pt":  "",
                                                               "TIMESTAMP_tt":  "",
@@ -183,10 +152,9 @@ class Command(BaseCommand):
                          idtag_pt = tag_ins.pk
                          timestamp_pt = vb_timestamp_DC
 
-                         pt_estado=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-                         pt_normal=pt_estado['normal']
-                         pt_urgente=pt_estado['urgente']
-                         pt_critica=pt_estado['critica']
+                         pt_alarma=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+
+
 
 
                     if (tag_ins.etiqueta1=='tt'):
@@ -195,10 +163,12 @@ class Command(BaseCommand):
                          idtag_tt = tag_ins.pk
                          timestamp_tt = vb_timestamp_DC
 
-                         tt_estado=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-                         tt_normal=tt_estado['normal']
-                         tt_urgente=tt_estado['urgente']
-                         tt_critica=tt_estado['critica']
+                         tt_alarma=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                         #tt_estado=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+
+                         #tt_normal=tt_estado['normal']
+                         #tt_urgente=tt_estado['urgente']
+                         #tt_critica=tt_estado['critica']
 
                     if (tag_ins.etiqueta1=='lta'):
                               # if idtag_DC.etiqueta1=='lta':
@@ -206,10 +176,8 @@ class Command(BaseCommand):
                          idtag_lta = tag_ins.pk
                          timestamp_lta = vb_timestamp_DC
 
-                         lta_estado=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-                         lta_normal=lta_estado['normal']
-                         lta_urgente=lta_estado['urgente']
-                         lta_critica=lta_estado['critica']
+                         lta_alarma=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+
 
                     if (tag_ins.etiqueta1=='ays'):
                                #if idtag_DC.etiqueta1=='ays':
@@ -217,11 +185,7 @@ class Command(BaseCommand):
                          idtag_ays = tag_ins.pk
                          timestamp_ays = vb_timestamp_DC
 
-                         ays_estado=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-                         ays_normal=ays_estado['normal']
-                         ays_urgente=ays_estado['urgente']
-                         ays_critica=ays_estado['critica']
-
+                         ays_alarma=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
                     if (tag_ins.etiqueta1=='lt'):
 
@@ -230,15 +194,13 @@ class Command(BaseCommand):
                          lt_unidad = tag_ins.Unidad
                          timestamp_lt = vb_timestamp_DC
 
-                         lt_estado=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-                         lt_normal=lt_estado['normal']
-                         lt_urgente=lt_estado['urgente']
-                         lt_critica=lt_estado['critica']
-                         #print(lt_estado)
+                         lt_alarma=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                         print(lt_alarma)
+
 
 
                          try:
-                             time.sleep(1)
+                             #time.sleep(1)
 
                              volumenes=VOLUMENES(nivel_producto,ays)
                              #print(volumenes)
@@ -255,29 +217,24 @@ class Command(BaseCommand):
 
 
                              timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                             tov_estado=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
-                             tov_normal=tov_estado['normal']
-                             tov_urgente=tov_estado['urgente']
-                             tov_critica=tov_estado['critica']
+                             tov_alarma=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
+
                              tov_unidad = instance_tov.Unidad
 
 
                              instance_gsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='GSV')
                              timestamp_gsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                             gsv_estado=Alarmas(gsv, instance_gsv.LL, instance_gsv.L, instance_gsv.H, instance_gsv.HH)
-                             gsv_normal=gsv_estado['normal']
-                             gsv_urgente=gsv_estado['urgente']
-                             gsv_critica=gsv_estado['critica']
+                             gsv_alarma=Alarmas(gsv, instance_gsv.LL, instance_gsv.L, instance_gsv.H, instance_gsv.HH)
+
                              gsv_unidad = instance_gsv.Unidad
 
 
                              instance_nsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='NSV')
                              timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                             nsv_estado=Alarmas(nsv, instance_nsv.LL, instance_nsv.L, instance_nsv.H, instance_nsv.HH)
-                             nsv_normal=nsv_estado['normal']
-                             nsv_urgente=nsv_estado['urgente']
-                             nsv_critica=nsv_estado['critica']
+                             nsv_alarma=Alarmas(nsv, instance_nsv.LL, instance_nsv.L, instance_nsv.H, instance_nsv.HH)
+
                              nsv_unidad = instance_nsv.Unidad
+
                              Data_Calculada  = {                "TANQUE": tag_ins.id_Tk.Nombre, #OJO CORREGIR PARA QUE SALGA EL NOMBRE
                                                                      "LT":    str(nivel_producto),
                                                                      "LT_PORCENTAJE": str(porcentaje),
@@ -302,30 +259,15 @@ class Command(BaseCommand):
                                                                      "TT":    str(temperatura_producto),
                                                                      "LTA":   str(nivel_agua_libre),
                                                                      "AYS":   str(ays),
-                                                                     "LT_NORMAL":     lt_normal,
-                                                                     "LT_URGENTE":    lt_urgente,
-                                                                     "LT_CRITICA":    lt_critica,
-                                                                     "PT_NORMAL":     pt_normal,
-                                                                     "PT_URGENTE":    pt_urgente,
-                                                                     "PT_CRITICA":    pt_critica,
-                                                                     "TT_NORMAL":     tt_normal,
-                                                                     "TT_URGENTE":    tt_urgente,
-                                                                     "TT_CRITICA":    tt_critica,
-                                                                     "LTA_NORMAL":    lta_normal,
-                                                                     "LTA_URGENTE":   lta_urgente,
-                                                                     "LTA_CRITICA":   lta_critica,
-                                                                     "AYS_NORMAL":    ays_normal,
-                                                                     "AYS_URGENTE":   ays_urgente,
-                                                                     "AYS_CRITICA":   ays_critica,
-                                                                     "TOV_NORMAL":    tov_normal,
-                                                                     "TOV_URGENTE":   tov_urgente,
-                                                                     "TOV_CRITICA":   tov_critica,
-                                                                     "NSV_NORMAL":    nsv_normal,
-                                                                     "NSV_URGENTE":   nsv_urgente,
-                                                                     "NSV_CRITICA":   nsv_critica,
-                                                                     "GSV_NORMAL":    gsv_normal,
-                                                                     "GSV_URGENTE":   gsv_urgente,
-                                                                     "GSV_CRITICA":   gsv_critica,
+                                                                     "LT_ALARMA":     lt_alarma,
+
+                                                                     "PT_ALARMA":     pt_alarma,
+                                                                     "TT_ALARMA":     tt_alarma,
+                                                                     "LTA_ALARMA":    lta_alarma,
+                                                                     "AYS_ALARMA":    ays_alarma,
+                                                                     "TOV_ALARMA":    tov_alarma,
+                                                                     "NSV_ALARMA":    nsv_alarma,
+                                                                     "GSV_ALARMA":    gsv_alarma,
                                                                      "TIMESTAMP_lt":  timestamp_lt,
                                                                      "TIMESTAMP_pt":  timestamp_pt,
                                                                      "TIMESTAMP_tt":  timestamp_tt,

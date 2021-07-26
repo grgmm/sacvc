@@ -281,8 +281,12 @@ class TkAdd(CreateView):
     @receiver(post_save, sender=Tk)  #CREA LA SEÑAL DE GUARDADO
     def create_Tk(sender, instance, created, **kwargs):#FUNCION QUE CAPTURA LA SEÑAL DE GUARDADO DE TK Y TRABAJA CON ESA INSTANCIA DE TK
         #INICIALIZA EL TANQUE CON SUS PARAMETROS (PT,LT,TT, TOV) #FALTA INCLUIR AYS, NSV, ENTRE OTROS.
+
         if created:
     ###INICIALIZANDO VALORES DE MINIMOS Y MAXIMOS Y CALCULOS DE SETTING DE ALARMAS PREDEFINIDOS
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+            ruta_Data=fs.location
+
             lt_minimo=0.0
             lt_maximo=19.226
             lt_alarmas=Settings_Alarmas(lt_maximo,lt_minimo)
@@ -318,16 +322,37 @@ class TkAdd(CreateView):
 
 
             qtk= Tk.objects.count()
+            direccionamiento = {'dir_disponible':''}
+
+
+            if qtk == 1:
+                direccionamiento['dir_disponible']= 1
+
+
+            else:
+
+                try:
+
+                    with fs.open(ruta_Data+'/direccionamiento.json', mode= 'r') as data_file:
+                        direccionamiento = json.loads(data_file.read())
+
+
+                except:
+                    print("Error inesperado: ", sys.exc_info()[0])
+
+            dir_disponible = int(direccionamiento['dir_disponible'])
+
+
 
 ####CREANDO PARAMETROS DE TANQUES DE FORMA AUTOMATICA
 
             Analogico.objects.create(Nombre= instance.Nombre+'_lt' ,
              Descriptor='NIVEL DEL TANQUE'+ instance.Nombre  ,
              Unidad= 'm',
-             direccion=(qtk-1)*16+1,
+             direccion=dir_disponible,
              id_Tk=instance,
              TipoVariable= 'B',
-             direccion_campo= 100+((qtk-1)*16+1),
+             direccion_campo= 100 + dir_disponible,
              etiqueta1='lt',
              ValorMinimo=lt_minimo,
              ValorMaximo=lt_maximo,
@@ -340,9 +365,9 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre +'_pt',
              Descriptor='PRESION DEL TANQUE'+ instance.Nombre,
              Unidad = 'psi',
-             direccion=(qtk-1)*16+3,
+             direccion=dir_disponible + 2,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+3,
+             direccion_campo= 100 + dir_disponible + 2,
              TipoVariable= 'B',
              etiqueta1='pt',
              ValorMinimo=pt_maximo,
@@ -356,9 +381,9 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre +'_tt',
              Descriptor='TEMPERATURA DEL TANQUE'+ instance.Nombre,
              Unidad= 'f',
-             direccion=(qtk-1)*16+5,
+             direccion=dir_disponible + 4,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+5,
+             direccion_campo= 100 + dir_disponible + 4,
              TipoVariable= 'B',
              etiqueta1='tt',
              ValorMinimo=tt_maximo,
@@ -372,9 +397,9 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre +'_lta',
              Descriptor='NIVEL DE AGUA LIBRE '+ instance.Nombre,
              Unidad= 'pie',
-             direccion=(qtk-1)*16+7,
+             direccion=dir_disponible + 6,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+7,
+             direccion_campo= 100 + dir_disponible + 6,
              TipoVariable= 'B',
              etiqueta1='lta',
              ValorMinimo=lta_maximo,
@@ -388,9 +413,9 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre +'_ays',
              Descriptor='PORCENTAJE DE AGUA Y SEDIMENTO '+ instance.Nombre,
              Unidad= '%',
-             direccion=(qtk-1)*16+9,
+             direccion=dir_disponible + 8,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+9,
+             direccion_campo= 100 + dir_disponible + 8,
              TipoVariable= 'C',
              etiqueta1='AYS',
              ValorMinimo=ays_maximo,
@@ -404,9 +429,9 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre +'_TOV',
              Descriptor='VOLUMEN TOTAL OBSERVADO DEL TANQUE '+ instance.Nombre,
              Unidad= 'bls',
-             direccion=(qtk-1)*16+11,
+             direccion=dir_disponible + 10,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+11,
+             direccion_campo= 100 + dir_disponible +10,
              TipoVariable= 'C',
              etiqueta1='TOV',
              ValorMinimo=TOV_maximo,
@@ -420,9 +445,9 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre +'_GSV',
              Descriptor='VOLUMEN BRUTO ESTANDAR DEL TANQUE '+ instance.Nombre,
              Unidad= 'bls',
-             direccion=(qtk-1)*16+13,
+             direccion=dir_disponible  + 12,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+13,
+             direccion_campo= 100 + dir_disponible + 12,
              TipoVariable= 'C',
              etiqueta1='GSV',
              ValorMinimo=GSV_maximo,
@@ -436,9 +461,9 @@ class TkAdd(CreateView):
             Analogico.objects.create(Nombre= instance.Nombre +'_NSV',
              Descriptor='VOLUMEN NETO ESTANDAR DEL TANQUE '+ instance.Nombre,
              Unidad= 'bls',
-             direccion=(qtk-1)*16+15,
+             direccion=dir_disponible + 14,
              id_Tk=instance,
-             direccion_campo= 100+(qtk-1)*16+15,
+             direccion_campo= 100 + dir_disponible + 14,
              TipoVariable= 'C',
              etiqueta1='NSV',
              ValorMinimo=NSV_maximo,
@@ -448,14 +473,54 @@ class TkAdd(CreateView):
              H =  NSV_alarmas['h'],
              HH = NSV_alarmas['hh'],
              )
+            direccionamiento['dir_disponible']= dir_disponible + 14 + 2
+
+            try:
+                with fs.open(ruta_Data +'/direccionamiento.json', mode= 'w') as file:
+                    print(direccionamiento)
+
+                    file.write(json.dumps(direccionamiento))#Data en cache)
+            except:
+
+                print("Error inesperado:ESTA FALLANDO AQUI", sys.exc_info()[0])
+
+
 
 class TkDelete(DeleteView):
     model = Tk
     template_name = 'acq/del_tk/del_tk.html'
 
     def get_success_url(self):
+            from django.db.models import Max, Min
+            direccionamiento={'dir_disponible':''}
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+            ruta_Data=fs.location
 
             success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
+            #print(self.object.pk)
+            q = Analogico.objects.filter(id_Tk=self.object.pk)
+            dict_direccion = (q.aggregate(Min('direccion')))
+            direccion = dict_direccion['direccion__min']
+            direccionamiento['dir_disponible']= direccion
+
+            try:
+                with fs.open(ruta_Data +'/direccionamiento.json', mode= 'w') as file:
+
+                    file.write(json.dumps(direccionamiento))#Data en cache)
+            except:
+
+                print("Error inesperado:", sys.exc_info()[0])
+
+
+
+
+
+
+            #lolo=Analogico.objects.get(id_Tk=self.object.pk)
+            #args.order_by('-rating').first()
+
+
+
             return(success_url)
 
 
@@ -471,7 +536,7 @@ class TkDelete(DeleteView):
 
                 return redirect('/sacvc/Menu')
             else:
-                 return super(TkDelete, self).get(request, *args, **kwargs)
+                return super(TkDelete, self).get(request, *args, **kwargs)
 
         else:
             return redirect('/sacvc/logout')
@@ -1194,6 +1259,7 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
         tovmaximo=instov.ValorMaximo
         tovminimo=instov.ValorMinimo
+
 
         DataTk_temp= {}
 
