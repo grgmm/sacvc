@@ -17,11 +17,6 @@ class Command(BaseCommand):
 
 
 
-
-
-
-
-
        # CALCULAR TOV PARTIENDO DEL NIVEL MEDIDO PROVENIENTE DEL MODULO DE ADQUISICION ACQ
 
 # -----------------------------------------------------------#
@@ -238,7 +233,7 @@ class Command(BaseCommand):
 
 
                          try:
-                             time.sleep(1)
+                             #time.sleep(1)
 
                              volumenes=VOLUMENES(nivel_producto,ays)
                              #print(volumenes)
