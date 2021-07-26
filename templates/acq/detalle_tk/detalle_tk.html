@@ -26,39 +26,60 @@
 					</div>
 			</div>
 		</div>	
-
 		<div id="data_pri">
-			<br><br>
-			<p>
-				<label for="encabezado">VARIABLES PRINCIPALES</label>
-			</p>
-			<table id="tablaPri">
-				<tr><td class="etiqueta">LT=</td><td id="lt" class="dato">---</td></tr>
-				<tr><td class="etiqueta">TOV=</td><td id="tov" class="dato">---</td></tr>
-				<tr><td class="etiqueta">NSV=</td><td id="nsv" class="dato">---</td></tr>
-				<tr><td class="etiqueta">GSV=</td><td id="gsv" class="dato">---</td></tr>
+			<br>	
+			<table class="tabla">
+				<caption class="titulotabla">VARIABLES PRINCIPALES</caption>
+				<tr><td class="etiqueta">LT:</td><td id="lt" class="dato">---</td></tr>
+				<tr><td class="etiqueta">TOV:</td><td id="tov" class="dato">---</td></tr> 
+				<tr><td class="etiqueta">NSV:</td><td id="nsv" class="dato">---</td></tr>
+				<tr><td class="etiqueta">GSV:</td><td id="gsv" class="dato">---</td></tr>
 			</table>
 			
 		</div>
 
 		<div id="data_sec">
-			<table id="tablaSec">
-				<tr><td class="etiqueta">LT=</td><td id="nombre" class="dato">{{tk.Nombre}}</td></tr>
-				<tr><td class="etiqueta">TOV=</td><td id="descriptor" class="dato"> {{tk.Descriptor}}<</td></tr>
-				<tr><td class="etiqueta">NSV=</td><td id="aor" class="dato">{{Aor}}</td></tr>
-			</table>
-			<!---de la BD-->
+			<div id="izq">
+				<table class="tabla">
+					<caption class="titulotabla">IDENTIFICACION</caption>
+					<tr><td class="etiqueta">NOMBRE:</td><td id="nombre" class="dato">{{tk.Nombre}}</td></tr>
+					<tr><td class="etiqueta">DESCRIPTOR:</td><td id="descriptor" class="dato"> {{tk.Descriptor}}</td></tr>
+					<tr><td class="etiqueta">AOR:</td><td id="aor" class="dato">{{Aor}}</td></tr>
+				</table>
+				<table class="tabla">
+					<caption class="titulotabla">VARIABLES COMPLEMENTARIAS</caption>
+					<tr><td class="etiqueta">PT:</td><td id="nombre" class="dato">---</td></tr>
+					<tr><td class="etiqueta">AYS:</td><td id="descriptor" class="dato">---</td></tr>
+					<tr><td class="etiqueta">TT:</td><td id="aor" class="dato">---</td></tr>
+					<tr><td class="etiqueta">LTA:</td><td id="aor" class="dato">---</td></tr>
+				</table>
+				<table class="tabla">
+					<caption class="titulotabla">RANGOS DE OPERACION</caption>
+					<tr><td class="etiqueta">LT MAXIMO:</td><td id="nombre" class="dato">---</td></tr>
+					<tr><td class="etiqueta">LT MINIMO:</td><td id="descriptor" class="dato">---</td></tr>
+					<tr><td class="etiqueta">TOV MAXIMO:</td><td id="aor" class="dato">---</td></tr>
+					<tr><td class="etiqueta">TOV MINIMO:</td><td id="aor" class="dato">---</td></tr>
+				</table>
+			</div>
+			<div id="der">
+				<table class="tabla">
+					<caption class="titulotabla">ALARMAS</caption>
+					<tr><td class="etiqueta">NOMBRE:</td><td id="nombre" class="dato">---</td></tr>
+					<tr><td class="etiqueta">DESC:</td><td id="descriptor" class="dato">---</td></tr>
+					<tr><td class="etiqueta">AOR:</td><td id="aor" class="dato">---</td></tr>
+				</table>
+			</div>
+			<!---de la BD-
 			<p class="dato">Nombre: {{tk.Nombre}}</p>
 			<p class="dato">id: {{tk.id}}</p>
 			<p class="dato">Descriptor: {{tk.Descriptor}}</p>
-			<!---de json-->
+			
 			<p class="dato">TOV: {{ Data.TOV }}</p>
 			<p class="dato">LT: {{ Data.LT }}</p>
 			<p class="dato">LT_URGENTE: {{ Data.LT_URGENTE }}</p>
 			
 			<p class="dato">AOR: {{Aor}}</p>
-			<p class="dato">TOV_MAXIMO: {{TOV_MAXIMO}}</p> <!--no es json-->
-
+			<p class="dato">TOV_MAXIMO: {{TOV_MAXIMO}}</p> -->
 		</div>
 	</div>
 	{% endblock %}
