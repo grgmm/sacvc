@@ -396,7 +396,7 @@ class TkAdd(CreateView):
 
             Analogico.objects.create(Nombre= instance.Nombre +'_lta',
              Descriptor='NIVEL DE AGUA LIBRE '+ instance.Nombre,
-             Unidad= 'pie',
+             Unidad= 'm',
              direccion=dir_disponible + 6,
              id_Tk=instance,
              direccion_campo= 100 + dir_disponible + 6,
@@ -417,7 +417,7 @@ class TkAdd(CreateView):
              id_Tk=instance,
              direccion_campo= 100 + dir_disponible + 8,
              TipoVariable= 'C',
-             etiqueta1='AYS',
+             etiqueta1='ays',
              ValorMinimo=ays_maximo,
              ValorMaximo=ays_minimo,
              LL = ays_alarmas['ll'],
