@@ -75,19 +75,17 @@ function mi_funcion() {
 
 	function manejar_alarmas(datos) {
 		//solo se ejecuta si el json cambia
-		var t = 1;//EMPIEZO POR LA CELDA1 (TANQUE1)
 		//todo en unidades de ingenieria
-		var lt_urgente;
-		var lt_critica;
+		var lt_alarma;
 		var idtk;//nro del tanque json
 
 		for (var tk in datos) {
 			idtk = tk.toString(); //tomo el id del tanque, uno por celda
-			lt_urgente = datos[idtk]["LT_URGENTE"];
-			lt_critica = datos[idtk]["LT_CRITICA"];
+			lt_alarma=datos[idtk]["LT_ALARMA"];
+			console.log("Alarma "+lt_alarma);
 
 			//Calculo de alarmas
-			if (lt_critica) {
+			if (lt_alarma=="C") {
 				$("#barra" + idtk).css('background', 'red');//color de barra
 				$("#nivel" + idtk).css('background', 'red');//color de fondo de la fuente
 				$("#nivel" + idtk).css('color', 'black');//color de fuente
@@ -99,7 +97,7 @@ function mi_funcion() {
 					$("#nivel" + idtk).css('background', 'none');
 				}
 			} else {
-				if (lt_urgente) {
+				if (lt_alarma=="U") {
 					$("#barra" + idtk).css('background', 'yellow');//color de barra
 					$("#nivel" + idtk).css('background', 'yellow');//color de fondo de la fuente
 					$("#nivel" + idtk).css('color', 'black');//color de fuente
@@ -109,6 +107,7 @@ function mi_funcion() {
 						$("#nivel" + idtk).css('background', 'none');
 					}
 				} else {
+					//Operamos sin alarma
 					$("#barra" + idtk).css('background', 'black');
 					$("#nivel" + idtk).css('color', 'green');
 					$("#nivel" + idtk).css('background', 'black');
