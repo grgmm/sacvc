@@ -68,6 +68,11 @@ class Command(BaseCommand):
        data_fr= ''
        tagcount= 1
        idtag_DC=1
+       tt_unidad = ''
+       pt_unidad = ''
+       lta_unidad = ''
+       ays_unidad = ''
+
        Data_Calculada  = {                                    "TANQUE":        "",
                                                               "LT":            "",
                                                               "LT_PORCENTAJE": "",
@@ -86,6 +91,10 @@ class Command(BaseCommand):
                                                               "NSV":           "",
                                                               "NSV_UNIDAD":    "",
                                                               "LT_UNIDAD":     "",
+                                                              "PT_UNIDAD":     "",
+                                                              "TT_UNIDAD":     "",
+                                                              "LTA_UNIDAD":     "",
+                                                              "AYS_UNIDAD":     "",
                                                               "VALORMAXIMO":   "",
                                                               "VALORMINIMO":   "",
                                                               "PT":            "",
@@ -151,6 +160,7 @@ class Command(BaseCommand):
                          Presion_tk = vb_PV
                          idtag_pt = tag_ins.pk
                          timestamp_pt = vb_timestamp_DC
+                         pt_unidad=tag_ins.Unidad
 
                          pt_alarma=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
@@ -162,6 +172,8 @@ class Command(BaseCommand):
                          temperatura_producto=vb_PV
                          idtag_tt = tag_ins.pk
                          timestamp_tt = vb_timestamp_DC
+                         tt_unidad=tag_ins.Unidad
+
 
                          tt_alarma=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
                          #tt_estado=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
@@ -175,6 +187,8 @@ class Command(BaseCommand):
                          nivel_agua_libre=vb_PV
                          idtag_lta = tag_ins.pk
                          timestamp_lta = vb_timestamp_DC
+                         lta_unidad=tag_ins.Unidad
+
 
                          lta_alarma=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
@@ -184,8 +198,12 @@ class Command(BaseCommand):
                          ays=vb_PV
                          idtag_ays = tag_ins.pk
                          timestamp_ays = vb_timestamp_DC
+                         ays_unidad=tag_ins.Unidad
+                         print(ays_unidad)
+
 
                          ays_alarma=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+
 
                     if (tag_ins.etiqueta1=='lt'):
 
@@ -195,7 +213,6 @@ class Command(BaseCommand):
                          timestamp_lt = vb_timestamp_DC
 
                          lt_alarma=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-                         print(lt_alarma)
 
 
 
@@ -251,16 +268,19 @@ class Command(BaseCommand):
                                                                      "GSV":   str(gsv),
                                                                      "GSV_UNIDAD":    gsv_unidad ,
                                                                      "NSV":   str(nsv),
-                                                                     "NSV_UNIDAD":    nsv_unidad ,
+                                                                     "NSV_UNIDAD":   nsv_unidad ,
                                                                      "LT_UNIDAD":    lt_unidad ,
-                                                                     "VALORMAXIMO": tag_ins.ValorMaximo,
-                                                                     "VALORMINIMO": tag_ins.ValorMinimo,
+                                                                     "PT_UNIDAD":    pt_unidad,
+                                                                     "TT_UNIDAD":    tt_unidad,
+                                                                     "LTA_UNIDAD":   lta_unidad,
+                                                                     "AYS_UNIDAD":   ays_unidad,
+                                                                     "VALORMAXIMO":  tag_ins.ValorMaximo,
+                                                                     "VALORMINIMO":  tag_ins.ValorMinimo,
                                                                      "PT":    str(Presion_tk),
                                                                      "TT":    str(temperatura_producto),
                                                                      "LTA":   str(nivel_agua_libre),
                                                                      "AYS":   str(ays),
                                                                      "LT_ALARMA":     lt_alarma,
-
                                                                      "PT_ALARMA":     pt_alarma,
                                                                      "TT_ALARMA":     tt_alarma,
                                                                      "LTA_ALARMA":    lta_alarma,
