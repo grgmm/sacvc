@@ -8,7 +8,7 @@
 <script src={% static 'js/detalle_tk.js' %}></script>
 	<h2 class="titulo">DETALLE DEL TANQUE {{tk.Nombre}}</h2>
 	<div>
-		<a href="" id="regresar" type="button" class="btn_control" >
+		<a href="{% url 'uacq:grupo_tk' %}" id="regresar" type="button" class="btn_control" >
 			<img id="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>REGRESAR</a>
 	</div>
 
@@ -64,8 +64,8 @@
 			<div id="der">
 				<table class="tabla">
 					<caption class="titulotabla">ALARMAS</caption>
-					<tr><td class="etiqueta">LT:</td><td id="lt_alarma" class="dato"></td></tr>
-					<tr><td class="etiqueta">PT:</td><td id="pt_alarma" class="dato"></td></tr>
+					<tr><td class="etiqueta">LT:</td><td id="lt_alarma" class="dato"><a href=""></a></td></tr>
+					<tr><td class="etiqueta">PT:</td><td id="pt_alarma" class="dato"><a href=""></a></td></tr>
 					<tr><td class="etiqueta">TT:</td><td id="tt_alarma" class="dato"></td></tr>
 					<tr><td class="etiqueta">LTA:</td><td id="lta_alarma" class="dato"></td></tr>
 					<tr><td class="etiqueta">AYS:</td><td id="ays_alarma" class="dato"></td></tr>
