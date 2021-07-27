@@ -10,7 +10,7 @@ function mi_funcion() {
 	}).done(function (datos) {
 		if (JSON.stringify(datos) != JSON.stringify(datos_anterior)) {
 			idtk = document.getElementById("nrotanque").innerHTML;
-			console.log("miTanque " + idtk)
+			//console.log("miTanque " + idtk)
 			//solo se ejecuta si el json cambia
 			actualizar_vista(datos);
 		}
@@ -40,10 +40,10 @@ function mi_funcion() {
 		$("#nsv").text(datos[idtk]["NSV"] + " " + datos[idtk]["NSV_UNIDAD"]);
 		$("#gsv").text(datos[idtk]["GSV"] + " " + datos[idtk]["GSV_UNIDAD"]);
 		//variables complementarias
-		$("#pt").text(datos[idtk]["PT"] + " " + datos[idtk]["LT_UNIDAD"]);
-		$("#ays").text(datos[idtk]["AYS"] + " " + datos[idtk]["TOV_UNIDAD"]);
-		$("#tt").text(datos[idtk]["TT"] + " " + datos[idtk]["NSV_UNIDAD"]);
-		$("#lta").text(datos[idtk]["LTA"] + " " + datos[idtk]["LT_UNIDAD"]);
+		$("#pt").text(datos[idtk]["PT"] + " " + datos[idtk]["PT_UNIDAD"]);
+		$("#ays").text(datos[idtk]["AYS"] + " " + datos[idtk]["AYS_UNIDAD"]);
+		$("#tt").text(datos[idtk]["TT"] + " " + datos[idtk]["TT_UNIDAD"]);
+		$("#lta").text(datos[idtk]["LTA"] + " " + datos[idtk]["LTA_UNIDAD"]);
 		//rangos de operacion
 		$("#lt_maximo").text(datos[idtk]["LT"] + " " + datos[idtk]["LT_UNIDAD"]);
 		$("#lt_minimo").text(datos[idtk]["TOV"] + " " + datos[idtk]["LT_UNIDAD"]);
@@ -295,12 +295,9 @@ function mi_funcion() {
 				$("#nsv_alarma").css('background', 'white');//alarma en la tabla
 			}
 		}
-
-		console.log("Alarma "+gsv_alarma)
 		//ALARMA GSV
 		if (gsv_alarma == "C") {
 			//Alarma en la tabla
-			console.log("Alarma "+gsv_alarma)
 			$("#gsv_alarma").css('background', 'red');
 
 			if (flag_alarma) {
