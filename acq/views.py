@@ -27,7 +27,7 @@ from django.core.exceptions import ValidationError
 import pandas as pd
 from .validaciones import validar_parametro_tct as valida
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.contrib.auth import logout
 from django.contrib.auth import login
 from django.contrib.auth import authenticate
@@ -511,16 +511,6 @@ class TkDelete(DeleteView):
 
                 print("Error inesperado:", sys.exc_info()[0])
 
-
-
-
-
-
-            #lolo=Analogico.objects.get(id_Tk=self.object.pk)
-            #args.order_by('-rating').first()
-
-
-
             return(success_url)
 
 
@@ -540,6 +530,26 @@ class TkDelete(DeleteView):
 
         else:
             return redirect('/sacvc/logout')
+
+@receiver(post_delete, sender=Tk)  #CREA LA SEÑAL DE GUARDADO
+def delete_Tk(sender, instance, **kwargs):#FUNCION QUE CAPTURA LA SEÑAL DE GUARDADO DE TK Y TRABAJA CON ESA INSTANCIA DE TK
+    #INICIALIZA EL TANQUE CON SUS PARAMETROS (PT,LT,TT, TOV) #FALTA INCLUIR AYS, NSV, ENTRE OTROS.
+
+        print('lumpia lolo')
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+        ruta_Data=fs.location
+        try:
+            with fs.open(ruta_Data +'/Buffer_Datos_Calculados', mode= 'w') as file:
+                file.seek(0)
+                file.truncated()
+
+
+        except:
+
+            print("Error inesperado:", sys.exc_info()[0])
+
+
+
 
 class TkDetail(DetailView):
     model = Tk
