@@ -121,9 +121,10 @@ class Command(BaseCommand):
                         pt_alarma=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
 
-                        Data_tanques_temp['IDPT'] = idtag_pt,
-                        Data_tanques_temp['PT_UNIDAD'] = pt_unidad,
-                        Data_tanques_temp['PT'] = str(Presion_tk),
+                        Data_tanques_temp['IDPT'] = idtag_pt
+
+                        Data_tanques_temp['PT_UNIDAD'] = pt_unidad
+                        Data_tanques_temp['PT'] = str(Presion_tk)
                         Data_tanques_temp['PT_ALARMA']= pt_alarma
                         Data_tanques_temp['TIMESTAMP_pt'] =  timestamp_pt
 
@@ -161,7 +162,7 @@ class Command(BaseCommand):
 
 
                         Data_tanques_temp['IDLTA'] = idtag_lta
-                        Data_tanques_temp['LTA_UNIDAD'] = lta_unidad,
+                        Data_tanques_temp['LTA_UNIDAD'] = lta_unidad
                         Data_tanques_temp['LTA'] =  str(nivel_agua_libre)
                         Data_tanques_temp['LTA_ALARMA']= lta_alarma
                         Data_tanques_temp['TIMESTAMP_lta'] =  timestamp_lta
@@ -179,11 +180,11 @@ class Command(BaseCommand):
 
 
 
-                        Data_tanques_temp['IDAYS'] = idtag_ays,
-                        Data_tanques_temp['AYS_UNIDAD'] = ays_unidad,
-                        Data_tanques_temp['AYS'] =  str(ays),
+                        Data_tanques_temp['IDAYS'] = idtag_ays
+                        Data_tanques_temp['AYS_UNIDAD'] = ays_unidad
+                        Data_tanques_temp['AYS'] =  str(ays)
                         Data_tanques_temp['AYS_ALARMA']= ays_alarma
-                        Data_tanques_temp['TIMESTAMP_ays'] =  timestamp_ays,
+                        Data_tanques_temp['TIMESTAMP_ays'] =  timestamp_ays
 
 
 
@@ -277,9 +278,6 @@ class Command(BaseCommand):
 
                   #    ciclo1+=1
                       #print(ciclo0,ciclo1)
-
-
-
 
                Data_tanques[tk_ins.pk] ={'TANQUE': tk_ins.Nombre}
 
