@@ -16,7 +16,6 @@ class Command(BaseCommand):
        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
 
 
-
        # CALCULAR TOV PARTIENDO DEL NIVEL MEDIDO PROVENIENTE DEL MODULO DE ADQUISICION ACQ
 
 # -----------------------------------------------------------#
@@ -72,54 +71,9 @@ class Command(BaseCommand):
        pt_unidad = ''
        lta_unidad = ''
        ays_unidad = ''
+       Data_tanques_pt, Data_tanques_tt,Data_tanques_lta, Data_tanques_ays, Data_tanque_lt = {},{},{},{},{}
 
-       Data_Calculada  = {                                    "TANQUE":        "",
-                                                              "LT":            "",
-                                                              "LT_PORCENTAJE": "",
-                                                              "IDTOV":         "",
-                                                              "IDNSV":         "",
-                                                              "IDGSV":         "",
-                                                              "IDLT" :         "",
-                                                              "IDPT" :         "",
-                                                              "IDTT" :         "",
-                                                              "IDLTA":         "",
-                                                              "IDAYS":         "",
-                                                              "TOV":           "",
-                                                              "TOV_UNIDAD":    "",
-                                                              "GSV":           "",
-                                                              "GSV_UNIDAD":    "",
-                                                              "NSV":           "",
-                                                              "NSV_UNIDAD":    "",
-                                                              "LT_UNIDAD":     "",
-                                                              "PT_UNIDAD":     "",
-                                                              "TT_UNIDAD":     "",
-                                                              "LTA_UNIDAD":     "",
-                                                              "AYS_UNIDAD":     "",
-                                                              "VALORMAXIMO":   "",
-                                                              "VALORMINIMO":   "",
-                                                              "PT":            "",
-                                                              "TT":            "",
-                                                              "LTA":           "",
-                                                              "AYS":           "",
-                                                              "LT_ALARMA":     "",
-                                                              "PT_ALARMA":     "",
-                                                              "TT_ALARMA":     "",
-                                                              "LTA_ALARMA":    "",
-                                                              "AYS_ALARMA":    "",
-                                                              "TOV_ALARMA":    "",
-                                                              "NSV_ALARMA":    "",
-                                                              "GSV_ALARMA":    "",
-                                                              "TIMESTAMP_lt":  "",
-                                                              "TIMESTAMP_pt":  "",
-                                                              "TIMESTAMP_tt":  "",
-                                                              "TIMESTAMP_lta": "",
-                                                              "TIMESTAMP_ays": "",
-                                                              "TIMESTAMP_TOV": "",
-                                                              "TIMESTAMP_GSV": "",
-                                                              "TIMESTAMP_NSV": "",
-                                                              "INDEXADO":      0,
-                                                              }
-
+       Data_tanques={}
 
 
 
@@ -130,207 +84,235 @@ class Command(BaseCommand):
 
 
 #OBTENIENDO DATOS DEL BUFFER DATA CRUDA
+               time.sleep(1)
 
                try:
                    with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode = 'r') as data_file_r:
                       data_fr = json.loads(data_file_r.read())
                       tagcount=(len(data_fr['Data_Cruda']))
                except:
-                    print("Error inesperado  leyendo data cruda:", sys.exc_info()[0])
+                      print("Error inesperado  leyendo data cruda:", sys.exc_info()[0])
+                      continue
 
-
-#INSTANCIAR EL TAG CALCULANDO SU VALOR REAL IEEE754 SOLO SI ES ANALOGICO
                for recorrido in range(tagcount):
-
-                    idtag_DC = Tag.objects.get(pk=data_fr['Data_Cruda'][recorrido]['IDTAG']) #id tag data cruda
-                    vb_REG_1=data_fr['Data_Cruda'][recorrido]['REGISTRO_1']
-                    vb_REG_2=data_fr['Data_Cruda'][recorrido]['REGISTRO_2']
-                    vb_timestamp_DC=data_fr['Data_Cruda'][recorrido]['TIMESTAMP']
-                    vb_PV=FloatIeee754(int(vb_REG_2), int(vb_REG_1))
-
-                    idtk = idtag_DC.id_Tk
-
-                    #Tags= Analogico.objects.all()
-                    #tag_ins=Tags.filter(pk__exact=idtag_DC)
-                    tag_ins = Analogico.objects.get(pk=idtag_DC.pk)
-
-
-                    if (tag_ins.etiqueta1=='pt') :
-
-                         Presion_tk = vb_PV
-                         idtag_pt = tag_ins.pk
-                         timestamp_pt = vb_timestamp_DC
-                         pt_unidad=tag_ins.Unidad
-
-                         pt_alarma=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                   idtag = data_fr['Data_Cruda'][recorrido]['IDTAG']
+                   vb_REG_1=data_fr['Data_Cruda'][recorrido]['REGISTRO_1']
+                   vb_REG_2=data_fr['Data_Cruda'][recorrido]['REGISTRO_2']
+                   vb_timestamp_DC=data_fr['Data_Cruda'][recorrido]['TIMESTAMP']
+                   vb_PV=FloatIeee754(int(vb_REG_2), int(vb_REG_1))
+                   print(vb_PV)
 
 
 
-
-                    if (tag_ins.etiqueta1=='tt'):
-
-                         temperatura_producto=vb_PV
-                         idtag_tt = tag_ins.pk
-                         timestamp_tt = vb_timestamp_DC
-                         tt_unidad=tag_ins.Unidad
+           #Tags= Analogico.objects.all()
+           #tag_ins=Tags.filter(pk__exact=idtag_DC)
+                   tag_ins = Analogico.objects.get(pk=idtag)
+                   tk_ins = Tk.objects.get(pk=tag_ins.id_Tk.pk)
+                   #print(tk_ins)
 
 
-                         tt_alarma=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-                         #tt_estado=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                   if (tag_ins.etiqueta1=='pt') :
 
-                         #tt_normal=tt_estado['normal']
-                         #tt_urgente=tt_estado['urgente']
-                         #tt_critica=tt_estado['critica']
+                        Presion_tk = vb_PV
+                        idtag_pt = tag_ins.pk
+                        timestamp_pt = vb_timestamp_DC
+                        pt_unidad=tag_ins.Unidad
 
-                    if (tag_ins.etiqueta1=='lta'):
-                              # if idtag_DC.etiqueta1=='lta':
-                         nivel_agua_libre=vb_PV
-                         idtag_lta = tag_ins.pk
-                         timestamp_lta = vb_timestamp_DC
-                         lta_unidad=tag_ins.Unidad
+                        pt_alarma=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
 
-                         lta_alarma=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-
-
-                    if (tag_ins.etiqueta1=='ays'):
-                               #if idtag_DC.etiqueta1=='ays':
-                         ays=vb_PV
-                         idtag_ays = tag_ins.pk
-                         timestamp_ays = vb_timestamp_DC
-                         ays_unidad=tag_ins.Unidad
-                         print(ays_unidad)
-
-
-                         ays_alarma=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-
-
-                    if (tag_ins.etiqueta1=='lt'):
-
-                         nivel_producto=vb_PV
-                         idtag_lt = tag_ins.pk
-                         lt_unidad = tag_ins.Unidad
-                         timestamp_lt = vb_timestamp_DC
-
-                         lt_alarma=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+                        Data_tanques_temp['IDPT'] = idtag_pt,
+                        Data_tanques_temp['PT_UNIDAD'] = pt_unidad,
+                        Data_tanques_temp['PT'] = str(Presion_tk),
+                        Data_tanques_temp['PT_ALARMA']= pt_alarma
+                        Data_tanques_temp['TIMESTAMP_pt'] =  timestamp_pt
 
 
 
-                         try:
-                             #time.sleep(1)
 
-                             volumenes=VOLUMENES(nivel_producto,ays)
-                             #print(volumenes)
-                             tov = volumenes['TOV']
-                             gsv = volumenes['GSV']
-                             nsv = volumenes['NSV']
+                   if (tag_ins.etiqueta1=='tt'):
 
+                        temperatura_producto=vb_PV
+                        idtag_tt = tag_ins.pk
+                        timestamp_tt = vb_timestamp_DC
+                        tt_unidad=tag_ins.Unidad
 
 
-                             porcentaje = Escalamiento(nivel_producto, tag_ins.ValorMinimo, tag_ins.ValorMaximo)
-                             #print(porcentaje)
-
-                             instance_tov = Analogico.objects.get(id_Tk = tag_ins.id_Tk.pk, etiqueta1='TOV')
+                        tt_alarma=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
 
-                             timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                             tov_alarma=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
-
-                             tov_unidad = instance_tov.Unidad
-
-
-                             instance_gsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='GSV')
-                             timestamp_gsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                             gsv_alarma=Alarmas(gsv, instance_gsv.LL, instance_gsv.L, instance_gsv.H, instance_gsv.HH)
-
-                             gsv_unidad = instance_gsv.Unidad
-
-
-                             instance_nsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='NSV')
-                             timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
-                             nsv_alarma=Alarmas(nsv, instance_nsv.LL, instance_nsv.L, instance_nsv.H, instance_nsv.HH)
-
-                             nsv_unidad = instance_nsv.Unidad
-
-                             Data_Calculada  = {                "TANQUE": tag_ins.id_Tk.Nombre, #OJO CORREGIR PARA QUE SALGA EL NOMBRE
-                                                                     "LT":    str(nivel_producto),
-                                                                     "LT_PORCENTAJE": str(porcentaje),
-                                                                     "IDTOV": instance_tov.pk,
-                                                                     "IDNSV": instance_nsv.pk,
-                                                                     "IDGSV": instance_gsv.pk,
-                                                                     "IDLT" : idtag_lt,
-                                                                     "IDPT" : idtag_pt,
-                                                                     "IDTT" : idtag_tt,
-                                                                     "IDLTA": idtag_lta,
-                                                                     "IDAYS": idtag_ays,
-                                                                     "TOV":   str(tov),
-                                                                     "TOV_UNIDAD":    tov_unidad ,
-                                                                     "GSV":   str(gsv),
-                                                                     "GSV_UNIDAD":    gsv_unidad ,
-                                                                     "NSV":   str(nsv),
-                                                                     "NSV_UNIDAD":   nsv_unidad ,
-                                                                     "LT_UNIDAD":    lt_unidad ,
-                                                                     "PT_UNIDAD":    pt_unidad,
-                                                                     "TT_UNIDAD":    tt_unidad,
-                                                                     "LTA_UNIDAD":   lta_unidad,
-                                                                     "AYS_UNIDAD":   ays_unidad,
-                                                                     "VALORMAXIMO":  tag_ins.ValorMaximo,
-                                                                     "VALORMINIMO":  tag_ins.ValorMinimo,
-                                                                     "PT":    str(Presion_tk),
-                                                                     "TT":    str(temperatura_producto),
-                                                                     "LTA":   str(nivel_agua_libre),
-                                                                     "AYS":   str(ays),
-                                                                     "LT_ALARMA":     lt_alarma,
-                                                                     "PT_ALARMA":     pt_alarma,
-                                                                     "TT_ALARMA":     tt_alarma,
-                                                                     "LTA_ALARMA":    lta_alarma,
-                                                                     "AYS_ALARMA":    ays_alarma,
-                                                                     "TOV_ALARMA":    tov_alarma,
-                                                                     "NSV_ALARMA":    nsv_alarma,
-                                                                     "GSV_ALARMA":    gsv_alarma,
-                                                                     "TIMESTAMP_lt":  timestamp_lt,
-                                                                     "TIMESTAMP_pt":  timestamp_pt,
-                                                                     "TIMESTAMP_tt":  timestamp_tt,
-                                                                     "TIMESTAMP_lta": timestamp_lta,
-                                                                     "TIMESTAMP_ays": timestamp_ays,
-                                                                     "TIMESTAMP_TOV": timestamp_tov,
-                                                                     "TIMESTAMP_GSV": timestamp_gsv,
-                                                                     "TIMESTAMP_NSV": timestamp_nsv,
-                                                                     "INDEXADO":  0,
-                                                                     }
-
-
-                         except:
-                             print("Error de parseo", sys.exc_info()[0], "occurred.")
+                        Data_tanques_temp['IDTT'] = idtag_tt
+                        Data_tanques_temp['TT_UNIDAD'] = tt_unidad
+                        Data_tanques_temp['TT'] = str(temperatura_producto)
+                        Data_tanques_temp['TT_ALARMA']= tt_alarma
+                        Data_tanques_temp['TIMESTAMP_tt'] =  timestamp_tt
 
 
 
-                         if  (nivel_producto >= tag_ins.ValorMinimo and  nivel_producto <= tag_ins.ValorMaximo):
-                            print('CALCULANDO VOLUMENES TANQUE',  Data_Calculada['TANQUE'] )
+                   if (tag_ins.etiqueta1=='lta'):
+                             # if idtag_DC.etiqueta1=='lta':
+                        nivel_agua_libre=vb_PV
+                        idtag_lta = tag_ins.pk
+                        timestamp_lta = vb_timestamp_DC
+                        lta_unidad=tag_ins.Unidad
 
-                         else:
-                            print('NIVEL DE PRODUCTO FUERA DE RANGOS EN TANQUE:', Data_Calculada['TANQUE'])
+
+                        lta_alarma=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
 
-               Data_tanques_temp={tag_ins.id_Tk.pk:Data_Calculada}
-               Data_tanques.update(Data_tanques_temp)
-               #print(Data_tanques)
+                        Data_tanques_temp['IDLTA'] = idtag_lta
+                        Data_tanques_temp['LTA_UNIDAD'] = lta_unidad,
+                        Data_tanques_temp['LTA'] =  str(nivel_agua_libre)
+                        Data_tanques_temp['LTA_ALARMA']= lta_alarma
+                        Data_tanques_temp['TIMESTAMP_lta'] =  timestamp_lta
 
+                   if (tag_ins.etiqueta1=='ays'):
+                              #if idtag_DC.etiqueta1=='ays':
+                        ays=vb_PV
+                        idtag_ays = tag_ins.pk
+                        timestamp_ays = vb_timestamp_DC
+                        ays_unidad=tag_ins.Unidad
+
+
+
+                        ays_alarma=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+
+
+
+                        Data_tanques_temp['IDAYS'] = idtag_ays,
+                        Data_tanques_temp['AYS_UNIDAD'] = ays_unidad,
+                        Data_tanques_temp['AYS'] =  str(ays),
+                        Data_tanques_temp['AYS_ALARMA']= ays_alarma
+                        Data_tanques_temp['TIMESTAMP_ays'] =  timestamp_ays,
+
+
+
+
+
+
+                   if (tag_ins.etiqueta1=='lt'):
+
+                        nivel_producto=vb_PV
+                        idtag_lt = tag_ins.pk
+                        lt_unidad = tag_ins.Unidad
+                        timestamp_lt = vb_timestamp_DC
+
+                        lt_alarma=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
+
+
+                        try:
+                            #time.sleep(1)
+
+                            volumenes=VOLUMENES(nivel_producto,ays)
+                            #print(volumenes)
+                            tov = volumenes['TOV']
+                            gsv = volumenes['GSV']
+                            nsv = volumenes['NSV']
+
+                            porcentaje = Escalamiento(nivel_producto, tag_ins.ValorMinimo, tag_ins.ValorMaximo)
+                            #print(porcentaje)
+
+                            instance_tov = Analogico.objects.get(id_Tk = tag_ins.id_Tk.pk, etiqueta1='TOV')
+
+
+                            timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                            tov_alarma=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
+
+                            tov_unidad = instance_tov.Unidad
+
+
+                            instance_gsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='GSV')
+                            timestamp_gsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                            gsv_alarma=Alarmas(gsv, instance_gsv.LL, instance_gsv.L, instance_gsv.H, instance_gsv.HH)
+
+                            gsv_unidad = instance_gsv.Unidad
+
+
+                            instance_nsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='NSV')
+                            timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
+                            nsv_alarma=Alarmas(nsv, instance_nsv.LL, instance_nsv.L, instance_nsv.H, instance_nsv.HH)
+
+                            nsv_unidad = instance_nsv.Unidad
+
+                            Data_tanques_temp['LT']=  str(nivel_producto)
+                            Data_tanques_temp['LT_PORCENTAJE']= str(porcentaje)
+                            Data_tanques_temp['IDTOV']= instance_tov.pk
+                            Data_tanques_temp['IDNSV']=  instance_nsv.pk
+                            Data_tanques_temp['IDGSV']= instance_gsv.pk
+                            Data_tanques_temp['IDLT'] = idtag_lt
+                            Data_tanques_temp['TOV']= str(tov)
+                            Data_tanques_temp['TOV_UNIDAD']=    tov_unidad
+                            Data_tanques_temp['GSV']= str(gsv)
+                            Data_tanques_temp['GSV_UNIDAD'] =    gsv_unidad
+                            Data_tanques_temp['NSV'] =   str(nsv)
+                            Data_tanques_temp['NSV_UNIDAD']=   nsv_unidad
+                            Data_tanques_temp['LT_UNIDAD']=    lt_unidad
+                            Data_tanques_temp['VALORMAXIMO']=  tag_ins.ValorMaximo
+                            Data_tanques_temp['VALORMINIMO'] =  tag_ins.ValorMinimo
+                            Data_tanques_temp['LT_ALARMA']=     lt_alarma
+                            Data_tanques_temp['TOV_ALARMA']=  tov_alarma
+                            Data_tanques_temp['NSV_ALARMA']=  nsv_alarma
+                            Data_tanques_temp['GSV_ALARMA'] =    gsv_alarma
+                            Data_tanques_temp['TIMESTAMP_lt']=   timestamp_lt
+                            Data_tanques_temp['TIMESTAMP_TOV']= timestamp_tov
+                            Data_tanques_temp['TIMESTAMP_GSV']= timestamp_gsv
+                            Data_tanques_temp['TIMESTAMP_NSV']= timestamp_nsv
+
+
+
+
+
+                        except:
+                            print("Error de parseo", sys.exc_info()[0], "occurred.")
+
+
+
+                            if  (nivel_producto >= tag_ins.ValorMinimo and  nivel_producto <= tag_ins.ValorMaximo):
+                                print('CALCULANDO VOLUMENES TANQUE', tk.Nombre)
+
+                            else:
+                                print('NIVEL DE PRODUCTO FUERA DE RANGOS EN TANQUE:', tk.Nombre)
+
+
+
+                  #    ciclo1+=1
+                      #print(ciclo0,ciclo1)
+
+
+
+
+               Data_tanques[tk_ins.pk] ={'TANQUE': tk_ins.Nombre}
+
+               Data_tanques[tk_ins.pk].update(Data_tanques_temp)
 
                try:
 
-                   with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
+                  with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
 
-                            file2.write(json.dumps(Data_tanques)) #A archivo json
+                      file2.write(json.dumps(Data_tanques)) #A archivo json
                except:
-                   print("Error inesperado escribiendo Data calculada:", sys.exc_info()[0])
+                  print("Error inesperado escribiendo Data calculada:", sys.exc_info()[0])
+
+               tk_ins.current_data  = Data_tanques
+
+               tk_ins.save()
 
 
-               tk=Tk.objects.get(pk=tag_ins.id_Tk.pk)
-               tk.current_data  = Data_tanques[tag_ins.id_Tk.pk] #A Base de Datos
 
-               tk.save()
-                           #idtk_DC_int=Analogico_DC.id_Tk
+
+
+
+
+
+               #for tk in Tk.objects.iterator():  # ITERANDO EN TANQUES EXISTENTES.
+                # RECORRIENDO LOS TAGS DE CADA TANQUE
+                    #ciclo0+=1
+
+
+
+                    #for tag in Tag.objects.filter(id_Tk=tk.pk).iterator(): #iteranado en los tags pertenecientes al tanque del ciclo
+
+                               #idtk_DC_int=Analogico_DC.id_Tk
 
 
 #INSTANCIANDO LOS RANGOS DEL TAG
