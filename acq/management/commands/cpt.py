@@ -83,6 +83,7 @@ class Command(BaseCommand):
        while i<=n: #MEJORAR
 
 
+
 #OBTENIENDO DATOS DEL BUFFER DATA CRUDA
                time.sleep(1)
 
@@ -100,7 +101,7 @@ class Command(BaseCommand):
                    vb_REG_2=data_fr['Data_Cruda'][recorrido]['REGISTRO_2']
                    vb_timestamp_DC=data_fr['Data_Cruda'][recorrido]['TIMESTAMP']
                    vb_PV=FloatIeee754(int(vb_REG_2), int(vb_REG_1))
-                   print(vb_PV)
+
 
 
 
@@ -109,7 +110,6 @@ class Command(BaseCommand):
                    tag_ins = Analogico.objects.get(pk=idtag)
                    tk_ins = Tk.objects.get(pk=tag_ins.id_Tk.pk)
                    #print(tk_ins)
-
 
                    if (tag_ins.etiqueta1=='pt') :
 
@@ -127,8 +127,6 @@ class Command(BaseCommand):
                         Data_tanques_temp['PT'] = str(Presion_tk)
                         Data_tanques_temp['PT_ALARMA']= pt_alarma
                         Data_tanques_temp['TIMESTAMP_pt'] =  timestamp_pt
-
-
 
 
                    if (tag_ins.etiqueta1=='tt'):
@@ -149,7 +147,6 @@ class Command(BaseCommand):
                         Data_tanques_temp['TIMESTAMP_tt'] =  timestamp_tt
 
 
-
                    if (tag_ins.etiqueta1=='lta'):
                              # if idtag_DC.etiqueta1=='lta':
                         nivel_agua_libre=vb_PV
@@ -159,7 +156,6 @@ class Command(BaseCommand):
 
 
                         lta_alarma=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-
 
                         Data_tanques_temp['IDLTA'] = idtag_lta
                         Data_tanques_temp['LTA_UNIDAD'] = lta_unidad
@@ -175,21 +171,13 @@ class Command(BaseCommand):
                         ays_unidad=tag_ins.Unidad
 
 
-
                         ays_alarma=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-
-
 
                         Data_tanques_temp['IDAYS'] = idtag_ays
                         Data_tanques_temp['AYS_UNIDAD'] = ays_unidad
                         Data_tanques_temp['AYS'] =  str(ays)
                         Data_tanques_temp['AYS_ALARMA']= ays_alarma
                         Data_tanques_temp['TIMESTAMP_ays'] =  timestamp_ays
-
-
-
-
-
 
                    if (tag_ins.etiqueta1=='lt'):
 
@@ -200,10 +188,8 @@ class Command(BaseCommand):
 
                         lt_alarma=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
-
                         try:
                             #time.sleep(1)
-
                             volumenes=VOLUMENES(nivel_producto,ays)
                             #print(volumenes)
                             tov = volumenes['TOV']
@@ -258,8 +244,11 @@ class Command(BaseCommand):
                             Data_tanques_temp['TIMESTAMP_TOV']= timestamp_tov
                             Data_tanques_temp['TIMESTAMP_GSV']= timestamp_gsv
                             Data_tanques_temp['TIMESTAMP_NSV']= timestamp_nsv
+                            if  (nivel_producto >= tag_ins.ValorMinimo and  nivel_producto <= tag_ins.ValorMaximo):
+                                print('CALCULANDO VOLUMENES TANQUE', tk_ins.Nombre)
 
-
+                            else:
+                                print('NIVEL DE PRODUCTO FUERA DE RANGOS EN TANQUE:', tk_ins.Nombre)
 
 
 
@@ -267,17 +256,6 @@ class Command(BaseCommand):
                             print("Error de parseo", sys.exc_info()[0], "occurred.")
 
 
-
-                            if  (nivel_producto >= tag_ins.ValorMinimo and  nivel_producto <= tag_ins.ValorMaximo):
-                                print('CALCULANDO VOLUMENES TANQUE', tk.Nombre)
-
-                            else:
-                                print('NIVEL DE PRODUCTO FUERA DE RANGOS EN TANQUE:', tk.Nombre)
-
-
-
-                  #    ciclo1+=1
-                      #print(ciclo0,ciclo1)
 
                Data_tanques[tk_ins.pk] ={'TANQUE': tk_ins.Nombre}
 
@@ -294,23 +272,3 @@ class Command(BaseCommand):
                tk_ins.current_data  = Data_tanques
 
                tk_ins.save()
-
-
-
-
-
-
-
-
-               #for tk in Tk.objects.iterator():  # ITERANDO EN TANQUES EXISTENTES.
-                # RECORRIENDO LOS TAGS DE CADA TANQUE
-                    #ciclo0+=1
-
-
-
-                    #for tag in Tag.objects.filter(id_Tk=tk.pk).iterator(): #iteranado en los tags pertenecientes al tanque del ciclo
-
-                               #idtk_DC_int=Analogico_DC.id_Tk
-
-
-#INSTANCIANDO LOS RANGOS DEL TAG
