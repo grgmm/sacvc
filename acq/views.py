@@ -250,7 +250,6 @@ class TkAdd(CreateView):
 
         return context
 
-
     #EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
 
     def get(self, request, *args, **kwargs):
@@ -286,6 +285,22 @@ class TkAdd(CreateView):
     ###INICIALIZANDO VALORES DE MINIMOS Y MAXIMOS Y CALCULOS DE SETTING DE ALARMAS PREDEFINIDOS
             fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
             ruta_Data=fs.location
+            dir_usadas=[]
+            direccionamiento={}
+            dir_disponible= 0
+            qtk= Tk.objects.count()
+
+            try:
+
+                with fs.open(ruta_Data+'/direccionamiento.json', mode= 'r') as data_file:
+                    direccionamiento = json.loads(data_file.read())
+                    print(direccionamiento['dir_disponibles'])
+
+
+            except:
+                print("Error inesperado: ", sys.exc_info()[0])
+
+
 
             lt_minimo=0.0
             lt_maximo=19.226
@@ -319,28 +334,12 @@ class TkAdd(CreateView):
             NSV_maximo=650000.0
             NSV_alarmas=Settings_Alarmas(NSV_maximo, NSV_minimo)
 
-
-
-            qtk= Tk.objects.count()
-            direccionamiento = {'dir_disponible':''}
-
-
             if qtk == 1:
-                direccionamiento['dir_disponible']= 1
-
+                dir_disponible = 1
 
             else:
 
-                try:
-
-                    with fs.open(ruta_Data+'/direccionamiento.json', mode= 'r') as data_file:
-                        direccionamiento = json.loads(data_file.read())
-
-
-                except:
-                    print("Error inesperado: ", sys.exc_info()[0])
-
-            dir_disponible = int(direccionamiento['dir_disponible'])
+                dir_disponible = min(direccionamiento['dir_disponibles'])
 
 
 
@@ -473,8 +472,22 @@ class TkAdd(CreateView):
              H =  NSV_alarmas['h'],
              HH = NSV_alarmas['hh'],
              )
-            direccionamiento['dir_disponible']= dir_disponible + 14 + 2
 
+            direccionamiento['dir_disponibles'].remove(dir_disponible)
+
+            dir_disponible = dir_disponible + 14 + 2
+
+            q = Analogico.objects.all()
+
+            for dirtag in q:
+                dir_usadas.append(int(dirtag.direccion))
+
+            if dir_disponible not in dir_usadas:
+                direccionamiento['dir_disponibles'].append(dir_disponible)
+
+            else:
+                dir_disponible = max(dir_usadas)+2
+                direccionamiento['dir_disponibles'].append(dir_disponible)
             try:
                 with fs.open(ruta_Data +'/direccionamiento.json', mode= 'w') as file:
                     print(direccionamiento)
@@ -482,8 +495,7 @@ class TkAdd(CreateView):
                     file.write(json.dumps(direccionamiento))#Data en cache)
             except:
 
-                print("Error inesperado:ESTA FALLANDO AQUI", sys.exc_info()[0])
-
+                print("Error inesperado:", sys.exc_info()[0])
 
 
 class TkDelete(DeleteView):
@@ -492,16 +504,23 @@ class TkDelete(DeleteView):
 
     def get_success_url(self):
             from django.db.models import Max, Min
-            direccionamiento={'dir_disponible':''}
+            direccionamiento={'dir_disponibles':[]}
             fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
             ruta_Data=fs.location
 
             success_url=('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
             #print(self.object.pk)
+            q2 = Analogico.objects.all()
+            last_direccion = q2.aggregate(Max('direccion'))
+            print(last_direccion)
+
             q = Analogico.objects.filter(id_Tk=self.object.pk)
-            dict_direccion = (q.aggregate(Min('direccion')))
-            direccion = dict_direccion['direccion__min']
-            direccionamiento['dir_disponible']= direccion
+            dict_direccion = q.aggregate(Min('direccion'))
+            print(dict_direccion)
+
+            dir_disponible = int(dict_direccion['direccion__min'])
+
+            direccionamiento['dir_disponibles'].append(dir_disponible)
 
             try:
                 with fs.open(ruta_Data +'/direccionamiento.json', mode= 'w') as file:
@@ -512,7 +531,6 @@ class TkDelete(DeleteView):
                 print("Error inesperado:", sys.exc_info()[0])
 
             return(success_url)
-
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -535,7 +553,6 @@ class TkDelete(DeleteView):
 def delete_Tk(sender, instance, **kwargs):#FUNCION QUE CAPTURA LA SEÑAL DE GUARDADO DE TK Y TRABAJA CON ESA INSTANCIA DE TK
     #INICIALIZA EL TANQUE CON SUS PARAMETROS (PT,LT,TT, TOV) #FALTA INCLUIR AYS, NSV, ENTRE OTROS.
 
-        print('lumpia lolo')
         fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
         ruta_Data=fs.location
         try:
@@ -547,8 +564,6 @@ def delete_Tk(sender, instance, **kwargs):#FUNCION QUE CAPTURA LA SEÑAL DE GUAR
         except:
 
             print("Error inesperado:", sys.exc_info()[0])
-
-
 
 
 class TkDetail(DetailView):
