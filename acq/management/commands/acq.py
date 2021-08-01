@@ -24,7 +24,7 @@ class Command(BaseCommand):
         # puertos validos por encima de 1024 en sistemas Linux Android Unix.
         slaveport = 5002
 
-        slaveip = '192.168.1.77'  # ip del esclavo para modbus TCP
+        slaveip = '192.168.1.53'  # ip del esclavo para modbus TCP
 
 
         # declara la conexión

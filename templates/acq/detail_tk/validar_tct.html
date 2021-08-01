@@ -9,8 +9,13 @@
      <link rel="stylesheet" href="{% static 'css/edit.css' %}">
  	<!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<<<<<<< HEAD
      
    <script src={% static 'js/subir_tct.js' %} defer></script>
+=======
+
+   <script src={% static 'js/barra_progreso.js' %} defer></script>
+>>>>>>> 800d45e0f3c70f5ea22d7313a9794662e5a3c155
 
 <div id="ventana">
 	<p>
@@ -18,13 +23,9 @@
 	</p>
     <form method="post" enctype = 'multipart/form-data'>
 		{% csrf_token %}
-		
-	<!-- 	<table>
-      	{{form.as_table}}
-      	<br><br><br><br><br><br><br>
-     </table>
-    -->        
- 
+
+
+
       	<table>
     		{% for field in form.visible_fields %}
       			<tr>
@@ -33,16 +34,32 @@
       			</tr>
     		{% endfor %}
  	 	</table>
- 	 	
+
 		<div id="contenedor_barra">
 			<div id="barra"></div>
 		</div>
-     	
-		{%if tk.tct_archivo%}
-			<a id="tk_regresar" href="{%url 'uacq:integridad_TCT' tk.pk%}" type="button" class="btn_control"> Validar Archivo</a>
-			<a id="tk_modificar"  href="{%url 'uacq:guardar_TCT_BD' tk.pk%}" onclick="move()" type="button" class="btn_control"> Guardar en BD</a>
-		{%endif%}
-		<input id="tk_validar" type="submit" class="btn_control" value="Solo Guardar"/>
+
+	<!--	{%if tk.tct_archivo%}
+			 <a id="tk_regresar" href="{%url 'uacq:integridad_TCT' tk.pk%}" type="button" class="btn_control"> Validar Archivo</a>
+      <a id="tk_modificar"  href="{%url 'uacq:guardar_TCT_BD' tk.pk%}" onclick="move()" type="button" class="btn_control"> Guardar en BD</a>
+		{%endif%} -->
+		<input id="tk_validar" type="submit" class="btn_control" value="Guardar en disco" onclick="move()"/>
+
 	</form>
+
+
+  <!-- CODIGO AGREGADO POR MM, FALTA ESTANDARIZAR Y O MEJORAR  -->
+
+  <form method="get">
+  {%if tk.tct_archivo%}
+  <input id="tk_regresar" name ='guardar_tct_bd' type="submit" class="btn_control" value="Guardar_BD"/>
+  <input id="tk_modificar" name ='validar_archivo' type="submit" class="btn_control" value="Validar_Archivo"/>
+  {%endif%}
+  </form>
+  <p>
+    <label for="encabezado">{{object.current_data.PORCENTAJE_SUBIDA}}</label>
+
+  </p>
+
 </div>
 {% endblock %}
