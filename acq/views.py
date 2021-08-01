@@ -516,7 +516,6 @@ class TkDelete(DeleteView):
 
             q = Analogico.objects.filter(id_Tk=self.object.pk)
             dict_direccion = q.aggregate(Min('direccion'))
-            print(dict_direccion)
 
             dir_disponible = int(dict_direccion['direccion__min'])
 
@@ -559,7 +558,6 @@ def delete_Tk(sender, instance, **kwargs):#FUNCION QUE CAPTURA LA SEÑAL DE GUAR
             with fs.open(ruta_Data +'/Buffer_Datos_Calculados', mode= 'w') as file:
                 file.seek(0)
                 file.truncated()
-
 
         except:
 
@@ -625,23 +623,8 @@ class TkUpdate(UpdateView):
 class Validar_Tct(UpdateView):
     model = Tk
     template_name = 'acq/detail_tk/validar_tct.html'
-    fields = ['tct_archivo', 'Descriptor_tct', 'fecha_subida_tct']
+    fields = ['tct_archivo', 'Descriptor_tct',]
     success_url = reverse_lazy('uacq:list_tf')
-
-    def get(self, request, *args, **kwargs):
-      obj = self.get_object()
-      fs = FileSystemStorage()
-
-      if not (bool(obj.tct_archivo)):
-        print('no hay archivo tct en en model Tk actual')
-        setattr(obj,'tctvalido', False)
-        setattr(obj,'Descriptor_tct', '')
-        setattr(obj,'fecha_subida_tct',None )
-      else:
-        TimestampTCT=fs.get_created_time(obj.tct_archivo.path)
-        setattr(obj,'fecha_subida_tct',TimestampTCT)
-      obj.save()
-      return super(Validar_Tct, self).get(request, **kwargs)
 
     def post(self, request, *args, **kwargs):
 
@@ -650,10 +633,12 @@ class Validar_Tct(UpdateView):
         request.POST = request.POST.copy()
         if request.POST.get("btn_guardar_tct_salir", ""):
           response= 'Editar Archivo Tct / Salir'
+
         return super(Validar_Tct, self).post(request, **kwargs)
 
 
     def get(self, request, *args, **kwargs):
+
         if request.user.is_authenticated:
 
             filtro_usuario = Group.objects.filter(user = request.user)
@@ -664,11 +649,87 @@ class Validar_Tct(UpdateView):
                 print('Usuario sin Perfil')
 
                 return redirect('/sacvc/Menu')
+
             else:
-                 return super(Validar_Tct, self).get(request, *args, **kwargs)
+
+                obj_tk = self.get_object()
+                cont=0
+
+                request.GET = request.GET.copy()
+
+                if request.GET.get("guardar_tct_bd", ""):
+                    if obj_tk.tctvalido:
+
+                          Tct.objects.all().delete()
+                          file=obj_tk.tct_archivo.path
+                          DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
+                          for i in range(0, len(DataFrame)):
+                              cont+=1
+                              nivel_format=format(DataFrame.iloc[i]['nivel']).replace(',','.')
+                              volumen_format=format(DataFrame.iloc[i]['volumen']).replace(',','.')
+                              nivel=float(nivel_format)
+                              volumen=float(volumen_format)
+                              Tct.objects.create(id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
+                              if len(DataFrame) !=0 :
+                                porc=round(i*100/len(DataFrame),0)
+                              if cont==30:
+                                try:
+                                  obj_tk.current_data['PORCENTAJE_SUBIDA']=porc
+                                  obj_tk.save()
+                                  cont=0
+                                  print(obj_tk.current_data['PORCENTAJE_SUBIDA'])
+                                except:
+                                  print("Error inesperado: insertando en BD", sys.exc_info()[0])
+
+                          Tct().save
+
+
+
+                if request.GET.get("validar_archivo", ""):
+                    nivel_minimo=0.0
+                    nivel_maximo =100.0
+                    volumen_minimo=0.0
+                    volumen_maximo= 1000000.0
+                    tct_valido=False
+
+                    file=obj_tk.tct_archivo.path
+
+                    DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
+                    json_temp = []
+
+                    for i in range(0, len(DataFrame)):
+
+                      nivel_format=format(DataFrame.iloc[i]['nivel']).replace(',','.')
+                      volumen_format=format(DataFrame.iloc[i]['volumen']).replace(',','.')
+
+                      nivel=valida(float(nivel_format),nivel_minimo,nivel_maximo)
+                      volumen=valida(float(volumen_format),volumen_minimo,volumen_maximo)
+                      json_temp.append({ 'registro': i,'nivel':nivel, 'volumen':volumen})
+
+                    setattr(obj_tk,'tctvalido', True)
+
+
+                    obj_tk.save()
+
+                    return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data':json_temp,'pk':obj_tk.pk})
+
+                fs = FileSystemStorage()
+                if not (bool(obj_tk.tct_archivo)):
+                  print('no hay archivo tct en en model Tk actual')
+                  setattr(obj_tk,'tctvalido', False)
+                  setattr(obj_tk,'Descriptor_tct', '')
+                  setattr(obj_tk,'fecha_subida_tct',None )
+                else:
+                  TimestampTCT=fs.get_created_time(obj_tk.tct_archivo.path)
+                  setattr(obj_tk,'fecha_subida_tct',TimestampTCT)
+                obj_tk.save()
+
+
+                return super(Validar_Tct, self).get(request, *args, **kwargs)
 
         else:
             return redirect('/sacvc/logout')
+
 
 def integridad_TCT(request, pk):
 
@@ -720,10 +781,11 @@ def guardar_TCT_BD(request, pk):
             nivel=float(nivel_format)
             volumen=float(volumen_format)
             Tct.objects.create(id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
+    Tct().save
 
   except Tk.DoesNotExist:
     raise Http404("Tk no existe")
-    Tct().save
+
 
   return HttpResponse('Guardado exitoso en BD')
 
@@ -1268,44 +1330,3 @@ class detalle_tk(LoginRequiredMixin, DetailView):
     template_name = 'acq/detalle_tk/detalle_tk.html'
     fields = ['Nombre', 'Descriptor', 'id_patioTanque','pk', 'current_data',]
     success_url= '/sacvc/grupo_tk/'
-
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
-        ruta_Data=fs.location
-
-        DataTk= self.object.current_data
-        idtk=(str(self.object.pk))
-        Nombretk=self.object.Nombre
-        Descriptortk= self.object.Descriptor
-        Aortk= self.object.id_aor.Nombre
-        instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
-        tovmaximo=instov.ValorMaximo
-        tovminimo=instov.ValorMinimo
-
-
-        DataTk_temp= {}
-
-
-        try:
-            with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode ='r') as data_file:
-                DataTk_temp = json.loads(data_file.read())
-
-                for item in DataTk_temp.keys():
-
-                    if idtk == item:
-                        context['Nombre']=Nombretk
-                        context['Descriptor']=Descriptortk
-                        context['Aor']=Aortk
-                        context['TOV_MAXIMO']=tovmaximo
-                        context['TOV_MINIMO']=tovminimo
-
-
-                        context['Data']=DataTk_temp[idtk]
-
-        except:
-            print("Error inesperado:", sys.exc_info()[0])
-
-        return context

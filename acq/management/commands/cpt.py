@@ -270,5 +270,6 @@ class Command(BaseCommand):
                   print("Error inesperado escribiendo Data calculada:", sys.exc_info()[0])
 
                tk_ins.current_data  = Data_tanques
+               print(tk_ins.current_data)
 
                tk_ins.save()
