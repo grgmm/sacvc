@@ -626,6 +626,7 @@ class Validar_Tct(UpdateView):
     fields = ['tct_archivo', 'Descriptor_tct',]
     success_url = reverse_lazy('uacq:list_tf')
 
+
     def post(self, request, *args, **kwargs):
 
         self.obj = self.get_object()
@@ -636,10 +637,12 @@ class Validar_Tct(UpdateView):
 
         return super(Validar_Tct, self).post(request, **kwargs)
 
-
     def get(self, request, *args, **kwargs):
 
         if request.user.is_authenticated:
+
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+            ruta_Data=fs.location
 
             filtro_usuario = Group.objects.filter(user = request.user)
             for g in filtro_usuario:
@@ -659,7 +662,6 @@ class Validar_Tct(UpdateView):
 
                 if request.GET.get("guardar_tct_bd", ""):
                     if obj_tk.tctvalido:
-
                           Tct.objects.all().delete()
                           file=obj_tk.tct_archivo.path
                           DataFrame=pd.read_csv(file, delimiter='\t', ) #abre el csv tc y lo pasa a un dataframe
@@ -670,20 +672,15 @@ class Validar_Tct(UpdateView):
                               nivel=float(nivel_format)
                               volumen=float(volumen_format)
                               Tct.objects.create(id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
+
                               if len(DataFrame) !=0 :
                                 porc=round(i*100/len(DataFrame),0)
-                              if cont==30:
-                                try:
-                                  obj_tk.current_data['PORCENTAJE_SUBIDA']=porc
-                                  obj_tk.save()
-                                  cont=0
-                                  print(obj_tk.current_data['PORCENTAJE_SUBIDA'])
-                                except:
-                                  print("Error inesperado: insertando en BD", sys.exc_info()[0])
+                              try:
+                                  with fs.open(ruta_Data+'/porcentaje_subida.json', mode= 'w') as file:
 
-                          Tct().save
-
-
+                                      file.write(json.dumps({'REGISTRO_ACTUAL':i, 'PORCENTAJE_SUBIDA':porc , 'REGISTROS_TOTALES': len(DataFrame)}))
+                              except:
+                                      print("Error inesperado:", sys.exc_info()[0])
 
                 if request.GET.get("validar_archivo", ""):
                     nivel_minimo=0.0
@@ -727,8 +724,28 @@ class Validar_Tct(UpdateView):
 
                 return super(Validar_Tct, self).get(request, *args, **kwargs)
 
+
+
         else:
             return redirect('/sacvc/logout')
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+        ruta_Data=fs.location
+
+        try:
+            with fs.open(ruta_Data+'/porcentaje_subida.json', mode= 'r') as data_file:
+                dataf = json.loads(data_file.read())
+                print(dataf)
+
+
+        except:
+                print("Error inesperado:", sys.exc_info()[0])
+
+
+        return context        
 
 
 def integridad_TCT(request, pk):
