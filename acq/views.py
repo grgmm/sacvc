@@ -672,7 +672,7 @@ class Validar_Tct(UpdateView):
                               Tct.objects.create(id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
                               if len(DataFrame) !=0 :
                                 porc=round(i*100/len(DataFrame),0)
-                              if cont==30:
+                              if cont==250:
                                 try:
                                   obj_tk.current_data['PORCENTAJE_SUBIDA']=porc
                                   obj_tk.save()
@@ -1330,3 +1330,44 @@ class detalle_tk(LoginRequiredMixin, DetailView):
     template_name = 'acq/detalle_tk/detalle_tk.html'
     fields = ['Nombre', 'Descriptor', 'id_patioTanque','pk', 'current_data',]
     success_url= '/sacvc/grupo_tk/'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+        ruta_Data=fs.location
+
+        DataTk= self.object.current_data
+        idtk=(str(self.object.pk))
+        Nombretk=self.object.Nombre
+        Descriptortk= self.object.Descriptor
+        Aortk= self.object.id_aor.Nombre
+        instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
+        tovmaximo=instov.ValorMaximo
+        tovminimo=instov.ValorMinimo
+
+
+        DataTk_temp= {}
+
+
+        try:
+            with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode ='r') as data_file:
+                DataTk_temp = json.loads(data_file.read())
+
+                for item in DataTk_temp.keys():
+
+                    if idtk == item:
+                        context['Nombre']=Nombretk
+                        context['Descriptor']=Descriptortk
+                        context['Aor']=Aortk
+                        context['TOV_MAXIMO']=tovmaximo
+                        context['TOV_MINIMO']=tovminimo
+
+
+                        context['Data']=DataTk_temp[idtk]
+
+        except:
+            print("Error inesperado:", sys.exc_info()[0])
+
+        return context
