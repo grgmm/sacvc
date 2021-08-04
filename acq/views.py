@@ -43,6 +43,19 @@ from acq.calculos import Settings_Alarmas
 
 
 #abre un archivo json en modo lectura
+def porcentaje_subida(request):
+    fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+    ruta_Data=fs.location
+    dataf= {}
+
+    try:
+          with fs.open(ruta_Data+'/porcentaje_subida.json', mode= 'r') as data_file:
+               dataf = json.loads(data_file.read())
+
+    except:
+              print("Error inesperado:", sys.exc_info()[0])
+    return JsonResponse(dataf)
+
 def actualizar(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
     ruta_Data=fs.location
@@ -679,6 +692,7 @@ class Validar_Tct(UpdateView):
                                   with fs.open(ruta_Data+'/porcentaje_subida.json', mode= 'w') as file:
 
                                       file.write(json.dumps({'REGISTRO_ACTUAL':i, 'PORCENTAJE_SUBIDA':porc , 'REGISTROS_TOTALES': len(DataFrame)}))
+                                      print(i,porc,len(DataFrame))
                               except:
                                       print("Error inesperado:", sys.exc_info()[0])
 
@@ -745,7 +759,7 @@ class Validar_Tct(UpdateView):
                 print("Error inesperado:", sys.exc_info()[0])
 
 
-        return context        
+        return context
 
 
 def integridad_TCT(request, pk):
