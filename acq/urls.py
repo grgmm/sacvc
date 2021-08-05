@@ -48,6 +48,8 @@ urlpatterns = [
 
     url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
 
+    url('barra_progreso/',views.barra_progreso, name='barra_progreso'),
+    
     path('PV/',TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
 
     url(r'^integridad_TCT/(?P<pk>\d+)$' ,views.integridad_TCT, name='integridad_TCT'), #OJO

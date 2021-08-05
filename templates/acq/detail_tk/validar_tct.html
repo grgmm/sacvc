@@ -9,15 +9,16 @@
 <link rel="stylesheet" href="{% static 'css/edit.css' %}">
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!--
-<script src={% static 'js/subir_tct.js' %} defer></script>
--->
-<script src={% static 'js/subir_tct.js' %} defer></script>
+<!---->
+<script src={% static 'js/barra_progreso.js' %} defer></script>
+
 <div id="ventana">
+	<p id="nrotanque"  style="display:none;">{{tk.id}}</p>
 	<p>
 		<label for="encabezado">Validar archivo TCT</label>
 	</p>
-	<form method="get" enctype='multipart/form-data'>
+
+	<form method="post" enctype='multipart/form-data'>
 		{% csrf_token %}
 
 		<table>
@@ -34,17 +35,22 @@
 		</div>
 
 		{%if tk.tct_archivo%}
+		
 		<!--
 		<a id="tk_regresar" href="{%url 'uacq:integridad_TCT' tk.pk%}" type="button" class="btn_control"> Validar Archivo</a>
-      	<a id="tk_modificar"  href="{%url 'uacq:guardar_TCT_BD' tk.pk%}" onclick="move()" type="button" class="btn_control"> Guardar en BD</a>
+      	<a id="tk_modificar"  href="{%url 'uacq:guardar_TCT_BD' tk.pk%}" onclick="mi_funcion()" type="button" class="btn_control"> Guardar en BD</a>
 	-->
-		<input id="tk_regresar" name='validar_archivo' type="submit" class="btn_control" value="Validar_Archivo" />
-		<input id="tk_modificar" name='guardar_tct_bd' type="submit" class="btn_control" value="Guardar_BD"
-			onclick="move()" />
-
 		{%endif%}
-		<input id="tk_validar" type="submit" class="btn_control" value="Guardar en disco" onclick="move()" />
+		<input id="tk_validar" type="submit" class="btn_control" value="Guardar en disco"/>
 	</form>
-	<p id="porcentaje_subida" style="display:none;">{{object.current_data.PORCENTAJE_SUBIDA}}</p>
+
+	<form method="get">
+		{%if tk.tct_archivo%}
+		<input id="tk_regresar" name='validar_archivo' type="submit" class="btn_control" value="Validar_Archivo" />
+		<!--<input id="tk_modificar" name='guardar_tct_bd' type="submit" class="btn_control" value="Guardar_BD"/ onclick="mi_funcion()">-->
+		<input id="tk_modificar" name='guardar_tct_bd' type="submit" class="btn_control" value="Guardar_BD" onclick="mi_funcion()"/>
+		{%endif%}
+	</form>
+	  
 </div>
-{% endblock %}
+{% endblock %} 
