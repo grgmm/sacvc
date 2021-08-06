@@ -1,6 +1,4 @@
 @charset "UTF-8";
-@import url(animate.css);
-
 /* Basics */
 html, body {
 	background: linear-gradient(#334d50, #cbcaa5) fixed;

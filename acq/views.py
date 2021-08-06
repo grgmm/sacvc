@@ -52,7 +52,6 @@ def porcentaje_subida(request):
     try:
           with fs.open(ruta_Data+'/porcentaje_subida.json', mode= 'r') as data_file:
                dataf = json.loads(data_file.read())
-
     except:
               print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
@@ -713,7 +712,7 @@ class Validar_Tct(UpdateView):
                             except:
                                 print("Error inesperado:", sys.exc_info()[0])
 
-                        data_temp = {'REGISTRO_ACTUAL': 0, 'PORCENTAJE_SUBIDA': 0, 'REGISTROS_TOTALES': 0}
+                        data_temp = {'REGISTRO_ACTUAL': 0, 'PORCENTAJE_SUBIDA': 100, 'REGISTROS_TOTALES': 0}
                         try:
                             with fs.open(ruta_Data+'/porcentaje_subida.json', mode='w') as file:
                                 file.write(json.dumps(data_temp))
