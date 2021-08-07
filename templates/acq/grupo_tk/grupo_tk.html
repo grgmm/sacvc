@@ -4,7 +4,7 @@
 {% block content %}
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
    	<script src={% static 'js/jquery-3.6.0.min.js' %}></script>
-   	<script src={% static 'js/leer_json.js' %}></script>
+   	<script src={% static 'js/grupo_tk.js' %}></script>
    
 	<div id="ventana">
 			{% csrf_token %} 
@@ -16,8 +16,9 @@
 				<tr>
 					{% for tk in object_list %}
 					<td class="tanque">
-						<a href=" ">
+						<a href=" {% url 'uacq:detalle_tk' tk.pk%}">
 							<p id="idtanque" class="idtanque">--</p>
+							
 							<p id="nivel" class="nivel">---</p>
 								<div class="contenedor"> 
 									<img src="{% static "recursos/imagenes/tanque.png" %}">
