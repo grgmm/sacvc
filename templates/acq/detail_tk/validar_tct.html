@@ -8,9 +8,11 @@
 <!--css & js-->
 <link rel="stylesheet" href="{% static 'css/edit.css' %}">
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"> </script>
+
+<script src={% static 'js/barra_progreso.js' %} defer> </script>
+
 <!---->
-<script src={% static 'js/barra_progreso.js' %} defer></script>
 
 <div id="ventana">
 	<p id="nrotanque" style="display:none;">{{tk.id}}</p>
@@ -45,6 +47,7 @@
 
 		<input id="tk_regresar" name='validar_archivo' type="submit" class="btn_control" value="Validar_Archivo" />
 		{%if tk.tctvalido%}
+
 		<!-- SOLO MUESTRA EL SIGUENTE BOTON SI EL ARCHIVO ES VALIDADO ANTES -->
 		<input id="tk_modificar" name='guardar_tct_bd' type="submit" class="btn_control" value="Guardar_BD"
 			onclick="mi_funcion()" />
