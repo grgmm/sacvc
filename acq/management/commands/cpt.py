@@ -85,7 +85,8 @@ class Command(BaseCommand):
 
 
 #OBTENIENDO DATOS DEL BUFFER DATA CRUDA
-               time.sleep(1)
+
+               time.sleep(0.5)
 
                try:
                    with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode = 'r') as data_file_r:
@@ -188,8 +189,11 @@ class Command(BaseCommand):
 
                         lt_alarma=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
+                        volumenes = VOLUMENES(nivel_producto, ays)
+                        print(volumenes)
+
                         try:
-                            #time.sleep(1)
+                            time.sleep(1)
                             volumenes=VOLUMENES(nivel_producto,ays)
                             #print(volumenes)
                             tov = volumenes['TOV']
@@ -197,7 +201,6 @@ class Command(BaseCommand):
                             nsv = volumenes['NSV']
 
                             porcentaje = Escalamiento(nivel_producto, tag_ins.ValorMinimo, tag_ins.ValorMaximo)
-                            #print(porcentaje)
 
                             instance_tov = Analogico.objects.get(id_Tk = tag_ins.id_Tk.pk, etiqueta1='TOV')
 
@@ -270,6 +273,5 @@ class Command(BaseCommand):
                   print("Error inesperado escribiendo Data calculada:", sys.exc_info()[0])
 
                tk_ins.current_data  = Data_tanques
-               print(tk_ins.current_data)
 
                tk_ins.save()
