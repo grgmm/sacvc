@@ -1,5 +1,5 @@
 var porcentaje_subida = 0;
-const tiempo = 150; /*nro de ms */
+const tiempo = 1; /*nro de ms */
 var subido = document.getElementById("barra"); //podria ponerse fuera de la funcion
 var flag100 = false;
 var id;
@@ -17,7 +17,7 @@ function mi_funcion2() {
 			//console.log(flag100, 'primero')
 			if (porcentaje_subida == 100 && flag100 == true) {
 				porcentaje_subida = 0;
-				subido.innerHTML = porcentaje_subida + "%";
+				//subido.innerHTML = porcentaje_subida + "%";
 				//id = setInterval(mi_funcion, tiempo);//arranca el script, llamado a la funcion
 				flag100 = false;
 				console.log(flag100, 'segundo')
@@ -41,6 +41,7 @@ function mi_funcion2() {
 		}
 	});
 }
+
 
 /*
 $(document).ready(function(){

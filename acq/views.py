@@ -711,13 +711,14 @@ class Validar_Tct(UpdateView):
                                     print(data_temp)
                             except:
                                 print("Error inesperado:", sys.exc_info()[0])
-
+                        
                         data_temp = {'REGISTRO_ACTUAL': 0, 'PORCENTAJE_SUBIDA': 100, 'REGISTROS_TOTALES': 0}
                         try:
                             with fs.open(ruta_Data+'/porcentaje_subida.json', mode='w') as file:
                                 file.write(json.dumps(data_temp))
                         except:
                             print("Error inesperado:", sys.exc_info()[0])
+                        
 
                 if request.GET.get("validar_archivo", ""):
                     nivel_minimo = 0.0
