@@ -59,7 +59,10 @@ function mi_funcion() {
 		for (var tk in datos) {
 			var idtk = tk.toString(); //tomo el id del tanque, uno por celda
 
-			$("#idtanque" + idtk).text(datos[idtk]["TANQUE"]);
+			/*ESTE DATO ES ESTATICO Y SE PONE EN EL TEMPLATE
+			//$("#idtanque" + idtk).text(datos[idtk]["TANQUE"]);
+			*/
+			
 			$("#tov" + idtk).text(datos[idtk]["TOV"]+" "+datos[idtk]["TOV_UNIDAD"]);
 			$("#nsv" + idtk).text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
 			$("#lt" + idtk).text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
