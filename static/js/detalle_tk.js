@@ -46,7 +46,7 @@ function mi_funcion() {
 		$("#lta").text(datos[idtk]["LTA"] + " " + datos[idtk]["LTA_UNIDAD"]);
 		
 		//rangos de operacion
-/*		Esto valores son estaticos
+/*		valores estaticos, vienen de BD
 		$("#lt_maximo").text(document.getElementById("lt_maximo").innerHTML + " " + datos[idtk]["LT_UNIDAD"]);
 		$("#lt_minimo").text(datos[idtk]["TOV"] + " " + datos[idtk]["LT_UNIDAD"]);
 		$("#tov_maximo").text(datos[idtk]["NSV"] + " " + datos[idtk]["TOV_UNIDAD"]);

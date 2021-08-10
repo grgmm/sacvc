@@ -17,7 +17,7 @@
 					{% for tk in object_list %}
 					<td class="tanque">
 						<a href=" {% url 'uacq:detalle_tk' tk.pk%}">
-							<p id="idtanque" class="idtanque">--</p>
+							<p id="idtanque" class="idtanque">{{tk.Nombre}}</p>
 							
 							<p id="nivel" class="nivel">---</p>
 								<div class="contenedor"> 
