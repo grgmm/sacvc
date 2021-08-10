@@ -45,13 +45,12 @@ function mi_funcion() {
 		$("#tt").text(datos[idtk]["TT"] + " " + datos[idtk]["TT_UNIDAD"]);
 		$("#lta").text(datos[idtk]["LTA"] + " " + datos[idtk]["LTA_UNIDAD"]);
 		//rangos de operacion
-		$("#lt_maximo").text(datos[idtk]["LT"] + " " + datos[idtk]["LT_UNIDAD"]);
+/*
+		$("#lt_maximo").text(document.getElementById("lt_maximo").innerHTML + " " + datos[idtk]["LT_UNIDAD"]);
 		$("#lt_minimo").text(datos[idtk]["TOV"] + " " + datos[idtk]["LT_UNIDAD"]);
 		$("#tov_maximo").text(datos[idtk]["NSV"] + " " + datos[idtk]["TOV_UNIDAD"]);
 		$("#tov_minimo").text(datos[idtk]["GSV"] + " " + datos[idtk]["TOV_UNIDAD"]);
-
-
-
+*/
 		datos_anterior = datos;//Evita actualizar datos innecesariamente
 		//console.log("datos actualizados");
 	}
