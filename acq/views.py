@@ -494,7 +494,7 @@ class TkAdd(CreateView):
                                      H=NSV_alarmas['h'],
                                      HH=NSV_alarmas['hh'],
                                      )
-	    
+
             direccionamiento['dir_disponibles'].remove(dir_disponible)
 
             dir_disponible = dir_disponible + 14 + 2
@@ -711,14 +711,14 @@ class Validar_Tct(UpdateView):
                                     print(data_temp)
                             except:
                                 print("Error inesperado:", sys.exc_info()[0])
-                        
+
                         data_temp = {'REGISTRO_ACTUAL': 0, 'PORCENTAJE_SUBIDA': 100, 'REGISTROS_TOTALES': 0}
                         try:
                             with fs.open(ruta_Data+'/porcentaje_subida.json', mode='w') as file:
                                 file.write(json.dumps(data_temp))
                         except:
                             print("Error inesperado:", sys.exc_info()[0])
-                        
+
 
                 if request.GET.get("validar_archivo", ""):
                     nivel_minimo = 0.0
@@ -1396,26 +1396,12 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         tovminimo = instov.ValorMinimo
         ltmaximo = inslt.ValorMaximo
         ltminimo = inslt.ValorMinimo
+        context['TOV_MAXIMO'] = tovmaximo
+        context['TOV_MINIMO'] = tovminimo
+        context['LT_MAXIMO'] = ltmaximo
+        context['LT_MINIMO'] = ltminimo
+        print(context)
 
-        DataTk_temp = {}
 
-        try:
-            with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode='r') as data_file:
-                DataTk_temp = json.loads(data_file.read())
-
-                for item in DataTk_temp.keys():
-
-                    if idtk == item:
-                        #context['Nombre'] = Nombretk
-                        #context['Descriptor'] = Descriptortk
-                        #context['Aor'] = Aortk
-                        context['TOV_MAXIMO'] = tovmaximo
-                        context['TOV_MINIMO'] = tovminimo
-                        context['LT_MAXIMO'] = ltmaximo
-                        context['LT_MINIMO'] = ltminimo
-                        context['Data'] = DataTk_temp[idtk]
-
-        except:
-            print("Error inesperado:", sys.exc_info()[0])
 
         return context
