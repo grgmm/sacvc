@@ -1390,8 +1390,11 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         Descriptortk = self.object.Descriptor
         Aortk = self.object.id_aor.Nombre
         instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
+        inslt = Analogico.objects.get(id_Tk=idtk, etiqueta1='LT')
         tovmaximo = instov.ValorMaximo
         tovminimo = instov.ValorMinimo
+        ltmaximo = inslt.ValorMaximo
+        ltminimo = inslt.ValorMinimo
 
         DataTk_temp = {}
 
@@ -1402,12 +1405,13 @@ class detalle_tk(LoginRequiredMixin, DetailView):
                 for item in DataTk_temp.keys():
 
                     if idtk == item:
-                        context['Nombre'] = Nombretk
-                        context['Descriptor'] = Descriptortk
-                        context['Aor'] = Aortk
+                        #context['Nombre'] = Nombretk
+                        #context['Descriptor'] = Descriptortk
+                        #context['Aor'] = Aortk
                         context['TOV_MAXIMO'] = tovmaximo
                         context['TOV_MINIMO'] = tovminimo
-
+                        context['LT_MAXIMO'] = ltmaximo
+                        context['LT_MINIMO'] = ltminimo
                         context['Data'] = DataTk_temp[idtk]
 
         except:

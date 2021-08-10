@@ -3,6 +3,7 @@ var porcentaje_subida = 0;
 const tiempo = 150; /*nro de ms */
 //var id = setInterval(mi_funcion, tiempo);
 var subido = document.getElementById("barra"); //podria ponerse fuera de la funcion
+
 var flag100=false;
 
 function mi_funcion() { var id = setInterval(mi_funcion2, tiempo); }
@@ -10,7 +11,6 @@ function mi_funcion() { var id = setInterval(mi_funcion2, tiempo); }
 
 function mi_funcion2() {
 
-	//console.log("Entrada a mi_funcion");
 	$.ajax({
 		url: 'porcentaje_subida/', //url que llamara a la funcion que abre el json
 		type: 'get',
@@ -48,10 +48,3 @@ function mi_funcion2() {
 	});
 
 }
-
-
-/*
-$(document).ready(function(){
-	mi_funcion();
-	console.log("Entrada a document.ready");
-});*/

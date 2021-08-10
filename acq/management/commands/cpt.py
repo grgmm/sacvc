@@ -6,7 +6,6 @@ from datetime import datetime
 import time
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-import numpy
 import sys
 
 class Command(BaseCommand):
