@@ -76,57 +76,52 @@ def FloatIeee754(registro1,registro2):
         #return(fvalue1)
 
 def VOLUMENES(nivel_medido, ays):
-        tov=0
-        gsv=0
-        nsv=0
-        volumenes={"TOV":0,
-        "NSV":0,
-        "GSV":0, }
+        tov, gsv, nsv=0,0,0
 
-        q=Tct.objects.all()
+        volumenes={}
 
+        try:
+            q=Tct.objects.all()
+            first_reg=Tct.objects.all().first()
+            last_reg=Tct.objects.all().last()
 
-        first_reg=Tct.objects.all().first()
-        last_reg=Tct.objects.all().last()
-
-        if nivel_medido > last_reg.Lt0:
-            tov=last_reg.Tov0
-            gsv=tov-ays
-            nsv=gsv-ays
-            volumenes  = {"TOV":tov,
-                "NSV":round(nsv,3),
-                "GSV":round(gsv,3), }
-        else:
-            if nivel_medido < first_reg.Lt0:
-                tov=first_reg.Tov0
+            if nivel_medido > last_reg.Lt0:
+                tov=last_reg.Tov0
                 gsv=tov-ays
                 nsv=gsv-ays
-                volumenes  = {"TOV":tov,
-                    "NSV":round(nsv,3),
-                    "GSV":round(gsv,3), }
-            else:
+            if nivel_medido < first_reg.Lt0:
+                    tov=first_reg.Tov0
+                    gsv=tov-ays
+                    nsv=gsv-ays
 
+            volumenes = {"TOV": tov,
+                         "NSV": round(nsv, 3),
+                         "GSV": round(gsv, 3), }
 
+            if nivel_medido > first_reg.Lt0 and nivel_medido < first_reg.Lt0:
+                    for fila in q:
+                            if fila.Lt0==nivel_medido:
+                                tov=fila.Tov0
+                                gsv=tov-ays
+                                nsv=gsv-ays
+                                volumenes  = {"TOV":tov,
+                                    "NSV":round(nsv,3),
+                                    "GSV":round(gsv,3), }
 
-
-                for fila in q:
-                        if fila.Lt0==nivel_medido:
-                            tov=fila.Tov0
-                            gsv=tov-ays
-                            nsv=gsv-ays
-                            volumenes  = {"TOV":tov,
-                                "NSV":round(nsv,3),
-                                "GSV":round(gsv,3), }
-
+        except:
+            print("Error leyendo tabla de Aforo TCT", sys.exc_info()[0], "occurred.")
+            volumenes = {"TOV": 0,
+                         "NSV": 0,
+                         "GSV": 0, }
+            return volumenes
 
         return(volumenes)
 
 
 def Settings_Alarmas(ValorMaximo,ValorMinimo):
-    """ settings inicial de alarmas basado en los valores minimo y maximo del parámetro
+    """ settings inicial de alarmas basados en los valores minimos y máximos del parámetro
     correspondiete, (5% para LL, 10% para L, 90% para H y 100% para HH)
     """
-
     LL=((ValorMaximo - ValorMinimo)*5/100)
     L=((ValorMaximo - ValorMinimo)*10/100)
     H=((ValorMaximo - ValorMinimo)*90/100)
@@ -136,27 +131,6 @@ def Settings_Alarmas(ValorMaximo,ValorMinimo):
         "h":H,
         'hh':HH, }
 
-
-
     return settings_alarmas
 
 
-
-
-
-        #if (Tct.objects.all().count() != 0) and (nivel_medido != 0 ):
-         # filtro_tk_tct=Tct.objects.filter(id_tk=idtk).iterator()
-         # for recorrido in filtro_tk_tct:
-        #    lt_tct=recorrido.Lt0
-        #    lt_tov=recorrido.Tov0
-        #    if lt_tct==nivel_medido:
-            #   tov=lt_tov
-        #       gsv=tov-ays
-            #   nsv=gsv-ays
-        #       volumenes  = {"TOV":tov,
-        #               "NSV":nsv,
-        #               "GSV":gsv, }
-    #           pass
-    #        else:
-#                pass
-#        return(volumenes)

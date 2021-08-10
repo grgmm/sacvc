@@ -312,7 +312,7 @@ class TkAdd(CreateView):
             fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
             ruta_Data = fs.location
             dir_usadas = []
-            direccionamiento = {}
+            direccionamiento = {'dir_disponibles':	''}
             dir_disponible = 0
             qtk = Tk.objects.count()
 
@@ -494,7 +494,7 @@ class TkAdd(CreateView):
                                      H=NSV_alarmas['h'],
                                      HH=NSV_alarmas['hh'],
                                      )
-
+	    
             direccionamiento['dir_disponibles'].remove(dir_disponible)
 
             dir_disponible = dir_disponible + 14 + 2

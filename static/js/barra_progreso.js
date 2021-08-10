@@ -39,8 +39,11 @@ function mi_funcion2() {
 			//console.log("Estoy en error"),
 			console.log(response);
 		}
+
 	});
+
 }
+
 
 /*
 $(document).ready(function(){
