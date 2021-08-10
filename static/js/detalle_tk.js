@@ -44,8 +44,9 @@ function mi_funcion() {
 		$("#ays").text(datos[idtk]["AYS"] + " " + datos[idtk]["AYS_UNIDAD"]);
 		$("#tt").text(datos[idtk]["TT"] + " " + datos[idtk]["TT_UNIDAD"]);
 		$("#lta").text(datos[idtk]["LTA"] + " " + datos[idtk]["LTA_UNIDAD"]);
+		
 		//rangos de operacion
-/*
+/*		Esto valores son estaticos
 		$("#lt_maximo").text(document.getElementById("lt_maximo").innerHTML + " " + datos[idtk]["LT_UNIDAD"]);
 		$("#lt_minimo").text(datos[idtk]["TOV"] + " " + datos[idtk]["LT_UNIDAD"]);
 		$("#tov_maximo").text(datos[idtk]["NSV"] + " " + datos[idtk]["TOV_UNIDAD"]);
