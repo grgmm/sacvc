@@ -1390,7 +1390,7 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         Descriptortk = self.object.Descriptor
         Aortk = self.object.id_aor.Nombre
         instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
-        inslt = Analogico.objects.get(id_Tk=idtk, etiqueta1='LT')
+        inslt = Analogico.objects.get(id_Tk=idtk, etiqueta1='lt')
         tovmaximo = instov.ValorMaximo
         tovminimo = instov.ValorMinimo
         ltmaximo = inslt.ValorMaximo
