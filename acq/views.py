@@ -69,7 +69,8 @@ def actualizar(request):
         print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
 
-
+'''
+ojo borrar no esta haciendo nada en el programa
 def barra_progreso(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
     ruta_Data = fs.location
@@ -83,12 +84,14 @@ def barra_progreso(request):
         print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
 
-
+'''
 class patiotanquelist(ListView):
     # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = PatioTanque
     template_name = 'acq/list_tf/list_tf.html'
+    
+    
 
 # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
     def get(self, request, *args, **kwargs):
@@ -1385,20 +1388,42 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
         ruta_Data = fs.location
 
-        DataTk = self.object.current_data
         idtk = (str(self.object.pk))
-        Nombretk = self.object.Nombre
-        Descriptortk = self.object.Descriptor
-        Aortk = self.object.id_aor.Nombre
+
+
         instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
         inslt = Analogico.objects.get(id_Tk=idtk, etiqueta1='lt')
+        inspt = Analogico.objects.get(id_Tk=idtk, etiqueta1='pt')
+        insays = Analogico.objects.get(id_Tk=idtk, etiqueta1='ays')
+        instt = Analogico.objects.get(id_Tk=idtk, etiqueta1='tt')
+
         tovmaximo = instov.ValorMaximo
         tovminimo = instov.ValorMinimo
         ltmaximo = inslt.ValorMaximo
         ltminimo = inslt.ValorMinimo
+
+    ###CONTEXT PASO DE DATOS A LA VISTA
+
+        ####UNIDADES
+        context['LT_UNIDAD'] =inslt.Unidad
+        context['LTA_UNIDAD'] = inslt.Unidad #misma unidad de nivel de producto (lt)
+
+        context['AYS_UNIDAD'] = insays.Unidad
+        context['PT_UNIDAD'] = inspt.Unidad
+        context['TT_UNIDAD'] = instt.Unidad
+
+        context['TOV_UNIDAD'] = instov.Unidad
+        context['NSV_UNIDAD'] = instov.Unidad #misma unidad de nivel del tov
+        context['GSV_UNIDAD'] = instov.Unidad #misma unidad de nivel del tov
+
+
+
+        ####RANGOS
+
         context['TOV_MAXIMO'] = tovmaximo
         context['TOV_MINIMO'] = tovminimo
         context['LT_MAXIMO'] = ltmaximo
         context['LT_MINIMO'] = ltminimo
+
         print(context)
         return context
