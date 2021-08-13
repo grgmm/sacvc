@@ -665,6 +665,7 @@ class Validar_Tct(UpdateView):
 
     def get(self, request, *args, **kwargs):
 
+        data_temp = {'REGISTRO_ACTUAL': '', 'PORCENTAJE_SUBIDA': '', 'REGISTROS_TOTALES': ''}
         if request.user.is_authenticated:
 
             fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
@@ -682,46 +683,56 @@ class Validar_Tct(UpdateView):
             else:
 
                 obj_tk = self.get_object()
-                cont = 0
+                q = Tct.objects.filter(id_tk = obj_tk.pk)
+                print(q.exists())
+
+                if q.exists():
+
+                    data_temp['PORCENTAJE_SUBIDA'] = 100
+                    print('HAY ARCHIVO')
+
+                else:
+                    data_temp['PORCENTAJE_SUBIDA'] = 0
+                    print('NO HAY ARCHIVO')
+
+
+                try:
+                        with fs.open(ruta_Data + '/porcentaje_subida.json', mode='w') as file:
+                            file.write(json.dumps(data_temp))
+                except:
+                        print("Error inesperado: subiendo porcentaje_subida.json ", sys.exc_info()[0])
+
 
                 request.GET = request.GET.copy()
 
                 if request.GET.get("guardar_tct_bd", ""):
-                    if obj_tk.tctvalido:
-                        Tct.objects.all().delete()
-                        file = obj_tk.tct_archivo.path
-                        # abre el csv tc y lo pasa a un dataframe
-                        DataFrame = pd.read_csv(file, delimiter='\t', )
-                        porcentaje_anterior = ""
-                        for i in range(0, len(DataFrame)):
-                            nivel_format = format(
-                                DataFrame.iloc[i]['nivel']).replace(',', '.')
-                            volumen_format = format(
-                                DataFrame.iloc[i]['volumen']).replace(',', '.')
-                            nivel = float(nivel_format)
-                            volumen = float(volumen_format)
-                            Tct.objects.create(
-                                id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
+                  if obj_tk.tctvalido:
+                      Tct.objects.all().delete()
+                      file = obj_tk.tct_archivo.path
+                      # abre el csv tc y lo pasa a un dataframe
+                      DataFrame = pd.read_csv(file, delimiter='\t', )
+                      porcentaje_anterior = ""
+                      for i in range(0, len(DataFrame)):
+                          nivel_format = format(
+                              DataFrame.iloc[i]['nivel']).replace(',', '.')
+                          volumen_format = format(
+                              DataFrame.iloc[i]['volumen']).replace(',', '.')
+                          nivel = float(nivel_format)
+                          volumen = float(volumen_format)
+                          Tct.objects.create(
+                              id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
 
-                            if len(DataFrame) != 0:
-                                porcentaje = round(i*100/len(DataFrame), 0)
-                            try:
-                                if(porcentaje != porcentaje_anterior):
-                                    porcentaje_anterior = porcentaje
-                                    data_temp = {'REGISTRO_ACTUAL': i, 'PORCENTAJE_SUBIDA': porcentaje, 'REGISTROS_TOTALES': len(DataFrame)}
-                                    with fs.open(ruta_Data+'/porcentaje_subida.json', mode='w') as file:
-                                        file.write(json.dumps(data_temp))
-                                    print(data_temp)
-                            except:
-                                print("Error inesperado:", sys.exc_info()[0])
-
-                        data_temp = {'REGISTRO_ACTUAL': 0, 'PORCENTAJE_SUBIDA': 100, 'REGISTROS_TOTALES': 0}
-                        try:
-                            with fs.open(ruta_Data+'/porcentaje_subida.json', mode='w') as file:
-                                file.write(json.dumps(data_temp))
-                        except:
-                            print("Error inesperado:", sys.exc_info()[0])
-
+                          if len(DataFrame) != 0:
+                              porcentaje = round(i*100/len(DataFrame), 0)
+                          try:
+                              if(porcentaje != porcentaje_anterior):
+                                  porcentaje_anterior = porcentaje
+                                  data_temp = {'REGISTRO_ACTUAL': i, 'PORCENTAJE_SUBIDA': porcentaje, 'REGISTROS_TOTALES': len(DataFrame)}
+                                  with fs.open(ruta_Data+'/porcentaje_subida.json', mode='w') as file:
+                                      file.write(json.dumps(data_temp))
+                                  #print(data_temp)
+                          except:
+                              print("Error inesperado escribiendo porcentaje_subida.json:", sys.exc_info()[0])
 
                 if request.GET.get("validar_archivo", ""):
                     nivel_minimo = 0.0

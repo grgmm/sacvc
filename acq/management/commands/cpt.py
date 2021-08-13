@@ -120,14 +120,12 @@ class Command(BaseCommand):
 
                         pt_alarma=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
-
                         Data_tanques_temp['IDPT'] = idtag_pt
 
                         #Data_tanques_temp['PT_UNIDAD'] = pt_unidad
                         Data_tanques_temp['PT'] = str(Presion_tk)
                         Data_tanques_temp['PT_ALARMA']= pt_alarma
                         Data_tanques_temp['TIMESTAMP_pt'] =  timestamp_pt
-
 
                    if (tag_ins.etiqueta1=='tt'):
 
@@ -136,9 +134,7 @@ class Command(BaseCommand):
                         timestamp_tt = vb_timestamp_DC
                         #tt_unidad=tag_ins.Unidad
 
-
                         tt_alarma=Alarmas(temperatura_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-
 
                         Data_tanques_temp['IDTT'] = idtag_tt
                         #Data_tanques_temp['TT_UNIDAD'] = tt_unidad
@@ -146,14 +142,12 @@ class Command(BaseCommand):
                         Data_tanques_temp['TT_ALARMA']= tt_alarma
                         Data_tanques_temp['TIMESTAMP_tt'] =  timestamp_tt
 
-
                    if (tag_ins.etiqueta1=='lta'):
                              # if idtag_DC.etiqueta1=='lta':
                         nivel_agua_libre=vb_PV
                         idtag_lta = tag_ins.pk
                         timestamp_lta = vb_timestamp_DC
                         #lta_unidad=tag_ins.Unidad
-
 
                         lta_alarma=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
@@ -169,7 +163,6 @@ class Command(BaseCommand):
                         idtag_ays = tag_ins.pk
                         timestamp_ays = vb_timestamp_DC
                         #ays_unidad=tag_ins.Unidad
-
 
                         ays_alarma=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
 
@@ -203,19 +196,16 @@ class Command(BaseCommand):
 
                             instance_tov = Analogico.objects.get(id_Tk = tag_ins.id_Tk.pk, etiqueta1='TOV')
 
-
                             timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                             tov_alarma=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
 
                             #tov_unidad = instance_tov.Unidad
-
 
                             instance_gsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='GSV')
                             timestamp_gsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                             gsv_alarma=Alarmas(gsv, instance_gsv.LL, instance_gsv.L, instance_gsv.H, instance_gsv.HH)
 
                             #gsv_unidad = instance_gsv.Unidad
-
 
                             instance_nsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='NSV')
                             timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
@@ -252,11 +242,8 @@ class Command(BaseCommand):
                             else:
                                 print('NIVEL DE PRODUCTO FUERA DE RANGOS EN TANQUE:', tk_ins.Nombre)
 
-
-
                         except:
                             print("Error de parseo", sys.exc_info()[0], "occurred.")
-
 
 
                Data_tanques[tk_ins.pk] ={'TANQUE': tk_ins.Nombre}
