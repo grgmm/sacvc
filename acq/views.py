@@ -69,28 +69,11 @@ def actualizar(request):
         print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
 
-'''
-ojo borrar no esta haciendo nada en el programa
-def barra_progreso(request):
-    fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
-    ruta_Data = fs.location
-    dataf = {}
-
-    try:
-        with fs.open(ruta_Data+'/porcentaje_subida.json', mode='r') as data_file:
-            dataf = json.loads(data_file.read())
-
-    except:
-        print("Error inesperado:", sys.exc_info()[0])
-    return JsonResponse(dataf)
-
-'''
 class patiotanquelist(ListView):
     # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = PatioTanque
     template_name = 'acq/list_tf/list_tf.html'
-    
     
 
 # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
@@ -136,7 +119,6 @@ class PatiotanqueAdd(CreateView):
         else:
             return redirect('/sacvc/logout')
 
-# EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
 
 
 class PatiotanqueDelete(DeleteView):
@@ -498,7 +480,11 @@ class TkAdd(CreateView):
                                      HH=NSV_alarmas['hh'],
                                      )
 
-            direccionamiento['dir_disponibles'].remove(dir_disponible)
+            print(dir_disponible)
+            try:
+                direccionamiento['dir_disponibles'].remove(dir_disponible)
+            except:
+                print('error tratando e remover direccion disponible')
 
             dir_disponible = dir_disponible + 14 + 2
 
@@ -508,14 +494,15 @@ class TkAdd(CreateView):
                 dir_usadas.append(int(dirtag.direccion))
 
             if dir_disponible not in dir_usadas:
-                direccionamiento['dir_disponibles'].append(dir_disponible)
-
+                try :
+                    direccionamiento['dir_disponibles'].append(dir_disponible)
+                except:
+                    dir_disponible=17
             else:
                 dir_disponible = max(dir_usadas)+2
                 direccionamiento['dir_disponibles'].append(dir_disponible)
             try:
                 with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
-                    print(direccionamiento)
 
                     file.write(json.dumps(direccionamiento))  # Data en cache)
             except:
@@ -537,7 +524,6 @@ class TkDelete(DeleteView):
         # print(self.object.pk)
         q2 = Analogico.objects.all()
         last_direccion = q2.aggregate(Max('direccion'))
-        print(last_direccion)
 
         q = Analogico.objects.filter(id_Tk=self.object.pk)
         dict_direccion = q.aggregate(Min('direccion'))
@@ -683,9 +669,8 @@ class Validar_Tct(UpdateView):
             else:
 
                 obj_tk = self.get_object()
+                print(obj_tk)
                 q = Tct.objects.filter(id_tk = obj_tk.pk)
-                print(q.exists())
-
                 if q.exists():
 
                     data_temp['PORCENTAJE_SUBIDA'] = 100
@@ -707,7 +692,8 @@ class Validar_Tct(UpdateView):
 
                 if request.GET.get("guardar_tct_bd", ""):
                   if obj_tk.tctvalido:
-                      Tct.objects.all().delete()
+                      for objtct in q:
+                        objtct.delete()
                       file = obj_tk.tct_archivo.path
                       # abre el csv tc y lo pasa a un dataframe
                       DataFrame = pd.read_csv(file, delimiter='\t', )
