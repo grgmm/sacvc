@@ -297,12 +297,11 @@ class TkAdd(CreateView):
             fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
             ruta_Data = fs.location
             dir_usadas = []
-            direccionamiento = {'dir_disponibles':	''}
+            direccionamiento = {'dir_disponibles':	[1]}
             dir_disponible = 0
             qtk = Tk.objects.count()
 
             try:
-
                 with fs.open(ruta_Data+'/direccionamiento.json', mode='r') as data_file:
                     direccionamiento = json.loads(data_file.read())
                     print(direccionamiento['dir_disponibles'])
@@ -341,7 +340,7 @@ class TkAdd(CreateView):
             NSV_minimo = 0.0
             NSV_maximo = 650000.0
             NSV_alarmas = Settings_Alarmas(NSV_maximo, NSV_minimo)
-
+            print(qtk)
             if qtk == 1:
                 dir_disponible = 1
 
@@ -484,7 +483,7 @@ class TkAdd(CreateView):
             try:
                 direccionamiento['dir_disponibles'].remove(dir_disponible)
             except:
-                print('error tratando e remover direccion disponible')
+                print('error tratando de remover direccion disponible')
 
             dir_disponible = dir_disponible + 14 + 2
 
@@ -501,6 +500,7 @@ class TkAdd(CreateView):
             else:
                 dir_disponible = max(dir_usadas)+2
                 direccionamiento['dir_disponibles'].append(dir_disponible)
+
             try:
                 with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
 
@@ -568,7 +568,7 @@ def delete_Tk(sender, instance, **kwargs):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
     ruta_Data = fs.location
     try:
-        with fs.open(ruta_Data + '/Buffer_Datos_Calculados', mode='w') as file:
+        with fs.open(ruta_Data + '/Buffer_Datos_Calculados.json', mode='w') as file:
             file.seek(0)
             file.truncated()
 
@@ -672,13 +672,14 @@ class Validar_Tct(UpdateView):
                 print(obj_tk)
                 q = Tct.objects.filter(id_tk = obj_tk.pk)
                 if q.exists():
-
+                    print(q.exists())
                     data_temp['PORCENTAJE_SUBIDA'] = 100
-                    print('HAY ARCHIVO')
+                    print('EXISTE DATA TCT DE ESTE TK EN BD ')
 
                 else:
+                    print(q.exists())
                     data_temp['PORCENTAJE_SUBIDA'] = 0
-                    print('NO HAY ARCHIVO')
+                    print('NO EXISTE DATA TCT DE ESTE TK EN BD ')
 
 
                 try:
