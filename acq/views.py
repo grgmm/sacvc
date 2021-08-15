@@ -95,7 +95,6 @@ class patiotanquelist(ListView):
         else:
             return redirect('/sacvc/logout')
 
-
 class PatiotanqueAdd(CreateView):
     model = PatioTanque
     fields = ['Nombre', 'Descriptor', ]
@@ -479,7 +478,6 @@ class TkAdd(CreateView):
                                      HH=NSV_alarmas['hh'],
                                      )
 
-            print(dir_disponible)
             try:
                 direccionamiento['dir_disponibles'].remove(dir_disponible)
             except:
@@ -504,7 +502,12 @@ class TkAdd(CreateView):
             try:
                 with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
 
+                    #print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
+                    direccionamiento['dir_disponibles'] = list(set(direccionamiento['dir_disponibles']))
+
                     file.write(json.dumps(direccionamiento))  # Data en cache)
+
+                    print(direccionamiento['dir_disponibles'])
             except:
 
                 print("Error inesperado:", sys.exc_info()[0])
@@ -520,22 +523,29 @@ class TkDelete(DeleteView):
         fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
         ruta_Data = fs.location
 
+        try:
+            with fs.open(ruta_Data + '/direccionamiento.json', mode='r') as data_file:
+                direccionamiento = json.loads(data_file.read())
+        except:
+            print("Error inesperado: ", sys.exc_info()[0])
+
         success_url = ('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
         # print(self.object.pk)
-        q2 = Analogico.objects.all()
-        last_direccion = q2.aggregate(Max('direccion'))
 
         q = Analogico.objects.filter(id_Tk=self.object.pk)
+
         dict_direccion = q.aggregate(Min('direccion'))
 
         dir_disponible = int(dict_direccion['direccion__min'])
-
-        direccionamiento['dir_disponibles'].append(dir_disponible)
+        if dir_disponible not in direccionamiento['dir_disponibles']:
+            direccionamiento['dir_disponibles'].append(dir_disponible)
 
         try:
             with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
-
+                #print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
+                direccionamiento['dir_disponibles'] = list(set(direccionamiento['dir_disponibles']))
                 file.write(json.dumps(direccionamiento))  # Data en cache)
+                print(direccionamiento['dir_disponibles'])
         except:
 
             print("Error inesperado:", sys.exc_info()[0])
