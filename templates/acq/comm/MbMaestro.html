@@ -1,7 +1,6 @@
 {% extends "acq/base.html" %}
 {% load static %}
-{% block title %}Mobus Mestro{% endblock %}
-
+{% block title %}Modbus Maestro{% endblock %}
 
 {% block content %}
 
@@ -13,20 +12,12 @@
 
 <h1>Configuracion Modbus Maestro</h1>
 
-
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save">
 </form>
 
-
-
-
  </body>
 </html>
-
-
 <p> {{mensajes}} </p>
-
-
 {% endblock %}
