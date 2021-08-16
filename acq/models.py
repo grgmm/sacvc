@@ -146,11 +146,20 @@ class MbMaestro(models.Model):
     ('TCP', 'MBTCP'),
     ('RTU', 'MBRTU'),
    ]
+  PORT_CHOICES = [
+      ('TCP_SRV', 'TCP_SRV'),
+      ('serial1', 'COM1'),
+      ('serial2', 'COM2'),
+      ('serial3', 's0'),
+      ('serial4', 's4'),
+
+  ]
 
 
-  Puerto = models.CharField(max_length=3, default = 's0')
-  Velocidad = models.IntegerField(choices = Vel_CHOICES, default= 'A')
-  Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR')
+  Puerto = models.CharField(max_length=10, default = 'TCP_SRV')
+  SercvicePort= models.IntegerField(default=5002, )
+  Velocidad = models.IntegerField(choices = Vel_CHOICES, default= 'A', verbose_name= _('solo para comunicacion serial'),) #NO APLICA PARA TCP
+  Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR', verbose_name= _('solo para comunicacion serial'),) #NO APLICA PARA TCP
   Reintentos = models.IntegerField(default=3)
   Tipo = models.CharField(max_length=3, choices=TIPOCOMM_CHOICES, default= 'TCP')
   IdDevice = models.IntegerField(default=1)
@@ -174,8 +183,8 @@ class MbEsclavo(models.Model):
     ('IMPAR', 'Impar'),]
 
   Puerto = models.CharField(max_length=3, default='sa')
-  Velocidad = models.IntegerField(choices = Vel_CHOICES, default=19200)
-  Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR')
+  Velocidad = models.IntegerField(choices = Vel_CHOICES, default=19200, verbose_name= _('solo para comunicacion serial'),)
+  Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR', verbose_name= _('solo para comunicacion serial'),)
   Reintentos = models.IntegerField(default=3)
   IdEsclavo = models.IntegerField(default=1)
 

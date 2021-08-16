@@ -39,12 +39,15 @@ from .views import (
     Aor_del,
     Aor_add,
     Aor_user_edit,
-    detalle_tk,)
+    detalle_tk,
+    MbMaestro,)
 
 app_name = 'sacvc'
 urlpatterns = [
 
     path('', views.welcome, name= 'welcome'),
+
+    url(r'^comm_mb_master/$', MbMaestro.as_view(), name='comm_mb_master'),  # Probada con módulo de prueba teste_url_complejas
 
     url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
 
