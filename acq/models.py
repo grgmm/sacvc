@@ -133,9 +133,9 @@ class Factor(models.Model):
 class MbMaestro(models.Model):
 
   Vel_CHOICES = [
-   ('A', 9600),
-   ('B', 19200),
-   ('C', 38400),
+   (1, 9600),
+   (2, 19200),
+   (3, 38400),
     ]
 
   PARIDAD_CHOICES = [
@@ -158,7 +158,7 @@ class MbMaestro(models.Model):
 
   Puerto = models.CharField(max_length=10, default = 'TCP_SRV')
   SercvicePort= models.IntegerField(default=5002, )
-  Velocidad = models.IntegerField(choices = Vel_CHOICES, default= 'A', verbose_name= _('solo para comunicacion serial'),) #NO APLICA PARA TCP
+  Velocidad = models.IntegerField(choices = Vel_CHOICES, default= 1, verbose_name= _('solo para comunicacion serial'),) #NO APLICA PARA TCP
   Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR', verbose_name= _('solo para comunicacion serial'),) #NO APLICA PARA TCP
   Reintentos = models.IntegerField(default=3)
   Tipo = models.CharField(max_length=3, choices=TIPOCOMM_CHOICES, default= 'TCP')
@@ -166,7 +166,7 @@ class MbMaestro(models.Model):
 
   def __str__(self):
 
-       return '%d' % (self.id,)
+       return '%d' % (self.SercvicePort,)
 
 
 class MbEsclavo(models.Model):
