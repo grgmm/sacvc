@@ -14,9 +14,8 @@ function mi_funcion2() {
 			porcentaje_subida = datos["PORCENTAJE_SUBIDA"];
 			subido.style.width = porcentaje_subida + "%"; //barra
 			subido.innerHTML = porcentaje_subida + "%";
-			//console.log(flag100, 'primero')
 			if (porcentaje_subida == 100 && flag100 == true) {
-				porcentaje_subida = 0;
+				//porcentaje_subida = 0;
 				//subido.innerHTML = porcentaje_subida + "%";
 				//id = setInterval(mi_funcion, tiempo);//arranca el script, llamado a la funcion
 				flag100 = false;
