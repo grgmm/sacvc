@@ -1,7 +1,7 @@
 datos_anterior = null; //Copia de json de ultimo refresh
 flag_alarma = false;
 var idtk;
-
+var pt_unidad, ays_unidad, tt_unidad,lta_unidad,lt_unidad,tov_unidad,nsv_unidad,gsv_unidad;
 function mi_funcion() {
 	var refresca = $.ajax({
 		url: 'actualizar/', //url que llamara a la funcion que abre el json
@@ -10,8 +10,7 @@ function mi_funcion() {
 	}).done(function (datos) {
 		if (JSON.stringify(datos) != JSON.stringify(datos_anterior)) {
 			idtk = document.getElementById("nrotanque").innerHTML;
-			console.log("Nro tanque " + idtk+"; tt_unidad "+datos[idtk]["TT_UNIDAD"]+"; lta_unidad "+datos[idtk]["LTA_UNIDAD"])
-			//solo se ejecuta si el json cambia
+			//pt_unidad=document.getElementById("pt").innerHTML;
 			actualizar_vista(datos);
 		}
 		//debe actualizarse cada refresh para que pueda existir el blinking
@@ -25,25 +24,36 @@ function mi_funcion() {
 		var nivel;
 		var lt_porcentaje;
 
-		//console.log("Nro de tanque "+idtk);
-		//$("#idtanque").text(datos[idtk]["TANQUE"]);
 		lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
-		//console.log(idtk + "  " + lt_porcentaje)
 		nivel = document.getElementById("barra"); //nivel en UI
 		nivel.style.width = lt_porcentaje + "%"; //barra de progreso
 		$("#nivel").text(lt_porcentaje + "%");//Valor numerico del nivel
-		//console.log("dato " + datos[idtk]["LT"] + " " + datos[idtk]["LT_UNIDAD"]);
 
 		//variables principales
-		$("#lt").text(datos[idtk]["LT"] + " " + datos[idtk]["LT_UNIDAD"]);
-		$("#tov").text(datos[idtk]["TOV"] + " " + datos[idtk]["TOV_UNIDAD"]);
-		$("#nsv").text(datos[idtk]["NSV"] + " " + datos[idtk]["NSV_UNIDAD"]);
-		$("#gsv").text(datos[idtk]["GSV"] + " " + datos[idtk]["GSV_UNIDAD"]);
+		if(lt_unidad==null) lt_unidad=document.getElementById("lt").innerHTML;
+		$("#lt").text(datos[idtk]["LT"] + " " + lt_unidad);
+		
+		if(tov_unidad==null) tov_unidad=document.getElementById("tov").innerHTML;
+		$("#tov").text(datos[idtk]["TOV"] + " " + tov_unidad);
+
+		if(nsv_unidad==null) nsv_unidad=document.getElementById("nsv").innerHTML;
+		$("#nsv").text(datos[idtk]["NSV"] + " " + nsv_unidad);
+
+		if(gsv_unidad==null) gsv_unidad=document.getElementById("gsv").innerHTML;
+		$("#gsv").text(datos[idtk]["GSV"] + " " + gsv_unidad);
+
 		//variables complementarias
-		$("#pt").text(datos[idtk]["PT"] + " " + datos[idtk]["PT_UNIDAD"]);
-		$("#ays").text(datos[idtk]["AYS"] + " " + datos[idtk]["AYS_UNIDAD"]);
-		$("#tt").text(datos[idtk]["TT"] + " " + datos[idtk]["TT_UNIDAD"]);
-		$("#lta").text(datos[idtk]["LTA"] + " " + datos[idtk]["LTA_UNIDAD"]);
+		if(pt_unidad==null) pt_unidad=document.getElementById("pt").innerHTML;
+		$("#pt").text(datos[idtk]["PT"]+" "+pt_unidad);
+
+		if(ays_unidad==null) ays_unidad=document.getElementById("ays").innerHTML;
+		$("#ays").text(datos[idtk]["AYS"] + " " + ays_unidad);
+
+		if(tt_unidad==null) tt_unidad=document.getElementById("tt").innerHTML;
+		$("#tt").text(datos[idtk]["TT"] + " " + tt_unidad);
+
+		if(lta_unidad==null) lta_unidad=document.getElementById("lta").innerHTML;
+		$("#lta").text(datos[idtk]["LTA"] + " " + lta_unidad);
 		
 		//rangos de operacion
 /*		valores estaticos, vienen de BD
@@ -53,7 +63,6 @@ function mi_funcion() {
 		$("#tov_minimo").text(datos[idtk]["GSV"] + " " + datos[idtk]["TOV_UNIDAD"]);
 */
 		datos_anterior = datos;//Evita actualizar datos innecesariamente
-		//console.log("datos actualizados");
 	}
 
 	function manejar_alarmas(datos) {

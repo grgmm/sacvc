@@ -30,10 +30,10 @@
 			<br>	
 			<table class="tabla">
 				<caption class="titulotabla">VARIABLES PRINCIPALES</caption>
-				<tr><td class="etiqueta">LT:</td><td id="lt" class="dato">---</td></tr>
-				<tr><td class="etiqueta">TOV:</td><td id="tov" class="dato">---</td></tr> 
-				<tr><td class="etiqueta">NSV:</td><td id="nsv" class="dato">---</td></tr>
-				<tr><td class="etiqueta">GSV:</td><td id="gsv" class="dato">---</td></tr>
+				<tr><td class="etiqueta">LT:</td><td id="lt" class="dato">{{LT_UNIDAD}}</td></tr>
+				<tr><td class="etiqueta">TOV:</td><td id="tov" class="dato">{{TOV_UNIDAD}}</td></tr> 
+				<tr><td class="etiqueta">NSV:</td><td id="nsv" class="dato">{{NSV_UNIDAD}}</td></tr>
+				<tr><td class="etiqueta">GSV:</td><td id="gsv" class="dato">{{GSV_UNIDAD}}</td></tr>
 			</table>
 			
 		</div>
@@ -49,18 +49,18 @@
 				</table>
 				<table class="tabla">
 					<caption class="titulotabla">VARIABLES COMPLEMENTARIAS</caption>
-					<tr><td class="etiqueta">PT:</td><td id="pt" class="dato">---</td></tr>
-					<tr><td class="etiqueta">AYS:</td><td id="ays" class="dato">---</td></tr>
-					<tr><td class="etiqueta">TT:</td><td id="tt" class="dato">---</td></tr>
-					<tr><td class="etiqueta">LTA:</td><td id="lta" class="dato">---</td></tr>
+					<tr><td class="etiqueta">PT:</td><td id="pt" class="dato">{{PT_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta">AYS:</td><td id="ays" class="dato">{{AYS_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta">TT:</td><td id="tt" class="dato">{{TT_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta">LTA:</td><td id="lta" class="dato">{{LTA_UNIDAD}}</td></tr>
 				</table>
 				<table class="tabla">
 					<!--valores estaticos, vienen de BD-->
 					<caption class="titulotabla">RANGOS DE OPERACION</caption>
-					<tr><td class="etiqueta">LT MINIMO:</td><td id="lt_minimo" class="dato">{{LT_MINIMO}}</td></tr>
-					<tr><td class="etiqueta">LT MAXIMO:</td><td id="lt_maximo" class="dato">{{LT_MAXIMO}}</td></tr>
-					<tr><td class="etiqueta">TOV MINIMO:</td><td id="tov_minimo" class="dato">{{TOV_MINIMO}}</td></tr>
-					<tr><td class="etiqueta">TOV MAXIMO:</td><td id="tov_maximo" class="dato">{{TOV_MAXIMO}}</td></tr>
+					<tr><td class="etiqueta">LT MINIMO:</td><td id="lt_minimo" class="dato">{{LT_MINIMO}} {{ LT_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta">LT MAXIMO:</td><td id="lt_maximo" class="dato">{{LT_MAXIMO}} {{ LT_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta">TOV MINIMO:</td><td id="tov_minimo" class="dato">{{TOV_MINIMO}} {{TOV_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta">TOV MAXIMO:</td><td id="tov_maximo" class="dato">{{TOV_MAXIMO}} {{TOV_UNIDAD}}</td></tr>
 				</table>
 			</div>
 			<div id="der">
