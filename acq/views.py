@@ -3,9 +3,9 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.http import JsonResponse
-from .models import Tag, Tk, PatioTanque, Tct, Analogico, Digital, UserProfile, AOR
+from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro
 from django.template.response import TemplateResponse
-from django.views.generic import ListView, FormView, TemplateView, RedirectView
+from django.views.generic import ListView, FormView, RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
@@ -1353,6 +1353,33 @@ class Aor_detail(DetailView):
                 return redirect('/sacvc/Menu')
             else:
                 return super(Aor_detail, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
+
+
+        ##    PARAMETROS DE COMUNICACION
+
+class MbMaestro(CreateView):
+    model = MbMaestro
+    template_name = 'acq/comm/MbMaestro.html'
+    fields = '__all__'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                print(self)
+                return super(MbMaestro, self).get(request, *args, **kwargs)
 
         else:
             return redirect('/sacvc/logout')
