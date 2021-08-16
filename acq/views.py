@@ -69,28 +69,11 @@ def actualizar(request):
         print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
 
-'''
-ojo borrar no esta haciendo nada en el programa
-def barra_progreso(request):
-    fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
-    ruta_Data = fs.location
-    dataf = {}
-
-    try:
-        with fs.open(ruta_Data+'/porcentaje_subida.json', mode='r') as data_file:
-            dataf = json.loads(data_file.read())
-
-    except:
-        print("Error inesperado:", sys.exc_info()[0])
-    return JsonResponse(dataf)
-
-'''
 class patiotanquelist(ListView):
     # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = PatioTanque
     template_name = 'acq/list_tf/list_tf.html'
-    
     
 
 # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
@@ -111,7 +94,6 @@ class patiotanquelist(ListView):
 
         else:
             return redirect('/sacvc/logout')
-
 
 class PatiotanqueAdd(CreateView):
     model = PatioTanque
@@ -136,7 +118,6 @@ class PatiotanqueAdd(CreateView):
         else:
             return redirect('/sacvc/logout')
 
-# EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
 
 
 class PatiotanqueDelete(DeleteView):
@@ -315,12 +296,11 @@ class TkAdd(CreateView):
             fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
             ruta_Data = fs.location
             dir_usadas = []
-            direccionamiento = {'dir_disponibles':	''}
+            direccionamiento = {'dir_disponibles':	[1]}
             dir_disponible = 0
             qtk = Tk.objects.count()
 
             try:
-
                 with fs.open(ruta_Data+'/direccionamiento.json', mode='r') as data_file:
                     direccionamiento = json.loads(data_file.read())
                     print(direccionamiento['dir_disponibles'])
@@ -359,7 +339,7 @@ class TkAdd(CreateView):
             NSV_minimo = 0.0
             NSV_maximo = 650000.0
             NSV_alarmas = Settings_Alarmas(NSV_maximo, NSV_minimo)
-
+            print(qtk)
             if qtk == 1:
                 dir_disponible = 1
 
@@ -498,7 +478,10 @@ class TkAdd(CreateView):
                                      HH=NSV_alarmas['hh'],
                                      )
 
-            direccionamiento['dir_disponibles'].remove(dir_disponible)
+            try:
+                direccionamiento['dir_disponibles'].remove(dir_disponible)
+            except:
+                print('error tratando de remover direccion disponible')
 
             dir_disponible = dir_disponible + 14 + 2
 
@@ -508,16 +491,23 @@ class TkAdd(CreateView):
                 dir_usadas.append(int(dirtag.direccion))
 
             if dir_disponible not in dir_usadas:
-                direccionamiento['dir_disponibles'].append(dir_disponible)
-
+                try :
+                    direccionamiento['dir_disponibles'].append(dir_disponible)
+                except:
+                    dir_disponible=17
             else:
                 dir_disponible = max(dir_usadas)+2
                 direccionamiento['dir_disponibles'].append(dir_disponible)
+
             try:
                 with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
-                    print(direccionamiento)
+
+                    #print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
+                    direccionamiento['dir_disponibles'] = list(set(direccionamiento['dir_disponibles']))
 
                     file.write(json.dumps(direccionamiento))  # Data en cache)
+
+                    print(direccionamiento['dir_disponibles'])
             except:
 
                 print("Error inesperado:", sys.exc_info()[0])
@@ -533,23 +523,29 @@ class TkDelete(DeleteView):
         fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
         ruta_Data = fs.location
 
+        try:
+            with fs.open(ruta_Data + '/direccionamiento.json', mode='r') as data_file:
+                direccionamiento = json.loads(data_file.read())
+        except:
+            print("Error inesperado: ", sys.exc_info()[0])
+
         success_url = ('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
         # print(self.object.pk)
-        q2 = Analogico.objects.all()
-        last_direccion = q2.aggregate(Max('direccion'))
-        print(last_direccion)
 
         q = Analogico.objects.filter(id_Tk=self.object.pk)
+
         dict_direccion = q.aggregate(Min('direccion'))
 
         dir_disponible = int(dict_direccion['direccion__min'])
-
-        direccionamiento['dir_disponibles'].append(dir_disponible)
+        if dir_disponible not in direccionamiento['dir_disponibles']:
+            direccionamiento['dir_disponibles'].append(dir_disponible)
 
         try:
             with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
-
+                #print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
+                direccionamiento['dir_disponibles'] = list(set(direccionamiento['dir_disponibles']))
                 file.write(json.dumps(direccionamiento))  # Data en cache)
+                print(direccionamiento['dir_disponibles'])
         except:
 
             print("Error inesperado:", sys.exc_info()[0])
@@ -582,7 +578,7 @@ def delete_Tk(sender, instance, **kwargs):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
     ruta_Data = fs.location
     try:
-        with fs.open(ruta_Data + '/Buffer_Datos_Calculados', mode='w') as file:
+        with fs.open(ruta_Data + '/Buffer_Datos_Calculados.json', mode='w') as file:
             file.seek(0)
             file.truncated()
 
@@ -683,17 +679,17 @@ class Validar_Tct(UpdateView):
             else:
 
                 obj_tk = self.get_object()
+                print(obj_tk)
                 q = Tct.objects.filter(id_tk = obj_tk.pk)
-                print(q.exists())
-
                 if q.exists():
-
+                    print(q.exists())
                     data_temp['PORCENTAJE_SUBIDA'] = 100
-                    print('HAY ARCHIVO')
+                    print('EXISTE DATA TCT DE ESTE TK EN BD ')
 
                 else:
+                    print(q.exists())
                     data_temp['PORCENTAJE_SUBIDA'] = 0
-                    print('NO HAY ARCHIVO')
+                    print('NO EXISTE DATA TCT DE ESTE TK EN BD ')
 
 
                 try:
@@ -707,7 +703,8 @@ class Validar_Tct(UpdateView):
 
                 if request.GET.get("guardar_tct_bd", ""):
                   if obj_tk.tctvalido:
-                      Tct.objects.all().delete()
+                      for objtct in q:
+                        objtct.delete()
                       file = obj_tk.tct_archivo.path
                       # abre el csv tc y lo pasa a un dataframe
                       DataFrame = pd.read_csv(file, delimiter='\t', )
