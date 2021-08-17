@@ -1,6 +1,7 @@
 flag_configurar = false; //Codigo que sera ejecutado solo al cargar o refrescar la pagina
 datos_anterior = null; //Copia de json de ultimo refresh
 flag_alarma=false;
+var lt_unidad, tov_unidad, nsv_unidad;
 
 function mi_funcion() {
 	var refresca = $.ajax({
@@ -62,10 +63,15 @@ function mi_funcion() {
 			//ESTE DATO ES ESTATICO Y SE PONE EN EL TEMPLATE
 			//$("#idtanque" + idtk).text(datos[idtk]["TANQUE"]);
 			
-			
-			$("#tov" + idtk).text(datos[idtk]["TOV"]+" "+datos[idtk]["TOV_UNIDAD"]);
-			$("#nsv" + idtk).text(datos[idtk]["NSV"]+" "+datos[idtk]["NSV_UNIDAD"]);
-			$("#lt" + idtk).text(datos[idtk]["LT"]+" "+datos[idtk]["LT_UNIDAD"]);
+			//if (tov_unidad == null) tov_unidad = document.getElementById("tov").innerHTML;
+			$("#tov" + idtk).text(datos[idtk]["TOV"]+" "+tov_unidad);
+
+			//if (nsv_unidad == null) nsv_unidad = document.getElementById("nsv").innerHTML;
+			$("#nsv" + idtk).text(datos[idtk]["NSV"]+" "+nsv_unidad);
+
+			//if (lt_unidad == null) lt_unidad = document.getElementById("lt").innerHTML;
+			$("#lt" + idtk).text(datos[idtk]["LT"]+" "+lt_unidad);
+
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
 			console.log(idtk+" "+lt_porcentaje)
 			nivel = document.getElementById("barra" + idtk); //nivel en UI
