@@ -910,6 +910,19 @@ class Menu(View):
         else:
             return redirect('/sacvc/logout')
 
+class configuracion(View):
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            if usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
+                print('AMBIENTE SUPERVISOR')
+                return render(request, "acq/menus/menu_configracion.html")
+                # return HttpResponse('AMBIENTE SUPERVISOR')
+
+        else:
+            return redirect('/sacvc/logout')
+
 
 class LoginView(FormView):
     form_class = AuthenticationForm

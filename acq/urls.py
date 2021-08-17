@@ -5,7 +5,6 @@ from django.views.generic.base import TemplateView
 from django.urls import path
 from django.conf.urls import url
 
-
 from .views import (
     patiotanquelist,
     PatiotanqueAdd,
@@ -40,14 +39,18 @@ from .views import (
     Aor_add,
     Aor_user_edit,
     detalle_tk,
-    MbMaestro,)
+    MbMaestro,
+    configuracion,
+    )
 
 app_name = 'sacvc'
 urlpatterns = [
 
     path('', views.welcome, name= 'welcome'),
 
-    url(r'^comm_mb_master/$', MbMaestro.as_view(), name='comm_mb_master'),  # Probada con módulo de prueba teste_url_complejas
+    url(r'^configuracion/$', configuracion.as_view(), name='configuracion'),
+
+    url(r'^comm_mb_master/$', MbMaestro.as_view(), name='comm_mb_master'),
 
     url('actualizar/',views.actualizar, name='actualizar'), #CONVIERTE EL JSON DEL PV EN UNA URL
 
@@ -61,25 +64,25 @@ urlpatterns = [
 
     path('', TemplateView.as_view(template_name="acq/main.html"), name='acq_main'), #principal (vacio)
 
-    url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'), #Probada con módulo de prueba teste_url_simples
+    url(r'^list_tankfarm/$', patiotanquelist.as_view(), name='list_tf'),
 
-    url(r'^delete_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'), #Probada con módulo de prueba teste_url_complejas
+    url(r'^delete_tf/(?P<pk>\d+)$', PatiotanqueDelete.as_view(), name='del_tf'),
 
-    url(r'^detail_tf/(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detail_tf'), #Probada con módulo de prueba teste_url_complejas
+    url(r'^detail_tf/(?P<pk>\d+)$', PatiotanqueDetail.as_view(), name='detail_tf'),
 
-    url(r'^edit_tf/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edit_tf'), #Probada con módulo de prueba teste_url_complejas
+    url(r'^edit_tf/(?P<pk>\d+)$', PatiotanqueUpdate.as_view(), name='edit_tf'),
 
-    url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'), #Probada con módulo de prueba teste_url_complejas
+    url(r'^add_tf/$', PatiotanqueAdd.as_view(), name='add_tf'),
 
-    url(r'^list_tk/(?P<exp>\d+)$', tklist.as_view(), name='list_tk'), #Probada con módulo de prueba teste_url_simples
+    url(r'^list_tk/(?P<exp>\d+)$', tklist.as_view(), name='list_tk'),
 
-    url(r'^delete_tk/(?P<pk>\d+)$', TkDelete.as_view(), name='del_tk'), #Probada con módulo de prueba teste_url_complejas
+    url(r'^delete_tk/(?P<pk>\d+)$', TkDelete.as_view(), name='del_tk'),
 
-    url(r'^detail_tk/(?P<pk>\d+)$', TkDetail.as_view(), name='detail_tk'), #Probada con módulo de prueba teste_url_complejas
+    url(r'^detail_tk/(?P<pk>\d+)$', TkDetail.as_view(), name='detail_tk'),
 
-    url(r'^edit_tk/(?P<pk>\d+)$', TkUpdate.as_view(), name='edit_tk'), #Probada con módulo de prueba teste_url_complejas
+    url(r'^edit_tk/(?P<pk>\d+)$', TkUpdate.as_view(), name='edit_tk'),
 
-    url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'), #Probada con módulo de prueba teste_url_complejas
+    url(r'^add_tk/$', TkAdd.as_view(), name='add_tk'),
 
     #url(r'^validar_tct/(?P<pk>\d+)$', validar_tct_form, name='validar_tct'),
 
@@ -91,11 +94,10 @@ urlpatterns = [
 
     url('login/',LoginView.as_view(), name='login'), #Probada con módulo de prueba teste_url_simples
 
-    url(r'^logout/$', LogoutView.as_view(), name = "logout"), #Probada con módulo de prueba teste_url_simples
+    url(r'^logout/$', LogoutView.as_view(), name = "logout"),
+    url(r'^Menu/$', Menu.as_view(), name = "Menu"),
 
-    url(r'^Menu/$', Menu.as_view(), name = "Menu"), #Probada con módulo de prueba teste_url_simples
-
-    url(r'^list_user/$', usuarioslist.as_view(), name = "list_user"), #Probada con módulo de prueba teste_url_simples
+    url(r'^list_user/$', usuarioslist.as_view(), name = "list_user"),
 
     url(r'^edit_user/(?P<pk>\d+)$', usuariosedit.as_view(), name='edit_user'),
 
@@ -107,18 +109,15 @@ urlpatterns = [
 
     url(r'^detail_user/(?P<pk>\d+)$', usuariodetail.as_view(), name='detail_user'),
 
-
     url(r'^cambiar_clave/(?P<pk>\d+)$', Cambiar_Clave.as_view(), name='cambiar_clave'),
 
     url(r'^Menu_Vistas/$', Menu_Vistas.as_view(), name='Menu_Vistas'),
 
-
     url(r'^edit_aor_user/(?P<pk>\d+)$', Aor_user_edit.as_view(), name='edit_aor_user'),
 
-    url(r'^list_aor/(?P<pk>\d+)$', Aor_list.as_view(), name='list_aor'), #Probada con módulo de prueba teste_url_simples
+    url(r'^list_aor/(?P<pk>\d+)$', Aor_list.as_view(), name='list_aor'),
 
-    url(r'^detail_aor/(?P<pk>\d+)$', Aor_detail.as_view(), name='detail_aor'), #Probada con módulo de prueba teste_url_complejas
-
+    url(r'^detail_aor/(?P<pk>\d+)$', Aor_detail.as_view(), name='detail_aor'),
     url(r'^del_aor/(?P<pk>\d+)$', Aor_del.as_view(), name='del_aor'),
 
     url(r'^add_aor/$', Aor_add.as_view(), name='add_aor'),
@@ -131,7 +130,5 @@ urlpatterns = [
 
 
     url(r'^detalle_tk/(?P<pk>\d+)$', detalle_tk.as_view(), name='detalle_tk'),
-
-
 
 ]
