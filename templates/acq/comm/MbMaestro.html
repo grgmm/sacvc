@@ -4,20 +4,39 @@
 
 {% block content %}
 
-<!DOCTYPE html>
-<html>
-   <head>
-   </head>
-   <body>
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
 
-<h1>Configuracion Modbus Maestro</h1>
+<div id="ventana">
+    <p>
+        <label for="encabezado">Configuracion Modbus Maestro</label>
+    </p>
 
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
+    <form method="post">
+        {% csrf_token %}
+        <!--
+    {{ form.as_table }}
     <input type="submit" value="Save">
-</form>
+    -->
 
- </body>
+        <table>
+            {% for field in form.visible_fields %}
+            <tr>
+                <td class="etiqueta">{{ field.label_tag }}</td>
+                <td class="dato">{{ field }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button id="tk_modificar" type="submit" class="btn_control">
+            <img class="imagen" src="{% static " recursos/iconos/editar24x24.png" %}" />Guardar</button>
+        <a id="tk_regresar" href="" type="button" class="btn_control">
+            <img class="imagen" src="{% static " recursos/iconos/atras24x24.png" %}" /> Regresar</a>
+            <!--
+        <a id="tk_validar" href="" type="button" class="btn_control">
+            <img class="imagen" src="{% static " recursos/iconos/atras24x24.png" %}" />Cancelar</a>
+        -->
+    </form>
+</div>
+
 </html>
 <p> {{mensajes}} </p>
 {% endblock %}

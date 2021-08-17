@@ -158,8 +158,8 @@ class MbMaestro(models.Model):
 
   Puerto = models.CharField(max_length=10, default = 'TCP_SRV')
   SercvicePort= models.IntegerField(default=5002, )
-  Velocidad = models.IntegerField(choices = Vel_CHOICES, default= 1, verbose_name= _('solo para comunicacion serial'),) #NO APLICA PARA TCP
-  Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR', verbose_name= _('solo para comunicacion serial'),) #NO APLICA PARA TCP
+  Velocidad = models.IntegerField(choices = Vel_CHOICES, default= 1, verbose_name= _('Tasa de baudios'),) #NO APLICA PARA TCP
+  Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR', verbose_name= _('Paridad'),) #NO APLICA PARA TCP
   Reintentos = models.IntegerField(default=3)
   Tipo = models.CharField(max_length=3, choices=TIPOCOMM_CHOICES, default= 'TCP')
   IdDevice = models.IntegerField(default=1)
