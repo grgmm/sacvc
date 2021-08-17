@@ -1421,6 +1421,7 @@ class grupo_tk(LoginRequiredMixin, ListView):
 
         qs = super(grupo_tk, self).get_queryset()
         filtro = qs.filter(id_aor__in=aoruser)
+
         return filtro
 
 
