@@ -151,18 +151,18 @@ class MbMaestro(models.Model):
       ('serial1', 'COM1'),
       ('serial2', 'COM2'),
       ('serial3', 's0'),
-      ('serial4', 's4'),
+      ('serial4', 's1'),
 
   ]
 
-
-  Puerto = models.CharField(max_length=10, default = 'TCP_SRV')
-  SercvicePort= models.IntegerField(default=5002, )
+  Tipo = models.CharField(max_length=3, choices=TIPOCOMM_CHOICES, default= 'TCP', )
+  Puerto = models.CharField(choices = PORT_CHOICES, max_length=10, default = 'TCP_SRV')
+  IpDevice=models.CharField(max_length=100, default= '127.0.0.1', verbose_name= _('Ip del Esclavo'))
+  SercvicePort= models.IntegerField(default=5002,verbose_name= _('Puerto de Servicio'),)
   Velocidad = models.IntegerField(choices = Vel_CHOICES, default= 1, verbose_name= _('Tasa de baudios'),) #NO APLICA PARA TCP
   Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR', verbose_name= _('Paridad'),) #NO APLICA PARA TCP
   Reintentos = models.IntegerField(default=3)
-  Tipo = models.CharField(max_length=3, choices=TIPOCOMM_CHOICES, default= 'TCP')
-  IdDevice = models.IntegerField(default=1)
+  IdDevice = models.IntegerField(default=1, verbose_name= _('Id del Esclavo'),)
 
   def __str__(self):
 
