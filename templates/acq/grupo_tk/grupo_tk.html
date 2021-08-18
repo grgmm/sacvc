@@ -10,18 +10,25 @@
 			{% csrf_token %} 
 			<p>
 				<!-- Encabezado -->
+<!--COFIGO DE REFERNCIA AGREGADO POR MM    BORRAR---</p>-->
+               UNIDAD DE NIVEL DEL TK CON ID 2 {{ UNIDADES.2.LT_UNIDAD }} <br><br>
+               UNIDAD DE TOV DEL TK CON ID 2 {{ UNIDADES.2.LT_TOV }}<br><br>
+               UNIDAD DE NIVEL DEL TK CON ID 3 {{ UNIDADES.3.TOV }}<br><br>
+               UNIDAD DE TOV DEL TK CON ID 3 {{ UNIDADES.2.LT_TOV }}<br><br>
+
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
 			<table id="tablaExterna">
 				<tr>
 					{% for tk in object_list %}
+                        {{UNIDADES.tk.pk.LT_UNIDAD }} <!--OJO NO FUNNCIONA MM---</p>-->
 					<td class="tanque">
 						<a href=" {% url 'uacq:detalle_tk' tk.pk%}">
 						<p id="idtanque" class="idtanque">{{tk.Nombre}}</p>
 						<!--<p id="idtanque" class="idtanque">---</p>-->
-							
+
 							<p id="nivel" class="nivel">---</p>
-								<div class="contenedor"> 
+								<div class="contenedor">
 									<img src="{% static "recursos/imagenes/tanque.png" %}">
 									<div id="contenedor_barra" class="contenedor_barra">
 										<div id="barra" class="barra">0%</div>
