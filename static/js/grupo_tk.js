@@ -46,40 +46,32 @@ function mi_funcion() {
 			}
 			//Cambio flag para evitar ejecucion de codigo innecesario
 			flag_configurar = true;
-			console.log("selectores id crearos");
 		}
 	}
 
 	function actualizar_vista(datos) {
 		//solo se ejecuta si el json cambia
-		var valormaximo;//valor del span
-		var valorminimo;
 		var nivel;
 		var lt_porcentaje;
 
 		for (var tk in datos) {
 			var idtk = tk.toString(); //tomo el id del tanque, uno por celda
 
-			//ESTE DATO ES ESTATICO Y SE PONE EN EL TEMPLATE
-			//$("#idtanque" + idtk).text(datos[idtk]["TANQUE"]);
-			
-			//if (tov_unidad == null) tov_unidad = document.getElementById("tov").innerHTML;
+			if (tov_unidad == null) tov_unidad = document.getElementById("tov" + idtk).innerHTML;
 			$("#tov" + idtk).text(datos[idtk]["TOV"]+" "+tov_unidad);
 
-			//if (nsv_unidad == null) nsv_unidad = document.getElementById("nsv").innerHTML;
+			if (nsv_unidad == null) nsv_unidad = document.getElementById("nsv" + idtk).innerHTML;
 			$("#nsv" + idtk).text(datos[idtk]["NSV"]+" "+nsv_unidad);
 
-			//if (lt_unidad == null) lt_unidad = document.getElementById("lt").innerHTML;
+			if (lt_unidad == null) lt_unidad = document.getElementById("lt" + idtk).innerHTML;
 			$("#lt" + idtk).text(datos[idtk]["LT"]+" "+lt_unidad);
 
 			lt_porcentaje = datos[idtk]["LT_PORCENTAJE"];
-			console.log(idtk+" "+lt_porcentaje)
 			nivel = document.getElementById("barra" + idtk); //nivel en UI
 			nivel.style.width = lt_porcentaje + "%"; //barra de progreso
 			$("#nivel" + idtk).text(lt_porcentaje + "%");//Valor numerico del nivel
 		}
 		datos_anterior = datos;//Evita actualizar datos innecesariamente
-		console.log("datos actualizados");
 	}
 
 	function manejar_alarmas(datos) {
@@ -91,7 +83,6 @@ function mi_funcion() {
 		for (var tk in datos) {
 			idtk = tk.toString(); //tomo el id del tanque, uno por celda
 			lt_alarma=datos[idtk]["LT_ALARMA"];
-			console.log("Alarma "+lt_alarma);
 
 			//Calculo de alarmas
 			if (lt_alarma=="C") {

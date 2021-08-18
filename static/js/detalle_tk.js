@@ -19,8 +19,6 @@ function mi_funcion() {
 
 	function actualizar_vista(datos) {
 		//solo se ejecuta si el json cambia
-		var valormaximo;//valor del span
-		var valorminimo;
 		var nivel;
 		var lt_porcentaje;
 
