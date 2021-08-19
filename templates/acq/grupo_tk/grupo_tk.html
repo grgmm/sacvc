@@ -6,64 +6,67 @@
    	<script src={% static 'js/jquery-3.6.0.min.js' %}></script>
    	<script src={% static 'js/grupo_tk.js' %}></script>
 
-	<!--Obtengo el nro de tanques en BD-->
-	<div id="nrotks" style="display: none">{{ object_list|length }}</div>
+	   <!--Obtengo el nro de tanques en BD-->
+	   <div id="nrotks" style="display: none">{{ object_list|length }}</div>
    
 	<div id="ventana">
 			{% csrf_token %} 
 			<p>
 				<!-- Encabezado -->
-<!--COFIGO DE REFERNCIA AGREGADO POR MM    BORRAR---</p>-->
-               UNIDAD DE NIVEL DEL TK CON ID 2 {{ UNIDADES.2.LT_UNIDAD }} <br><br>
-               UNIDAD DE TOV DEL TK CON ID 2 {{ UNIDADES.2.TOV_UNIDAD }}<br><br>
-               UNIDAD DE NIVEL DEL TK CON ID 3 {{ UNIDADES.4.LT_UNIDAD }}<br><br>
-               UNIDAD DE TOV DEL TK CON ID 3 {{ UNIDADES.4.TOV_UNIDAD }}<br><br>
-
-
 				<label for="encabezado">PATIO DE TANQUES</label>
 			</p>
+			<!--
+			{% for k,v in UNIDADES.items %}
+				{{tk.id}}:{{v}}
+				{{k}}
+				{{v.LT_UNIDAD}}
+				{{v.TOV_UNIDAD}}
+				{{v.NSV_UNIDAD}}
+			{% endfor %}
+			-->
 			<table id="tablaExterna">
 				<tr>
 					{% for tk in object_list %}
-                        {{UNIDADES.tk.pk.LT_UNIDAD }} <!--OJO NO FUNNCIONA MM---</p>-->
-					<td class="tanque">
-						<a href=" {% url 'uacq:detalle_tk' tk.pk%}">
-						<p id="idtanque" class="idtanque">{{tk.Nombre}}</p>
-<<<<<<< HEAD
+						<td class="tanque">
+							<a href=" {% url 'uacq:detalle_tk' tk.pk%}">
+								<p id="idtanque" class="idtanque">{{tk.Nombre}}</p>
 							
-=======
-						<!--<p id="idtanque" class="idtanque">---</p>-->
-
->>>>>>> 6bcea912b40bb769edfebc0416f17632f6aec071
-							<p id="nivel" class="nivel">---</p>
-								<div class="contenedor">
+								<p id="nivel" class="nivel">---</p>
+								<div class="contenedor"> 
 									<img src="{% static "recursos/imagenes/tanque.png" %}">
 									<div id="contenedor_barra" class="contenedor_barra">
 										<div id="barra" class="barra">0%</div>
 									</div>
 								</div>
-						</a>
-						<table class="tablaInterna">
-							<tr>
-								<br><br>
-								<td>
+							</a>
+							<table class="tablaInterna">
+							
+							{% for k,v in UNIDADES.items %}
+							<!--Recorre el diccionario de unidades-->
+								{% if k == tk.id %}
+								<!--Pone la unidades del tanque respectivo-->
+									<tr>
+										<br><br>
+										<td>
 
-									<label class="variable">TOV:</label>
-									<p id="tov" class="tov">{{TOV_UNIDAD}}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label class="variable">NSV:</label>
-									<p id="nsv" class="nsv">{{NSV_UNIDAD}}</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label class="variable">LT:</label>
-									<p id="lt" class="lt">{{LT_UNIDAD}}</p>
-								</td>
-							</tr>
+											<label class="variable">TOV:</label>
+											<p id="tov" class="tov">{{v.TOV_UNIDAD}}</p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label class="variable">NSV:</label>
+											<p id="nsv" class="nsv">{{v.NSV_UNIDAD}}</p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label class="variable">LT:</label>
+											<p id="lt" class="lt">{{v.LT_UNIDAD}}</p>
+										</td>
+									</tr>
+								{% endif%}
+							{% endfor %}
 						</table>
 					{% cycle '' '' '</td></tr><tr>' %}
 					{% endfor %}

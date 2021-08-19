@@ -1450,7 +1450,6 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         idtk = (str(self.object.pk))
 
-
         instov = Analogico.objects.get(id_Tk=idtk, etiqueta1='TOV')
         inslt = Analogico.objects.get(id_Tk=idtk, etiqueta1='lt')
         inspt = Analogico.objects.get(id_Tk=idtk, etiqueta1='pt')
