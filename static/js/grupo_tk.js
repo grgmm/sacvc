@@ -1,7 +1,6 @@
 flag_configurar = false; //Codigo que sera ejecutado solo al cargar o refrescar la pagina
 datos_anterior = null; //Copia de json de ultimo refresh
 flag_alarma=false;
-var lt_unidad, tov_unidad, nsv_unidad;
 
 function mi_funcion() {
 	var refresca = $.ajax({
@@ -9,6 +8,18 @@ function mi_funcion() {
 		dataType: 'json', //indicamos que es de tipo json
 		type: 'get'
 	}).done(function (datos) {
+
+		/*
+		var unidades = document.getElementById("unidades")
+		console.log(unidades);
+		unidades={5: {'LT_UNIDAD': 'm', 'TOV_UNIDAD': 'bls', 'NSV_UNIDAD': 'bls'}}
+		console.log(unidades);
+		console.log(unidades[5]['LT_UNIDAD']);
+		console.log(unidades[1]);
+		console.log(unidades[19]);
+		console.log(unidades[38]+unidades[39]+unidades[40]);
+		console.log(unidades[59]+unidades[60]+unidades[61]);
+		*/
 		if (!flag_configurar) {
 			configurar(datos);
 		}
@@ -53,8 +64,8 @@ function mi_funcion() {
 		//solo se ejecuta si el json cambia
 		var nivel;
 		var lt_porcentaje;
-
 		for (var tk in datos) {
+			var lt_unidad, tov_unidad, nsv_unidad;
 			var idtk = tk.toString(); //tomo el id del tanque, uno por celda
 
 			if (tov_unidad == null) tov_unidad = document.getElementById("tov" + idtk).innerHTML;
