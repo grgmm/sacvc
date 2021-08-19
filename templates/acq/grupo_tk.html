@@ -5,9 +5,6 @@
 	<link rel="stylesheet" href="{% static 'css/grupo_tk.css' %}">
    	<script src={% static 'js/jquery-3.6.0.min.js' %}></script>
    	<script src={% static 'js/grupo_tk.js' %}></script>
-
-	<!--Obtengo el nro de tanques en BD-->
-	<div id="nrotks" style="display: none">{{ object_list|length }}</div>
    
 	<div id="ventana">
 			{% csrf_token %} 
@@ -21,6 +18,7 @@
 					<td class="tanque">
 						<a href=" {% url 'uacq:detalle_tk' tk.pk%}">
 						<p id="idtanque" class="idtanque">{{tk.Nombre}}</p>
+						<!--<p id="idtanque" class="idtanque">---</p>-->
 							
 							<p id="nivel" class="nivel">---</p>
 								<div class="contenedor"> 

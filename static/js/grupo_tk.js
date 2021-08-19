@@ -1,7 +1,6 @@
 flag_configurar = false; //Codigo que sera ejecutado solo al cargar o refrescar la pagina
 datos_anterior = null; //Copia de json de ultimo refresh
 flag_alarma=false;
-var lt_unidad, tov_unidad, nsv_unidad;
 
 function mi_funcion() {
 	var refresca = $.ajax({
@@ -55,6 +54,7 @@ function mi_funcion() {
 		var lt_porcentaje;
 
 		for (var tk in datos) {
+			var lt_unidad, tov_unidad, nsv_unidad;
 			var idtk = tk.toString(); //tomo el id del tanque, uno por celda
 
 			if (tov_unidad == null) tov_unidad = document.getElementById("tov" + idtk).innerHTML;
