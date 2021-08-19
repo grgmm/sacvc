@@ -1421,22 +1421,24 @@ class grupo_tk(LoginRequiredMixin, ListView):
 
         qs = super(grupo_tk, self).get_queryset()
         filtro = qs.filter(id_aor__in=aoruser)
-
         return filtro
+
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
+        context['UNIDADES']  ={}
         for instk in self.object_list:
-
             instov = Analogico.objects.get(id_Tk=instk, etiqueta1='TOV')
             inslt = Analogico.objects.get(id_Tk=instk, etiqueta1='lt')
             insnsv = Analogico.objects.get(id_Tk=instk, etiqueta1='NSV')
-            context['LT_UNIDAD'] = inslt.Unidad
-            context['TOV_UNIDAD'] = instov.Unidad
-            context['NSV_UNIDAD'] = insnsv.Unidad
-            print(context)
-        return context
+            temp_unidades={instk.pk:{'LT_UNIDAD':inslt.Unidad, 'TOV_UNIDAD':instov.Unidad, 'NSV_UNIDAD':insnsv.Unidad}}
 
+            context['UNIDADES'].update(temp_unidades)
+
+            #context['LT_UNIDAD'] = inslt.Unidad
+            #context['TOV_UNIDAD'] = instov.Unidad
+            #context['NSV_UNIDAD'] = insnsv.Unidad
+        print(context['UNIDADES'])
+        return context
 
 class detalle_tk(LoginRequiredMixin, DetailView):
     model = Tk
