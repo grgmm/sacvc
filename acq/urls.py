@@ -95,6 +95,7 @@ urlpatterns = [
     url('login/',LoginView.as_view(), name='login'), #Probada con módulo de prueba teste_url_simples
 
     url(r'^logout/$', LogoutView.as_view(), name = "logout"),
+    
     url(r'^Menu/$', Menu.as_view(), name = "Menu"),
 
     url(r'^list_user/$', usuarioslist.as_view(), name = "list_user"),
