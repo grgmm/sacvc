@@ -917,7 +917,7 @@ class configuracion(View):
 
             if usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
                 print('AMBIENTE SUPERVISOR')
-                return render(request, "acq/menus/menu_configracion.html")
+                return render(request, "acq/menus/menu_configuracion.html")
                 # return HttpResponse('AMBIENTE SUPERVISOR')
 
         else:
