@@ -40,15 +40,18 @@ from .views import (
     Aor_user_edit,
     detalle_tk,
     MbMaestro,
-    configuracion,
-    )
+        )
 
 app_name = 'sacvc'
 urlpatterns = [
 
     path('', views.welcome, name= 'welcome'),
 
-    url(r'^configuracion/$', configuracion.as_view(), name='configuracion'),
+    path('PV/', TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
+
+    path('configuracion/', TemplateView.as_view(template_name="acq/menus/menu_configuracion.html"), name='configuracion'),
+
+    #url(r'^configuracion/$', configuracion.as_view(), name='configuracion'),
 
     url(r'^comm_mb_master/$', MbMaestro.as_view(), name='comm_mb_master'),
 

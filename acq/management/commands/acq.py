@@ -13,7 +13,6 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 # from scapy.all import *
 
-
 class Command(BaseCommand):
     help = 'help'
 

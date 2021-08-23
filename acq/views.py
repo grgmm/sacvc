@@ -253,6 +253,7 @@ class TkAdd(CreateView):
 
                 self.initial = json.loads(data_file.read())
 
+
                 context['patio'] = (self.initial['id_patioTanque'])
 
         except:
@@ -909,7 +910,7 @@ class Menu(View):
 
         else:
             return redirect('/sacvc/logout')
-
+'''
 class configuracion(View):
 
     def get(self, request, *args, **kwargs):
@@ -923,7 +924,7 @@ class configuracion(View):
         else:
             return redirect('/sacvc/logout')
 
-
+'''
 class LoginView(FormView):
     form_class = AuthenticationForm
     template_name = "acq/authent/login.html"
@@ -1175,6 +1176,8 @@ class usuariodetail(DetailView):
             return redirect('/sacvc/logout')
 
 
+
+
 # gestionar los formularios desde un unico archivo que luego se importa
 
 
@@ -1215,7 +1218,6 @@ class Cambiar_Clave(FormView):
         def form_valid(self, form):  # OJO VALIDAR APLICACIÓN DE ESTA PARTE
             print('Datos no Válidos')
             return super().form_valid(form)
-
 
 class Menu_Vistas(View):
 
@@ -1354,30 +1356,31 @@ class Aor_detail(DetailView):
     template_name = 'acq/detail_aor/detail_aor.html'
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+            if request.user.is_authenticated:
 
-            filtro_usuario = Group.objects.filter(user=request.user)
-            for g in filtro_usuario:
-                print(g.name)
+                filtro_usuario = Group.objects.filter(user=request.user)
+                for g in filtro_usuario:
+                    print(g.name)
 
-            if (not g.name == 'supervisores'):
-                print('Usuario sin Perfil')
+                if (not g.name == 'supervisores'):
+                    print('Usuario sin Perfil')
 
-                return redirect('/sacvc/Menu')
+                    return redirect('/sacvc/Menu')
+                else:
+                    return super(Aor_detail, self).get(request, *args, **kwargs)
+
             else:
-                return super(Aor_detail, self).get(request, *args, **kwargs)
-
-        else:
-            return redirect('/sacvc/logout')
+                return redirect('/sacvc/logout')
 
 
-
-        ##    PARAMETROS DE COMUNICACION
+            ##    PARAMETROS DE COMUNICACION
 
 class MbMaestro(CreateView):
     model = MbMaestro
     template_name = 'acq/comm/MbMaestro.html'
     fields = '__all__'
+    success_url = reverse_lazy('uacq:Menu')
+
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -1391,7 +1394,7 @@ class MbMaestro(CreateView):
 
                 return redirect('/sacvc/Menu')
             else:
-                print(self)
+                #print(self.fields[0])
                 return super(MbMaestro, self).get(request, *args, **kwargs)
 
         else:
