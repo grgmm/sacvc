@@ -1,4 +1,4 @@
-from .forms.acqforms import users_cambio_clave_form  # OJO interesante metodo para
+from .forms.acqforms import users_cambio_clave_form, MbMaestroForm  # OJO interesante metodo para
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
@@ -20,7 +20,7 @@ from django.shortcuts import get_object_or_404, Http404
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.shortcuts import render,  get_object_or_404
+from django.shortcuts import render, get_object_or_404
 import sys
 import csv
 from django.core.validators import DecimalValidator, ValidationError
@@ -43,47 +43,48 @@ from django import forms
 from acq.calculos import Settings_Alarmas
 
 
-#abre un archivo json en modo lectura
+# abre un archivo json en modo lectura
 def porcentaje_subida(request):
-    fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
-    ruta_Data   =fs.location
-    dataf= {}
-
-    try:
-          with fs.open(ruta_Data+'/porcentaje_subida.json', mode= 'r') as data_file:
-               dataf = json.loads(data_file.read())
-    except:
-              print("Error inesperado:", sys.exc_info()[0])
-    return JsonResponse(dataf)
-
-def actualizar(request):
-    fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+    fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
     ruta_Data = fs.location
     dataf = {}
 
     try:
-        with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode='r') as data_file:
+        with fs.open(ruta_Data + '/porcentaje_subida.json', mode='r') as data_file:
+            dataf = json.loads(data_file.read())
+    except:
+        print("Error inesperado:", sys.exc_info()[0])
+    return JsonResponse(dataf)
+
+
+def actualizar(request):
+    fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+    ruta_Data = fs.location
+    dataf = {}
+
+    try:
+        with fs.open(ruta_Data + '/Buffer_Datos_Calculados.json', mode='r') as data_file:
             dataf = json.loads(data_file.read())
 
     except:
         print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
 
+
 class patiotanquelist(ListView):
     # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = PatioTanque
     template_name = 'acq/list_tf/list_tf.html'
-    
 
-# EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
+    # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-    # Grupos a los que el usuario pertence
+            # Grupos a los que el usuario pertence
 
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
@@ -94,6 +95,7 @@ class patiotanquelist(ListView):
 
         else:
             return redirect('/sacvc/logout')
+
 
 class PatiotanqueAdd(CreateView):
     model = PatioTanque
@@ -117,7 +119,6 @@ class PatiotanqueAdd(CreateView):
 
         else:
             return redirect('/sacvc/logout')
-
 
 
 class PatiotanqueDelete(DeleteView):
@@ -199,7 +200,7 @@ class tklist(ListView):  # LISTADO TANQUES DE UN TERMINAL
         filtro = qs.filter(id_patioTanque__exact=self.kwargs['exp'])
         patio = self.kwargs['exp']
 
-        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
         ruta_Data = fs.location
 
         add_tk_iniciales = {'Nombre': '',
@@ -207,13 +208,13 @@ class tklist(ListView):  # LISTADO TANQUES DE UN TERMINAL
                             'id_patioTanque': patio, }
 
         try:
-            with fs.open(ruta_Data+'/tk_iniciales.json', mode='w') as file:
+            with fs.open(ruta_Data + '/tk_iniciales.json', mode='w') as file:
 
                 file.write(json.dumps(add_tk_iniciales))  # Data en cache
         except:
             print("Error inesperado:", sys.exc_info()[0])
 
-        return(filtro)
+        return (filtro)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -240,19 +241,18 @@ class TkAdd(CreateView):
 
     def get_success_url(self):  # ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
         # DE REGRESO DE LA VISTA
-        success_url = ('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
-        return(success_url)
+        success_url = ('/sacvc/list_tk/' + str(self.object.id_patioTanque.pk))
+        return (success_url)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
         ruta_Data = fs.location
         try:
-            with fs.open(ruta_Data+'/tk_iniciales.json', mode='r') as data_file:
+            with fs.open(ruta_Data + '/tk_iniciales.json', mode='r') as data_file:
 
                 self.initial = json.loads(data_file.read())
-
 
                 context['patio'] = (self.initial['id_patioTanque'])
 
@@ -271,11 +271,11 @@ class TkAdd(CreateView):
                 return redirect('/sacvc/logout')
             else:
 
-                fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+                fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
                 ruta_Data = fs.location
 
                 try:
-                    with fs.open(ruta_Data+'/tk_iniciales.json', mode='r') as data_file:
+                    with fs.open(ruta_Data + '/tk_iniciales.json', mode='r') as data_file:
 
                         self.initial = json.loads(data_file.read())
 
@@ -294,15 +294,15 @@ class TkAdd(CreateView):
 
         if created:
             # INICIALIZANDO VALORES DE MINIMOS Y MAXIMOS Y CALCULOS DE SETTING DE ALARMAS PREDEFINIDOS
-            fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
             ruta_Data = fs.location
             dir_usadas = []
-            direccionamiento = {'dir_disponibles':	[1]}
+            direccionamiento = {'dir_disponibles': [1]}
             dir_disponible = 0
             qtk = Tk.objects.count()
 
             try:
-                with fs.open(ruta_Data+'/direccionamiento.json', mode='r') as data_file:
+                with fs.open(ruta_Data + '/direccionamiento.json', mode='r') as data_file:
                     direccionamiento = json.loads(data_file.read())
                     print(direccionamiento['dir_disponibles'])
 
@@ -348,10 +348,9 @@ class TkAdd(CreateView):
 
                 dir_disponible = min(direccionamiento['dir_disponibles'])
 
+            # CREANDO PARAMETROS DE TANQUES DE FORMA AUTOMATICA
 
-# CREANDO PARAMETROS DE TANQUES DE FORMA AUTOMATICA
-
-            Analogico.objects.create(Nombre=instance.Nombre+'_lt',
+            Analogico.objects.create(Nombre=instance.Nombre + '_lt',
                                      Descriptor='NIVEL DEL TANQUE' + instance.Nombre,
                                      Unidad='m',
                                      direccion=dir_disponible,
@@ -492,18 +491,18 @@ class TkAdd(CreateView):
                 dir_usadas.append(int(dirtag.direccion))
 
             if dir_disponible not in dir_usadas:
-                try :
+                try:
                     direccionamiento['dir_disponibles'].append(dir_disponible)
                 except:
-                    dir_disponible=17
+                    dir_disponible = 17
             else:
-                dir_disponible = max(dir_usadas)+2
+                dir_disponible = max(dir_usadas) + 2
                 direccionamiento['dir_disponibles'].append(dir_disponible)
 
             try:
                 with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
 
-                    #print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
+                    # print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
                     direccionamiento['dir_disponibles'] = list(set(direccionamiento['dir_disponibles']))
 
                     file.write(json.dumps(direccionamiento))  # Data en cache)
@@ -521,7 +520,7 @@ class TkDelete(DeleteView):
     def get_success_url(self):
         from django.db.models import Max, Min
         direccionamiento = {'dir_disponibles': []}
-        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
         ruta_Data = fs.location
 
         try:
@@ -530,7 +529,7 @@ class TkDelete(DeleteView):
         except:
             print("Error inesperado: ", sys.exc_info()[0])
 
-        success_url = ('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
+        success_url = ('/sacvc/list_tk/' + str(self.object.id_patioTanque.pk))
         # print(self.object.pk)
 
         q = Analogico.objects.filter(id_Tk=self.object.pk)
@@ -543,7 +542,7 @@ class TkDelete(DeleteView):
 
         try:
             with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
-                #print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
+                # print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
                 direccionamiento['dir_disponibles'] = list(set(direccionamiento['dir_disponibles']))
                 file.write(json.dumps(direccionamiento))  # Data en cache)
                 print(direccionamiento['dir_disponibles'])
@@ -551,7 +550,7 @@ class TkDelete(DeleteView):
 
             print("Error inesperado:", sys.exc_info()[0])
 
-        return(success_url)
+        return (success_url)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -576,7 +575,7 @@ class TkDelete(DeleteView):
 def delete_Tk(sender, instance, **kwargs):
     # INICIALIZA EL TANQUE CON SUS PARAMETROS (PT,LT,TT, TOV) #FALTA INCLUIR AYS, NSV, ENTRE OTROS.
 
-    fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+    fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
     ruta_Data = fs.location
     try:
         with fs.open(ruta_Data + '/Buffer_Datos_Calculados.json', mode='w') as file:
@@ -595,8 +594,8 @@ class TkDetail(DetailView):
 
     def get_success_url(self):
 
-        success_url = ('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
-        return(success_url)
+        success_url = ('/sacvc/list_tk/' + str(self.object.id_patioTanque.pk))
+        return (success_url)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -623,8 +622,8 @@ class TkUpdate(UpdateView):
 
     def get_success_url(self):
 
-        success_url = ('/sacvc/list_tk/'+str(self.object.id_patioTanque.pk))
-        return(success_url)
+        success_url = ('/sacvc/list_tk/' + str(self.object.id_patioTanque.pk))
+        return (success_url)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -665,7 +664,7 @@ class Validar_Tct(UpdateView):
         data_temp = {'REGISTRO_ACTUAL': '', 'PORCENTAJE_SUBIDA': '', 'REGISTROS_TOTALES': ''}
         if request.user.is_authenticated:
 
-            fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
             ruta_Data = fs.location
 
             filtro_usuario = Group.objects.filter(user=request.user)
@@ -681,7 +680,7 @@ class Validar_Tct(UpdateView):
 
                 obj_tk = self.get_object()
                 print(obj_tk)
-                q = Tct.objects.filter(id_tk = obj_tk.pk)
+                q = Tct.objects.filter(id_tk=obj_tk.pk)
                 if q.exists():
                     print(q.exists())
                     data_temp['PORCENTAJE_SUBIDA'] = 100
@@ -692,45 +691,44 @@ class Validar_Tct(UpdateView):
                     data_temp['PORCENTAJE_SUBIDA'] = 0
                     print('NO EXISTE DATA TCT DE ESTE TK EN BD ')
 
-
                 try:
-                        with fs.open(ruta_Data + '/porcentaje_subida.json', mode='w') as file:
-                            file.write(json.dumps(data_temp))
+                    with fs.open(ruta_Data + '/porcentaje_subida.json', mode='w') as file:
+                        file.write(json.dumps(data_temp))
                 except:
-                        print("Error inesperado: subiendo porcentaje_subida.json ", sys.exc_info()[0])
-
+                    print("Error inesperado: subiendo porcentaje_subida.json ", sys.exc_info()[0])
 
                 request.GET = request.GET.copy()
 
                 if request.GET.get("guardar_tct_bd", ""):
-                  if obj_tk.tctvalido:
-                      for objtct in q:
-                        objtct.delete()
-                      file = obj_tk.tct_archivo.path
-                      # abre el csv tc y lo pasa a un dataframe
-                      DataFrame = pd.read_csv(file, delimiter='\t', )
-                      porcentaje_anterior = ""
-                      for i in range(0, len(DataFrame)):
-                          nivel_format = format(
-                              DataFrame.iloc[i]['nivel']).replace(',', '.')
-                          volumen_format = format(
-                              DataFrame.iloc[i]['volumen']).replace(',', '.')
-                          nivel = float(nivel_format)
-                          volumen = float(volumen_format)
-                          Tct.objects.create(
-                              id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
+                    if obj_tk.tctvalido:
+                        for objtct in q:
+                            objtct.delete()
+                        file = obj_tk.tct_archivo.path
+                        # abre el csv tc y lo pasa a un dataframe
+                        DataFrame = pd.read_csv(file, delimiter='\t', )
+                        porcentaje_anterior = ""
+                        for i in range(0, len(DataFrame)):
+                            nivel_format = format(
+                                DataFrame.iloc[i]['nivel']).replace(',', '.')
+                            volumen_format = format(
+                                DataFrame.iloc[i]['volumen']).replace(',', '.')
+                            nivel = float(nivel_format)
+                            volumen = float(volumen_format)
+                            Tct.objects.create(
+                                id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
 
-                          if len(DataFrame) != 0:
-                              porcentaje = round(i*100/len(DataFrame), 0)
-                          try:
-                              if(porcentaje != porcentaje_anterior):
-                                  porcentaje_anterior = porcentaje
-                                  data_temp = {'REGISTRO_ACTUAL': i, 'PORCENTAJE_SUBIDA': porcentaje, 'REGISTROS_TOTALES': len(DataFrame)}
-                                  with fs.open(ruta_Data+'/porcentaje_subida.json', mode='w') as file:
-                                      file.write(json.dumps(data_temp))
-                                  #print(data_temp)
-                          except:
-                              print("Error inesperado escribiendo porcentaje_subida.json:", sys.exc_info()[0])
+                            if len(DataFrame) != 0:
+                                porcentaje = round(i * 100 / len(DataFrame), 0)
+                            try:
+                                if (porcentaje != porcentaje_anterior):
+                                    porcentaje_anterior = porcentaje
+                                    data_temp = {'REGISTRO_ACTUAL': i, 'PORCENTAJE_SUBIDA': porcentaje,
+                                                 'REGISTROS_TOTALES': len(DataFrame)}
+                                    with fs.open(ruta_Data + '/porcentaje_subida.json', mode='w') as file:
+                                        file.write(json.dumps(data_temp))
+                                    # print(data_temp)
+                            except:
+                                print("Error inesperado escribiendo porcentaje_subida.json:", sys.exc_info()[0])
 
                 if request.GET.get("validar_archivo", ""):
                     nivel_minimo = 0.0
@@ -746,7 +744,6 @@ class Validar_Tct(UpdateView):
                     json_temp = []
 
                     for i in range(0, len(DataFrame)):
-
                         nivel_format = format(
                             DataFrame.iloc[i]['nivel']).replace(',', '.')
                         volumen_format = format(
@@ -763,7 +760,8 @@ class Validar_Tct(UpdateView):
 
                     obj_tk.save()
 
-                    return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data': json_temp, 'pk': obj_tk.pk})
+                    return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html',
+                                            {'data': json_temp, 'pk': obj_tk.pk})
 
                 fs = FileSystemStorage()
                 if not (bool(obj_tk.tct_archivo)):
@@ -783,11 +781,11 @@ class Validar_Tct(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
         ruta_Data = fs.location
 
         try:
-            with fs.open(ruta_Data+'/porcentaje_subida.json', mode='r') as data_file:
+            with fs.open(ruta_Data + '/porcentaje_subida.json', mode='r') as data_file:
                 dataf = json.loads(data_file.read())
                 print(dataf)
 
@@ -798,7 +796,6 @@ class Validar_Tct(UpdateView):
 
 
 def integridad_TCT(request, pk):
-
     nivel_minimo = 0.0
     nivel_maximo = 100.0
     volumen_minimo = 0.0
@@ -818,7 +815,6 @@ def integridad_TCT(request, pk):
     json_temp = []
 
     for i in range(0, len(DataFrame)):
-
         nivel_format = format(DataFrame.iloc[i]['nivel']).replace(',', '.')
         volumen_format = format(DataFrame.iloc[i]['volumen']).replace(',', '.')
 
@@ -834,9 +830,8 @@ def integridad_TCT(request, pk):
 
 
 def guardar_TCT_BD(request, pk):
-
     try:
-        #obj1 = Tct.objects.get(pk=pk)
+        # obj1 = Tct.objects.get(pk=pk)
         obj_tk = Tk.objects.get(pk=pk)
 
         if obj_tk.tctvalido:
@@ -862,13 +857,12 @@ def guardar_TCT_BD(request, pk):
 
 
 def Valores_Actuales(request):
-
     # do something with the your data
-    fs = FileSystemStorage(location=settings.MEDIA_ROOT+'/Data')
+    fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
     ruta_Data = fs.location  # RUTA DE BUFFER
 
     data_fr = {}
-    with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode='r') as data_file_r:
+    with fs.open(ruta_Data + '/Buffer_Datos_Calculados.json', mode='r') as data_file_r:
         data_fr = json.loads(data_file_r.read())
         # INSTANCIANDO tk,tag
 
@@ -910,21 +904,29 @@ class Menu(View):
 
         else:
             return redirect('/sacvc/logout')
-'''
+
+
 class configuracion(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
-            if usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
-                print('AMBIENTE SUPERVISOR')
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('uacq:Menu')
+            else:
                 return render(request, "acq/menus/menu_configuracion.html")
-                # return HttpResponse('AMBIENTE SUPERVISOR')
 
         else:
-            return redirect('/sacvc/logout')
+            return redirect('/sacvc/')
 
-'''
+
+
 class LoginView(FormView):
     form_class = AuthenticationForm
     template_name = "acq/authent/login.html"
@@ -959,7 +961,6 @@ def welcome(request):
 
 
 class usuarioslist(ListView):
-
     model = usuario
     template_name = 'acq/list_user/list_user.html'
 
@@ -1016,8 +1017,8 @@ class edit_patio_user(UpdateView):
     def get_success_url(self):  # OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
         # DE REGRESO DE LA VISTA
 
-        success_url = ('/sacvc/edit_user/'+str(self.object.user.pk))
-        return(success_url)
+        success_url = ('/sacvc/edit_user/' + str(self.object.user.pk))
+        return (success_url)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -1047,8 +1048,8 @@ class Aor_user_edit(UpdateView):
     def get_success_url(self):  # OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
         # DE REGRESO DE LA VISTA
 
-        success_url = ('/sacvc/edit_user/'+str(self.object.user.pk))
-        return(success_url)
+        success_url = ('/sacvc/edit_user/' + str(self.object.user.pk))
+        return (success_url)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -1176,19 +1177,16 @@ class usuariodetail(DetailView):
             return redirect('/sacvc/logout')
 
 
-
-
 # gestionar los formularios desde un unico archivo que luego se importa
 
 
 class Cambiar_Clave(FormView):
-
     template_name = 'acq/edit_user/cambiar_clave.html'
     success_url = reverse_lazy('uacq:list_user')
     form_class = users_cambio_clave_form
 
     def post(self, request, *args, **kwargs):
-        #self.obj = self.get_object()
+        # self.obj = self.get_object()
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         context = super(Cambiar_Clave, self).get_context_data(**kwargs)
@@ -1218,6 +1216,7 @@ class Cambiar_Clave(FormView):
         def form_valid(self, form):  # OJO VALIDAR APLICACIÓN DE ESTA PARTE
             print('Datos no Válidos')
             return super().form_valid(form)
+
 
 class Menu_Vistas(View):
 
@@ -1271,8 +1270,8 @@ class Aor_edit(UpdateView):
     def get_success_url(self):  # OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
         # DE REGRESO DE LA VISTA
         print(self.object.id_patioTanque.pk)
-        success_url = ('/sacvc/list_aor/'+str(self.object.id_patioTanque.pk))
-        return(success_url)
+        success_url = ('/sacvc/list_aor/' + str(self.object.id_patioTanque.pk))
+        return (success_url)
 
     def get(self, request, *args, **kwargs):
 
@@ -1305,10 +1304,9 @@ class Aor_list(ListView):
         filtro = qs.filter(id_patioTanque__exact=self.kwargs['pk'])
         patio = self.kwargs['pk']
 
-        return(filtro)
+        return (filtro)
 
-
-# EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
+    # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -1356,24 +1354,23 @@ class Aor_detail(DetailView):
     template_name = 'acq/detail_aor/detail_aor.html'
 
     def get(self, request, *args, **kwargs):
-            if request.user.is_authenticated:
+        if request.user.is_authenticated:
 
-                filtro_usuario = Group.objects.filter(user=request.user)
-                for g in filtro_usuario:
-                    print(g.name)
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
 
-                if (not g.name == 'supervisores'):
-                    print('Usuario sin Perfil')
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
 
-                    return redirect('/sacvc/Menu')
-                else:
-                    return super(Aor_detail, self).get(request, *args, **kwargs)
-
+                return redirect('/sacvc/Menu')
             else:
-                return redirect('/sacvc/logout')
+                return super(Aor_detail, self).get(request, *args, **kwargs)
 
+        else:
+            return redirect('/sacvc/logout')
 
-            ##    PARAMETROS DE COMUNICACION
+        ##    PARAMETROS DE COMUNICACION
 
 class MbMaestro(CreateView):
     model = MbMaestro
@@ -1401,7 +1398,7 @@ class MbMaestro(CreateView):
             return redirect('/sacvc/logout')
 
 
-####################################################################################
+    ####################################################################################
 ##    VISTAS OPERATIVAS            ####################################
 
 class grupo_tk(LoginRequiredMixin, ListView):
@@ -1428,20 +1425,22 @@ class grupo_tk(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['UNIDADES']  ={}
+        context['UNIDADES'] = {}
         for instk in self.object_list:
             instov = Analogico.objects.get(id_Tk=instk, etiqueta1='TOV')
             inslt = Analogico.objects.get(id_Tk=instk, etiqueta1='lt')
             insnsv = Analogico.objects.get(id_Tk=instk, etiqueta1='NSV')
-            temp_unidades={instk.pk:{'LT_UNIDAD':inslt.Unidad, 'TOV_UNIDAD':instov.Unidad, 'NSV_UNIDAD':insnsv.Unidad}}
+            temp_unidades = {
+                instk.pk: {'LT_UNIDAD': inslt.Unidad, 'TOV_UNIDAD': instov.Unidad, 'NSV_UNIDAD': insnsv.Unidad}}
 
             context['UNIDADES'].update(temp_unidades)
 
-            #context['LT_UNIDAD'] = inslt.Unidad
-            #context['TOV_UNIDAD'] = instov.Unidad
-            #context['NSV_UNIDAD'] = insnsv.Unidad
+            # context['LT_UNIDAD'] = inslt.Unidad
+            # context['TOV_UNIDAD'] = instov.Unidad
+            # context['NSV_UNIDAD'] = insnsv.Unidad
         print(context['UNIDADES'])
         return context
+
 
 class detalle_tk(LoginRequiredMixin, DetailView):
     model = Tk
@@ -1464,21 +1463,19 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         ltmaximo = inslt.ValorMaximo
         ltminimo = inslt.ValorMinimo
 
-    ###CONTEXT PASO DE DATOS A LA VISTA
+        ###CONTEXT PASO DE DATOS A LA VISTA
 
         ####UNIDADES
-        context['LT_UNIDAD'] =inslt.Unidad
-        context['LTA_UNIDAD'] = inslt.Unidad #misma unidad de nivel de producto (lt)
+        context['LT_UNIDAD'] = inslt.Unidad
+        context['LTA_UNIDAD'] = inslt.Unidad  # misma unidad de nivel de producto (lt)
 
         context['AYS_UNIDAD'] = insays.Unidad
         context['PT_UNIDAD'] = inspt.Unidad
         context['TT_UNIDAD'] = instt.Unidad
 
         context['TOV_UNIDAD'] = instov.Unidad
-        context['NSV_UNIDAD'] = instov.Unidad #misma unidad de nivel del tov
-        context['GSV_UNIDAD'] = instov.Unidad #misma unidad de nivel del tov
-
-
+        context['NSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov
+        context['GSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov
 
         ####RANGOS
 
