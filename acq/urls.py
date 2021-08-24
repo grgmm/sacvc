@@ -40,7 +40,11 @@ from .views import (
     Aor_user_edit,
     detalle_tk,
     MbMaestro,
-    configuracion
+    configuracion,
+    Factores_Tk_add,
+    Factores_Tk_update,
+    Factores_Tk_delete,
+    Factores_Tk,
         )
 
 app_name = 'sacvc'
@@ -48,13 +52,16 @@ urlpatterns = [
 
     path('', views.welcome, name= 'welcome'),
 
+#### FACTORES E TANQUES
+
+    url(r'^add_factores_tk/$', Factores_Tk_add.as_view(), name='add_factores_tk'),
+    url(r'^list_factores_tk/$', Factores_Tk.as_view(), name='factores_tk'),
+    url(r'^edit_factores_tk/(?P<pk>\d+)$', Factores_Tk_edit.as_view(), name='edit_factores_tk'),
+    url(r'^delete_factores_tk/(?P<pk>\d+)$', Factores_Tk_delete.as_view(), name='delete_factores_tk'),
+
     path('PV/', TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
 
-    #path('configuracion/', TemplateView.as_view(template_name="acq/menus/menu_configuracion.html"), name='configuracion'),
-
     url(r'^configuracion/$', configuracion.as_view(), name='configuracion'),
-
-    #url(r'^configuracion/$', configuracion.as_view(), name='configuracion'),
 
     url(r'^comm_mb_master/$', MbMaestro.as_view(), name='comm_mb_master'),
 

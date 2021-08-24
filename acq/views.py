@@ -643,6 +643,105 @@ class TkUpdate(UpdateView):
             return redirect('/sacvc/logout')
 
 
+
+class Factores_Tk_add(CreateView):
+    model = Factor
+    fields = '__all__'
+    template_name = 'acq/factores_tk/Factores_tk_add.html''
+    success_url = reverse_lazy('uacq:Menu')
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                return super(Factores_Tk_add, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
+class Factores_Tk_update(UpdateView):
+    model = Factor
+    fields = '__all__'
+    template_name = 'acq/factores_tk/Factores_tk_update.html'
+    success_url = reverse_lazy('uacq:Menu')
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                return super(Factores_Tk_update, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
+class Factores_Tk_Delete(DeleteView):
+    model = Factor
+    success_url = reverse_lazy('uacq:Menu')
+    template_name = 'acq/factores_tk/Factores_tk_delete.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                return super(Factores_Tk_Delete, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
+
+class Factores_Tk(ListView):
+    # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
+
+    model = PatioTanque
+    template_name = 'acq/factores_tk/Factores_tk_list.html'
+
+    # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+            # Grupos a los que el usuario pertence
+
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                return super(Factores_Tk, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
+
+
+
+
 class Validar_Tct(UpdateView):
     model = Tk
     template_name = 'acq/detail_tk/validar_tct.html'
@@ -905,7 +1004,7 @@ class Menu(View):
         else:
             return redirect('/sacvc/logout')
 
-
+###VISTAS DE CONFIGURACION
 class configuracion(View):
 
     def get(self, request, *args, **kwargs):
@@ -925,7 +1024,35 @@ class configuracion(View):
         else:
             return redirect('/sacvc/')
 
+        ##    PARAMETROS DE COMUNICACION
 
+class MbMaestro(CreateView):
+    model = MbMaestro
+    template_name = 'acq/comm/MbMaestro.html'
+    fields = '__all__'
+    success_url = reverse_lazy('uacq:Menu')
+
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+
+                return redirect('/sacvc/Menu')
+            else:
+                #print(self.fields[0])
+                return super(MbMaestro, self).get(request, *args, **kwargs)
+
+        else:
+            return redirect('/sacvc/logout')
+
+
+###VISTAS DE USUARIOS
 
 class LoginView(FormView):
     form_class = AuthenticationForm
@@ -1294,7 +1421,7 @@ class Aor_edit(UpdateView):
 
 
 class Aor_list(ListView):
-    # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
+    # LISTADO DE AREAS OPERATIVAS
 
     model = AOR
     template_name = 'acq/list_aor/list_aor.html'
@@ -1370,32 +1497,7 @@ class Aor_detail(DetailView):
         else:
             return redirect('/sacvc/logout')
 
-        ##    PARAMETROS DE COMUNICACION
 
-class MbMaestro(CreateView):
-    model = MbMaestro
-    template_name = 'acq/comm/MbMaestro.html'
-    fields = '__all__'
-    success_url = reverse_lazy('uacq:Menu')
-
-
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-
-            filtro_usuario = Group.objects.filter(user=request.user)
-            for g in filtro_usuario:
-                print(g.name)
-
-            if (not g.name == 'supervisores'):
-                print('Usuario sin Perfil')
-
-                return redirect('/sacvc/Menu')
-            else:
-                #print(self.fields[0])
-                return super(MbMaestro, self).get(request, *args, **kwargs)
-
-        else:
-            return redirect('/sacvc/logout')
 
 
     ####################################################################################
