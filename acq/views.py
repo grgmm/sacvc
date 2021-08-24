@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.http import JsonResponse
-from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro
+from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro, Factor
 from django.template.response import TemplateResponse
 from django.views.generic import ListView, FormView, RedirectView
 from django.views.generic.detail import DetailView
@@ -41,6 +41,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
 from acq.calculos import Settings_Alarmas
+
 
 
 # abre un archivo json en modo lectura
@@ -647,7 +648,7 @@ class TkUpdate(UpdateView):
 class Factores_Tk_add(CreateView):
     model = Factor
     fields = '__all__'
-    template_name = 'acq/factores_tk/Factores_tk_add.html''
+    template_name = 'acq/factores_tk/Factores_tk_add.html'
     success_url = reverse_lazy('uacq:Menu')
 
     def get(self, request, *args, **kwargs):
@@ -717,7 +718,7 @@ class Factores_Tk(ListView):
     # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
 
     model = PatioTanque
-    template_name = 'acq/factores_tk/Factores_tk_list.html'
+    template_name = 'acq/factores_tk/Factores_tk.html'
 
     # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
     def get(self, request, *args, **kwargs):

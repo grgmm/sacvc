@@ -43,7 +43,7 @@ from .views import (
     configuracion,
     Factores_Tk_add,
     Factores_Tk_update,
-    Factores_Tk_delete,
+    Factores_Tk_Delete,
     Factores_Tk,
         )
 
@@ -52,12 +52,12 @@ urlpatterns = [
 
     path('', views.welcome, name= 'welcome'),
 
-#### FACTORES E TANQUES
+#### FACTORES DE TANQUES
 
     url(r'^add_factores_tk/$', Factores_Tk_add.as_view(), name='add_factores_tk'),
-    url(r'^list_factores_tk/$', Factores_Tk.as_view(), name='factores_tk'),
-    url(r'^edit_factores_tk/(?P<pk>\d+)$', Factores_Tk_edit.as_view(), name='edit_factores_tk'),
-    url(r'^delete_factores_tk/(?P<pk>\d+)$', Factores_Tk_delete.as_view(), name='delete_factores_tk'),
+    url(r'^factores_tk/$', Factores_Tk.as_view(), name='factores_tk'),
+    url(r'^edit_factores_tk/(?P<pk>\d+)$', Factores_Tk_update.as_view(), name='edit_factores_tk'),
+    url(r'^delete_factores_tk/(?P<pk>\d+)$', Factores_Tk_Delete.as_view(), name='delete_factores_tk'),
 
     path('PV/', TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),
 
