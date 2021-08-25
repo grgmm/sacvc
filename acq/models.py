@@ -205,7 +205,6 @@ class Tag(models.Model): #Características comunes para Analógicos y Digitales
    ('lta', 'Nivel de Agua Libre'),
    ('ays', 'Porcentaje de Agua y Sedimento'),
    ]
-
   Nombre = models.CharField(max_length=42)
   Descriptor = models.CharField(max_length=120, default='')
   id_Tk= models.ForeignKey(Tk, on_delete=models.CASCADE)

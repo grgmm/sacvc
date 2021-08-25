@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.http import JsonResponse
-from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro, Factor
+from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro as mbmaster_model, Factor
 from django.template.response import TemplateResponse
 from django.views.generic import ListView, FormView, RedirectView
 from django.views.generic.detail import DetailView
@@ -1040,7 +1040,6 @@ class MbMaestro(View):
                 print('Usuario sin Perfil')
                 return HttpResponseRedirect('sacvc:Menu')
             else:
-
                 file_form = guardar_configuracion_mbm
                 form = self.form_class(initial=self.initial)
 
@@ -1060,36 +1059,30 @@ class MbMaestro(View):
                 return HttpResponseRedirect('sacvc:Menu')
             else:
                 request.POST = request.POST.copy()
-
                 if request.POST.get("subir_configuracion", ""):
-                    response = 'SUBE CONFIGURACION GUARDADA AL FORMULARIO'
                     print('SUBE CONFIGURACION GUARDADA AL FORMULARIO')
                     file_form = guardar_configuracion_mbm
-                    guardar_archivo = file_form(request.POST, request.FILES)
-
-                    if request.FILES:
+                    if request.FILES: #Si se selecciono algun archivo
                         in_memory_uploaded_file = request.FILES['Configuracion']
                         io_file = in_memory_uploaded_file.file
-                       # file_value = io_file.getvalue()
-                       # files = {'my_file': file_value}
                         dataf = json.loads(io_file.read())
-
-                        print(dataf)
-                        #make_http_request(path, files=files)
                         file_form = guardar_configuracion_mbm
-
                         form = self.form_class(initial=dataf)
-                        print(form)
-
                         return render(request, self.template_name, {'form': form, 'conf': file_form})
-
-                    #return redirect(self.success_url)
-
                 else:
-                    print('FORMULARIO SIN GUARDA DE ARCHIVO DE CONFIGURACION')
+                    print('GUARDA FORMULARIO EN BD')
                     form = self.form_class(request.POST)
                     if form.is_valid():
-                        print('Formuario Correcto')
+                        mbmaster_model.objects.all().delete()
+                        print(form.cleaned_data)
+                        #id = None, Lt0 = nivel,
+                        #Tov0 = volumen, id_tk = obj_tk
+
+                        mbmaster_model.objects.create(id = None, Tipo= form.cleaned_data['Tipo'], Puerto= form.cleaned_data['Puerto'],
+                                                    IpDevice= form.cleaned_data['IpDevice'], SercvicePort= form.cleaned_data['SercvicePort'],
+                                                      Velocidad=form.cleaned_data['Velocidad'],Paridad=form.cleaned_data['Paridad'],
+                                                      Reintentos=form.cleaned_data['Reintentos'],IdDevice=form.cleaned_data['IdDevice'],
+                                                      )
                         print(form.data['Tipo']) #prueba funcionando
                         return redirect(self.success_url)
                     else:

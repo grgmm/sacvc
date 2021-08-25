@@ -6,8 +6,6 @@ class users_cambio_clave_form(forms.Form):
 
 class guardar_configuracion_mbm(forms.Form):
     Configuracion = forms.FileField(required=False)
-
-
 class mbmaestro(forms.Form):
     Tipo = forms.CharField(max_length=3, )
     Puerto = forms.CharField( max_length=10, )
