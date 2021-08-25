@@ -608,11 +608,8 @@ class TkDetail(DetailView):
                 return redirect('/sacvc/Menu')
             else:
                 return super(TkDetail, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
 class TkUpdate(UpdateView):
     model = Tk
     fields = ['Nombre', 'Descriptor', 'id_aor', ]
@@ -636,18 +633,13 @@ class TkUpdate(UpdateView):
                 return redirect('/sacvc/Menu')
             else:
                 return super(TkUpdate, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
-
 class Factores_Tk_add(CreateView):
     model = Factor
     fields = '__all__'
     template_name = 'acq/factores_tk/Factores_tk_add.html'
     success_url = reverse_lazy('uacq:Menu')
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
@@ -661,120 +653,83 @@ class Factores_Tk_add(CreateView):
                 return redirect('/sacvc/Menu')
             else:
                 return super(Factores_Tk_add, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
 class Factores_Tk_update(UpdateView):
     model = Factor
     fields = '__all__'
     template_name = 'acq/factores_tk/Factores_tk_update.html'
     success_url = reverse_lazy('uacq:Menu')
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(Factores_Tk_update, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
 class Factores_Tk_Delete(DeleteView):
     model = Factor
     success_url = reverse_lazy('uacq:Menu')
     template_name = 'acq/factores_tk/Factores_tk_delete.html'
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(Factores_Tk_Delete, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
 class Factores_Tk(ListView):
     # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
-
     model = PatioTanque
     template_name = 'acq/factores_tk/Factores_tk.html'
-
     # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
             # Grupos a los que el usuario pertence
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(Factores_Tk, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
-
-
-
 class Validar_Tct(UpdateView):
     model = Tk
     template_name = 'acq/detail_tk/validar_tct.html'
     fields = ['tct_archivo', 'Descriptor_tct', ]
     success_url = reverse_lazy('uacq:list_tf')
-
     def post(self, request, *args, **kwargs):
-
         self.obj = self.get_object()
-
         request.POST = request.POST.copy()
         if request.POST.get("btn_guardar_tct_salir", ""):
             response = 'Editar Archivo Tct / Salir'
-
         return super(Validar_Tct, self).post(request, **kwargs)
-
     def get(self, request, *args, **kwargs):
-
         data_temp = {'REGISTRO_ACTUAL': '', 'PORCENTAJE_SUBIDA': '', 'REGISTROS_TOTALES': ''}
         if request.user.is_authenticated:
-
             fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
             ruta_Data = fs.location
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
-
             else:
-
                 obj_tk = self.get_object()
                 print(obj_tk)
                 q = Tct.objects.filter(id_tk=obj_tk.pk)
@@ -782,20 +737,16 @@ class Validar_Tct(UpdateView):
                     print(q.exists())
                     data_temp['PORCENTAJE_SUBIDA'] = 100
                     print('EXISTE DATA TCT DE ESTE TK EN BD ')
-
                 else:
                     print(q.exists())
                     data_temp['PORCENTAJE_SUBIDA'] = 0
                     print('NO EXISTE DATA TCT DE ESTE TK EN BD ')
-
                 try:
                     with fs.open(ruta_Data + '/porcentaje_subida.json', mode='w') as file:
                         file.write(json.dumps(data_temp))
                 except:
                     print("Error inesperado: subiendo porcentaje_subida.json ", sys.exc_info()[0])
-
                 request.GET = request.GET.copy()
-
                 if request.GET.get("guardar_tct_bd", ""):
                     if obj_tk.tctvalido:
                         for objtct in q:
@@ -813,7 +764,6 @@ class Validar_Tct(UpdateView):
                             volumen = float(volumen_format)
                             Tct.objects.create(
                                 id=None, Lt0=nivel, Tov0=volumen, id_tk=obj_tk)
-
                             if len(DataFrame) != 0:
                                 porcentaje = round(i * 100 / len(DataFrame), 0)
                             try:
@@ -826,20 +776,16 @@ class Validar_Tct(UpdateView):
                                     # print(data_temp)
                             except:
                                 print("Error inesperado escribiendo porcentaje_subida.json:", sys.exc_info()[0])
-
                 if request.GET.get("validar_archivo", ""):
                     nivel_minimo = 0.0
                     nivel_maximo = 100.0
                     volumen_minimo = 0.0
                     volumen_maximo = 1000000.0
                     tct_valido = False
-
                     file = obj_tk.tct_archivo.path
-
                     # abre el csv tc y lo pasa a un dataframe
                     DataFrame = pd.read_csv(file, delimiter='\t', )
                     json_temp = []
-
                     for i in range(0, len(DataFrame)):
                         nivel_format = format(
                             DataFrame.iloc[i]['nivel']).replace(',', '.')
@@ -852,14 +798,10 @@ class Validar_Tct(UpdateView):
                                          volumen_minimo, volumen_maximo)
                         json_temp.append(
                             {'registro': i, 'nivel': nivel, 'volumen': volumen})
-
                     setattr(obj_tk, 'tctvalido', True)
-
                     obj_tk.save()
-
                     return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html',
                                             {'data': json_temp, 'pk': obj_tk.pk})
-
                 fs = FileSystemStorage()
                 if not (bool(obj_tk.tct_archivo)):
                     print('no hay archivo tct en en model Tk actual')
@@ -872,45 +814,33 @@ class Validar_Tct(UpdateView):
                 obj_tk.save()
 
                 return super(Validar_Tct, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
         ruta_Data = fs.location
-
         try:
             with fs.open(ruta_Data + '/porcentaje_subida.json', mode='r') as data_file:
                 dataf = json.loads(data_file.read())
                 print(dataf)
-
         except:
             print("Error inesperado:", sys.exc_info()[0])
-
         return context
-
-
 def integridad_TCT(request, pk):
     nivel_minimo = 0.0
     nivel_maximo = 100.0
     volumen_minimo = 0.0
     volumen_maximo = 1000000.0
     tct_valido = False
-
     try:
         obj = Tk.objects.get(pk=pk)
-
     except Tk.DoesNotExist:
         raise Http404("Tk no existe")
-
     file = obj.tct_archivo.path
-
     # abre el csv tc y lo pasa a un dataframe
     DataFrame = pd.read_csv(file, delimiter='\t', )
     json_temp = []
-
     for i in range(0, len(DataFrame)):
         nivel_format = format(DataFrame.iloc[i]['nivel']).replace(',', '.')
         volumen_format = format(DataFrame.iloc[i]['volumen']).replace(',', '.')
@@ -918,19 +848,13 @@ def integridad_TCT(request, pk):
         nivel = valida(float(nivel_format), nivel_minimo, nivel_maximo)
         volumen = valida(float(volumen_format), volumen_minimo, volumen_maximo)
         json_temp.append({'registro': i, 'nivel': nivel, 'volumen': volumen})
-
     setattr(obj, 'tctvalido', True)
-
     obj.save()
-
     return TemplateResponse(request, 'acq/detail_tk/integridad_tct.html', {'data': json_temp, 'pk': pk})
-
-
 def guardar_TCT_BD(request, pk):
     try:
         # obj1 = Tct.objects.get(pk=pk)
         obj_tk = Tk.objects.get(pk=pk)
-
         if obj_tk.tctvalido:
             Tct.objects.all().delete()
             file = obj_tk.tct_archivo.path
@@ -946,31 +870,22 @@ def guardar_TCT_BD(request, pk):
                 Tct.objects.create(id=None, Lt0=nivel,
                                    Tov0=volumen, id_tk=obj_tk)
         Tct().save
-
     except Tk.DoesNotExist:
         raise Http404("Tk no existe")
-
     return HttpResponse('Guardado exitoso en BD')
-
-
 def Valores_Actuales(request):
     # do something with the your data
     fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
     ruta_Data = fs.location  # RUTA DE BUFFER
-
     data_fr = {}
     with fs.open(ruta_Data + '/Buffer_Datos_Calculados.json', mode='r') as data_file_r:
         data_fr = json.loads(data_file_r.read())
         # INSTANCIANDO tk,tag
-
     TAG = Tag.objects.get(pk=data_fr['IDTAG'])
     idtk = TAG.id_Tk.pk
-
     TK = Tk.objects.get(pk=idtk)
-
     TAG_VALUE = data_fr['TAG_VALUE']
     TIMESTAMP = data_fr['TIMESTAMP']
-
     data = {'TK': 'TANQUE1',
             'LT': '1000',
             'PT': '3000',
@@ -978,27 +893,19 @@ def Valores_Actuales(request):
             'TOV': '2000',
             }
     return TemplateResponse(request, 'acq/detail_tk/Valores_Actuales.html', {'data': data})
-
-
 class Menu(View):
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             if usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
                 print('AMBIENTE SUPERVISOR')
                 return render(request, "acq/menus/menu_supervisor.html")
                 # return HttpResponse('AMBIENTE SUPERVISOR')
-
             if usuario.objects.filter(pk=request.user.pk, groups__name='operativos').exists():
                 print('AMBIENTE OPERADOR')
-
                 # return HttpResponse('AMBIENTE OPERADOR')
                 return render(request, "acq/menus/menu_operativo.html")
-
             else:
                 return redirect('/sacvc/logout')
-
         else:
             return redirect('/sacvc/logout')
 
@@ -1007,23 +914,18 @@ class configuracion(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('uacq:Menu')
             else:
                 return render(request, "acq/menus/menu_configuracion.html")
-
         else:
             return redirect('/sacvc/')
 
         ##    PARAMETROS DE COMUNICACION
-
 class MbMaestro(View):
     form_class = mbmaestro
     initial = {"Tipo":"TCP", "Puerto":"TCP_SRV","IpDevice": "127.0.0.1","SercvicePort": "5002","Velocidad":19200, "Paridad":"PAR","Reintentos": 3,
@@ -1031,6 +933,7 @@ class MbMaestro(View):
     template_name = "acq/comm/MbMaestro.html"
     success_url = reverse_lazy('sacvc:configuracion')
 
+    #def guardar_configuracion(request, ): #Guardar configuracion al Disco
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             filtro_usuario = Group.objects.filter(user=request.user)
@@ -1042,12 +945,20 @@ class MbMaestro(View):
             else:
                 file_form = guardar_configuracion_mbm
                 form = self.form_class(initial=self.initial)
+                request.GET = request.GET.copy()
+
+
+                if request.GET.get("Guardar_Configuracion", ""):   #####OJO EN DESARROLLO
+                    lolo= form.cleaned_data
+                    print(lolo)
+
+
+
+
 
             return render(request, self.template_name, {'form': form, 'conf':file_form})
-
         else:
             return redirect('/sacvc/logout')
-
     def post(self, request, *args, **kwargs):
         print(request)
         if request.user.is_authenticated:
@@ -1060,7 +971,7 @@ class MbMaestro(View):
             else:
                 request.POST = request.POST.copy()
                 if request.POST.get("subir_configuracion", ""):
-                    print('SUBE CONFIGURACION GUARDADA AL FORMULARIO')
+                    print('SUBE CONFIGURACION GUARDADA DEL DISCO AL FORMULARIO')
                     file_form = guardar_configuracion_mbm
                     if request.FILES: #Si se selecciono algun archivo
                         in_memory_uploaded_file = request.FILES['Configuracion']
@@ -1069,12 +980,16 @@ class MbMaestro(View):
                         file_form = guardar_configuracion_mbm
                         form = self.form_class(initial=dataf)
                         return render(request, self.template_name, {'form': form, 'conf': file_form})
+                    else:
+                        form = self.form_class(initial=self.initial)
+                        file_form = guardar_configuracion_mbm
+                        return render(request, self.template_name, {'form': form, 'conf': file_form})
                 else:
                     print('GUARDA FORMULARIO EN BD')
                     form = self.form_class(request.POST)
                     if form.is_valid():
                         mbmaster_model.objects.all().delete()
-                        print(form.cleaned_data)
+                        #print(form.cleaned_data)
                         #id = None, Lt0 = nivel,
                         #Tov0 = volumen, id_tk = obj_tk
 
@@ -1088,57 +1003,38 @@ class MbMaestro(View):
                     else:
                         print('Formuario Incorrecto')
                         return render(request, self.template_name, {'form': form})
-
-
 ###VISTAS DE USUARIOS
-
 class LoginView(FormView):
     form_class = AuthenticationForm
     template_name = "acq/authent/login.html"
     success_url = reverse_lazy('sacvc:Menu')
-
     def dispatch(self, request, *args, **kwargs):
-
         if request.user.is_authenticated:
-
             return HttpResponseRedirect('sacvc:Menu')
             # return HttpResponseRedirect(self.get_success_url())
-
         else:
-
             return super(LoginView, self).dispatch(request, *args, **kwargs)
-
     def form_valid(self, form):
         login(self.request, form.get_user())
         return super(LoginView, self).form_valid(form)
-
-
 class LogoutView(RedirectView):
     pattern_name = 'sacvc:login'
 
     def get(self, request, *args, **kwargs):
         logout(request)
         return super(LogoutView, self).get(request, *args, **kwargs)
-
-
 def welcome(request):
     return redirect('/sacvc/logout')
-
-
 class usuarioslist(ListView):
     model = usuario
     template_name = 'acq/list_user/list_user.html'
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(usuarioslist, self).get(request, *args, **kwargs)

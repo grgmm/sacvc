@@ -18,6 +18,7 @@
             {% endfor %}
         </table>
         <button id="tk_modificar" type= "submit" class= "btn_control" name= "aceptar_configuracion" value = "Aceptar_Configuracion">
+
             <img class="imagen" src="{% static " recursos/iconos/editar24x24.png" %}" />Guardar</button>
         <a id="tk_regresar" href="" type="button" class="btn_control">
             <img class="imagen" src="{% static " recursos/iconos/atras24x24.png" %}" /> Regresar</a>
@@ -29,6 +30,7 @@
          {{ conf.as_p }}
             <button id="subir_configuracion" name="subir_configuracion" type="submit" class="btn_control" value = "subir_configuracion" >
      </form>
+
 </html>
 <p> {{mensajes}} </p>
 {% endblock %}
