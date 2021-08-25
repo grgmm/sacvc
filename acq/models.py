@@ -14,10 +14,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
-
 #MODELOS DE PATIO DE TANQUES
-
 
 class PatioTanque(models.Model):
 
@@ -31,7 +28,6 @@ class PatioTanque(models.Model):
     def __str__(self):
 
        return '%s' % (self.Nombre,)
-
 
 class AOR(models.Model):
 
@@ -125,10 +121,7 @@ class Factor(models.Model):
 
 #MODELOS TABLA CERTIFICADA (DE AFORO) DE TANQUES
 
-
-
        #MODELOS DE COMUNICACION
-
 
 class MbMaestro(models.Model):
 
@@ -166,8 +159,7 @@ class MbMaestro(models.Model):
 
   def __str__(self):
 
-       return '%d' % (self.SercvicePort,)
-
+       return '%d' % (self.id,)
 
 class MbEsclavo(models.Model):
 
@@ -191,7 +183,6 @@ class MbEsclavo(models.Model):
   def __str__(self):
 
        return '%d' % (self.id,)
-
 
 #MODELOS DE TAGS
 

@@ -1,4 +1,4 @@
-from .forms.acqforms import users_cambio_clave_form, MbMaestroForm  # OJO interesante metodo para
+from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configuracion_mbm   # OJO interesante metodo para
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
@@ -41,9 +41,6 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
 from acq.calculos import Settings_Alarmas
-
-
-
 # abre un archivo json en modo lectura
 def porcentaje_subida(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
@@ -1027,30 +1024,77 @@ class configuracion(View):
 
         ##    PARAMETROS DE COMUNICACION
 
-class MbMaestro(CreateView):
-    model = MbMaestro
-    template_name = 'acq/comm/MbMaestro.html'
-    fields = '__all__'
-    success_url = reverse_lazy('uacq:Menu')
-
+class MbMaestro(View):
+    form_class = mbmaestro
+    initial = {"Tipo":"TCP", "Puerto":"TCP_SRV","IpDevice": "127.0.0.1","SercvicePort": "5002","Velocidad":19200, "Paridad":"PAR","Reintentos": 3,
+                   "IdDevice": 11}
+    template_name = "acq/comm/MbMaestro.html"
+    success_url = reverse_lazy('sacvc:configuracion')
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
-                return redirect('/sacvc/Menu')
+                return HttpResponseRedirect('sacvc:Menu')
             else:
-                #print(self.fields[0])
-                return super(MbMaestro, self).get(request, *args, **kwargs)
+
+                file_form = guardar_configuracion_mbm
+                form = self.form_class(initial=self.initial)
+
+            return render(request, self.template_name, {'form': form, 'conf':file_form})
 
         else:
             return redirect('/sacvc/logout')
+
+    def post(self, request, *args, **kwargs):
+        print(request)
+        if request.user.is_authenticated:
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+                return HttpResponseRedirect('sacvc:Menu')
+            else:
+                request.POST = request.POST.copy()
+
+                if request.POST.get("subir_configuracion", ""):
+                    response = 'SUBE CONFIGURACION GUARDADA AL FORMULARIO'
+                    print('SUBE CONFIGURACION GUARDADA AL FORMULARIO')
+                    file_form = guardar_configuracion_mbm
+                    guardar_archivo = file_form(request.POST, request.FILES)
+
+                    if request.FILES:
+                        in_memory_uploaded_file = request.FILES['Configuracion']
+                        io_file = in_memory_uploaded_file.file
+                       # file_value = io_file.getvalue()
+                       # files = {'my_file': file_value}
+                        dataf = json.loads(io_file.read())
+
+                        print(dataf)
+                        #make_http_request(path, files=files)
+                        file_form = guardar_configuracion_mbm
+
+                        form = self.form_class(initial=dataf)
+                        print(form)
+
+                        return render(request, self.template_name, {'form': form, 'conf': file_form})
+
+                    #return redirect(self.success_url)
+
+                else:
+                    print('FORMULARIO SIN GUARDA DE ARCHIVO DE CONFIGURACION')
+                    form = self.form_class(request.POST)
+                    if form.is_valid():
+                        print('Formuario Correcto')
+                        print(form.data['Tipo']) #prueba funcionando
+                        return redirect(self.success_url)
+                    else:
+                        print('Formuario Incorrecto')
+                        return render(request, self.template_name, {'form': form})
 
 
 ###VISTAS DE USUARIOS
