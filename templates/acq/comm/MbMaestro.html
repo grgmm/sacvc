@@ -13,10 +13,6 @@
 
     <form method="post">
         {% csrf_token %}
-        <!--
-    {{ form.as_table }}
-    <input type="submit" value="Save">
-    -->
 
         <table>
             {% for field in form.visible_fields %}
