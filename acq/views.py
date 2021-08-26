@@ -970,7 +970,7 @@ class MbMaestro(View):
                 return HttpResponseRedirect('sacvc:Menu')
             else:
                 request.POST = request.POST.copy()
-                if request.POST.get("subir_configuracion", ""):
+                if request.POST.get("cargar_archivo", ""):
                     print('SUBE CONFIGURACION GUARDADA DEL DISCO AL FORMULARIO')
                     file_form = guardar_configuracion_mbm
                     if request.FILES: #Si se selecciono algun archivo

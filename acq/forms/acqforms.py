@@ -9,12 +9,12 @@ class guardar_configuracion_mbm(forms.Form):
 class mbmaestro(forms.Form):
     Tipo = forms.CharField(max_length=3, )
     Puerto = forms.CharField( max_length=10, )
-    IpDevice = forms.CharField(max_length=100, )
-    SercvicePort = forms.IntegerField( )
+    IpDevice = forms.CharField(max_length=100, label="Ip del Dispositivo")
+    SercvicePort = forms.IntegerField( label="Puerto de Servicio")
     Velocidad = forms.IntegerField()  # NO APLICA PARA TCP
     Paridad = forms.CharField(max_length=5 )  # NO APLICA PARA TCP
     Reintentos = forms.IntegerField()
-    IdDevice = forms.IntegerField()
+    IdDevice = forms.IntegerField(label="Id del Dispositivo")
 
 
 

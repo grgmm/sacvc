@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Modbus Maestro{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+<link rel="stylesheet" href="{% static 'css/edit_tk.css' %}">
 <div id="ventana">
     <p>
         <label for="encabezado">Configuración Modbus Maestro</label>
@@ -17,20 +17,31 @@
             </tr>
             {% endfor %}
         </table>
-        <button id="tk_modificar" type= "submit" class= "btn_control" name= "aceptar_configuracion" value = "Aceptar_Configuracion">
+        <button id="tk_modificar" type= "submit" class= "btn_control" name= "guardar_en_bd" >
 
-            <img class="imagen" src="{% static " recursos/iconos/editar24x24.png" %}" />Guardar</button>
+            <img class="imagen" src="{% static " recursos/iconos/editar24x24.png" %}" />Guardar en BD</button>
         <a id="tk_regresar" href="" type="button" class="btn_control">
             <img class="imagen" src="{% static " recursos/iconos/atras24x24.png" %}" /> Regresar</a>
+
+        <input id=usrArea type="submit" formmethod="get" name="guardar_en_disco" class="btn_control" value="Guardar en Disco">
+            </input>
+    </form>
+
+    <!-- codigo modificado por MM para poder subir archivos fuera de models.py -->
+    <form id="subir_configuracion" enctype="multipart/form-data" action="" method="post" >
+        {% csrf_token %}
+        <!--{{ conf.as_table }}-->
+            <table id="tablaconf">
+                {% for field in conf.visible_fields %}
+                      <tr>
+                        <td class="etiqueta">{{ field.label_tag }}</td>
+                        <td class="dato">{{ field }}</td>
+                      </tr>
+                {% endfor %}
+              </table>  
+        <input id="tk_validar" type="submit" class="btn_control" name="cargar_archivo" value = "Cargar Archivo" />      
     </form>
 </div>
-    <!-- codigo modificado por MM para poder subir archivos fuera de models.py -->
-     <form id="subir_configuracion" enctype="multipart/form-data" action="" method="post" >
-                 {% csrf_token %}
-         {{ conf.as_p }}
-            <button id="subir_configuracion" name="subir_configuracion" type="submit" class="btn_control" value = "subir_configuracion" >
-     </form>
-
 </html>
 <p> {{mensajes}} </p>
 {% endblock %}
