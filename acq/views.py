@@ -22,6 +22,8 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 import sys
+from datetime import datetime
+
 import csv
 from django.core.validators import DecimalValidator, ValidationError
 from django.core.exceptions import ValidationError
@@ -500,12 +502,10 @@ class TkAdd(CreateView):
             try:
                 with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
 
-                    # print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
                     direccionamiento['dir_disponibles'] = list(set(direccionamiento['dir_disponibles']))
 
                     file.write(json.dumps(direccionamiento))  # Data en cache)
 
-                    print(direccionamiento['dir_disponibles'])
             except:
 
                 print("Error inesperado:", sys.exc_info()[0])
@@ -945,22 +945,30 @@ class MbMaestro(View):
             else:
                 file_form = guardar_configuracion_mbm
                 form = self.form_class(initial=self.initial)
-                request.GET = request.GET.copy()
+                fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+                ruta_Data = fs.location
+
+                if request.GET.get("guardar_en_disco", ""):
+                    response = request.GET
+                    data=response.dict()
+
+                    tofile={'Tipo':data['Tipo'], 'Puerto':data['Puerto'],'IpDevice': data['IpDevice'], 'SercvicePort':data['SercvicePort'],
+                            'Velocidad':data['Velocidad'], 'Paridad':data['Paridad'],'Reintentos':data['Reintentos'], 'IdDevice':data['IdDevice']}
+                    try:
+                        tiempo = datetime.now().strftime(
+                                '%H_%M_%Y_%m_%d_%S.%f')[:-7]
 
 
-                if request.GET.get("Guardar_Configuracion", ""):   #####OJO EN DESARROLLO
-                    lolo= form.cleaned_data
-                    print(lolo)
+                        with fs.open(ruta_Data + '/'+ tiempo + '_mbmaster.json', mode='w') as file:
+                            file.write(json.dumps(tofile))
 
-
-
-
+                    except:
+                            print("Error inesperado:", sys.exc_info()[0])
 
             return render(request, self.template_name, {'form': form, 'conf':file_form})
         else:
             return redirect('/sacvc/logout')
     def post(self, request, *args, **kwargs):
-        print(request)
         if request.user.is_authenticated:
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
@@ -970,39 +978,40 @@ class MbMaestro(View):
                 return HttpResponseRedirect('sacvc:Menu')
             else:
                 request.POST = request.POST.copy()
-                if request.POST.get("subir_configuracion", ""):
+
+                if request.POST.get("cargar_archivo", ""):
                     print('SUBE CONFIGURACION GUARDADA DEL DISCO AL FORMULARIO')
                     file_form = guardar_configuracion_mbm
-                    if request.FILES: #Si se selecciono algun archivo
+                    if request.FILES: #Si se selecciono algun archivo y le a al boton vargar archivo
                         in_memory_uploaded_file = request.FILES['Configuracion']
                         io_file = in_memory_uploaded_file.file
                         dataf = json.loads(io_file.read())
                         file_form = guardar_configuracion_mbm
                         form = self.form_class(initial=dataf)
                         return render(request, self.template_name, {'form': form, 'conf': file_form})
-                    else:
-                        form = self.form_class(initial=self.initial)
+                    else:   #Formulario cargado con valores inicales sin guardar
+                        form = self.form_class(initial=self.initial) #valores iniciales
                         file_form = guardar_configuracion_mbm
                         return render(request, self.template_name, {'form': form, 'conf': file_form})
-                else:
+
+                else: #GUARDA EL FORMULARIO EN LA BD SOLO PERMITE UNA CONFIGURACION ACTIVA
                     print('GUARDA FORMULARIO EN BD')
                     form = self.form_class(request.POST)
                     if form.is_valid():
                         mbmaster_model.objects.all().delete()
-                        #print(form.cleaned_data)
-                        #id = None, Lt0 = nivel,
-                        #Tov0 = volumen, id_tk = obj_tk
-
                         mbmaster_model.objects.create(id = None, Tipo= form.cleaned_data['Tipo'], Puerto= form.cleaned_data['Puerto'],
                                                     IpDevice= form.cleaned_data['IpDevice'], SercvicePort= form.cleaned_data['SercvicePort'],
                                                       Velocidad=form.cleaned_data['Velocidad'],Paridad=form.cleaned_data['Paridad'],
                                                       Reintentos=form.cleaned_data['Reintentos'],IdDevice=form.cleaned_data['IdDevice'],
                                                       )
-                        print(form.data['Tipo']) #prueba funcionando
                         return redirect(self.success_url)
                     else:
                         print('Formuario Incorrecto')
                         return render(request, self.template_name, {'form': form})
+
+                return redirect(self.success_url)
+
+
 ###VISTAS DE USUARIOS
 class LoginView(FormView):
     form_class = AuthenticationForm
