@@ -956,12 +956,9 @@ class MbMaestro(View):
                             'Velocidad':data['Velocidad'], 'Paridad':data['Paridad'],'Reintentos':data['Reintentos'], 'IdDevice':data['IdDevice']}
                     try:
                         tiempo = datetime.now().strftime(
-                                '%H_%M_%Y_%m_%d_%S.%f')[:-7]
-
-
+                                '%Y_%m_%d_%H_%M.%f')[:-7]
                         with fs.open(ruta_Data + '/'+ tiempo + '_mbmaster.json', mode='w') as file:
                             file.write(json.dumps(tofile))
-
                     except:
                             print("Error inesperado:", sys.exc_info()[0])
 
