@@ -26,14 +26,7 @@ table {
 	width: 90%;
 	margin: 0 auto;
 	margin-top: 5%;
-	margin-bottom: 0%;
-}
-
-#tablaconf{
-    width: 70%;
-	margin: 0 auto;
-	margin-top: 2%;
-	margin-bottom: 15%;
+	margin-bottom: 25%;
 }
 
 label {
@@ -79,7 +72,7 @@ label[for=encabezado] {
 .btn_control {
 	position: absolute;
 	/*posicion respecto a la esquina inferior derecha  del contenedor*/
-	bottom: 5%;
+	bottom: 10%;
 	/*dimensiones comunes de botones*/
 	height: 34px; /*depende del alto del icono*/
 	padding-left: 4px; 
@@ -119,8 +112,21 @@ label[for=encabezado] {
 	padding-left: 1rem;
 }
 
-#tk_regresar, #usrPatio {
+#cargarArchivo{
 	/*posiciono el boton*/
+	position: absolute;
+	left: 50%;	/*Centro del boton*/
+  	transform: translateX(-50%);  
+	padding-left: 1rem;
+}
+
+#tk_regresar, #usrPatio{
+	/*posiciono el boton*/
+	left: 25%;	/*Centro del boton*/
+  	transform: translateX(-50%); 
+	padding-left: 1rem;
+}
+#cancelar {
 	left: 25%;	/*Centro del boton*/
   	transform: translateX(-50%); 
 	padding-left: 1rem;
@@ -137,6 +143,14 @@ label[for=encabezado] {
 	left: 33%;	/*Centro del boton*/
   	transform: translateX(-50%); 
 	padding-left: 1rem;
+}
+
+#guardarDisco{
+	bottom: 1%;
+	left: 28%;	/*Centro del boton*/
+  	transform: translateX(-50%); 
+	padding-left: 1rem;
+
 }
 
 #detalle {

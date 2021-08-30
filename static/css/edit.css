@@ -112,6 +112,16 @@ label[for=encabezado] {
 	padding-left: 1rem;
 }
 
+#cargarArchivo{
+	/*posiciono el boton*/
+	position: relative;
+	bottom: 10%;
+	left: 50%;	/*Centro del boton*/
+  	transform: translateX(-50%);  
+	padding-left: 1rem;
+
+}
+
 #tk_regresar, #usrPatio {
 	/*posiciono el boton*/
 	left: 25%;	/*Centro del boton*/

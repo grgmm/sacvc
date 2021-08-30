@@ -1,0 +1,2 @@
+{"Tipo":"TCP", "Puerto":"TCP_SRV","IpDevice": "127.0.0.99","SercvicePort": "5002","Velocidad":19200, "Paridad":"PAR","Reintentos": 3,
+                   "IdDevice": 99}
