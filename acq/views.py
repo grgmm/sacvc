@@ -948,7 +948,8 @@ class MbMaestro(View):
                 fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
                 ruta_Data = fs.location
 
-                if request.GET.get("guardar_en_disco", ""):
+                if request.GET.get("guardar_en_disco", ""): #GUARDAR CONFIGURACION DEL FORMULARIO AL DISO
+                    print('GUARDAR CONFIGURACION DEL FORMULARIO AL DISO')
                     response = request.GET
                     data=response.dict()
 
@@ -956,12 +957,10 @@ class MbMaestro(View):
                             'Velocidad':data['Velocidad'], 'Paridad':data['Paridad'],'Reintentos':data['Reintentos'], 'IdDevice':data['IdDevice']}
                     try:
                         tiempo = datetime.now().strftime(
-                                '%H_%M_%Y_%m_%d_%S.%f')[:-7]
-
-
+                                '%Y_%m_%d_%H_%M_%S.%f')[:-7]
                         with fs.open(ruta_Data + '/'+ tiempo + '_mbmaster.json', mode='w') as file:
                             file.write(json.dumps(tofile))
-
+                            form = self.form_class(initial=tofile)
                     except:
                             print("Error inesperado:", sys.exc_info()[0])
 
