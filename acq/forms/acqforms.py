@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import ModelForm
+
 
 class users_cambio_clave_form(forms.Form):
     nueva_clave = forms.CharField(widget=forms.PasswordInput)
@@ -15,8 +17,6 @@ class mbmaestro(forms.Form):
     Paridad = forms.CharField(max_length=5 )  # NO APLICA PARA TCP
     Reintentos = forms.IntegerField()
     IdDevice = forms.IntegerField(label="Id del Dispositivo")
-
-
 
 
 

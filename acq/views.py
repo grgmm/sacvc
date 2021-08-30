@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.http import JsonResponse
-from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro as mbmaster_model, Factor
+from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro as mbmaster_model
 from django.template.response import TemplateResponse
 from django.views.generic import ListView, FormView, RedirectView
 from django.views.generic.detail import DetailView
@@ -612,7 +612,7 @@ class TkDetail(DetailView):
             return redirect('/sacvc/logout')
 class TkUpdate(UpdateView):
     model = Tk
-    fields = ['Nombre', 'Descriptor', 'id_aor', ]
+    fields = ['Nombre', 'Descriptor', 'id_aor', 'ctsh', 'fra', 'ctpl']
     template_name = 'acq/edit_tk/edit_tk.html'
 
     def get_success_url(self):
@@ -632,81 +632,11 @@ class TkUpdate(UpdateView):
 
                 return redirect('/sacvc/Menu')
             else:
+
                 return super(TkUpdate, self).get(request, *args, **kwargs)
         else:
             return redirect('/sacvc/logout')
-class Factores_Tk_add(CreateView):
-    model = Factor
-    fields = '__all__'
-    template_name = 'acq/factores_tk/Factores_tk_add.html'
-    success_url = reverse_lazy('uacq:Menu')
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
 
-            filtro_usuario = Group.objects.filter(user=request.user)
-            for g in filtro_usuario:
-                print(g.name)
-
-            if (not g.name == 'supervisores'):
-                print('Usuario sin Perfil')
-
-                return redirect('/sacvc/Menu')
-            else:
-                return super(Factores_Tk_add, self).get(request, *args, **kwargs)
-        else:
-            return redirect('/sacvc/logout')
-class Factores_Tk_update(UpdateView):
-    model = Factor
-    fields = '__all__'
-    template_name = 'acq/factores_tk/Factores_tk_update.html'
-    success_url = reverse_lazy('uacq:Menu')
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-
-            filtro_usuario = Group.objects.filter(user=request.user)
-            for g in filtro_usuario:
-                print(g.name)
-            if (not g.name == 'supervisores'):
-                print('Usuario sin Perfil')
-                return redirect('/sacvc/Menu')
-            else:
-                return super(Factores_Tk_update, self).get(request, *args, **kwargs)
-        else:
-            return redirect('/sacvc/logout')
-class Factores_Tk_Delete(DeleteView):
-    model = Factor
-    success_url = reverse_lazy('uacq:Menu')
-    template_name = 'acq/factores_tk/Factores_tk_delete.html'
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            filtro_usuario = Group.objects.filter(user=request.user)
-            for g in filtro_usuario:
-                print(g.name)
-            if (not g.name == 'supervisores'):
-                print('Usuario sin Perfil')
-                return redirect('/sacvc/Menu')
-            else:
-                return super(Factores_Tk_Delete, self).get(request, *args, **kwargs)
-        else:
-            return redirect('/sacvc/logout')
-class Factores_Tk(ListView):
-    # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
-    model = PatioTanque
-    template_name = 'acq/factores_tk/Factores_tk.html'
-    # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            filtro_usuario = Group.objects.filter(user=request.user)
-            for g in filtro_usuario:
-                print(g.name)
-            # Grupos a los que el usuario pertence
-            if (not g.name == 'supervisores'):
-                print('Usuario sin Perfil')
-                return redirect('/sacvc/Menu')
-            else:
-                return super(Factores_Tk, self).get(request, *args, **kwargs)
-        else:
-            return redirect('/sacvc/logout')
 class Validar_Tct(UpdateView):
     model = Tk
     template_name = 'acq/detail_tk/validar_tct.html'
@@ -910,7 +840,7 @@ class Menu(View):
             return redirect('/sacvc/logout')
 
 ###VISTAS DE CONFIGURACION
-class configuracion(View):
+class configuracion(View): ###MENU
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -949,7 +879,7 @@ class MbMaestro(View):
                 ruta_Data = fs.location
 
                 if request.GET.get("guardar_en_disco", ""): #GUARDAR CONFIGURACION DEL FORMULARIO AL DISO
-                    print('GUARDAR CONFIGURACION DEL FORMULARIO AL DISO')
+                    print('GUARDAR CONFIGURACION DEL FORMULARIO AL DISCO')
                     response = request.GET
                     data=response.dict()
 

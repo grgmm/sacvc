@@ -65,6 +65,9 @@ class Tk(models.Model):
     Nombre = models.CharField(max_length=30,null=True,unique=True)
     Descriptor = models.CharField(max_length=120, default="", blank=True,)
     id_aor = models.ForeignKey(AOR, on_delete=models.CASCADE,verbose_name= _('Area'), blank=True,null=True)
+    ctsh = models.FloatField(default=1.0, verbose_name= _('Ctsh'))
+    fra = models.FloatField(default=1.0, verbose_name= _('Fra'))
+    ctpl = models.FloatField(default=1.0, verbose_name= _('Ctpl'))
 
     tct_archivo = models.FileField (upload_to='tct', max_length=100, blank=True, verbose_name= _('Archivo:'), validators=[FileExtensionValidator(allowed_extensions=['csv'])])
     Descriptor_tct = models.CharField(max_length=120,default="",null=True, blank=True, verbose_name= _('Descriptor:'),)
@@ -88,6 +91,7 @@ class Tk(models.Model):
 
        return '%s, %s' % (self.Nombre, self. Descriptor, )
 
+#MODELOS TABLA CERTIFICADA (DE AFORO) DE TANQUES
 
 class Tct(models.Model):
 
@@ -105,21 +109,6 @@ class Tct(models.Model):
 
        return '%d' % (self.id)
 
-
-#MODELOS DE FACTORES DE TANQUES
-
-class Factor(models.Model):
-
-    id_tk = models.ForeignKey(Tk, on_delete=models.CASCADE)
-    ctsh = models.FloatField(default = 1.0)
-    fra = models.FloatField(default = 1.0)
-    ctpl = models.FloatField(default = 1.0)
-
-    def __str__(self):
-
-       return '%d' % (self.id,)
-
-#MODELOS TABLA CERTIFICADA (DE AFORO) DE TANQUES
 
        #MODELOS DE COMUNICACION
 
@@ -283,9 +272,6 @@ class Analogico(Tag):
 class Analogico_Hs(models.Model): #Poblado automatico al levantar modulo hs.py
 
   data = models.JSONField(null=True, blank=True,)
-
-
-
 
   def __str__(self):
 
