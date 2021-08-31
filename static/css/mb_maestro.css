@@ -22,11 +22,15 @@ table, th, td {
 	vertical-align: middle;
 }
 
+#tablaconf{
+	margin-bottom: 10%;
+}
+
 table {
 	width: 90%;
 	margin: 0 auto;
 	margin-top: 5%;
-	margin-bottom: 25%;
+	margin-bottom: 20%;
 }
 
 label {
@@ -96,69 +100,60 @@ label[for=encabezado] {
 	float:left;	
 }
 
-/*para edit_tk, edit_tf, del_tk, del_tf, cambiar_clave, edit_usr*/
-/*********************/
-#tk_modificar, #usrModificar {
+
+#guardar_en_bd {
 	/*posiciono el boton*/
-	left: 75%;	/*Centro del boton*/
+	/*
+	left: 75%;	
   	transform: translateX(-50%); 
-	padding-left: 1rem;
+	*/
+	right: 15%;
 }
 
-#tk_validar, #usrRegresar {
+#regresar {
 	/*posiciono el boton*/
-	left: 50%;	/*Centro del boton*/
-  	transform: translateX(-50%);  
-	padding-left: 1rem;
+	/*
+	left: 25%;
+  	transform: translateX(-50%); 
+	*/
+	left: 15%;	
 }
 
 #cargarArchivo{
 	/*posiciono el boton*/
-	position: absolute;
-	left: 50%;	/*Centro del boton*/
+	/*
+	left: 50%;	
   	transform: translateX(-50%);  
-	padding-left: 1rem;
+	  */
+	left: 38%;
 }
 
-#tk_regresar, #usrPatio{
-	/*posiciono el boton*/
-	left: 25%;	/*Centro del boton*/
-  	transform: translateX(-50%); 
-	padding-left: 1rem;
-}
 #cancelar {
-	left: 25%;	/*Centro del boton*/
+	/*
+	left: 25%;	
   	transform: translateX(-50%); 
-	padding-left: 1rem;
+	  */
+	left: 25%;
 }
 
-#usrClave {
-	bottom: 1%;
-	left: 66%;	/*Centro del boton*/
-  	transform: translateX(-50%); 
-	padding-left: 1rem;
-}
-#usrArea {
-	bottom: 1%;
-	left: 33%;	/*Centro del boton*/
-  	transform: translateX(-50%); 
-	padding-left: 1rem;
+#confirmar {
+	/*posiciono el boton*/
+	/*
+	left: 50%;	
+  	transform: translateX(-50%);  
+	  */
+	right: 25%;
 }
 
 #guardarDisco{
-	bottom: 1%;
-	left: 28%;	/*Centro del boton*/
+	bottom: 3%;
+	/*
+	left: 28%;	
   	transform: translateX(-50%); 
-	padding-left: 1rem;
+	  */
+	left: 15%;
 
 }
-
-#detalle {
-	left: 50%;	/*Centro del boton*/
-  	transform: translateX(-50%); 
-	padding-left: 1rem;
-}
-/******************************/
 .btn_control:hover {
 	text-decoration: none;
 	background-color: #1cc1d9; /*fondo del link*/
@@ -173,37 +168,5 @@ label[for=encabezado] {
 	background-image: linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
 }
 
-/*barra de progreso*/
 
-#contenedor_barra,#barra{	
-  	height:2rem;
-	border-style:solid;
-	border-width:1px;
-	border-radius: 1rem;
-	border-color:white;	
-}
-
-#contenedor_barra{
-	/*posicion respecto a la esquina inferior derecha  del contenedor*/
-	position:absolute;
-	bottom: 21%;
-	width: 50%;
-	left:50%;
-  	transform: translateX(-50%); 
-}
-
-#barra{
-	width: 0%;	/*Progreso inicial alabrir pagina*/
-  	height: 2rem;
-	background-color: #117a8b;	
-  	text-align: center; /* To center it horizontally (if you want) */
-  	line-height: 2rem; /* To center it vertically */
-  	color:black; /*color del texto*/
-}
-
-
-
-.not-visible {
-    display: none;
-}
 
