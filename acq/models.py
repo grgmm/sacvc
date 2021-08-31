@@ -114,7 +114,7 @@ class Tct(models.Model):
 
 class MbMaestro(models.Model):
 
-  Vel_CHOICES = [
+  VEL_CHOICES = [
    (1, 9600),
    (2, 19200),
    (3, 38400),
@@ -141,7 +141,7 @@ class MbMaestro(models.Model):
   Puerto = models.CharField(choices = PORT_CHOICES, max_length=10, default = 'TCP_SRV')
   IpDevice=models.CharField(max_length=100, default= '127.0.0.1', verbose_name= _('Ip del Esclavo'))
   SercvicePort= models.IntegerField(default=5002,verbose_name= _('Puerto de Servicio'),)
-  Velocidad = models.IntegerField(choices = Vel_CHOICES, default= 1, verbose_name= _('Tasa de baudios'),) #NO APLICA PARA TCP
+  Velocidad = models.IntegerField(choices = VEL_CHOICES, default= 1, verbose_name= _('Tasa de baudios'),) #NO APLICA PARA TCP
   Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR', verbose_name= _('Paridad'),) #NO APLICA PARA TCP
   Reintentos = models.IntegerField(default=3)
   IdDevice = models.IntegerField(default=1, verbose_name= _('Id del Esclavo'),)
