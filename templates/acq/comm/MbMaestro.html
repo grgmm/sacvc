@@ -11,6 +11,8 @@
   </p>
   <form action="" method="post">
     {% csrf_token %}
+
+    <!-- {{ form.as_table}} -->
     <table>
       {% for field in form.visible_fields %}
       <tr>
@@ -19,15 +21,14 @@
       </tr>
       {% endfor %}
     </table>
-    <button id="tk_modificar" type="submit" class="btn_control" name="guardar_en_bd">
-      <img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}" />Guardar en BD</button>
+    <button id="guardar_en_bd" type="submit" class="btn_control" name="guardar_en_bd">
+      <img class="imagen" src="{% static "recursos/iconos/bd_add24x24.png" %}" />Guardar en BD</button>
 
-    <a id="tk_regresar" href="{% url 'uacq:configuracion' %}" type="button" class="btn_control">
-      <img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}" /> Regresar</a>
+    <a id="regresar" href="{% url 'uacq:configuracion' %}" type="button" class="btn_control">
+      <img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
 
-    <input id="guardarDisco" type="submit" formmethod="get" name="guardar_en_disco" class="btn_control"
-      value="Guardar en Disco">
-    </input>
+    <button id="guardarDisco" type="submit" formmethod="get" name="guardar_en_disco" class="btn_control"><img
+        class="imagen" src="{% static "recursos/iconos/disco_add24x24.png" %}"/>Guardar en Disco</button>
   </form>
 
   <!-- Este form abre un dialog para cargar un archivo -->
@@ -50,12 +51,14 @@
           </table>
         </section>
         <menu>
-          <button id="cancelar" class="btn_control" type="reset">Cancelar</button>
-          <input id="tk_validar" type="submit" class="btn_control" name="cargar_archivo" value="Confirmar" />
+          <button id="cancelar" class="btn_control" type="reset">
+            <img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}" />Cancelar</button>
+          <button id="confirmar" type="submit" class="btn_control" name="cargar_archivo" value="Confirmar">
+            <img class="imagen" src="{% static "recursos/iconos/confirmar24x24.png" %}" />Confirmar</button>
         </menu>
       </form>
     </dialog>
-    <button id="cargarArchivo" class="btn_control">Cargar Archivo</button>
+    <button id="cargarArchivo" class="btn_control"><img class="imagen" src="{% static "recursos/iconos/cargar24x24.png" %}" />Cargar Archivo</button>
     <script src={% static 'js/mb_maestro.js' %}></script>
   </form>
 </div>
