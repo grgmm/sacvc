@@ -1415,7 +1415,6 @@ class grupo_tk(LoginRequiredMixin, ListView):
         print(context['UNIDADES'])
         return context
 
-
 class detalle_tk(LoginRequiredMixin, DetailView):
     model = Tk
     template_name = 'acq/detalle_tk/detalle_tk.html'
@@ -1458,5 +1457,18 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         context['LT_MAXIMO'] = ltmaximo
         context['LT_MINIMO'] = ltminimo
 
-        print(context)
         return context
+
+class Detalle_Analogico(LoginRequiredMixin, DetailView):
+    model = Analogico
+    template_name = 'acq/Detalle_Puntos/Detalle_Analogico.html'
+    fields = '__All__'
+    #fields= ['Nombre', 'Descriptor', 'id_Tk', 'pk', ]
+
+
+
+
+
+
+
+

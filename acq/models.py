@@ -89,7 +89,7 @@ class Tk(models.Model):
 
     def __str__(self):
 
-       return '%s, %s' % (self.Nombre, self. Descriptor, )
+       return '%s, %s, %s' % (self.Nombre, self. Descriptor,'('+str(self.pk)+')' )
 
 #MODELOS TABLA CERTIFICADA (DE AFORO) DE TANQUES
 
@@ -262,8 +262,7 @@ class Analogico(Tag):
 
   def __str__(self):
 
-     return '%s' % (self.Nombre)
-
+     return '%s %s' % (self.Nombre, '('+str(self.pk)+')')
 
 
 #HISTORICOS Hs=todos, Hs0= tablas de segundos, Hs1= tablas de minutos, Hs2= tablas de horas, Hs3= tablas de dias,
