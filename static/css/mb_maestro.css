@@ -107,7 +107,7 @@ label[for=encabezado] {
 	left: 75%;	
   	transform: translateX(-50%); 
 	*/
-	right: 15%;
+	right: 10%;
 }
 
 #regresar {
@@ -116,7 +116,7 @@ label[for=encabezado] {
 	left: 25%;
   	transform: translateX(-50%); 
 	*/
-	left: 15%;	
+	left: 10%;	
 }
 
 #cargarArchivo{
@@ -125,7 +125,7 @@ label[for=encabezado] {
 	left: 50%;	
   	transform: translateX(-50%);  
 	  */
-	left: 38%;
+	left: 34%;
 }
 
 #cancelar {
@@ -151,7 +151,7 @@ label[for=encabezado] {
 	left: 28%;	
   	transform: translateX(-50%); 
 	  */
-	left: 15%;
+	left: 10%;
 
 }
 .btn_control:hover {
