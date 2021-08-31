@@ -3,6 +3,8 @@
 {% block title %}Modbus Maestro{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/mb_maestro.css' %}">
+<script src={% static 'js/jquery-3.6.0.min.js' %}></script>
+
 <div id="ventana">
   <p>
     <label for="encabezado">Configuración Modbus Maestro</label>
@@ -18,10 +20,10 @@
       {% endfor %}
     </table>
     <button id="tk_modificar" type="submit" class="btn_control" name="guardar_en_bd">
-      <img class="imagen" src="{% static " recursos/iconos/editar24x24.png" %}" />Guardar en BD</button>
+      <img class="imagen" src="{% static "recursos/iconos/editar24x24.png" %}" />Guardar en BD</button>
 
     <a id="tk_regresar" href="{% url 'uacq:configuracion' %}" type="button" class="btn_control">
-      <img class="imagen" src="{% static " recursos/iconos/atras24x24.png" %}" /> Regresar</a>
+      <img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}" /> Regresar</a>
 
     <input id="guardarDisco" type="submit" formmethod="get" name="guardar_en_disco" class="btn_control"
       value="Guardar en Disco">
@@ -34,6 +36,9 @@
     <!--{{ conf.as_table }}-->
     <dialog id="favDialog">
       <form method="dialog">
+        <!-- Em Mozilla para que dialog funcione ponga en la barra de direcciones about:config
+          y cambie "dom.dialog_element.enabled" a true.
+        -->
         <section>
           <table id="tablaconf">
             {% for field in conf.visible_fields %}
@@ -51,25 +56,7 @@
       </form>
     </dialog>
     <button id="cargarArchivo" class="btn_control">Cargar Archivo</button>
-
-    <script>
-      (function () {
-        var cargarArchivo = document.getElementById('cargarArchivo');
-        var cancelButton = document.getElementById('cancelar');
-        var favDialog = document.getElementById('favDialog');
-
-        // Update button opens a modal dialog
-        cargarArchivo.addEventListener('click', function () {
-          favDialog.showModal();
-        });
-
-        // Form cancel button closes the dialog box
-        cancelButton.addEventListener('click', function () {
-          favDialog.close();
-        });
-
-      })();
-    </script>
+    <script src={% static 'js/mb_maestro.js' %}></script>
   </form>
 </div>
 
