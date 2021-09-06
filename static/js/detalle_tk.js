@@ -97,7 +97,7 @@ function mi_funcion() {
 		//ESTADO DE ALARMAS
 		//ALARMA LT
 		if (lt_alarma == "C") {
-			//Visibilidad del link de detalle
+			//Visibilidad del link de detalle (CRITICA)
 			document.getElementById('link_lt').style.display = 'inline';
 			//barra de progreso y nivel
 			$("#barra").css('background', 'red');//color de barra
@@ -117,7 +117,7 @@ function mi_funcion() {
 			}
 		} else {
 			if (lt_alarma == "U") {
-				//Visibilidad del link de detalle
+				//Visibilidad del link de detalle (URGENTE)
 				document.getElementById('link_lt').style.display = 'inline';
 				$("#barra").css('background', 'yellow');//color de barra
 				$("#nivel").css('background', 'yellow');//color de fondo de la fuente
@@ -131,7 +131,7 @@ function mi_funcion() {
 					$("#lt_alarma").css('background', 'white');//alarma en la tabla
 				}
 			} else {
-				//sin alarmas
+				//sin alarmas (N)
 				$("#barra").css('background', 'black');
 				$("#nivel").css('color', 'green');
 				$("#nivel").css('background', 'black');
