@@ -2,6 +2,7 @@ from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configur
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
+#from django.http import JsonRemsponse
 from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro as mbmaster_model
 from django.template.response import TemplateResponse
@@ -878,10 +879,11 @@ class MbMaestro(View):
                 fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
                 ruta_Data = fs.location
 
-                if request.GET.get("guardar_en_disco", ""): #GUARDAR CONFIGURACION DEL FORMULARIO AL DISO
+                if request.GET.get("guardar_en_disco    ", ""): #GUARDAR CONFIGURACION DEL FORMULARIO AL DISO
                     print('GUARDAR CONFIGURACION DEL FORMULARIO AL DISCO')
                     response = request.GET
                     data=response.dict()
+                    print(data)
 
                     tofile={'Tipo':data['Tipo'], 'Puerto':data['Puerto'],'IpDevice': data['IpDevice'], 'SercvicePort':data['SercvicePort'],
                             'Velocidad':data['Velocidad'], 'Paridad':data['Paridad'],'Reintentos':data['Reintentos'], 'IdDevice':data['IdDevice']}
@@ -1430,6 +1432,10 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         inspt = Analogico.objects.get(id_Tk=idtk, etiqueta1='pt')
         insays = Analogico.objects.get(id_Tk=idtk, etiqueta1='ays')
         instt = Analogico.objects.get(id_Tk=idtk, etiqueta1='tt')
+        insgsv = Analogico.objects.get(id_Tk=idtk, etiqueta1='GSV')
+        insnsv = Analogico.objects.get(id_Tk=idtk, etiqueta1='NSV')
+
+
 
         tovmaximo = instov.ValorMaximo
         tovminimo = instov.ValorMinimo
@@ -1456,7 +1462,8 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         context['TOV_MINIMO'] = tovminimo
         context['LT_MAXIMO'] = ltmaximo
         context['LT_MINIMO'] = ltminimo
-
+        context['ID']={'LT': inslt.pk , 'PT':inspt.pk, 'AYS':insays.pk, 'TT':instt.pk, 'TOV':instov.pk, 'GSV':insgsv.pk, 'NSV':insnsv.pk}
+        #print(context['ID'])
         return context
 
 class Detalle_Analogico(LoginRequiredMixin, DetailView):
