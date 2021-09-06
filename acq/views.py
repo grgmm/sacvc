@@ -2,6 +2,7 @@ from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configur
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
+#from django.http import JsonRemsponse
 from django.http import JsonResponse
 from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro as mbmaster_model
 from django.template.response import TemplateResponse
@@ -878,10 +879,11 @@ class MbMaestro(View):
                 fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
                 ruta_Data = fs.location
 
-                if request.GET.get("guardar_en_disco", ""): #GUARDAR CONFIGURACION DEL FORMULARIO AL DISO
+                if request.GET.get("guardar_en_disco    ", ""): #GUARDAR CONFIGURACION DEL FORMULARIO AL DISO
                     print('GUARDAR CONFIGURACION DEL FORMULARIO AL DISCO')
                     response = request.GET
                     data=response.dict()
+                    print(data)
 
                     tofile={'Tipo':data['Tipo'], 'Puerto':data['Puerto'],'IpDevice': data['IpDevice'], 'SercvicePort':data['SercvicePort'],
                             'Velocidad':data['Velocidad'], 'Paridad':data['Paridad'],'Reintentos':data['Reintentos'], 'IdDevice':data['IdDevice']}
