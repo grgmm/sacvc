@@ -102,9 +102,6 @@ class Command(BaseCommand):
                    vb_timestamp_DC=data_fr['Data_Cruda'][recorrido]['TIMESTAMP']
                    vb_PV=FloatIeee754(int(vb_REG_2), int(vb_REG_1))
 
-
-
-
            #Tags= Analogico.objects.all()
            #tag_ins=Tags.filter(pk__exact=idtag_DC)
                    tag_ins = Analogico.objects.get(pk=idtag)
@@ -176,21 +173,19 @@ class Command(BaseCommand):
 
                         nivel_producto=vb_PV
                         idtag_lt = tag_ins.pk
-                        #lt_unidad = tag_ins.Unidad
                         timestamp_lt = vb_timestamp_DC
-
                         lt_alarma=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-
-                        volumenes = VOLUMENES(nivel_producto, ays)
-                        print(volumenes)
+                        volumenesll = VOLUMENES(nivel_producto, ays)
+                        #tovj = volumenesll['TOV']
+                        print(volumenesll)
 
                         try:
                             time.sleep(1)
                             volumenes=VOLUMENES(nivel_producto,ays)
-                            #print(volumenes)
                             tov = volumenes['TOV']
                             gsv = volumenes['GSV']
                             nsv = volumenes['NSV']
+                            print(tov)
 
                             porcentaje = Escalamiento(nivel_producto, tag_ins.ValorMinimo, tag_ins.ValorMaximo)
 
@@ -198,7 +193,7 @@ class Command(BaseCommand):
 
                             timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                             tov_alarma=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
-                            print(tov_alarma)
+                            #print(tov_alarma)
 
                             #tov_unidad = instance_tov.Unidad
 
