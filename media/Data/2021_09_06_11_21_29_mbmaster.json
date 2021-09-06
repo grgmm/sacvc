@@ -1,0 +1,1 @@
+{"Tipo": "RTU", "Puerto": "serial1", "IpDevice": "127.0.0.60", "SercvicePort": "5002", "Velocidad": "1", "Paridad": "PAR", "Reintentos": "3", "IdDevice": "66"}
