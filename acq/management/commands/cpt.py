@@ -198,6 +198,7 @@ class Command(BaseCommand):
 
                             timestamp_tov = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                             tov_alarma=Alarmas(tov, instance_tov.LL, instance_tov.L, instance_tov.H, instance_tov.HH)
+                            print(tov_alarma)
 
                             #tov_unidad = instance_tov.Unidad
 
