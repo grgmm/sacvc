@@ -34,15 +34,6 @@ html, body {
 	margin-bottom: 2rem;
 }
 
-#tablaInterna{
-//width: 30%;
-}
-
-tr td{
-	//border: solid 1px;
-	//border-color: black;
-}
-
 label {
 	color: white;
 	display: inline-block;
@@ -141,3 +132,19 @@ img{
     display: none;
 }
 
+
+
+/*
+#tablaInterna{
+   width: 30%;
+}
+
+tr td{
+	border: solid 1px;
+	border-color: black;
+}
+*/
+
+#milt{
+	background-color: black;
+}

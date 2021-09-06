@@ -27,14 +27,14 @@
 			</div>
 		</div>	
 		<div id="data_pri">
-			<br>	
+			<br>
+			<div id="milt"><a href="{% url 'uacq:Detalle_Analogico' ID.LT %}"  title="ir al detalle de punto LT"></a></div>	
 			<table class="tabla">
 				<caption class="titulotabla">VARIABLES PRINCIPALES</caption>
-				<tr><td class="etiqueta">LT:</td><td id="lt" class="dato">{{LT_UNIDAD}}
-				</td></tr>
-				<tr><td class="etiqueta">TOV:</td><td id="tov" class="dato">{{TOV_UNIDAD}}</td></tr> 
-				<tr><td class="etiqueta">NSV:</td><td id="nsv" class="dato">{{NSV_UNIDAD}}</td></tr>
-				<tr><td class="etiqueta">GSV:</td><td id="gsv" class="dato">{{GSV_UNIDAD}}</td></tr>
+				<tr><td class="etiqueta">LT:</td><td ><div id="lt" class="dato">{{LT_UNIDAD}}</td><td>boton</td></tr>
+				<tr><td class="etiqueta">TOV:</td><td id="tov" class="dato">{{TOV_UNIDAD}}</td><td></td></tr> 
+				<tr><td class="etiqueta">NSV:</td><td id="nsv" class="dato">{{NSV_UNIDAD}}</td><td></td></tr>
+				<tr><td class="etiqueta">GSV:</td><td id="gsv" class="dato">{{GSV_UNIDAD}}</td><td></td></tr>
 			</table>
 			<table class="tabla">
 				<caption class="titulotabla">VARIABLES COMPLEMENTARIAS</caption>
@@ -68,7 +68,7 @@
 				<table class="tabla">
 					<caption class="titulotabla">ALARMAS</caption>
 					<tr><td class="etiqueta">LT:</td><td id="lt_alarma" class="dato">
-						<a href="{% url 'uacq:Detalle_Analogico' ID.LT %}"+ id="link_lt" title="ir al detalle de alarma LT"></a>
+						<a href="{% url 'uacq:Detalle_Analogico' ID.LT %}" id="link_lt" title="ir al detalle de alarma LT"></a>
 					</td></tr>
 					<tr><td class="etiqueta">PT:</td><td id="pt_alarma" class="dato">
 						<a href="{% url 'uacq:Detalle_Analogico' ID.PT %}" id="link_pt" title="ir al detalle de alarma PT"></a>
