@@ -1432,6 +1432,10 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         inspt = Analogico.objects.get(id_Tk=idtk, etiqueta1='pt')
         insays = Analogico.objects.get(id_Tk=idtk, etiqueta1='ays')
         instt = Analogico.objects.get(id_Tk=idtk, etiqueta1='tt')
+        insgsv = Analogico.objects.get(id_Tk=idtk, etiqueta1='GSV')
+        insnsv = Analogico.objects.get(id_Tk=idtk, etiqueta1='NSV')
+
+
 
         tovmaximo = instov.ValorMaximo
         tovminimo = instov.ValorMinimo
@@ -1458,7 +1462,8 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         context['TOV_MINIMO'] = tovminimo
         context['LT_MAXIMO'] = ltmaximo
         context['LT_MINIMO'] = ltminimo
-
+        context['ID']={'LT': inslt.pk , 'PT':inspt.pk, 'AYS':insays.pk, 'TT':instt.pk, 'TOV':instov.pk, 'GSV':insgsv.pk, 'NSV':insnsv.pk}
+        #print(context['ID'])
         return context
 
 class Detalle_Analogico(LoginRequiredMixin, DetailView):
