@@ -60,7 +60,7 @@
 #data_pri{
 	position: absolute;
 	left: 4%;
-	top:44%;
+	top:50%;
 	width: 31%;
 	height: 49%;
 
@@ -117,9 +117,11 @@ th,tr td{
 }
 
 #link_lt, #link_pt, #link_tt, #link_lta, #link_ays, #link_tov, #link_nsv, #link_gsv{
-	display: none; /*sin link al inicio*/
-	opacity: 0;		/*link transparente, no se ve*/
-	padding: 1.5% 50%;
+	/*
+	display: none; 
+	*/
+	opacity: 0;	
+	pointer-events: none;
 	margin: 0 auto;
 }
 

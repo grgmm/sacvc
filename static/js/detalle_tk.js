@@ -98,7 +98,8 @@ function mi_funcion() {
 		//ALARMA LT
 		if (lt_alarma == "C") {
 			//Visibilidad del link de detalle (CRITICA)
-			//document.getElementById('link_lt').style.display = 'inline';
+			document.getElementById('link_lt').style.pointerEvents = 'inline';
+			document.getElementById('link_lt').style.opacity =1;
 			//barra de progreso y nivel
 			$("#barra").css('background', 'red');//color de barra
 			//$("#nivel").css('background', 'red');//color de fondo de la fuente
@@ -118,7 +119,8 @@ function mi_funcion() {
 		} else {
 			if (lt_alarma == "U") {
 				//Visibilidad del link de detalle (URGENTE)
-				//document.getElementById('link_lt').style.display = 'inline';
+				document.getElementById('link_lt').style.pointerEvents = 'inline';
+				document.getElementById('link_lt').style.opacity =1;
 				$("#barra").css('background', 'yellow');//color de barra
 				$("#nivel").css('background', 'yellow');//color de fondo de la fuente
 				$("#nivel").css('color', 'black');//color de fuente//Alarma en la tabla
@@ -137,14 +139,15 @@ function mi_funcion() {
 				$("#nivel").css('background', 'black');
 				$("#lt_alarma").css('background', 'white');//alarma en la tabla
 				//Visibilidad del link de detalle
-				//document.getElementById('link_lt').style.display = 'none';
+				document.getElementById('link_lt').style.pointerEvents = 'none';
+				document.getElementById('link_lt').style.opacity =0;
 			}
 		}
 
 		//ALARMA PT
 		if (pt_alarma == "C") {
 			//Visibilidad del link de detalle
-			//document.getElementById('link_pt').style.display = 'inline';
+			document.getElementById('link_pt').style.display = 'inline';
 			//Alarma en la tabla
 			$("#pt_alarma").css('background', 'red');
 
@@ -156,7 +159,7 @@ function mi_funcion() {
 		} else {
 			if (pt_alarma == "U") {
 				//Visibilidad del link de detalle
-				//document.getElementById('link_pt').style.display = 'inline';
+				document.getElementById('link_pt').style.display = 'inline';
 				$("#pt_alarma").css('background', 'yellow');
 				if (flag_alarma) {
 					$("#pt_alarma").css('background', 'yellow');//alarma en la tabla
@@ -167,14 +170,14 @@ function mi_funcion() {
 				//sin alarmas
 				$("#pt_alarma").css('background', 'white');//alarma en la tabla
 				//Visibilidad del link de detalle
-				//document.getElementById('link_pt').style.display = 'none';
+				document.getElementById('link_pt').style.display = 'none';
 			}
 		}
 
 		//ALARMA TT
 		if (tt_alarma == "C") {
 			//Visibilidad del link de detalle
-			//document.getElementById('link_tt').style.display = 'inline';
+			document.getElementById('link_tt').style.display = 'inline';
 			//Alarma en la tabla
 			$("#tt_alarma").css('background', 'red');
 
@@ -186,7 +189,7 @@ function mi_funcion() {
 		} else {
 			if (tt_alarma == "U") {
 				//Visibilidad del link de detalle
-				//document.getElementById('link_tt').style.display = 'inline';
+				document.getElementById('link_tt').style.display = 'inline';
 				$("#tt_alarma").css('background', 'yellow');
 				if (flag_alarma) {
 					$("#tt_alarma").css('background', 'yellow');//alarma en la tabla
@@ -197,14 +200,14 @@ function mi_funcion() {
 				//sin alarmas
 				$("#tt_alarma").css('background', 'white');//alarma en la tabla
 				//Visibilidad del link de detalle
-				//document.getElementById('link_tt').style.display = 'none';
+				document.getElementById('link_tt').style.display = 'none';
 			}
 		}
 
 		//ALARMA LTA
 		if (lta_alarma == "C") {
 			//Visibilidad del link de detalle
-			//document.getElementById('link_lta').style.display = 'inline';
+			document.getElementById('link_lta').style.display = 'inline';
 			//Alarma en la tabla
 			$("#lta_alarma").css('background', 'red');
 
@@ -216,7 +219,7 @@ function mi_funcion() {
 		} else {
 			if (lta_alarma == "U") {
 				//Visibilidad del link de detalle
-				//document.getElementById('link_lta').style.display = 'inline';
+				document.getElementById('link_lta').style.display = 'inline';
 				$("#lta_alarma").css('background', 'yellow');
 				if (flag_alarma) {
 					$("#lta_alarma").css('background', 'yellow');//alarma en la tabla
@@ -227,14 +230,14 @@ function mi_funcion() {
 				//sin alarmas
 				$("#lta_alarma").css('background', 'white');//alarma en la tabla
 				//Visibilidad del link de detalle
-				//document.getElementById('link_lta').style.display = 'none';
+				document.getElementById('link_lta').style.display = 'none';
 			}
 		}
 
 		//ALARMA AYS
 		if (ays_alarma == "C") {
 			//Visibilidad del link de detalle
-			//document.getElementById('link_ays').style.display = 'inline';
+			document.getElementById('link_ays').style.display = 'inline';
 			//Alarma en la tabla
 			$("#ays_alarma").css('background', 'red');
 
@@ -245,7 +248,7 @@ function mi_funcion() {
 			}
 		} else {
 			//Visibilidad del link de detalle
-			//document.getElementById('link_ays').style.display = 'inline';
+			document.getElementById('link_ays').style.display = 'inline';
 			if (ays_alarma == "U") {
 				$("#ays_alarma").css('background', 'yellow');
 				if (flag_alarma) {
@@ -257,14 +260,14 @@ function mi_funcion() {
 				//sin alarmas
 				$("#ays_alarma").css('background', 'white');//alarma en la tabla
 				//Visibilidad del link de detalle
-				//document.getElementById('link_ays').style.display = 'none';
+				document.getElementById('link_ays').style.display = 'none';
 			}
 		}
 
 		//ALARMA TOV
 		if (tov_alarma == "C") {
 			//Visibilidad del link de detalle
-			//document.getElementById('link_tov').style.display = 'inline';
+			document.getElementById('link_tov').style.display = 'inline';
 			//Alarma en la tabla
 			$("#tov_alarma").css('background', 'red');
 
@@ -276,7 +279,7 @@ function mi_funcion() {
 		} else {
 			if (tov_alarma == "U") {
 				//Visibilidad del link de detalle
-				//document.getElementById('link_tov').style.display = 'inline';
+				document.getElementById('link_tov').style.display = 'inline';
 				$("#tov_alarma").css('background', 'yellow');
 				if (flag_alarma) {
 					$("#tov_alarma").css('background', 'yellow');//alarma en la tabla
@@ -287,14 +290,14 @@ function mi_funcion() {
 				//sin alarmas
 				$("#tov_alarma").css('background', 'white');//alarma en la tabla
 				//Visibilidad del link de detalle
-				//document.getElementById('link_tov').style.display = 'none';
+				document.getElementById('link_tov').style.display = 'none';
 			}
 		}
 
 		//ALARMA NSV
 		if (nsv_alarma == "C") {
 			//Visibilidad del link de detalle
-			//document.getElementById('link_nsv').style.display = 'inline';
+			document.getElementById('link_nsv').style.display = 'inline';
 			//Alarma en la tabla
 			$("#nsv_alarma").css('background', 'red');
 
@@ -306,7 +309,7 @@ function mi_funcion() {
 		} else {
 			if (nsv_alarma == "U") {
 				//Visibilidad del link de detalle
-				//document.getElementById('link_nsv').style.display = 'inline';
+				document.getElementById('link_nsv').style.display = 'inline';
 				$("#nsv_alarma").css('background', 'yellow');
 				if (flag_alarma) {
 					$("#nsv_alarma").css('background', 'yellow');//alarma en la tabla
@@ -317,13 +320,13 @@ function mi_funcion() {
 				//sin alarmas
 				$("#nsv_alarma").css('background', 'white');//alarma en la tabla
 				//Visibilidad del link de detalle
-				//document.getElementById('link_nsv').style.display = 'none';
+				document.getElementById('link_nsv').style.display = 'none';
 			}
 		}
 		//ALARMA GSV
 		if (gsv_alarma == "C") {
 			//Visibilidad del link de detalle
-			//document.getElementById('link_gsv').style.display = 'inline';
+			document.getElementById('link_gsv').style.display = 'inline';
 			//Alarma en la tabla
 			$("#gsv_alarma").css('background', 'red');
 
@@ -335,7 +338,7 @@ function mi_funcion() {
 		} else {
 			if (gsv_alarma == "U") {
 				//Visibilidad del link de detalle
-				//document.getElementById('link_gsv').style.display = 'inline';
+				document.getElementById('link_gsv').style.display = 'inline';
 				$("#gsv_alarma").css('background', 'yellow');
 				if (flag_alarma) {
 					$("#gsv_alarma").css('background', 'yellow');//alarma en la tabla
@@ -346,7 +349,7 @@ function mi_funcion() {
 				//sin alarmas
 				$("#gsv_alarma").css('background', 'white');//alarma en la tabla
 				//Visibilidad del link de detalle
-				//document.getElementById('link_gsv').style.display = 'none';
+				document.getElementById('link_gsv').style.display = 'none';
 			}
 		}
 
