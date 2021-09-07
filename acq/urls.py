@@ -50,6 +50,8 @@ urlpatterns = [
 
     path('', views.welcome, name= 'welcome'),
 
+    url(r'^Modulos', Modulos.as_view(), name='Modulos'),
+
     url(r'^Detalle_Analogico/(?P<pk>\d+)$', Detalle_Analogico.as_view(), name='Detalle_Analogico'),
 
     path('PV/', TemplateView.as_view(template_name="acq/refrescar.html"), name='PV'),

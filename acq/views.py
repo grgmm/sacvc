@@ -1,4 +1,4 @@
-from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configuracion_mbm   # OJO interesante metodo para
+from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configuracion_mbm, ModulosForm
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
@@ -942,6 +942,9 @@ class MbMaestro(View):
 
                 return redirect(self.success_url)
 
+class Modulos(View):
+    form_class = ModulosForm
+
 
 ###VISTAS DE USUARIOS
 class LoginView(FormView):
@@ -1449,15 +1452,15 @@ class detalle_tk(LoginRequiredMixin, DetailView):
 
         ####UNIDADES
         context['LT_UNIDAD'] = inslt.Unidad
-        context['LTA_UNIDAD'] = inslt.Unidad  # misma unidad de nivel de producto (lt)
+        context['LTA_UNIDAD'] = inslt.Unidad  # misma unidad de nivel de producto (lt) OJO CAMBIAR POR lta
 
         context['AYS_UNIDAD'] = insays.Unidad
         context['PT_UNIDAD'] = inspt.Unidad
         context['TT_UNIDAD'] = instt.Unidad
 
         context['TOV_UNIDAD'] = instov.Unidad
-        context['NSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov
-        context['GSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov
+        context['NSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov OJO CAMBIAR POR NSV
+        context['GSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov  OJO CAMBIAR POR GSV
 
         ####RANGOS
 
