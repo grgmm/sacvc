@@ -1,6 +1,6 @@
 .titulo {
 	text-align: center;
-	font-size: 28px;
+	font-size: 2rem;
 	font-weight: bold;
 	color: #338599;
 	margin:auto;
@@ -19,13 +19,11 @@
 	top: 15%; /* mayor que height de la imagen*/
 	left: 10%; /*(100%-(width:24%))/2*/
 	height: 82%;
-	overflow-x: hidden;
 	width: 80%;
 	background-color:none;
 	border-radius: 0.4rem;
-	/*border-color:#000000;
-	border-width: 1px;
-	border-style: solid;*/
+
+	/*border: solid 1px black;*/
 }
 
 #barra_tanque{
@@ -71,11 +69,10 @@
 
 #data_sec{
 	position: absolute;
+	top: 4%;
 	left: 36%;
 	width: 63%;
 	height: 99.5%;
-
-	/*border: solid 1px black;*/
 }
 
 #izq{
@@ -84,7 +81,7 @@
 	left: 1%;
 	width: 48%;
 
-	/*border: solid 1px black;*/
+	
 }
 
 #der{
@@ -93,8 +90,13 @@
 	left: 50%;
 	width: 48%;
 
-	/*border: solid 1px black;*/
 }
+
+/*
+#der, #izq{
+	border: solid 1px black;
+}
+*/
 
 .titulotabla{
 	border: 1px solid BLACK;
@@ -102,11 +104,11 @@
 	color: white;
 	border-radius: 0.4rem;
 	text-align: center;
-	font-size: 1.4rem;
+	font-size: 1.2rem;
 	font-weight: bold;
 	padding: 2% 1%;
 	margin-top: 3%;
-	margin-bottom: 1px;
+	margin-bottom: 1%;
 }
 
 th,tr td{
@@ -126,30 +128,26 @@ th,tr td{
 	font-size: 1.4rem;
 }
 
-.etiqueta {
+.etiqueta1 {
 	color: white;
 	background-color: #117a8b;
-	width: 30%;
+	width: 20%;
+}
+
+.etiqueta2 {
+	color: white;
+	background-color: #117a8b;
+	width: 20%;
 }
 
 .dato {
 	color: black;
 	background-color: white;
-	width: 35%;
-	height: 100%;
+	width: 40%;
 	/*width: 80%;*/
 }
 
-
-.linkdetalle{
-	left: 80%;
-	background-color:white;
-	border-width: 0;
-	width: 0px;
-	height: 0.6%;
-}
-
-.etiqueta, .dato{
+.etiqueta1, .etiqueta2, .dato{
 	padding-top: .5rem;
 	/*border-radius: 0.4rem;*/
 	margin-bottom: 0.4rem;
@@ -162,9 +160,9 @@ th,tr td{
 	vertical-align: middle;
 }
 
-.etiqueta, .dato, #tanque, #nivel{
+.etiqueta1, .etiqueta2, .dato, #tanque, #nivel{
 	font-weight: bold;
-	font-size: 1.2rem;	
+	font-size: 1rem;	
 }
 
 .btn_control {
@@ -205,15 +203,14 @@ th,tr td{
 a {
 	background-color: #138496; 
 	color: white; 
-	margin-left: 1rem;
 }
 
-#imagen{	
+#imgregresar{	
 	padding-right: 4px;
 	float:left;	
 }
 
-img{
+#imgtanque{
 	margin-left: 1rem;
 	float:right;
 	height: 100%;
@@ -270,4 +267,30 @@ img{
 
 .not-visible {
     display: none;
+}
+
+.btn_tabla{
+	position: relative;
+	left: 15%;
+	background-color: #117a8b;
+	border-radius: 0.2rem;
+	width: auto;
+	padding: 1% 3%;
+}
+
+.img_interna{
+	/*imagen a la izquierda y en el centro*/
+	position: relative;
+	width: 10%;
+	/*border: 1px solid black;*/
+}
+
+.btn_tabla:disabled {
+	opacity: 0.65;
+	background-color: #117a8b;
+	border-color: #10707f;
+}
+
+.btn_tabla:not(:disabled) {
+	cursor: pointer;
 }

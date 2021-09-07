@@ -116,7 +116,7 @@ label[for=encabezado] {
 	/*posiciono el boton*/
 	position: relative;
 	bottom: 10%;
-	left: 50%;	/*Centro del boton*/
+	left: 20%;	/*Centro del boton*/
   	transform: translateX(-50%);  
 	padding-left: 1rem;
 
