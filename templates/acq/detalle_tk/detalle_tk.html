@@ -9,7 +9,7 @@
 	<h2 class="titulo">DETALLE DEL TANQUE {{tk.Nombre}}</h2>
 	<div>
 		<a href="{% url 'uacq:grupo_tk' %}" id="regresar" type="button" class="btn_control" >
-			<img id="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>REGRESAR</a>
+			<img id="imgregresar" src="{% static "recursos/iconos/atras24x24.png" %}"/>REGRESAR</a>
 	</div>
 
 	<div id="ventana">
@@ -19,29 +19,77 @@
 				<!--<p id="idtanque" class="idtanque">{{tk.Nombre}}</p>-->
 				<p id="nivel">{{ Data.LT }}%</p>
 					<div id="contenedor"> 
-						<img src="{% static "recursos/imagenes/tanque.png" %}">
+						<img id="imgtanque" src="{% static "recursos/imagenes/tanque.png" %}">
 						<div id="contenedor_barra">
 							<div id="barra">0%</div>
 						</div>
 					</div>
 			</div>
 		</div>	
-		<div id="data_pri">
-			<br>	
+		<div id="data_pri" >
+			<div id="milt"><a href="{% url 'uacq:Detalle_Analogico' ID.LT %}"  title="ir al detalle de punto LT"></a></div>	
 			<table class="tabla">
 				<caption class="titulotabla">VARIABLES PRINCIPALES</caption>
-				<tr><td class="etiqueta">LT:</td><td id="lt" class="dato">{{LT_UNIDAD}}
-				</td></tr>
-				<tr><td class="etiqueta">TOV:</td><td id="tov" class="dato">{{TOV_UNIDAD}}</td></tr> 
-				<tr><td class="etiqueta">NSV:</td><td id="nsv" class="dato">{{NSV_UNIDAD}}</td></tr>
-				<tr><td class="etiqueta">GSV:</td><td id="gsv" class="dato">{{GSV_UNIDAD}}</td></tr>
+				<tr>
+					<td class="etiqueta1">LT:</td>
+					<td id="lt" class="dato">{{LT_UNIDAD}}</td>
+					<td class="dato">
+						<a href="{% url 'uacq:Detalle_Analogico' ID.LT %}" class="btn_tabla" title="ir al detalle de alarma LT">
+						<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle LT</a>
+					</td>
+				</tr>
+				<tr><td class="etiqueta1">TOV:</td>
+					<td id="tov" class="dato">{{TOV_UNIDAD}}</td>
+					<td class="dato">
+						<a href="{% url 'uacq:Detalle_Analogico' ID.TOV %}" class="btn_tabla" title="ir al detalle de alarma LT">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle TOV</a>
+					</td>
+				</tr> 
+				<tr><td class="etiqueta1">NSV:</td>
+					<td id="nsv" class="dato">{{NSV_UNIDAD}}</td>
+					<td class="dato">
+						<a href="{% url 'uacq:Detalle_Analogico' ID.NSV%}" class="btn_tabla" title="ir al detalle de alarma LT">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle NSV</a>
+					</td>
+				</tr>
+				<tr><td class="etiqueta1">GSV:</td>
+					<td id="gsv" class="dato">{{GSV_UNIDAD}}</td>
+					<td class="dato">
+						<a href="{% url 'uacq:Detalle_Analogico' ID.GSV %}" class="btn_tabla" title="ir al detalle de alarma LT">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle GSV</a>
+					</td>
+				</tr>
 			</table>
 			<table class="tabla">
 				<caption class="titulotabla">VARIABLES COMPLEMENTARIAS</caption>
-				<tr><td class="etiqueta">PT:</td><td id="pt" class="dato">{{PT_UNIDAD}}</td></tr>
-				<tr><td class="etiqueta">AYS:</td><td id="ays" class="dato">{{AYS_UNIDAD}}</td></tr>
-				<tr><td class="etiqueta">TT:</td><td id="tt" class="dato">{{TT_UNIDAD}}</td></tr>
-				<tr><td class="etiqueta">LTA:</td><td id="lta" class="dato">{{LTA_UNIDAD}}</td></tr>
+				<tr><td class="etiqueta1">PT:</td>
+					<td id="pt" class="dato">{{PT_UNIDAD}}</td>
+					<td class="dato">
+						<a href="{% url 'uacq:Detalle_Analogico' ID.PT %}" class="btn_tabla" title="ir al detalle de alarma LT">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle PT</a>
+					</td>
+				</tr>
+				<tr><td class="etiqueta1">AYS:</td>
+					<td id="ays" class="dato">{{AYS_UNIDAD}}</td>
+					<td class="dato">
+						<a href="{% url 'uacq:Detalle_Analogico' ID.AYS %}" class="btn_tabla" title="ir al detalle de alarma LT">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle AYS</a>
+					</td>
+				</tr>
+				<tr><td class="etiqueta1">TT:</td>
+					<td id="tt" class="dato">{{TT_UNIDAD}}</td>
+					<td class="dato">
+						<a href="{% url 'uacq:Detalle_Analogico' ID.TT %}" class="btn_tabla" title="ir al detalle de alarma LT">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle TT</a>
+					</td>
+				</tr>
+				<tr><td class="etiqueta1">LTA:</td>
+					<td id="lta" class="dato">{{LTA_UNIDAD}}</td>
+					<td class="dato">
+						<a href="{% url 'uacq:Detalle_Analogico' ID.LTA %}" class="btn_tabla" title="ir al detalle de alarma LT">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle LTA</a>
+					</td>
+				</tr>
 			</table>
 			
 		</div>
@@ -51,59 +99,87 @@
 				<table class="tabla">
 					<!--valores estaticos, vienen de BD-->
 					<caption class="titulotabla">IDENTIFICACION</caption>
-					<tr><td class="etiqueta">NOMBRE:</td><td id="nombre" class="dato">{{tk.Nombre}}</td></tr>
-					<tr><td class="etiqueta">DESCRIPTOR:</td><td id="descriptor" class="dato"> {{tk.Descriptor}}</td></tr>
-					<tr><td class="etiqueta">AOR:</td><td id="aor" class="dato">{{tk.id_aor.Nombre}}</td></tr>
+					<tr><td class="etiqueta2">NOMBRE:</td><td id="nombre" class="dato">{{tk.Nombre}}</td></tr>
+					<tr><td class="etiqueta2">DESCRIPTOR:</td><td id="descriptor" class="dato"> {{tk.Descriptor}}</td></tr>
+					<tr><td class="etiqueta2">AOR:</td><td id="aor" class="dato">{{tk.id_aor.Nombre}}</td></tr>
 				</table>
 				<table class="tabla">
 					<!--valores estaticos, vienen de BD-->
 					<caption class="titulotabla">RANGOS DE OPERACION</caption>
-					<tr><td class="etiqueta">LT MINIMO:</td><td id="lt_minimo" class="dato">{{LT_MINIMO}} {{ LT_UNIDAD}}</td></tr>
-					<tr><td class="etiqueta">LT MAXIMO:</td><td id="lt_maximo" class="dato">{{LT_MAXIMO}} {{ LT_UNIDAD}}</td></tr>
-					<tr><td class="etiqueta">TOV MINIMO:</td><td id="tov_minimo" class="dato">{{TOV_MINIMO}} {{TOV_UNIDAD}}</td></tr>
-					<tr><td class="etiqueta">TOV MAXIMO:</td><td id="tov_maximo" class="dato">{{TOV_MAXIMO}} {{TOV_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta2">LT MINIMO:</td><td id="lt_minimo" class="dato">{{LT_MINIMO}} {{ LT_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta2">LT MAXIMO:</td><td id="lt_maximo" class="dato">{{LT_MAXIMO}} {{ LT_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta2">TOV MINIMO:</td><td id="tov_minimo" class="dato">{{TOV_MINIMO}} {{TOV_UNIDAD}}</td></tr>
+					<tr><td class="etiqueta2">TOV MAXIMO:</td><td id="tov_maximo" class="dato">{{TOV_MAXIMO}} {{TOV_UNIDAD}}</td></tr>
 				</table>
 			</div>
 			<div id="der">
 				<table class="tabla">
 					<caption class="titulotabla">ALARMAS</caption>
-					<tr><td class="etiqueta">LT:</td><td id="lt_alarma" class="dato">
-						<a href="{% url 'uacq:Detalle_Analogico' 81 %}" id="link_lt" title="ir al detalle de alarma LT"></a>
-					</td></tr>
-					<tr><td class="etiqueta">PT:</td><td id="pt_alarma" class="dato">
-						<a href="" id="link_pt" title="ir al detalle de alarma PT"></a>
-					</td></tr>
-					<tr><td class="etiqueta">TT:</td><td id="tt_alarma" class="dato">
-						<a href="" id="link_tt" title="ir al detalle de alarma TT"></a>
-					</td></tr>
-					<tr><td class="etiqueta">LTA:</td><td id="lta_alarma" class="dato">
-						<a href="" id="link_lta" title="ir al detalle de alarma LTA"></a>
-					</td></tr>
-					<tr><td class="etiqueta">AYS:</td><td id="ays_alarma" class="dato">
-						<a href="" id="link_ays" title="ir al detalle de alarma AYS"></a>
-					</td></tr>
-					<tr><td class="etiqueta">TOV:</td><td id="tov_alarma" class="dato">
-						<a href="" id="link_tov" title="ir al detalle de alarma TOV"></a>
-					</td></tr>
-					<tr><td class="etiqueta">NSV:</td><td id="nsv_alarma" class="dato">
-						<a href="" id="link_nsv" title="ir al detalle de alarma NSV"></a>
-					</td></tr>
-					<tr><td class="etiqueta">GSV:</td><td id="gsv_alarma" class="dato">
-						<a href="" id="link_gsv" title="ir al detalle de alarma GSV"></a>
-					</td></tr>
+
+					<tr>
+						<td class="etiqueta1">LT:</td><td id="lt_alarma" class="dato"></td>
+						<td class="dato">
+							<a href="{% url 'uacq:Detalle_Analogico' ID.LT %}" class="btn_tabla" title="ir al detalle de alarma LT">
+								<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle LT</a>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="etiqueta1">PT:</td><td id="pt_alarma" class="dato"></td>
+						<td class="dato">
+							<a href="{% url 'uacq:Detalle_Analogico' ID.PT %}" class="btn_tabla" title="ir al detalle de alarma LT">
+								<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle PT</a>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="etiqueta1">TT:</td><td id="tt_alarma" class="dato"></td>
+						<td class="dato">
+							<a href="{% url 'uacq:Detalle_Analogico' ID.TT %}" class="btn_tabla" title="ir al detalle de alarma LT">
+								<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle TT</a>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="etiqueta1">LTA:</td><td id="lta_alarma" class="dato"></td>
+						<td class="dato">
+							<a href="{% url 'uacq:Detalle_Analogico' ID.LTA %}" class="btn_tabla" title="ir al detalle de alarma LT">
+								<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle LTA</a>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="etiqueta1">AYS:</td><td id="ays_alarma" class="dato">
+						</td><td class="dato">
+							<a href="{% url 'uacq:Detalle_Analogico' ID.AYS %}" class="btn_tabla" title="ir al detalle de alarma LT">
+								<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle AYS</a>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="etiqueta1">TOV:</td><td id="tov_alarma" class="dato"></td>
+						<td class="dato">
+							<a href="{% url 'uacq:Detalle_Analogico' ID.TOV %}" class="btn_tabla" title="ir al detalle de alarma LT">
+								<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle TOV</a>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="etiqueta1">NSV:</td><td id="nsv_alarma" class="dato"></td>
+						<td class="dato">
+							<a href="{% url 'uacq:Detalle_Analogico' ID.NSV %}" class="btn_tabla" title="ir al detalle de alarma LT">
+								<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle NSV</a>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="etiqueta1">GSV:</td><td id="gsv_alarma" class="dato"></td>
+						<td class="dato">
+							<a href="{% url 'uacq:Detalle_Analogico' ID.GSV %}" class="btn_tabla" title="ir al detalle de alarma LT">
+								<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Detalle GSV</a>
+						</td>
+					</tr>
 				</table>
 			</div>
-			<!---de la BD-
-			<p class="dato">Nombre: {{tk.Nombre}}</p>
-			<p class="dato">id: {{tk.id}}</p>
-			<p class="dato">Descriptor: {{tk.Descriptor}}</p>
-			
-			<p class="dato">TOV: {{ Data.TOV }}</p>
-			<p class="dato">LT: {{ Data.LT }}</p>
-			<p class="dato">LT_URGENTE: {{ Data.LT_URGENTE }}</p>
-			
-			<p class="dato">AOR: {{Aor}}</p>
-			<p class="dato">TOV_MAXIMO: {{TOV_MAXIMO}}</p> -->
 		</div>
-	</div>
 	{% endblock %}
