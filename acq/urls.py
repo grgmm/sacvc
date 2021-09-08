@@ -42,7 +42,7 @@ from .views import (
     MbMaestro,
     configuracion,
     Detalle_Analogico,
-    Modulos
+    Modulos,
 
         )
 

@@ -944,6 +944,42 @@ class MbMaestro(View):
 
 class Modulos(View):
     form_class = ModulosForm
+    template_name = "acq/Modulo/Modulo.html"
+    success_url = reverse_lazy('sacvc:configuracion')
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+                #return HttpResponseRedirect('sacvc:Menu')
+                return render(request, self.template_name, {'form': form, 'conf': file_form})
+        else:
+            return redirect('/sacvc/logout')
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+                return HttpResponseRedirect('sacvc:Menu')
+            else:
+                form = self.form_class(initial=self.initial)
+                request.POST = request.POST.copy()
+                print(request)
+                if form.is_valid():
+                    print('lolo')
+                else:
+                    print('lola')
+                    return render(request, self.template_name, {'form': form})
+
+
+
+
 
 
 ###VISTAS DE USUARIOS
@@ -1476,8 +1512,23 @@ class Detalle_Analogico(LoginRequiredMixin, DetailView):
     model = Analogico
     template_name = 'acq/Detalle_Puntos/Detalle_Analogico.html'
     fields = '__All__'
-    #fields= ['Nombre', 'Descriptor', 'id_Tk', 'pk', ]
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag = self.object
+        dict_temp={}
+        for f in tag._meta.get_fields():
+            campo=f.name
+            valor=getattr(tag, campo)
+            campovalor={campo:valor}
+            dict_temp.update(campovalor)
+            
+
+        context['FIELDS']=dict_temp
+        print(context)
+        return context
+     
+        
 
 
 
