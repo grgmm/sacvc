@@ -62,5 +62,5 @@ class ModulosForm(forms.Form):
             ("ALL", "Seleccionar Todos"),
             ("NONE", "Deseleccionar Todos"),
     ]
-    Countries = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+    Modulos = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                           choices=OPTIONS, )

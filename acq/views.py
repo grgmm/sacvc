@@ -944,7 +944,7 @@ class MbMaestro(View):
 
 class Modulos(View):
     form_class = ModulosForm
-    template_name = "acq/Modulo/Modulo.html"
+    template_name = "acq/Modulos/Modulos.html"
     success_url = reverse_lazy('sacvc:configuracion')
 
     def get(self, request, *args, **kwargs):
@@ -955,28 +955,29 @@ class Modulos(View):
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
                 #return HttpResponseRedirect('sacvc:Menu')
-                return render(request, self.template_name, {'form': form, 'conf': file_form})
+                form=self.form_class
+                return render(request, self.template_name, {'form': form})
         else:
             return redirect('/sacvc/logout')
 
     def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            filtro_usuario = Group.objects.filter(user=request.user)
-            for g in filtro_usuario:
-                print(g.name)
-            if (not g.name == 'supervisores'):
-                print('Usuario sin Perfil')
-                return HttpResponseRedirect('sacvc:Menu')
-            else:
-                form = self.form_class(initial=self.initial)
-                request.POST = request.POST.copy()
-                print(request)
-                if form.is_valid():
-                    print('lolo')
-                else:
-                    print('lola')
-                    return render(request, self.template_name, {'form': form})
 
+      request.POST = request.POST.copy()
+      form = self.form_class(request.POST)
+
+      print(request)
+      if form.is_valid():
+            print(form.data)
+            return render(request, self.template_name, {'form': form})     
+
+      else:
+            print('lola')
+            return render(request, self.template_name, {'form': form})     
+                           
+                
+  
+                
+                
 
 
 
@@ -1527,6 +1528,9 @@ class Detalle_Analogico(LoginRequiredMixin, DetailView):
         context['FIELDS']=dict_temp
         print(context)
         return context
+
+
+
      
         
 
