@@ -954,24 +954,38 @@ class Modulos(View):
                 print(g.name)
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-                #return HttpResponseRedirect('sacvc:Menu')
+                return HttpResponseRedirect('sacvc:Menu')
+            else:
                 form=self.form_class
                 return render(request, self.template_name, {'form': form})
         else:
             return redirect('/sacvc/logout')
 
     def post(self, request, *args, **kwargs):
+      fs = FileSystemStorage(location=settings.COMMANDS)
+      ruta_Data = fs.location
+      print(ruta_Data)
 
       request.POST = request.POST.copy()
       form = self.form_class(request.POST)
 
-      print(request)
-      if form.is_valid():
-            print(form.data)
-            return render(request, self.template_name, {'form': form})     
+      if form.is_valid(): 
+          selecciones=form.cleaned_data['Modulos']
+          print(selecciones)       
+          for seleccion in selecciones:
+              if seleccion == 'ACQ':
+                print('EJECUTAR ACQ')
+              if seleccion == 'CPT':
+                print('EJECUTAR VOLUMENES(CPT)')
+              if seleccion == 'HS':
+                print('EJECUTAR GRABAR HISTORICOS')
+              if seleccion == 'GES_HS':
+                print('EJECUTAR GESTION DE HOSTORICOS')
+                
+          return render(request, self.template_name, {'form': form})     
 
       else:
-            print('lola')
+            print('no valido en esta jodia')
             return render(request, self.template_name, {'form': form})     
                            
                 
@@ -1520,6 +1534,7 @@ class Detalle_Analogico(LoginRequiredMixin, DetailView):
         dict_temp={}
         for f in tag._meta.get_fields():
             campo=f.name
+            lolo= f
             valor=getattr(tag, campo)
             campovalor={campo:valor}
             dict_temp.update(campovalor)
@@ -1528,10 +1543,6 @@ class Detalle_Analogico(LoginRequiredMixin, DetailView):
         context['FIELDS']=dict_temp
         print(context)
         return context
-
-
-
-     
         
 
 

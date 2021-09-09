@@ -55,10 +55,10 @@ class guardar_configuracion_mbm(forms.Form):
 
 class ModulosForm(forms.Form):
     OPTIONS = [
-            ("ACQ", "Adquisicion"),
-            ("CPT", "Computo"),
-            ("HS", "Historicos"),
-            ("GES_HS", "Gestion Historicos"),
+            ("ACQ", "Adquisición"),
+            ("CPT", "Volúmenes"),
+            ("HS", "Históricos"),
+            ("GES_HS", "Gestion de Históricos"),
             ("ALL", "Seleccionar Todos"),
             ("NONE", "Deseleccionar Todos"),
     ]
