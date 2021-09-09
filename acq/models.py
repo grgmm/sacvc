@@ -239,7 +239,7 @@ class Digital(Tag):
 
 
 class Analogico(Tag):
-  ValorMinimo = models.FloatField(default= 0.0)
+  ValorMinimo = models.FloatField(default= 0.0, verbose_name= _('Valor Minimo'))
   ValorMaximo = models.FloatField(default= 20.0)
   Unidad = models.CharField(max_length= 5)
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from .import views
 from django.conf.urls import url
 from django.views.generic.base import TemplateView
 from django.urls import path
@@ -42,6 +42,7 @@ from .views import (
     MbMaestro,
     configuracion,
     Detalle_Analogico,
+    Modulos,
 
         )
 
@@ -49,6 +50,8 @@ app_name = 'sacvc'
 urlpatterns = [
 
     path('', views.welcome, name= 'welcome'),
+
+    url(r'^Modulos', Modulos.as_view(), name='Modulos'),
 
     url(r'^Detalle_Analogico/(?P<pk>\d+)$', Detalle_Analogico.as_view(), name='Detalle_Analogico'),
 

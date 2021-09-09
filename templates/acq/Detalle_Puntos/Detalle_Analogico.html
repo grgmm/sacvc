@@ -1,60 +1,61 @@
 {% extends 'acq/base.html' %}
 {% load static %}
-  {% block title %}Detalle{% endblock %}
+{% block title %}Detalle{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalle_analogico.css' %}">
 <div id="ventana">
-		<p>
-			<!-- Encabezado -->
-			<label for="encabezado">Detalle del Punto</label>
-		</p>
+	<p>
+		<!-- Encabezado -->
+		<label for="encabezado">Detalle del Punto</label>
+	</p>
 
-        <table>
-            {% for field in object.fields%}
-            <tr>
-              <td class="etiqueta">{{ object.field }}</td>
-              <td class="dato">{{ field }}</td>
-            </tr>
-            {% endfor %}
-          </table>
-       
-		<div>
-			<table>
-			
-				<tr>
-					<td class="etiqueta">Nombre:</td>
-					<td class="dato">{{ object.Nombre}}</td>
-				</tr>
+	<table>
+		{% for key, v in FIELDS.items %}
+		<tr>
+			<td class="etiqueta">{{key}}:</td>
+			<td class="dato">{{ v}}</td>
+		</tr>
+		{% endfor %}
+	</table>
 
-				<tr>
-					<td class="etiqueta">Descriptor:</td>
-					<td class="dato">{{ object.Descriptor }}</td>
-				</tr>
-				<tr>
-					<td class="etiqueta">Valor Maximo:</td>
-					<td class="dato">{{ object.ValorMinimo }}</td>
-				</tr>
-				<tr>
-					<td class="etiqueta">Alarma muy Alta:</td>
-					<td class="dato">{{ object.HH}}</td>
-				</tr>
-				<tr>
-					<td class="etiqueta">Alarma Alta:</td>
-					<td class="dato">{{ object.H}}</td>
-				</tr>
-				<tr>
-					<td class="etiqueta">Alarma Baja:</td>
-					<td class="dato">{{ object.L}}</td>
-				</tr>
-				<tr>
-					<td class="etiqueta">Alarma muy Baja:</td>
-					<td class="dato">{{ object.LL}}</td>
-				</tr>
-			</table>
-		</div>
-    <a id="detalle" href="" type="button" class="btn_control">
-							<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/> Regresar</a>
+	<!--
+	<div>
+		<table>
 
-</div>
-{% endblock %}
+			<tr>
+				<td class="etiqueta">Nombre:</td>
+				<td class="dato">{{ object.Nombre}}</td>
+			</tr>
+
+			<tr>
+				<td class="etiqueta">Descriptor:</td>
+				<td class="dato">{{ object.Descriptor }}</td>
+			</tr>
+			<tr>
+				<td class="etiqueta">Valor Maximo:</td>
+				<td class="dato">{{ object.ValorMinimo }}</td>
+			</tr>
+			<tr>
+				<td class="etiqueta">Alarma muy Alta:</td>
+				<td class="dato">{{ object.HH}}</td>
+			</tr>
+			<tr>
+				<td class="etiqueta">Alarma Alta:</td>
+				<td class="dato">{{ object.H}}</td>
+			</tr>
+			<tr>
+				<td class="etiqueta">Alarma Baja:</td>
+				<td class="dato">{{ object.L}}</td>
+			</tr>
+			<tr>
+				<td class="etiqueta">Alarma muy Baja:</td>
+				<td class="dato">{{ object.LL}}</td>
+			</tr>
+		</table>
+	</div>
+-->
+	<a id="regresar" href="" type="button" class="btn_control">
+		<img class="imagen" src="{% static "recursos/iconos/atras24x24.png"%}" /> Regresar</a>
+
+	{% endblock %}

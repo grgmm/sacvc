@@ -1,4 +1,4 @@
-from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configuracion_mbm   # OJO interesante metodo para
+from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configuracion_mbm, ModulosForm
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
@@ -942,6 +942,46 @@ class MbMaestro(View):
 
                 return redirect(self.success_url)
 
+class Modulos(View):
+    form_class = ModulosForm
+    template_name = "acq/Modulos/Modulos.html"
+    success_url = reverse_lazy('sacvc:configuracion')
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            filtro_usuario = Group.objects.filter(user=request.user)
+            for g in filtro_usuario:
+                print(g.name)
+            if (not g.name == 'supervisores'):
+                print('Usuario sin Perfil')
+                #return HttpResponseRedirect('sacvc:Menu')
+                form=self.form_class
+                return render(request, self.template_name, {'form': form})
+        else:
+            return redirect('/sacvc/logout')
+
+    def post(self, request, *args, **kwargs):
+
+      request.POST = request.POST.copy()
+      form = self.form_class(request.POST)
+
+      print(request)
+      if form.is_valid():
+            print(form.data)
+            return render(request, self.template_name, {'form': form})     
+
+      else:
+            print('lola')
+            return render(request, self.template_name, {'form': form})     
+                           
+                
+  
+                
+                
+
+
+
+
 
 ###VISTAS DE USUARIOS
 class LoginView(FormView):
@@ -1437,9 +1477,6 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         insnsv = Analogico.objects.get(id_Tk=idtk, etiqueta1='NSV')
         inslta = Analogico.objects.get(id_Tk=idtk, etiqueta1='lta')
 
-
-
-
         tovmaximo = instov.ValorMaximo
         tovminimo = instov.ValorMinimo
         ltmaximo = inslt.ValorMaximo
@@ -1449,15 +1486,15 @@ class detalle_tk(LoginRequiredMixin, DetailView):
 
         ####UNIDADES
         context['LT_UNIDAD'] = inslt.Unidad
-        context['LTA_UNIDAD'] = inslt.Unidad  # misma unidad de nivel de producto (lt)
+        context['LTA_UNIDAD'] = inslt.Unidad  # misma unidad de nivel de producto (lt) OJO CAMBIAR POR lta
 
         context['AYS_UNIDAD'] = insays.Unidad
         context['PT_UNIDAD'] = inspt.Unidad
         context['TT_UNIDAD'] = instt.Unidad
 
         context['TOV_UNIDAD'] = instov.Unidad
-        context['NSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov
-        context['GSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov
+        context['NSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov OJO CAMBIAR POR NSV
+        context['GSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov  OJO CAMBIAR POR GSV
 
         ####RANGOS
 
@@ -1473,12 +1510,17 @@ class Detalle_Analogico(LoginRequiredMixin, DetailView):
     model = Analogico
     template_name = 'acq/Detalle_Puntos/Detalle_Analogico.html'
     fields = '__All__'
-    #fields= ['Nombre', 'Descriptor', 'id_Tk', 'pk', ]
 
-
-
-
-
-
-
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag = self.object
+        dict_temp={}
+        for f in tag._meta.get_fields():
+            campo=f.name
+            valor=getattr(tag, campo)
+            campovalor={campo:valor}
+            dict_temp.update(campovalor)
+            
+        context['FIELDS']=dict_temp
+        print(context)
+        return context
