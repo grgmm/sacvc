@@ -119,9 +119,9 @@ th,tr td{
 #link_lt, #link_pt, #link_tt, #link_lta, #link_ays, #link_tov, #link_nsv, #link_gsv{
 	/*
 	display: none; 
-	*/
 	opacity: 0;	
 	pointer-events: none;
+	*/
 	margin: 0 auto;
 }
 
@@ -273,7 +273,7 @@ a {
 
 .btn_tabla{
 	position: relative;
-	left: 15%;
+	left: 10%;
 	background-color: #117a8b;
 	border-radius: 0.2rem;
 	width: auto;

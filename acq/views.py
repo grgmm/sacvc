@@ -1491,9 +1491,6 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         insnsv = Analogico.objects.get(id_Tk=idtk, etiqueta1='NSV')
         inslta = Analogico.objects.get(id_Tk=idtk, etiqueta1='lta')
 
-
-
-
         tovmaximo = instov.ValorMaximo
         tovminimo = instov.ValorMinimo
         ltmaximo = inslt.ValorMaximo
@@ -1539,14 +1536,10 @@ class Detalle_Analogico(LoginRequiredMixin, DetailView):
             campovalor={campo:valor}
             dict_temp.update(campovalor)
             
-
         context['FIELDS']=dict_temp
         print(context)
         return context
         
-
-
-
 
 
 
