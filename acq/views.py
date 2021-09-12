@@ -44,6 +44,8 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
 from acq.calculos import Settings_Alarmas
+from Backend.COMUNICACION.Adquisicion import acq
+
 # abre un archivo json en modo lectura
 def porcentaje_subida(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
@@ -964,7 +966,8 @@ class Modulos(View):
     def post(self, request, *args, **kwargs):
       fs = FileSystemStorage(location=settings.COMMANDS)
       ruta_Data = fs.location
-      print(ruta_Data)
+      conexion = {}
+
 
       request.POST = request.POST.copy()
       form = self.form_class(request.POST)
@@ -974,7 +977,24 @@ class Modulos(View):
           print(selecciones)       
           for seleccion in selecciones:
               if seleccion == 'ACQ':
+                #print(acq.mbtcpserver.conectar(11,5002))
+                try:
+                    MbSrv = mbmaster_model.objects.first()
+                    conexion['SercvicePort'] =  MbSrv.SercvicePort
+                    conexion['IdDevice'] = MbSrv.IdDevice
+                    conexion['IpDevice'] = MbSrv.IpDevice
+                    conexion['activar']= True
+                    conectar = acq.mbtcpserver(conexion['SercvicePort'], conexion['IdDevice'], conexion['IpDevice'], conexion['activar'])
+                
+                except:
+                    print("Error inesperado:", sys.exc_info()[0])
+
                 print('EJECUTAR ACQ')
+              else:
+                    conexion['activar']= 'false'
+                    conectar = acq.mbtcpserver(conexion['SercvicePort'], conexion['IdDevice'], conexion['IpDevice'], conexion['activar'])
+                    print('PASOPASPASOPASOPASOPAOSPAOSPAOSPAOSPAOSPAOSPSOAPSOAPSOAPSOPAO')
+
               if seleccion == 'CPT':
                 print('EJECUTAR VOLUMENES(CPT)')
               if seleccion == 'HS':

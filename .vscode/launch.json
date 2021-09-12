@@ -30,7 +30,7 @@
             "request": "launch",
             "program": "${workspaceFolder}\\manage.py",
             "args": [
-                "CPT"
+                "cpt"
             ],
             "django": true
         },
