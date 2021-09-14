@@ -1,5 +1,34 @@
+{% extends "acq/base.html" %}
+{% load static %}
+{% block title %}{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/modulos.css' %}">
+
+<div id="ventana">
+	<p>
+		<label for="encabezado">Arrancar Modulos</label>
+	</p>
+
 <form method='post'>
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type='submit' value='submit'>
+    <!--
+    <table>
+        {{ form.as_table }}
+    </table>
+    -->
+
+    <table>
+        <caption >Seleccione los Modulos</caption>
+        {% for field in form.visible_fields %}
+              <tr>
+                <td class="dato">{{ field }}</td>
+              </tr>
+        {% endfor %}
+      </table>
+
+    <button id="tk_modificar"   type='submit' value='submit' class="btn_control">Enviar</button>
 </form>
+</div>
+{% endblock %}
