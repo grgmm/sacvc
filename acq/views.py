@@ -1,3 +1,4 @@
+import subprocess
 from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configuracion_mbm, ModulosForm
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -977,23 +978,25 @@ class Modulos(View):
           print(selecciones)       
           for seleccion in selecciones:
               if seleccion == 'ACQ':
-                #print(acq.mbtcpserver.conectar(11,5002))
                 try:
+                    print('EJECUTAR ACQ')
                     MbSrv = mbmaster_model.objects.first()
                     conexion['SercvicePort'] =  MbSrv.SercvicePort
                     conexion['IdDevice'] = MbSrv.IdDevice
                     conexion['IpDevice'] = MbSrv.IpDevice
-                    conexion['activar']= True
-                    conectar = acq.mbtcpserver(conexion['SercvicePort'], conexion['IdDevice'], conexion['IpDevice'], conexion['activar'])
+                    print(conexion['SercvicePort'])
+                    print(conexion['IdDevice'])
+                    print(conexion['IpDevice'])
+
+                    #PROBLEMA DETECTADO EN LA SIGUIENTE LINEA, NO EJECUTA OTRAS ACCIONES EN LA VHASTA MIENTRAS ESTE CORRIENDO EL MODULO ACQ
+
+                    subprocess.Popen(acq.mbtcpserver(conexion['SercvicePort'], conexion['IdDevice'], conexion['IpDevice']))
+
                 
                 except:
                     print("Error inesperado:", sys.exc_info()[0])
 
-                print('EJECUTAR ACQ')
-              else:
-                    conexion['activar']= 'false'
-                    conectar = acq.mbtcpserver(conexion['SercvicePort'], conexion['IdDevice'], conexion['IpDevice'], conexion['activar'])
-                    print('PASOPASPASOPASOPASOPAOSPAOSPAOSPAOSPAOSPAOSPSOAPSOAPSOAPSOPAO')
+                   
 
               if seleccion == 'CPT':
                 print('EJECUTAR VOLUMENES(CPT)')
@@ -1008,14 +1011,6 @@ class Modulos(View):
             print('no valido en esta jodia')
             return render(request, self.template_name, {'form': form})     
                            
-                
-  
-                
-                
-
-
-
-
 
 ###VISTAS DE USUARIOS
 class LoginView(FormView):
