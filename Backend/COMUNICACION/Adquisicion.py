@@ -31,9 +31,9 @@ class acq():
         try:
             sock.connect((slave_ip_address, serviceport))             
             print('Adquisción de Data Modbus Activa (Running)')
-            n = 2  # 100 iteraciones
+            #n = 2  # 100 iteraciones
             # INICIALIZAR VARIABLES
-            i = 1
+            #i = 1
             timestamp = ""
             Datos_Actuales = {}
             fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
@@ -46,12 +46,11 @@ class acq():
             Pv0 = 0
             Pv1 = 0
 
-            while i <= n:
-                if not Tk.objects.exists():
+            if not Tk.objects.exists():
                     print(
                         'NO HAY DATOS PARA ENCUESTAR SALIENDO DEL ADQUISIDOR ###################')
                     exit()  # SALIR DEL PROGRAMA SI NO HAY TANQUES QUE ENCUESTAR
-                else:
+            else:
 
                     for tk in Tk.objects.iterator():  # ITERNDO EN TANQUES EXISTENTES.
                         Data_Cruda = {'Data_Cruda': []}
@@ -124,6 +123,9 @@ class acq():
                         # print("Error inesperado:", sys.exc_info()[0])
 
             sock.close() # cierra la conexión
+
+            #while i <= n:
+                
         except:
             print("Sin conexión...reintentando", sys.exc_info()[0])
             pass

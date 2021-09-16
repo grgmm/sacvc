@@ -969,15 +969,19 @@ class Modulos(View):
       ruta_Data = fs.location
       conexion = {}
 
-
       request.POST = request.POST.copy()
       form = self.form_class(request.POST)
 
       if form.is_valid(): 
           selecciones=form.cleaned_data['Modulos']
-          print(selecciones)       
+          activar_acq = True
           for seleccion in selecciones:
-              if seleccion == 'ACQ':
+                 
+              while (seleccion == 'ACQ' and activar_acq):
+                if 'ACQ' in selecciones:
+                    activar_acq = True
+                else:
+                    activar_acq = False         
                 try:
                     print('EJECUTAR ACQ')
                     MbSrv = mbmaster_model.objects.first()
@@ -988,13 +992,10 @@ class Modulos(View):
                     print(conexion['IdDevice'])
                     print(conexion['IpDevice'])
 
-                    #PROBLEMA DETECTADO EN LA SIGUIENTE LINEA, NO EJECUTA OTRAS ACCIONES EN LA VHASTA MIENTRAS ESTE CORRIENDO EL MODULO ACQ
-
-                    subprocess.Popen(acq.mbtcpserver(conexion['SercvicePort'], conexion['IdDevice'], conexion['IpDevice']))
-
-                
+                    q= acq.mbtcpserver(conexion['SercvicePort'] , conexion['IdDevice'] , conexion['IpDevice'])
+                    
                 except:
-                    print("Error inesperado:", sys.exc_info()[0])
+                    print("Error inesperado:LOLO1", sys.exc_info()[0])
 
                    
 
