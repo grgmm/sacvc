@@ -947,6 +947,45 @@ class MbMaestro(View):
 
                 return redirect(self.success_url)
 
+import threading
+import time
+#-----------------------------------------------------------------------
+#HILOS PARA LA EJECUCION DE SCRIPTS DE ADQUISICION Y TRATAMIENTO DE DATOS
+def tarea_acq(arg):
+    t_acq = threading.currentThread()
+    while getattr(t_acq, "activar", True):
+        # poner aqui el codigo deseado
+        acq.mbtcpserver(5002 ,11 , '127.0.0.1')        
+        print ('Ejecutando ACQ '+t_acq.name+' %s' % arg)
+        #time.sleep(1)
+
+def tarea_cpt(arg):
+    t_cpt = threading.currentThread()
+    while getattr(t_cpt, "activar", True):
+        #poner aqui el codigo deseado
+        print ('Ejecutando CPT '+t_acq.name+' %s' % arg)
+        time.sleep(1)
+
+def tarea_hs(arg):
+    t_hs = threading.currentThread()
+    while getattr(t_hs, "activar", True):
+        #poner aqui el codigo deseado
+        print ('Ejecutando HS '+t_acq.name+' %s' % arg)
+        time.sleep(1)
+
+def tarea_ges_hs(arg):
+    t_ges_hs = threading.currentThread()
+    while getattr(t_ges_hs, "activar", True):
+        #poner aqui el codigo deseado
+        print ('Ejecutando GES_HS '+t_ges_hs.name+' %s' % arg)
+        time.sleep(1)
+#-----------------------------------------------------------------------
+
+activar_acq= False
+activar_cpt= False
+activar_hs= False
+activar_ges_hs= False
+
 class Modulos(View):
     form_class = ModulosForm
     template_name = "acq/Modulos/Modulos.html"
@@ -966,61 +1005,118 @@ class Modulos(View):
         else:
             return redirect('/sacvc/logout')
 
-    def post(self, request, *args, **kwargs):
+   
+    def post(self, request, *args, **kwargs): 
+      global activar_acq 
+      global activar_cpt  
+      global activar_hs  
+      global activar_ges_hs 
       fs = FileSystemStorage(location=settings.COMMANDS)
       ruta_Data = fs.location
-      conexion = {}
+      #print(ruta_Data)
 
 
       request.POST = request.POST.copy()
       form = self.form_class(request.POST)
 
+#---------------------------------------------------------------------------
+#lOGICA DE CONTROL PARA ARRANQUE Y PARADA DE HILOS
       if form.is_valid(): 
+          #print('hay uno o mas modulos seleccionados')
           selecciones=form.cleaned_data['Modulos']
-          hilo_acq= threading.Thread()
-          
-          MbSrv = mbmaster_model.objects.first() #OBTIENE LOS ATOS CONFIGURADOS POR EL USUARIO PARA LA CMUNICACION CON EL ECLAVO MOBUS
-          conexion['SercvicePort'] =  MbSrv.SercvicePort
-          conexion['IdDevice'] = MbSrv.IdDevice
-          conexion['IpDevice'] = MbSrv.IpDevice
-          
-          def conecta():
+          for seleccion in selecciones: 
+              if 'ACQ' in selecciones and activar_acq == False:
+                print("ORDEN DE ARRANQUE RECIBIDA PARA ACQ")
+                activar_acq = True
+                global t_acq
+                t_acq = threading.Thread(target=tarea_acq, args=("tarea_acq",))
+                t_acq.start()
 
-                  acq.mbtcpserver(conexion['SercvicePort'] ,conexion['IdDevice'] , conexion['IpDevice'])
-                  return
+              if 'ACQ' not in selecciones and activar_acq == True:
+                print("ORDEN DE PARADA RECIBIDA PARA ACQ")
+                print(t_acq.name) 
+                t_acq.activar = False
+                t_acq.join()
+                activar_acq = False 
+              
+              if 'CPT' in selecciones and activar_cpt == False:
+                print("ORDEN DE ARRANQUE RECIBIDA PARA CPT")
+                activar_cpt = True
+                global t_cpt
+                t_cpt = threading.Thread(target=tarea_cpt, args=("tarea_cpt",))
+                print('ARRANCAR '+t_cpt.name)
+                t_cpt.start()
 
-            
-            
-          for seleccion in selecciones:
-              if seleccion in 'ACQ':
-                print('EJECUTAR ACQ')
-                
-                hilo1=threading.Thread(target=conecta(), daemon=True)
-                hilo1.start()
-                return render(request, self.template_name, {'form': form})     
+              if 'CPT' not in selecciones and activar_cpt == True:
+                print("ORDEN DE PARADA RECIBIDA PARA CPT")
+                print(t_cpt.name) 
+                t_cpt.activar = False
+                t_cpt.join()
+                activar_cpt = False 
+              
+              if 'HS' in selecciones and activar_hs == False:
+                print("ORDEN DE ARRANQUE RECIBIDA PARA HS")
+                activar_hs = True
+                global t_hs
+                t_hs = threading.Thread(target=tarea_hs, args=("tarea_hs",))
+                print('ARRANCAR '+t_hs.name)
+                t_hs.start()
 
+              if 'HS' not in selecciones and activar_hs == True:
+                print("ORDEN DE PARADA RECIBIDA PARA HS")
+                print(t_hs.name) 
+                t_hs.activar = False
+                t_hs.join()
+                activar_hs = False 
+              
+              if 'GES_HS' in selecciones and activar_ges_hs == False:
+                print("ORDEN DE ARRANQUE RECIBIDA PARA GES_HS")
+                activar_ges_hs = True
+                global t_ges_hs
+                t_ges_hs = threading.Thread(target=tarea_ges_hs, args=("tarea_ges_hs",))
+                print('ARRANCAR '+t_ges_hs.name)
+                t_ges_hs.start()
 
-              else:
-                  
-                print('detuvo el hilo acq')
-                #except:
-                    #print("Error inesperado:LOLO1", sys.exc_info()[0])
-          
+              if 'GES_HS' not in selecciones and activar_ges_hs == True:
+                print("ORDEN DE PARADA RECIBIDA PARA GES_HS")
+                print(t_ges_hs.name) 
+                t_ges_hs.activar = False
+                t_ges_hs.join()
+                activar_ges_hs = False 
 
-              if seleccion == 'CPT':
-                print('EJECUTAR VOLUMENES(CPT)')
-              if seleccion == 'HS':
-                print('EJECUTAR GRABAR HISTORICOS')
-              if seleccion == 'GES_HS':
-                print('EJECUTAR GESTION DE HOSTORICOS')
-                
           return render(request, self.template_name, {'form': form})     
 
       else:
-            print('no valido en esta jodia')
-            return render(request, self.template_name, {'form': form})     
-                           
+            print('no hay ninguna seleccion')
+            #desactiva los modulos que esten arrancados
+            
+            if activar_acq:
+                print("ORDEN DE PARADA RECIBIDA PARA ACQ")
+                t_acq.activar = False
+                t_acq.join()
+                activar_acq = False
 
+            if activar_cpt:
+                print("ORDEN DE PARADA RECIBIDA PARA CPT")
+                t_cpt.activar = False
+                t_cpt.join()
+                activar_cpt = False
+
+            if activar_hs:
+                print("ORDEN DE PARADA RECIBIDA PARA HS")
+                t_hs.activar = False
+                t_hs.join()
+                activar_hs = False
+
+            if activar_ges_hs:
+                print("ORDEN DE PARADA RECIBIDA PARA GES_HS")
+                t_ges_hs.activar = False
+                t_ges_hs.join()
+                activar_ges_hs = False
+  
+            return render(request, self.template_name, {'form': form})   
+#---------------------------------------------------------------------------  
+                           
 ###VISTAS DE USUARIOS
 class LoginView(FormView):
     form_class = AuthenticationForm
