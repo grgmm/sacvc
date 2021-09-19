@@ -46,6 +46,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
 from acq.calculos import Settings_Alarmas
 from Backend.COMUNICACION.Adquisicion import acq
+import threading
+
 
 # abre un archivo json en modo lectura
 def porcentaje_subida(request):
@@ -969,35 +971,41 @@ class Modulos(View):
       ruta_Data = fs.location
       conexion = {}
 
+
       request.POST = request.POST.copy()
       form = self.form_class(request.POST)
 
       if form.is_valid(): 
           selecciones=form.cleaned_data['Modulos']
-          activar_acq = True
+          hilo_acq= threading.Thread()
+          
+          MbSrv = mbmaster_model.objects.first() #OBTIENE LOS ATOS CONFIGURADOS POR EL USUARIO PARA LA CMUNICACION CON EL ECLAVO MOBUS
+          conexion['SercvicePort'] =  MbSrv.SercvicePort
+          conexion['IdDevice'] = MbSrv.IdDevice
+          conexion['IpDevice'] = MbSrv.IpDevice
+          
+          def conecta():
+
+                  acq.mbtcpserver(conexion['SercvicePort'] ,conexion['IdDevice'] , conexion['IpDevice'])
+                  return
+
+            
+            
           for seleccion in selecciones:
-                 
-              while (seleccion == 'ACQ' and activar_acq):
-                if 'ACQ' in selecciones:
-                    activar_acq = True
-                else:
-                    activar_acq = False         
-                try:
-                    print('EJECUTAR ACQ')
-                    MbSrv = mbmaster_model.objects.first()
-                    conexion['SercvicePort'] =  MbSrv.SercvicePort
-                    conexion['IdDevice'] = MbSrv.IdDevice
-                    conexion['IpDevice'] = MbSrv.IpDevice
-                    print(conexion['SercvicePort'])
-                    print(conexion['IdDevice'])
-                    print(conexion['IpDevice'])
+              if seleccion in 'ACQ':
+                print('EJECUTAR ACQ')
+                
+                hilo1=threading.Thread(target=conecta(), daemon=True)
+                hilo1.start()
+                return render(request, self.template_name, {'form': form})     
 
-                    q= acq.mbtcpserver(conexion['SercvicePort'] , conexion['IdDevice'] , conexion['IpDevice'])
-                    
-                except:
-                    print("Error inesperado:LOLO1", sys.exc_info()[0])
 
-                   
+              else:
+                  
+                print('detuvo el hilo acq')
+                #except:
+                    #print("Error inesperado:LOLO1", sys.exc_info()[0])
+          
 
               if seleccion == 'CPT':
                 print('EJECUTAR VOLUMENES(CPT)')
