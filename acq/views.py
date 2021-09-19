@@ -1,3 +1,4 @@
+import subprocess
 from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configuracion_mbm, ModulosForm
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect

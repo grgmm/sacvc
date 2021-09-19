@@ -15,28 +15,25 @@ from django.conf import settings
 class acq():
     help = 'help'
 
-    def mbtcpserver(serviceport, id_esclavo, slave_ip_address, activar):
-        print(activar)
-        if activar != True:
-            exit()
+    def mbtcpserver(serviceport, id_esclavo, slave_ip_address):
         conf.SIGNED_VALUES = True
         # puertos validos por encima de 1024 en sistemas Linux Android Unix.
 
         # declara la conexión
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        print(slave_ip_address, type(slave_ip_address))
-        print(id_esclavo, type(id_esclavo))
-        print(serviceport, type(serviceport))
+      # print(slave_ip_address, type(slave_ip_address))
+      # print(id_esclavo, type(id_esclavo))
+      # print(serviceport, type(serviceport))
 
 
                
         try:
-            sock.connect(('localhost', 502))             
+            sock.connect((slave_ip_address, serviceport))             
             print('Adquisción de Data Modbus Activa (Running)')
-            n = 2  # 100 iteraciones
+            #n = 2  # 100 iteraciones
             # INICIALIZAR VARIABLES
-            i = 1
+            #i = 1
             timestamp = ""
             Datos_Actuales = {}
             fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
@@ -46,16 +43,14 @@ class acq():
             k = 0
             TKS = {}
             Parametro_tk = ''
-            # simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
             Pv0 = 0
             Pv1 = 0
 
-            while i <= n:
-                if not Tk.objects.exists():
+            if not Tk.objects.exists():
                     print(
                         'NO HAY DATOS PARA ENCUESTAR SALIENDO DEL ADQUISIDOR ###################')
                     exit()  # SALIR DEL PROGRAMA SI NO HAY TANQUES QUE ENCUESTAR
-                else:
+            else:
 
                     for tk in Tk.objects.iterator():  # ITERNDO EN TANQUES EXISTENTES.
                         Data_Cruda = {'Data_Cruda': []}
@@ -128,6 +123,9 @@ class acq():
                         # print("Error inesperado:", sys.exc_info()[0])
 
             sock.close() # cierra la conexión
+
+            #while i <= n:
+                
         except:
             print("Sin conexión...reintentando", sys.exc_info()[0])
             pass
