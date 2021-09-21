@@ -952,28 +952,28 @@ def tarea_acq(arg):
     while getattr(t_acq, "activar", True):
         #poner aqui el codigo deseado
         print ('Ejecutando ACQ '+t_acq.name+' %s' % arg)
-        time.sleep(1)
+        time.sleep(2)
 
 def tarea_cpt(arg):
     t_cpt = threading.currentThread()
     while getattr(t_cpt, "activar", True):
         #poner aqui el codigo deseado
         print ('Ejecutando CPT '+t_acq.name+' %s' % arg)
-        time.sleep(1)
+        time.sleep(2)
 
 def tarea_hs(arg):
     t_hs = threading.currentThread()
     while getattr(t_hs, "activar", True):
         #poner aqui el codigo deseado
-        print ('Ejecutando HS '+t_acq.name+' %s' % arg)
-        time.sleep(1)
+        print (' Ejecutando HS '+t_acq.name+' %s' % arg)
+        time.sleep(2)
 
 def tarea_ges_hs(arg):
     t_ges_hs = threading.currentThread()
     while getattr(t_ges_hs, "activar", True):
         #poner aqui el codigo deseado
         print ('Ejecutando GES_HS '+t_ges_hs.name+' %s' % arg)
-        time.sleep(1)
+        time.sleep(2)
 #-----------------------------------------------------------------------
 
 activar_acq= False
@@ -985,7 +985,7 @@ class Modulos(View):
     form_class = ModulosForm
     template_name = "acq/Modulos/Modulos.html"
     success_url = reverse_lazy('sacvc:configuracion')
-
+    
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             filtro_usuario = Group.objects.filter(user=request.user)
