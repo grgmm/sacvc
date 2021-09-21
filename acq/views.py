@@ -45,6 +45,10 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
 from acq.calculos import Settings_Alarmas
+from Backend.COMUNICACION.Adquisicion import acq
+import threading
+
+
 # abre un archivo json en modo lectura
 def porcentaje_subida(request):
     fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
@@ -950,9 +954,14 @@ import time
 def tarea_acq(arg):
     t_acq = threading.currentThread()
     while getattr(t_acq, "activar", True):
-        #poner aqui el codigo deseado
+        # poner aqui el codigo deseado
+        acq.mbtcpserver(5002 ,11 , '127.0.0.1')        
         print ('Ejecutando ACQ '+t_acq.name+' %s' % arg)
+<<<<<<< HEAD
         time.sleep(2)
+=======
+        #time.sleep(1)
+>>>>>>> b3d47bc3580d1c07d22018fc173a351edc7efb21
 
 def tarea_cpt(arg):
     t_cpt = threading.currentThread()
@@ -1010,13 +1019,14 @@ class Modulos(View):
       ruta_Data = fs.location
       #print(ruta_Data)
 
+
       request.POST = request.POST.copy()
       form = self.form_class(request.POST)
 
 #---------------------------------------------------------------------------
 #lOGICA DE CONTROL PARA ARRANQUE Y PARADA DE HILOS
       if form.is_valid(): 
-          print('hay uno o mas modulos seleccionados')
+          #print('hay uno o mas modulos seleccionados')
           selecciones=form.cleaned_data['Modulos']
           for seleccion in selecciones: 
               if 'ACQ' in selecciones and activar_acq == False:

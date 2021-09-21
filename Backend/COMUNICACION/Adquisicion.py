@@ -34,7 +34,7 @@ class acq():
             #n = 2  # 100 iteraciones
             # INICIALIZAR VARIABLES
             #i = 1
-            timestamp = ""
+            timestamp = ""  
             Datos_Actuales = {}
             fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
             ruta_Data = fs.location  # RUTA DEL BUFFER
@@ -45,70 +45,71 @@ class acq():
             Parametro_tk = ''
             Pv0 = 0
             Pv1 = 0
+            
+            if True:
+                if not Tk.objects.exists():
+                        print(
+                            'NO HAY DATOS PARA ENCUESTAR SALIENDO DEL ADQUISIDOR ###################')
+                        exit()  # SALIR DEL PROGRAMA SI NO HAY TANQUES QUE ENCUESTAR
+                else:
 
-            if not Tk.objects.exists():
-                    print(
-                        'NO HAY DATOS PARA ENCUESTAR SALIENDO DEL ADQUISIDOR ###################')
-                    exit()  # SALIR DEL PROGRAMA SI NO HAY TANQUES QUE ENCUESTAR
-            else:
+                        for tk in Tk.objects.iterator():  # ITERNDO EN TANQUES EXISTENTES.
+                            Data_Cruda = {'Data_Cruda': []}
+                            # RECORRIENDO LOS TAGS DE CADA TANQUE
+                            for tag in Tag.objects.filter(id_Tk=tk.pk).iterator():
+                                # Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
+                                # Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
+                                idtag = tag.pk  # Del mdelo Tag
+                                tag_addres = int(tag.direccion_campo)-1  # Del mdelo Tag
+                                # DATA PARA TRASNFERIR
+                                #print(tag_addres)
+                                Current_Value = [idtag, Pv0, Pv1]
+                                print(Current_Value)
 
-                    for tk in Tk.objects.iterator():  # ITERNDO EN TANQUES EXISTENTES.
-                        Data_Cruda = {'Data_Cruda': []}
-                        # RECORRIENDO LOS TAGS DE CADA TANQUE
-                        for tag in Tag.objects.filter(id_Tk=tk.pk).iterator():
-                            # Pv0=random.randint(16384,32765)    #simula el valor medido de un transmisor (registro menos significativo) del Float IEE754
-                            # Pv1=random.randint(16000,17900)    #simula el valor medido de un transmisor (registro mas significativo) del Float IEEE754
-                            idtag = tag.pk  # Del mdelo Tag
-                            tag_addres = int(tag.direccion_campo)-1  # Del mdelo Tag
-                            # DATA PARA TRASNFERIR
-                            #print(tag_addres)
-                            Current_Value = [idtag, Pv0, Pv1]
-                            print(Current_Value)
+                            # ESCRIBIR
+                                # message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
+                                # Se construye el msj de escritura en el esclavo(SIMULACION)
+                                # escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj al esclavo en el socket abierto.
 
-                        # ESCRIBIR
-                            # message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
-                            # Se construye el msj de escritura en el esclavo(SIMULACION)
-                            # escribir = tcp.send_message(message1, sock) #Se envia comando de escritura con el msj al esclavo en el socket abierto.
+                                # Leer
+                                message2 = tcp.read_holding_registers(
+                                    slave_id=id_esclavo, starting_address=tag_addres, quantity=2)
+                                # Construcción del msj de lectura desde el esclavo partiendo de la dirección mb configurada en el modelo Tag
 
-                            # Leer
-                            message2 = tcp.read_holding_registers(
-                                slave_id=id_esclavo, starting_address=tag_addres, quantity=2)
-                            # Construcción del msj de lectura desde el esclavo partiendo de la dirección mb configurada en el modelo Tag
+                                leer = tcp.send_message(message2, sock)
+                                # Se envia comando de lectura en el esclavo en el socket abierto.
+                                timestamp = datetime.now().strftime(
+                                    '%Y-%m-%d %H:%M:%S.%f')[:-7]
+                                # id extraido del paquete transferido
+                                tag_instance = Tag.objects.get(pk=idtag)
 
-                            leer = tcp.send_message(message2, sock)
-                            # Se envia comando de lectura en el esclavo en el socket abierto.
-                            timestamp = datetime.now().strftime(
-                                '%Y-%m-%d %H:%M:%S.%f')[:-7]
-                            # id extraido del paquete transferido
-                            tag_instance = Tag.objects.get(pk=idtag)
+                                Data_Cruda_Temp = {'IDTAG': idtag,
+                                                'REGISTRO_1': leer[0],
+                                                'REGISTRO_2': leer[1],
+                                                'TIMESTAMP': timestamp,
+                                                'INDEXADO': False,
+                                                'DIRECCIONCAMPO': tag.direccion_campo,
+                                                'TAG_ADDRES':    tag_addres,
 
-                            Data_Cruda_Temp = {'IDTAG': idtag,
-                                            'REGISTRO_1': leer[0],
-                                            'REGISTRO_2': leer[1],
-                                            'TIMESTAMP': timestamp,
-                                            'INDEXADO': False,
-                                            'DIRECCIONCAMPO': tag.direccion_campo,
-                                            'TAG_ADDRES':    tag_addres,
+                                                }
+                                print(Data_Cruda_Temp)
 
-                                            }
-                            print(Data_Cruda_Temp)
+                                Data_Cruda['Data_Cruda'].append(Data_Cruda_Temp)
+                                # print(Data_Cruda)
+                                # datacruda=json.dumps(Data_Cruda)
 
-                            Data_Cruda['Data_Cruda'].append(Data_Cruda_Temp)
-                            # print(Data_Cruda)
-                            # datacruda=json.dumps(Data_Cruda)
+                            # tk = {"IDTK":tk_instance.pk,IDTAG":str(tag_instance.pk),"INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":0.000, "UNIDAD":(Analogico_instance.Unidad),"PARAMETRO_TK":tag_instance.etiqueta1, "INDEXADO": 0}
 
-                        # tk = {"IDTK":tk_instance.pk,IDTAG":str(tag_instance.pk),"INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":0.000, "UNIDAD":(Analogico_instance.Unidad),"PARAMETRO_TK":tag_instance.etiqueta1, "INDEXADO": 0}
+                            # print(Datos_Actuales) PARA DEBUGGER
 
-                        # print(Datos_Actuales) PARA DEBUGGER
+                            try:
+                                with fs.open(ruta_Data + '/Buffer_Data_Cruda.json', mode='w') as file1:
+                                    # with open ('/home/morenomx/solucionesweb/sacvc/valoresbasicos.json','w') as file1: #abre un archivo json (cambiar por ruta simbólica)
 
-                        try:
-                            with fs.open(ruta_Data + '/Buffer_Data_Cruda.json', mode='w') as file1:
-                                # with open ('/home/morenomx/solucionesweb/sacvc/valoresbasicos.json','w') as file1: #abre un archivo json (cambiar por ruta simbólica)
-
-                                # Data en cache
-                                file1.write(json.dumps(Data_Cruda))
-                        except:
-                            print("Error inesperado:", sys.exc_info()[0])
+                                    # Data en cache
+                                    file1.write(json.dumps(Data_Cruda))
+                            except:
+                                print("Error inesperado:", sys.exc_info()[0])
 
                         # try:
 
