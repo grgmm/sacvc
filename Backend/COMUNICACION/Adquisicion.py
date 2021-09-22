@@ -22,15 +22,10 @@ class acq():
         # declara la conexión
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-      # print(slave_ip_address, type(slave_ip_address))
-      # print(id_esclavo, type(id_esclavo))
-      # print(serviceport, type(serviceport))
-
-
-               
+      
         try:
             sock.connect((slave_ip_address, serviceport))             
-            print('Adquisción de Data Modbus Activa (Running)')
+            #print('Adquisción de Data Modbus Activa (Running)')
             #n = 2  # 100 iteraciones
             # INICIALIZAR VARIABLES
             #i = 1
@@ -62,9 +57,7 @@ class acq():
                                 idtag = tag.pk  # Del mdelo Tag
                                 tag_addres = int(tag.direccion_campo)-1  # Del mdelo Tag
                                 # DATA PARA TRASNFERIR
-                                #print(tag_addres)
                                 Current_Value = [idtag, Pv0, Pv1]
-                                print(Current_Value)
 
                             # ESCRIBIR
                                 # message1 = tcp.write_multiple_registers(slave_id = slaveid, starting_address = tag_addres, values = list(Current_Value))
@@ -92,15 +85,10 @@ class acq():
                                                 'TAG_ADDRES':    tag_addres,
 
                                                 }
-                                print(Data_Cruda_Temp)
+                                #print(Data_Cruda_Temp)
 
                                 Data_Cruda['Data_Cruda'].append(Data_Cruda_Temp)
                                 # print(Data_Cruda)
-                                # datacruda=json.dumps(Data_Cruda)
-
-                            # tk = {"IDTK":tk_instance.pk,IDTAG":str(tag_instance.pk),"INSTALACION":tk_instance.id_patioTanque.Nombre, "TIMESTAMP":timestamp,"PV0":leer[1],"PV1":leer[2], "PV_FLOAT":0.000, "UNIDAD":(Analogico_instance.Unidad),"PARAMETRO_TK":tag_instance.etiqueta1, "INDEXADO": 0}
-
-                            # print(Datos_Actuales) PARA DEBUGGER
 
                             try:
                                 with fs.open(ruta_Data + '/Buffer_Data_Cruda.json', mode='w') as file1:
@@ -111,17 +99,6 @@ class acq():
                             except:
                                 print("Error inesperado:", sys.exc_info()[0])
 
-                        # try:
-
-                            # with fs.open(ruta_Data+'/Valores_Tk.json', mode= 'w') as file2:
-
-                            # file2.write(json.dumps(Data_Cruda)) #Data en cache
-
-                        # tk.current_data = Data_Cruda #A Base de Datos
-
-                        # tk.save()
-                        # except:
-                        # print("Error inesperado:", sys.exc_info()[0])
 
             sock.close() # cierra la conexión
 

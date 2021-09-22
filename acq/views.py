@@ -977,12 +977,11 @@ class MbMaestro(View):
                 return redirect(self.success_url)
 
 
-
 class Modulos(View):
     form_class = ModulosForm
     template_name = "acq/Modulos/Modulos.html"
     success_url = reverse_lazy('sacvc:configuracion')
-
+    
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             filtro_usuario = Group.objects.filter(user=request.user)
@@ -1009,7 +1008,6 @@ class Modulos(View):
       request.POST = request.POST.copy()
       form = self.form_class(request.POST)
 
-#---------------------------------------------------------------------------
 #lOGICA DE CONTROL PARA ARRANQUE Y PARADA DE HILOS
       if form.is_valid(): 
           
@@ -1020,8 +1018,8 @@ class Modulos(View):
           ip_device = MbSrv.IpDevice
           mensaje_acq='tarea_acq'          
           selecciones=form.cleaned_data['Modulos']
-         
-          statusModulos  = {}
+          StatusModulos  = {}
+          acq_run=''
           
           for seleccion in selecciones: 
 
@@ -1031,12 +1029,21 @@ class Modulos(View):
                 global t_acq
                 t_acq = threading.Thread(target=tarea_acq, args=(mensaje_acq, puertoip, id_device, ip_device ))
                 t_acq.start()
+                #print(t_acq.is_alive())
+                if t_acq.is_alive:
+                    acq_run=True
+                else:
+                    acq_run=    False
               
               if 'ACQ' not in selecciones and activar_acq == True:
                 print("ORDEN DE PARADA RECIBIDA PARA ACQ")
                 t_acq.activar = False
-                
                 t_acq.join()
+                if t_acq.is_alive():
+                    acq_run=True
+                else:
+                   acq_run=False
+
                 activar_acq = False 
               
               if 'CPT' in selecciones and activar_cpt == False:
@@ -1049,7 +1056,6 @@ class Modulos(View):
 
               if 'CPT' not in selecciones and activar_cpt == True:
                 print("ORDEN DE PARADA RECIBIDA PARA CPT")
-                print(t_cpt.name) 
                 t_cpt.activar = False
                 t_cpt.join()
                 activar_cpt = False 
@@ -1064,7 +1070,6 @@ class Modulos(View):
 
               if 'HS' not in selecciones and activar_hs == True:
                 print("ORDEN DE PARADA RECIBIDA PARA HS")
-                print(t_hs.name) 
                 t_hs.activar = False
                 t_hs.join()
                 activar_hs = False 
@@ -1079,11 +1084,9 @@ class Modulos(View):
 
               if 'GES_HS' not in selecciones and activar_ges_hs == True:
                 print("ORDEN DE PARADA RECIBIDA PARA GES_HS")
-                print(t_ges_hs.name) 
                 t_ges_hs.activar = False
                 t_ges_hs.join()
                 activar_ges_hs = False 
-
 
               if 'NONE' in selecciones:
                 
@@ -1109,10 +1112,8 @@ class Modulos(View):
                     t_ges_hs.activar = False
                     t_ges_hs.join()
                     activar_ges_hs = False
-
-         
-         # Monitor_Procesos= {'ACQ_RUN':acq_run, 'CPT_RUN': cpt_run, 'HS_RUN':hs_run, 'GES_HS_RUN': ges_hs_run}
-          return render(request, self.template_name, {'form': form, })
+          print(acq_run)
+          return render(request, self.template_name, {'form': form,'ACQ_RUN':acq_run })
       else:
         print('no hay ninguna seleccion')
         return render(request, self.template_name, {'form': form})

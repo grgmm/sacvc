@@ -16,7 +16,7 @@ def tarea_acq(mensaje,puertomb,idslave,ipslave ):
     while getattr(t_acq, "activar", True):
         # poner aqui el codigo deseado
         acq.mbtcpserver(puertomb ,idslave , ipslave)        
-        print ('Ejecutando ACQ '+t_acq.name+' %s' % mensaje)
+        #print ('Ejecutando ACQ '+t_acq.name+' %s' % mensaje)
         #time.sleep(1)
 
 '''
@@ -33,19 +33,19 @@ def tarea_cpt(arg):
     t_cpt = threading.currentThread()
     while getattr(t_cpt, "activar", True):
         #poner aqui el codigo deseado
-        print ('Ejecutando CPT '+t_cpt.name+' %s' % arg)
+        #print ('Ejecutando CPT '+t_cpt.name+' %s' % arg)
         time.sleep(1)
 
 def tarea_hs(arg):
     t_hs = threading.currentThread()
     while getattr(t_hs, "activar", True):
         #poner aqui el codigo deseado
-        print ('Ejecutando HS '+t_hs.name+' %s' % arg)
+        #print ('Ejecutando HS '+t_hs.name+' %s' % arg)
         time.sleep(1)
 
 def tarea_ges_hs(arg):
     t_ges_hs = threading.currentThread()
     while getattr(t_ges_hs, "activar", True):
         #poner aqui el codigo deseado
-        print ('Ejecutando GES_HS '+t_ges_hs.name+' %s' % arg)
+        #print ('Ejecutando GES_HS '+t_ges_hs.name+' %s' % arg)
         time.sleep(1)
