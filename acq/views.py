@@ -1,9 +1,8 @@
 #=====================================================================
-# Importando moulos Desarrollaos para la aplicacion
+# Importando modulos Desarrollados para la aplicacion
 from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro as mbmaster_model
 from django.core.validators import DecimalValidator, ValidationError
 from .validaciones import validar_parametro_tct as valida
-from Backend.COMUNICACION.Adquisicion import acq
 from acq.calculos import Settings_Alarmas
 from Backend.PROCEDIMIENTOS.Funciones import tarea_acq, tarea_cpt, tarea_hs, tarea_ges_hs
 
@@ -49,7 +48,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
 from django.core.exceptions import ValidationError
 #=====================================================================
-#Importando modulos para manejo de json
+#Importando modulos para manejo de archivos json
 import json
 
 #=====================================================================
@@ -70,14 +69,12 @@ activar_hs= False
 activar_ges_hs= False
 
 
-
 #=========================================================================================================================
 #=========================================================================================================================
 #DESARROLLO DE CODIGO PARA VISTAS EL SISTEMA
 
 # Abre un archivo json en modo lectura
-def porcentaje_subida(request):    #PARA ORGANIZARMEJOR EL COIGO Y HACERLO MAS LEGIBLE ESTA Y TODAS LAS FUNCIONES
-                                   #SUELTAS SALDRAN DE views.py
+def porcentaje_subida(request):   #VISTAS BASAAS EN EXCEPCIONES
     fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
     ruta_Data = fs.location
 
@@ -91,46 +88,35 @@ def porcentaje_subida(request):    #PARA ORGANIZARMEJOR EL COIGO Y HACERLO MAS L
     return JsonResponse(dataf)
 
 
-def actualizar(request): #PARA ORGANIZARMEJOR EL COIGO Y HACERLO MAS LEGIBLE ESTA Y TODAS LAS FUNCIONES
-                                   #SUELTAS SALDRAN DE views.py
+def actualizar(request): #VISTAS BASAAS EN EXCEPCIONES
     fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
     ruta_Data = fs.location
     dataf = {}
-
     try:
         with fs.open(ruta_Data + '/Buffer_Datos_Calculados.json', mode='r') as data_file:
             dataf = json.loads(data_file.read())
-
     except:
         print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
 
-
 class patiotanquelist(ListView):
     # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
-
     model = PatioTanque
     template_name = 'acq/list_tf/list_tf.html'
-
     # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
             # Grupos a los que el usuario pertence
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(patiotanquelist, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
 
 class PatiotanqueAdd(CreateView):
     model = PatioTanque
@@ -155,12 +141,10 @@ class PatiotanqueAdd(CreateView):
         else:
             return redirect('/sacvc/logout')
 
-
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
     success_url = reverse_lazy('uacq:list_tf')
     template_name = 'acq/del_tf/del_tf.html'
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
@@ -178,11 +162,9 @@ class PatiotanqueDelete(DeleteView):
         else:
             return redirect('/sacvc/logout')
 
-
 class PatiotanqueDetail(DetailView):
     model = PatioTanque
     template_name = 'acq/detail_tf/detail_tf.html'
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
@@ -200,30 +182,23 @@ class PatiotanqueDetail(DetailView):
         else:
             return redirect('/sacvc/logout')
 
-
 class PatiotanqueUpdate(UpdateView):
     model = PatioTanque
     fields = ['Nombre', 'Descriptor']
     template_name = 'acq/edit_tf/edit_tf.html'
     success_url = reverse_lazy('uacq:list_tf')
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(PatiotanqueUpdate, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
 
 class tklist(ListView):  # LISTADO TANQUES DE UN TERMINAL
     # Vista en modo supervisión
@@ -976,7 +951,6 @@ class MbMaestro(View):
 
                 return redirect(self.success_url)
 
-
 class Modulos(View):
     form_class = ModulosForm
     template_name = "acq/Modulos/Modulos.html"
@@ -1007,10 +981,8 @@ class Modulos(View):
       ruta_Data = fs.location
       request.POST = request.POST.copy()
       form = self.form_class(request.POST)
-
 #lOGICA DE CONTROL PARA ARRANQUE Y PARADA DE HILOS
       if form.is_valid(): 
-          
           #PARAMETROS REQUERIDOS PARA INICIAR EL HILO ACQ
           MbSrv = mbmaster_model.objects.first() #OBTIENE LOS ATOS CONFIGURADOS POR EL USUARIO PARA LA CMUNICACION CON EL ECLAVO MOBUS
           puertoip =  MbSrv.SercvicePort
@@ -1020,9 +992,7 @@ class Modulos(View):
           selecciones=form.cleaned_data['Modulos']
           StatusModulos  = {}
           acq_run=''
-          
           for seleccion in selecciones: 
-
               if 'ACQ' in selecciones and activar_acq == False:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA ACQ")
                 activar_acq = True
@@ -1034,7 +1004,6 @@ class Modulos(View):
                     acq_run=True
                 else:
                     acq_run=    False
-              
               if 'ACQ' not in selecciones and activar_acq == True:
                 print("ORDEN DE PARADA RECIBIDA PARA ACQ")
                 t_acq.activar = False
@@ -1043,17 +1012,16 @@ class Modulos(View):
                     acq_run=True
                 else:
                    acq_run=False
+                activar_acq = False
 
-                activar_acq = False 
-              
               if 'CPT' in selecciones and activar_cpt == False:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA CPT")
                 activar_cpt = True
                 global t_cpt
-                t_cpt = threading.Thread(target=tarea_cpt, args=("tarea_cpt",))
+                mensaje_cpt='tarea_cpt'
+                t_cpt = threading.Thread(target=tarea_cpt, args=(mensaje_cpt,))
                 print('ARRANCAR '+t_cpt.name)
                 t_cpt.start()
-
               if 'CPT' not in selecciones and activar_cpt == True:
                 print("ORDEN DE PARADA RECIBIDA PARA CPT")
                 t_cpt.activar = False
