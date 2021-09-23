@@ -1,11 +1,21 @@
-import subprocess
+#=====================================================================
+# Importando modulos Desarrollados para la aplicacion
+from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro as mbmaster_model
+from django.core.validators import DecimalValidator, ValidationError
+from .validaciones import validar_parametro_tct as valida
+from acq.calculos import Settings_Alarmas
+from Backend.PROCEDIMIENTOS.Funciones import tarea_acq, tarea_cpt, tarea_hs, tarea_ges_hs
+
+
+#=====================================================================
+#Importando Formularios customizados
 from .forms.acqforms import users_cambio_clave_form, mbmaestro, guardar_configuracion_mbm, ModulosForm
+
+#=====================================================================
+#Importando modulos DJANGO
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-import json
-#from django.http import JsonRemsponse
 from django.http import JsonResponse
-from .models import Tag, Tk, PatioTanque, Tct, Analogico, UserProfile, AOR, MbMaestro as mbmaster_model
 from django.template.response import TemplateResponse
 from django.views.generic import ListView, FormView, RedirectView
 from django.views.generic.detail import DetailView
@@ -23,14 +33,6 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-import sys
-from datetime import datetime
-
-import csv
-from django.core.validators import DecimalValidator, ValidationError
-from django.core.exceptions import ValidationError
-import pandas as pd
-from .validaciones import validar_parametro_tct as valida
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
 from django.contrib.auth import logout
@@ -44,15 +46,38 @@ from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
-from acq.calculos import Settings_Alarmas
-from Backend.COMUNICACION.Adquisicion import acq
+from django.core.exceptions import ValidationError
+#=====================================================================
+#Importando modulos para manejo de archivos json
+import json
+
+#=====================================================================
+#Importando modulos externos
+import subprocess
+import sys
+from datetime import datetime
+import csv
+import pandas as pd
 import threading
+import time
+
+#=====================================================================
+#Inicializando variables globales
+activar_acq= False
+activar_cpt= False
+activar_hs= False
+activar_ges_hs= False
 
 
-# abre un archivo json en modo lectura
-def porcentaje_subida(request):
+#=========================================================================================================================
+#=========================================================================================================================
+#DESARROLLO DE CODIGO PARA VISTAS DEL SISTEMA
+
+# Abre un archivo json en modo lectura
+def porcentaje_subida(request):   #VISTAS BASAAS EN EXCEPCIONES
     fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
     ruta_Data = fs.location
+
     dataf = {}
 
     try:
@@ -63,45 +88,35 @@ def porcentaje_subida(request):
     return JsonResponse(dataf)
 
 
-def actualizar(request):
+def actualizar(request): #VISTAS BASAAS EN EXCEPCIONES
     fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
     ruta_Data = fs.location
     dataf = {}
-
     try:
         with fs.open(ruta_Data + '/Buffer_Datos_Calculados.json', mode='r') as data_file:
             dataf = json.loads(data_file.read())
-
     except:
         print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
 
-
 class patiotanquelist(ListView):
     # LISTADO DE PATIOS DE TANQUES O TERMINALES DE ALMACENAMIENTO
-
     model = PatioTanque
     template_name = 'acq/list_tf/list_tf.html'
-
     # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
             # Grupos a los que el usuario pertence
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(patiotanquelist, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
 
 class PatiotanqueAdd(CreateView):
     model = PatioTanque
@@ -126,12 +141,10 @@ class PatiotanqueAdd(CreateView):
         else:
             return redirect('/sacvc/logout')
 
-
 class PatiotanqueDelete(DeleteView):
     model = PatioTanque
     success_url = reverse_lazy('uacq:list_tf')
     template_name = 'acq/del_tf/del_tf.html'
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
@@ -149,11 +162,9 @@ class PatiotanqueDelete(DeleteView):
         else:
             return redirect('/sacvc/logout')
 
-
 class PatiotanqueDetail(DetailView):
     model = PatioTanque
     template_name = 'acq/detail_tf/detail_tf.html'
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
@@ -171,30 +182,23 @@ class PatiotanqueDetail(DetailView):
         else:
             return redirect('/sacvc/logout')
 
-
 class PatiotanqueUpdate(UpdateView):
     model = PatioTanque
     fields = ['Nombre', 'Descriptor']
     template_name = 'acq/edit_tf/edit_tf.html'
     success_url = reverse_lazy('uacq:list_tf')
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(PatiotanqueUpdate, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
 
 class tklist(ListView):  # LISTADO TANQUES DE UN TERMINAL
     # Vista en modo supervisión
@@ -947,6 +951,7 @@ class MbMaestro(View):
 
                 return redirect(self.success_url)
 
+<<<<<<< HEAD
 import threading
 import time
 #-----------------------------------------------------------------------
@@ -986,6 +991,8 @@ activar_cpt= False
 activar_hs= False
 activar_ges_hs= False
 
+=======
+>>>>>>> a1af92ccc35f742c35bc571c0e5885fe057b20c6
 class Modulos(View):
     form_class = ModulosForm
     template_name = "acq/Modulos/Modulos.html"
@@ -1001,55 +1008,63 @@ class Modulos(View):
                 return HttpResponseRedirect('sacvc:Menu')
             else:
                 form=self.form_class
+               
                 return render(request, self.template_name, {'form': form})
         else:
             return redirect('/sacvc/logout')
-
    
-    def post(self, request, *args, **kwargs): 
+    def post(self, request, *args, **kwargs):
       global activar_acq 
       global activar_cpt  
       global activar_hs  
-      global activar_ges_hs 
+      global activar_ges_hs
+      
       fs = FileSystemStorage(location=settings.COMMANDS)
       ruta_Data = fs.location
-      #print(ruta_Data)
-
-
       request.POST = request.POST.copy()
       form = self.form_class(request.POST)
-
-#---------------------------------------------------------------------------
 #lOGICA DE CONTROL PARA ARRANQUE Y PARADA DE HILOS
       if form.is_valid(): 
-          #print('hay uno o mas modulos seleccionados')
+          #PARAMETROS REQUERIDOS PARA INICIAR EL HILO ACQ
+          MbSrv = mbmaster_model.objects.first() #OBTIENE LOS DATOS CONFIGURADOS POR EL USUARIO PARA LA CMUNICACION CON EL ECLAVO MOBUS
+          puertoip =  MbSrv.SercvicePort
+          id_device = MbSrv.IdDevice
+          ip_device = MbSrv.IpDevice
+          mensaje_acq='tarea_acq'          
           selecciones=form.cleaned_data['Modulos']
+          StatusModulos  = {}
+          acq_run=False
           for seleccion in selecciones: 
               if 'ACQ' in selecciones and activar_acq == False:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA ACQ")
                 activar_acq = True
                 global t_acq
-                t_acq = threading.Thread(target=tarea_acq, args=("tarea_acq",))
+                t_acq = threading.Thread(target=tarea_acq, args=(mensaje_acq, puertoip, id_device, ip_device ))
                 t_acq.start()
-
+                if t_acq.is_alive:
+                    acq_run=True
+                else:
+                    acq_run=    False
               if 'ACQ' not in selecciones and activar_acq == True:
                 print("ORDEN DE PARADA RECIBIDA PARA ACQ")
-                print(t_acq.name) 
                 t_acq.activar = False
                 t_acq.join()
-                activar_acq = False 
-              
+                if t_acq.is_alive():
+                    acq_run=True
+                else:
+                   acq_run=False
+                activar_acq = False
+
               if 'CPT' in selecciones and activar_cpt == False:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA CPT")
                 activar_cpt = True
                 global t_cpt
-                t_cpt = threading.Thread(target=tarea_cpt, args=("tarea_cpt",))
+                mensaje_cpt='tarea_cpt'
+                t_cpt = threading.Thread(target=tarea_cpt, args=(mensaje_cpt,))
                 print('ARRANCAR '+t_cpt.name)
                 t_cpt.start()
-
               if 'CPT' not in selecciones and activar_cpt == True:
                 print("ORDEN DE PARADA RECIBIDA PARA CPT")
-                print(t_cpt.name) 
                 t_cpt.activar = False
                 t_cpt.join()
                 activar_cpt = False 
@@ -1064,7 +1079,6 @@ class Modulos(View):
 
               if 'HS' not in selecciones and activar_hs == True:
                 print("ORDEN DE PARADA RECIBIDA PARA HS")
-                print(t_hs.name) 
                 t_hs.activar = False
                 t_hs.join()
                 activar_hs = False 
@@ -1079,43 +1093,39 @@ class Modulos(View):
 
               if 'GES_HS' not in selecciones and activar_ges_hs == True:
                 print("ORDEN DE PARADA RECIBIDA PARA GES_HS")
-                print(t_ges_hs.name) 
                 t_ges_hs.activar = False
                 t_ges_hs.join()
                 activar_ges_hs = False 
 
-          return render(request, self.template_name, {'form': form})     
+              if 'NONE' in selecciones:
+                
+                if activar_acq:
+                    print("ORDEN DE PARADA RECIBIDA PARA ACQ")
+                    t_acq.activar = False
+                    t_acq.join()
+                    activar_acq = False
+                if activar_cpt:
+                    print("ORDEN DE PARADA RECIBIDA PARA CPT")
+                    t_cpt.activar = False
+                    t_cpt.join()
+                    activar_cpt = False
 
+                if activar_hs:
+                    print("ORDEN DE PARADA RECIBIDA PARA HS")
+                    t_hs.activar = False
+                    t_hs.join()
+                    activar_hs = False
+
+                if activar_ges_hs:
+                    print("ORDEN DE PARADA RECIBIDA PARA GES_HS")
+                    t_ges_hs.activar = False
+                    t_ges_hs.join()
+                    activar_ges_hs = False
+          print(acq_run)
+          return render(request, self.template_name, {'form': form,'ACQ_RUN':acq_run })
       else:
-            print('no hay ninguna seleccion')
-            #desactiva los modulos que esten arrancados
-            
-            if activar_acq:
-                print("ORDEN DE PARADA RECIBIDA PARA ACQ")
-                t_acq.activar = False
-                t_acq.join()
-                activar_acq = False
-
-            if activar_cpt:
-                print("ORDEN DE PARADA RECIBIDA PARA CPT")
-                t_cpt.activar = False
-                t_cpt.join()
-                activar_cpt = False
-
-            if activar_hs:
-                print("ORDEN DE PARADA RECIBIDA PARA HS")
-                t_hs.activar = False
-                t_hs.join()
-                activar_hs = False
-
-            if activar_ges_hs:
-                print("ORDEN DE PARADA RECIBIDA PARA GES_HS")
-                t_ges_hs.activar = False
-                t_ges_hs.join()
-                activar_ges_hs = False
-  
-            return render(request, self.template_name, {'form': form})   
-#---------------------------------------------------------------------------  
+        print('no hay ninguna seleccion')
+        return render(request, self.template_name, {'form': form})
                            
 ###VISTAS DE USUARIOS
 class LoginView(FormView):
@@ -1125,7 +1135,6 @@ class LoginView(FormView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return HttpResponseRedirect('sacvc:Menu')
-            # return HttpResponseRedirect(self.get_success_url())
         else:
             return super(LoginView, self).dispatch(request, *args, **kwargs)
     def form_valid(self, form):
@@ -1545,10 +1554,7 @@ class Aor_detail(DetailView):
         else:
             return redirect('/sacvc/logout')
 
-
-
-
-    ####################################################################################
+#=========================================================================================================================
 ##    VISTAS OPERATIVAS            ####################################
 
 class grupo_tk(LoginRequiredMixin, ListView):
@@ -1659,8 +1665,3 @@ class Detalle_Analogico(LoginRequiredMixin, DetailView):
         context['FIELDS']=dict_temp
         print(context)
         return context
-        
-
-
-
-
