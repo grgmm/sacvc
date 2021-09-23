@@ -71,7 +71,7 @@ activar_ges_hs= False
 
 #=========================================================================================================================
 #=========================================================================================================================
-#DESARROLLO DE CODIGO PARA VISTAS EL SISTEMA
+#DESARROLLO DE CODIGO PARA VISTAS DEL SISTEMA
 
 # Abre un archivo json en modo lectura
 def porcentaje_subida(request):   #VISTAS BASAAS EN EXCEPCIONES
@@ -984,14 +984,14 @@ class Modulos(View):
 #lOGICA DE CONTROL PARA ARRANQUE Y PARADA DE HILOS
       if form.is_valid(): 
           #PARAMETROS REQUERIDOS PARA INICIAR EL HILO ACQ
-          MbSrv = mbmaster_model.objects.first() #OBTIENE LOS ATOS CONFIGURADOS POR EL USUARIO PARA LA CMUNICACION CON EL ECLAVO MOBUS
+          MbSrv = mbmaster_model.objects.first() #OBTIENE LOS DATOS CONFIGURADOS POR EL USUARIO PARA LA CMUNICACION CON EL ECLAVO MOBUS
           puertoip =  MbSrv.SercvicePort
           id_device = MbSrv.IdDevice
           ip_device = MbSrv.IpDevice
           mensaje_acq='tarea_acq'          
           selecciones=form.cleaned_data['Modulos']
           StatusModulos  = {}
-          acq_run=''
+          acq_run=False
           for seleccion in selecciones: 
               if 'ACQ' in selecciones and activar_acq == False:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA ACQ")
@@ -999,7 +999,6 @@ class Modulos(View):
                 global t_acq
                 t_acq = threading.Thread(target=tarea_acq, args=(mensaje_acq, puertoip, id_device, ip_device ))
                 t_acq.start()
-                #print(t_acq.is_alive())
                 if t_acq.is_alive:
                     acq_run=True
                 else:
@@ -1094,7 +1093,6 @@ class LoginView(FormView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return HttpResponseRedirect('sacvc:Menu')
-            # return HttpResponseRedirect(self.get_success_url())
         else:
             return super(LoginView, self).dispatch(request, *args, **kwargs)
     def form_valid(self, form):
@@ -1514,10 +1512,7 @@ class Aor_detail(DetailView):
         else:
             return redirect('/sacvc/logout')
 
-
-
-
-    ####################################################################################
+#=========================================================================================================================
 ##    VISTAS OPERATIVAS            ####################################
 
 class grupo_tk(LoginRequiredMixin, ListView):
