@@ -957,11 +957,7 @@ def tarea_acq(arg):
         # poner aqui el codigo deseado
         acq.mbtcpserver(5002 ,11 , '127.0.0.1')        
         print ('Ejecutando ACQ '+t_acq.name+' %s' % arg)
-<<<<<<< HEAD
-        time.sleep(2)
-=======
         #time.sleep(1)
->>>>>>> b3d47bc3580d1c07d22018fc173a351edc7efb21
 
 def tarea_cpt(arg):
     t_cpt = threading.currentThread()
