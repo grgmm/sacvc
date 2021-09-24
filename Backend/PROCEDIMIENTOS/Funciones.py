@@ -4,7 +4,6 @@ from Backend.VOLUMENES.Computos import cpt
 
 import time
 
-
 #=====================================================================
 #ESTE ARCIVO TIENE LA FUNCION DE DESCARGAR DE LOGICA NO REFERIDA A VISTAS DEL ARCHIVO views.py 
 
@@ -20,11 +19,11 @@ def tarea_acq(mensaje,puertomb,idslave,ipslave ):
 def tarea_cpt(mensaje):
     t_cpt = threading.currentThread()
     while getattr(t_cpt, "activar", True):
-        print(cpt.volumenes(), mensaje)
-        #volumenes=cpt.volumenes
-
-
-        
+        try:
+            calc_volumenes=cpt.volumenes()
+            print(calc_volumenes)
+        except:
+            print('FALLA 1002 EJECUTANDO COMPUTO(CPT):', sys.exc_info()[0])
 
 def tarea_hs(arg):
     t_hs = threading.currentThread()
