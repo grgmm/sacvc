@@ -951,48 +951,6 @@ class MbMaestro(View):
 
                 return redirect(self.success_url)
 
-<<<<<<< HEAD
-import threading
-import time
-#-----------------------------------------------------------------------
-#HILOS PARA LA EJECUCION DE SCRIPTS DE ADQUISICION Y TRATAMIENTO DE DATOS
-def tarea_acq(arg):
-    t_acq = threading.currentThread()
-    while getattr(t_acq, "activar", True):
-        # poner aqui el codigo deseado
-        acq.mbtcpserver(5002 ,11 , '127.0.0.1')        
-        print ('Ejecutando ACQ '+t_acq.name+' %s' % arg)
-        #time.sleep(1)
-
-def tarea_cpt(arg):
-    t_cpt = threading.currentThread()
-    while getattr(t_cpt, "activar", True):
-        #poner aqui el codigo deseado
-        print ('Ejecutando CPT '+t_acq.name+' %s' % arg)
-        time.sleep(2)
-
-def tarea_hs(arg):
-    t_hs = threading.currentThread()
-    while getattr(t_hs, "activar", True):
-        #poner aqui el codigo deseado
-        print (' Ejecutando HS '+t_acq.name+' %s' % arg)
-        time.sleep(2)
-
-def tarea_ges_hs(arg):
-    t_ges_hs = threading.currentThread()
-    while getattr(t_ges_hs, "activar", True):
-        #poner aqui el codigo deseado
-        print ('Ejecutando GES_HS '+t_ges_hs.name+' %s' % arg)
-        time.sleep(2)
-#-----------------------------------------------------------------------
-
-activar_acq= False
-activar_cpt= False
-activar_hs= False
-activar_ges_hs= False
-
-=======
->>>>>>> a1af92ccc35f742c35bc571c0e5885fe057b20c6
 class Modulos(View):
     form_class = ModulosForm
     template_name = "acq/Modulos/Modulos.html"

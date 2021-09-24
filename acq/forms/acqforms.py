@@ -52,7 +52,6 @@ class guardar_configuracion_mbm(forms.Form):
     Configuracion = forms.FileField(required=False)
 
 # VARIABLES DE SELECCION PARA LA GESTION DE LOS MODULOS
-
 class ModulosForm(forms.Form):
     OPTIONS = [
             ("ACQ", "Adquisición"),
@@ -64,3 +63,7 @@ class ModulosForm(forms.Form):
     ]
     Modulos = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                           choices=OPTIONS, )
+                                          
+                                          
+
+    
