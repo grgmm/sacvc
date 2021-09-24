@@ -1012,21 +1012,22 @@ class Modulos(View):
                 else:
                    acq_run=False
                 activar_acq = False
-
               if 'CPT' in selecciones and activar_cpt == False:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA CPT")
                 activar_cpt = True
                 global t_cpt
                 mensaje_cpt='tarea_cpt'
-                t_cpt = threading.Thread(target=tarea_cpt, args=(mensaje_cpt,))
-                print('ARRANCAR '+t_cpt.name)
-                t_cpt.start()
+                try:
+                    t_cpt = threading.Thread(target=tarea_cpt, args=(mensaje_cpt,))
+                    print('ARRANCAR '+t_cpt.name)
+                    t_cpt.start()
+                except:
+                    print('FALLA 1001 EJECUTANDO COMPUTO(CPT):', sys.exc_info()[0])
               if 'CPT' not in selecciones and activar_cpt == True:
                 print("ORDEN DE PARADA RECIBIDA PARA CPT")
                 t_cpt.activar = False
                 t_cpt.join()
                 activar_cpt = False 
-              
               if 'HS' in selecciones and activar_hs == False:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA HS")
                 activar_hs = True
