@@ -990,6 +990,7 @@ class Modulos(View):
           ip_device = MbSrv.IpDevice
           mensaje_acq='tarea_acq'          
           selecciones=form.cleaned_data['Modulos']
+          print(selecciones)
           StatusModulos  = {}
           acq_run=False
           for seleccion in selecciones: 

@@ -6,13 +6,13 @@ var flag_none = 0
 var rbotones = document.getElementsByClassName('r_boton');
 var len = rbotones.length;
 var acq, cpt, hs, ges_hs, none, all
+/*
 if (flag_all == 0 && flag_none == 0) {
     //Condicion de inicio del script
     for (var i = 0; i < len; i++) {
         //botones de modulos seleccionados
         rbotones[i].checked = true
         console.log(rbotones[i].id)
-        /*
         switch (i) {
             case 0:
                 acq = i
@@ -33,12 +33,12 @@ if (flag_all == 0 && flag_none == 0) {
                 none = i
                console.log( rbotones[i].id)
         }
-        */
         rbotones[5].checked = false //none desseleccionado
         flag_none = 0
         flag_all = 1
     }
 }
+*/
 function myFunction(clicked_id) {
     var rbotones = document.getElementsByClassName('r_boton');
     var len = rbotones.length;

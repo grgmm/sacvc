@@ -53,16 +53,12 @@ class guardar_configuracion_mbm(forms.Form):
 
 # VARIABLES DE SELECCION PARA LA GESTION DE LOS MODULOS
 class ModulosForm(forms.Form):
-    OPTIONS = [
-            ("ACQ", "Adquisición"),
-            ("CPT", "Volúmenes"),
-            ("HS", "Históricos"),
-            ("GES_HS", "Gestion de Históricos"),
-            ("ALL", "Seleccionar Todos"),
-            ("NONE", "Deseleccionar Todos"),
-    ]
-    Modulos = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                          choices=OPTIONS, )
+    acq=forms.BooleanField(required=False,initial=False,label='Adquisición')
+    cpt=forms.BooleanField(required=False,initial=False,label='Volúmenes')
+    hs=forms.BooleanField(required=False,initial=False,label='Históricos')
+    ges_hs=forms.BooleanField(required=False,initial=False,label='Gestion de Históricos')
+    all=forms.BooleanField(required=False,initial=False,label='Seleccionar Todos')
+    non=forms.BooleanField(required=False,initial=False,label='Deseleccionar Todos')
                                           
                                           
 

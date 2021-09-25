@@ -7,14 +7,20 @@
 <link rel="stylesheet" href="{% static 'css/modulos.css' %}">
 
 <div id="ventana">
-<form method='post' name="forma">
+<form method='post'>
     {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+
+
+    <!-- CODIGO ANTIGUO COMENTADO
     <div >  
-        <table   border="1" cellspacing="0" onclick="myFunction(this.id)" id="tabla">
+        <table onclick="myFunction(this.id)" id="tabla">
         <caption>Arranque/Parada de Modulos</caption>
         <tr>
             <td>
-                <input type="checkbox" id="acq" class="r_boton" name="acq" value="acq" unchecked>
+                <input type="checkbox" id="id_acq" class="r_boton" name="acq" value="acq" unchecked>
             </td>
             <td>
                 <label for="acq">Adquisición</label> 
@@ -25,7 +31,7 @@
         </tr>
         <tr>
             <td>
-                <input type="checkbox" id="cpt" class="r_boton" name="cpt" value="cpt" unchecked>
+                <input type="checkbox" id="id_cpt" class="r_boton" name="cpt" value="cpt" unchecked>
             </td>
             <td>
                 <label for="cpt">Volúmenes</label>
@@ -36,7 +42,7 @@
         </tr>
         <tr>
             <td>
-                <input type="checkbox" id="hs" class="r_boton" name="hs" value="hs" unchecked>
+                <input type="checkbox" id="id_hs" class="r_boton" name="hs" value="hs" unchecked>
             </td>
             <td>
                 <label for="hs">Históricos</label>
@@ -47,7 +53,7 @@
         </tr>
         <tr>
             <td>
-                <input type="checkbox" id="ges_hs" class="r_boton" name="ges_hs" value="ges_hs" unchecked>
+                <input type="checkbox" id="id_ges_hs" class="r_boton" name="ges_hs" value="ges_hs" unchecked>
             </td>
             <td>
                 <label for="ges_hs">Gestion de Históricos</label>
@@ -58,7 +64,7 @@
         </tr>
         <tr>
             <td>
-                <input type="checkbox" id="all" class="r_boton" name="all" value="all" unchecked>
+                <input type="checkbox" id="id_all" class="r_boton" name="all" value="all" unchecked>
             </td>
             <td>
                 <label for="all">Seleccionar Todos</label>
@@ -75,10 +81,13 @@
     </table>
 
     </div>
+    -->
     <input id="btn_aceptar"   type='submit' value="Aceptar" class="btn_control"></input>
-    <input id="btn_cancelar" type="button" value="Cancelar" class="btn_control"></input>
 </form>
+<input id="btn_cancelar" type="button" value="Cancelar" class="btn_control"></input>
 </div>
+<!--
 <script src={% static 'js/jquery-3.6.0.min.js' %}></script>
 <script src={% static 'js/modulos.js' %}></script>
+-->
 {% endblock %}
