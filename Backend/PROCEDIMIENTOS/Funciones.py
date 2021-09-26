@@ -14,7 +14,6 @@ def tarea_acq(mensaje,puertomb,idslave,ipslave ):
     t_acq = threading.currentThread()
     while getattr(t_acq, "activar", True):
         acq.mbtcpserver(puertomb ,idslave , ipslave)        
-       
 
 def tarea_cpt(mensaje):
     t_cpt = threading.currentThread()

@@ -68,14 +68,13 @@ activar_cpt= False
 activar_hs= False
 activar_ges_hs= False
 
-
 #=========================================================================================================================
 #=========================================================================================================================
 #DESARROLLO DE CODIGO PARA VISTAS DEL SISTEMA
 
 # Abre un archivo json en modo lectura
-def porcentaje_subida(request):   #VISTAS BASAAS EN EXCEPCIONES
-    fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+def porcentaje_subida(request):   #VISTAS BASADAS EN FUNCIONES
+    fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Intercambio_Aplicacion')
     ruta_Data = fs.location
 
     dataf = {}
@@ -87,8 +86,7 @@ def porcentaje_subida(request):   #VISTAS BASAAS EN EXCEPCIONES
         print("Error inesperado:", sys.exc_info()[0])
     return JsonResponse(dataf)
 
-
-def actualizar(request): #VISTAS BASAAS EN EXCEPCIONES
+def actualizar(request): #VISTAS BASAAS EN FUNCIONES
     fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
     ruta_Data = fs.location
     dataf = {}
@@ -210,7 +208,7 @@ class tklist(ListView):  # LISTADO TANQUES DE UN TERMINAL
         filtro = qs.filter(id_patioTanque__exact=self.kwargs['exp'])
         patio = self.kwargs['exp']
 
-        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Intercambio_Aplicacion')
         ruta_Data = fs.location
 
         add_tk_iniciales = {'Nombre': '',
@@ -304,7 +302,7 @@ class TkAdd(CreateView):
 
         if created:
             # INICIALIZANDO VALORES DE MINIMOS Y MAXIMOS Y CALCULOS DE SETTING DE ALARMAS PREDEFINIDOS
-            fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Intercambio_Aplicacion')
             ruta_Data = fs.location
             dir_usadas = []
             direccionamiento = {'dir_disponibles': [1]}
@@ -950,12 +948,10 @@ class MbMaestro(View):
                         return render(request, self.template_name, {'form': form})
 
                 return redirect(self.success_url)
-
 class Modulos(View):
     form_class = ModulosForm
     template_name = "acq/Modulos/Modulos.html"
     success_url = reverse_lazy('sacvc:configuracion')
-    
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             filtro_usuario = Group.objects.filter(user=request.user)
@@ -966,17 +962,14 @@ class Modulos(View):
                 return HttpResponseRedirect('sacvc:Menu')
             else:
                 form=self.form_class
-               
                 return render(request, self.template_name, {'form': form})
         else:
             return redirect('/sacvc/logout')
-   
     def post(self, request, *args, **kwargs):
       global activar_acq 
       global activar_cpt  
       global activar_hs  
       global activar_ges_hs
-      
       fs = FileSystemStorage(location=settings.COMMANDS)
       ruta_Data = fs.location
       request.POST = request.POST.copy()
@@ -1035,13 +1028,11 @@ class Modulos(View):
                 t_hs = threading.Thread(target=tarea_hs, args=("tarea_hs",))
                 print('ARRANCAR '+t_hs.name)
                 t_hs.start()
-
               if 'HS' not in selecciones and activar_hs == True:
                 print("ORDEN DE PARADA RECIBIDA PARA HS")
                 t_hs.activar = False
                 t_hs.join()
                 activar_hs = False 
-              
               if 'GES_HS' in selecciones and activar_ges_hs == False:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA GES_HS")
                 activar_ges_hs = True
@@ -1049,15 +1040,12 @@ class Modulos(View):
                 t_ges_hs = threading.Thread(target=tarea_ges_hs, args=("tarea_ges_hs",))
                 print('ARRANCAR '+t_ges_hs.name)
                 t_ges_hs.start()
-
               if 'GES_HS' not in selecciones and activar_ges_hs == True:
                 print("ORDEN DE PARADA RECIBIDA PARA GES_HS")
                 t_ges_hs.activar = False
                 t_ges_hs.join()
                 activar_ges_hs = False 
-
               if 'NONE' in selecciones:
-                
                 if activar_acq:
                     print("ORDEN DE PARADA RECIBIDA PARA ACQ")
                     t_acq.activar = False
@@ -1068,7 +1056,6 @@ class Modulos(View):
                     t_cpt.activar = False
                     t_cpt.join()
                     activar_cpt = False
-
                 if activar_hs:
                     print("ORDEN DE PARADA RECIBIDA PARA HS")
                     t_hs.activar = False
@@ -1085,7 +1072,6 @@ class Modulos(View):
       else:
         print('no hay ninguna seleccion')
         return render(request, self.template_name, {'form': form})
-                           
 ###VISTAS DE USUARIOS
 class LoginView(FormView):
     form_class = AuthenticationForm
@@ -1101,7 +1087,6 @@ class LoginView(FormView):
         return super(LoginView, self).form_valid(form)
 class LogoutView(RedirectView):
     pattern_name = 'sacvc:login'
-
     def get(self, request, *args, **kwargs):
         logout(request)
         return super(LogoutView, self).get(request, *args, **kwargs)
@@ -1120,108 +1105,75 @@ class usuarioslist(ListView):
                 return redirect('/sacvc/Menu')
             else:
                 return super(usuarioslist, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
 class usuariosedit(UpdateView):
     model = usuario
     template_name = 'acq/edit_user/edit_user.html'
     fields = ['username', 'first_name', 'last_name', 'email', 'groups', ]
     success_url = reverse_lazy('uacq:list_user')
-
     def get(self, request, *args, **kwargs):
-
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
-
                 return super(usuariosedit, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
 class edit_patio_user(UpdateView):
     model = UserProfile
     template_name = 'acq/edit_user/edit_patio_user.html'
     fields = ['user', 'patios']
     success_url = reverse_lazy('uacq:list_user')
-
     def get_success_url(self):  # OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
         # DE REGRESO DE LA VISTA
-
         success_url = ('/sacvc/edit_user/' + str(self.object.user.pk))
         return (success_url)
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
-
                 return super(edit_patio_user, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
 class Aor_user_edit(UpdateView):
     model = UserProfile
     template_name = 'acq/edit_user/edit_aor_user.html'
     fields = ['user', 'aor']
     success_url = reverse_lazy('uacq:list_user')
-
     def get_success_url(self):  # OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
         # DE REGRESO DE LA VISTA
-
         success_url = ('/sacvc/edit_user/' + str(self.object.user.pk))
         return (success_url)
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
-
                 return super(Aor_user_edit, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
 
 class usuariosadd(CreateView):
     model = usuario
     fields = ['username', 'first_name', 'last_name', 'password', 'email']
     template_name = 'acq/add_user/add_user.html'
     success_url = reverse_lazy('uacq:list_user')
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
@@ -1231,162 +1183,111 @@ class usuariosadd(CreateView):
 
                 return redirect('/sacvc/Menu')
             else:
-
                 return super(usuariosadd, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
     def post(self, request, *args, **kwargs):
-
         request.POST = request.POST.copy()
         if (request.POST['first_name']) == '' or (request.POST['last_name'] == ''):
-
             mensajes = 'RELLENE LOS CAMPOS REQUERIDOS'
-
             return redirect('/sacvc/add_user')
-
         else:
-
             return super(usuariosadd, self).post(request, **kwargs)
-
 
 class usuariosdelete(DeleteView):
     model = usuario
     success_url = reverse_lazy('uacq:list_user')
     template_name = 'acq/del_user/del_user.html'
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(usuariosdelete, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
 class usuariodetail(DetailView):
     model = UserProfile
     fields = ['patios']
     template_name = 'acq/detail_user/detail_user.html'
-
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
         filtro_usuario_grupos = Group.objects.filter(user=self.object.pk)
-
         for g in filtro_usuario_grupos:
             context['grupos'] = g.name
         qs = self.object.patios.all()
         qsaor = self.object.aor.all()
         patiosuser = []
         aoruser = []
-
         for patio_inst in qs:
             patiosuser.append(patio_inst.Nombre)
             context['patiosuser'] = patiosuser
-
         for aor_inst in qsaor:
             aoruser.append(aor_inst.Nombre)
             context['aoruser'] = aoruser
-
         return context
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
-
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
                 return super(usuariodetail, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
 # gestionar los formularios desde un unico archivo que luego se importa
-
-
 class Cambiar_Clave(FormView):
     template_name = 'acq/edit_user/cambiar_clave.html'
     success_url = reverse_lazy('uacq:list_user')
     form_class = users_cambio_clave_form
-
     def post(self, request, *args, **kwargs):
         # self.obj = self.get_object()
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         context = super(Cambiar_Clave, self).get_context_data(**kwargs)
-
         context['form'] = form
-
         request.POST = request.POST.copy()
-
         if ((request.POST['nueva_clave']) == (request.POST['repita_nueva_clave'])):
             clave_valida = str(request.POST['repita_nueva_clave'])
             print('CLAVE VALIDA')
-
             u = usuario.objects.get(pk=context['pk'])
             u.set_password(clave_valida)
             u.save()
-
             context['user'] = u
             return redirect('/sacvc/list_user')
-
         else:
             context['mensajes'] = 'LAS CLAVES NO COINCIDEN'
             print('LAS CLAVES NO COINCIDEN')
             clave_valida = ''
-
         return self.render_to_response(context)
-
         def form_valid(self, form):  # OJO VALIDAR APLICACIÓN DE ESTA PARTE
             print('Datos no Válidos')
             return super().form_valid(form)
-
-
 class Menu_Vistas(View):
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             if usuario.objects.filter(pk=request.user.pk, groups__name='supervisores').exists():
                 print('USUARIO CON PERFIL SUPERVISOR')
                 return render(request, "acq/menus/menu_vistas.html")
-
             if usuario.objects.filter(pk=request.user.pk, groups__name='operativos').exists():
                 print('USUARIO CON PERFIL OPERADOR')
                 return render(request, "acq/menus/menu_vistas.html")
-
             else:
                 return redirect('/sacvc/logout')
-
         else:
             return redirect('/sacvc/logout')
-
-
 class Aor_add(CreateView):
     model = AOR
     fields = ['Nombre', 'Descriptor', 'id_patioTanque']
     template_name = 'acq/add_aor/add_aor.html'
     success_url = reverse_lazy('uacq:list_tf')
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
 
@@ -1400,60 +1301,42 @@ class Aor_add(CreateView):
                 return redirect('/sacvc/Menu')
             else:
                 return super(Aor_add, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
 class Aor_edit(UpdateView):
     model = AOR
     template_name = 'acq/edit_aor/edit_aor.html'
     fields = ['Nombre', 'Descriptor', 'id_patioTanque']
-
     def get_success_url(self):  # OJO ESTE BLOQUE SIRVE PARA DIRECCIONAR LA NAVEGACION
         # DE REGRESO DE LA VISTA
         print(self.object.id_patioTanque.pk)
         success_url = ('/sacvc/list_aor/' + str(self.object.id_patioTanque.pk))
         return (success_url)
-
     def get(self, request, *args, **kwargs):
-
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
-
             if (not g.name == 'supervisores'):
                 print('Usuario sin Perfil')
-
                 return redirect('/sacvc/Menu')
             else:
-
                 return super(Aor_edit, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
 
-
 class Aor_list(ListView):
     # LISTADO DE AREAS OPERATIVAS
-
     model = AOR
     template_name = 'acq/list_aor/list_aor.html'
-
     def get_queryset(self):
         qs = super(Aor_list, self).get_queryset()
         filtro = qs.filter(id_patioTanque__exact=self.kwargs['pk'])
         patio = self.kwargs['pk']
-
         return (filtro)
-
     # EL SIGUIENTE BLOQUE VALIDA USUARIO CON PERFIL SUPERVISOR SINO CIERRA LA SESIÓN
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
                 print(g.name)
@@ -1467,7 +1350,6 @@ class Aor_list(ListView):
 
         else:
             return redirect('/sacvc/logout')
-
 
 class Aor_del(DeleteView):
     model = AOR
@@ -1550,9 +1432,6 @@ class grupo_tk(LoginRequiredMixin, ListView):
 
             context['UNIDADES'].update(temp_unidades)
 
-            # context['LT_UNIDAD'] = inslt.Unidad
-            # context['TOV_UNIDAD'] = instov.Unidad
-            # context['NSV_UNIDAD'] = insnsv.Unidad
         print(context['UNIDADES'])
         return context
 
@@ -1565,7 +1444,6 @@ class detalle_tk(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         idtk = (str(self.object.pk))
-
         inslt = Analogico.objects.get(id_Tk=idtk, etiqueta1='lt')
         inspt = Analogico.objects.get(id_Tk=idtk, etiqueta1='pt')
         insays = Analogico.objects.get(id_Tk=idtk, etiqueta1='ays')
@@ -1575,12 +1453,10 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         insgsv = Analogico.objects.get(id_Tk=idtk, etiqueta1='GSV')
         insnsv = Analogico.objects.get(id_Tk=idtk, etiqueta1='NSV')
         inslta = Analogico.objects.get(id_Tk=idtk, etiqueta1='lta')
-
         tovmaximo = instov.ValorMaximo
         tovminimo = instov.ValorMinimo
         ltmaximo = inslt.ValorMaximo
         ltminimo = inslt.ValorMinimo
-
         ###CONTEXT PASO DE DATOS A LA VISTA
 
         ####UNIDADES
@@ -1592,8 +1468,8 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         context['TT_UNIDAD'] = instt.Unidad
 
         context['TOV_UNIDAD'] = instov.Unidad
-        context['NSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov OJO CAMBIAR POR NSV
-        context['GSV_UNIDAD'] = instov.Unidad  # misma unidad de nivel del tov  OJO CAMBIAR POR GSV
+        context['NSV_UNIDAD'] = instov.Unidad
+        context['GSV_UNIDAD'] = instov.Unidad
 
         ####RANGOS
 
@@ -1602,7 +1478,6 @@ class detalle_tk(LoginRequiredMixin, DetailView):
         context['LT_MAXIMO'] = ltmaximo
         context['LT_MINIMO'] = ltminimo
         context['ID']={'LT': inslt.pk , 'PT':inspt.pk, 'AYS':insays.pk, 'TT':instt.pk, 'LTA':inslta.pk, 'TOV':instov.pk, 'GSV':insgsv.pk, 'NSV':insnsv.pk}
-        #print(context['ID'])
         return context
 
 class Detalle_Analogico(LoginRequiredMixin, DetailView):
