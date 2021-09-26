@@ -948,6 +948,8 @@ class MbMaestro(View):
                         return render(request, self.template_name, {'form': form})
 
                 return redirect(self.success_url)
+
+#OJO LA SIGUIENTE CLASE ESTA EN REVISION YA QUE EL STOP DE LOS PROCESOS DEBE ESTAR SUJETA AL RUN NO A UN FLAG
 class Modulos(View):
     form_class = ModulosForm
     template_name = "acq/Modulos/Modulos.html"
@@ -982,22 +984,24 @@ class Modulos(View):
           id_device = MbSrv.IdDevice
           ip_device = MbSrv.IpDevice
           mensaje_acq='tarea_acq'          
-          selecciones=form.cleaned_data['Modulos']
-          print(selecciones)
+          #selecciones=form.cleaned_data['Modulos']
           StatusModulos  = {}
           acq_run=False
-          for seleccion in selecciones: 
-              if 'ACQ' in selecciones and activar_acq == False:
+          selecciones=form.cleaned_data
+          
+          #for seleccion in selecciones: 
+          if selecciones['acq'] and not activar_acq:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA ACQ")
                 activar_acq = True
                 global t_acq
                 t_acq = threading.Thread(target=tarea_acq, args=(mensaje_acq, puertoip, id_device, ip_device ))
                 t_acq.start()
                 if t_acq.is_alive:
-                    acq_run=True
+                    acq_run= True
                 else:
-                    acq_run=    False
-              if 'ACQ' not in selecciones and activar_acq == True:
+                    acq_run= False
+
+          if not selecciones['acq'] and activar_acq:
                 print("ORDEN DE PARADA RECIBIDA PARA ACQ")
                 t_acq.activar = False
                 t_acq.join()
@@ -1006,7 +1010,8 @@ class Modulos(View):
                 else:
                    acq_run=False
                 activar_acq = False
-              if 'CPT' in selecciones and activar_cpt == False:
+
+          if selecciones['cpt'] and not activar_cpt:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA CPT")
                 activar_cpt = True
                 global t_cpt
@@ -1017,36 +1022,41 @@ class Modulos(View):
                     t_cpt.start()
                 except:
                     print('FALLA 1001 EJECUTANDO COMPUTO(CPT):', sys.exc_info()[0])
-              if 'CPT' not in selecciones and activar_cpt == True:
+
+          if not selecciones['cpt'] and activar_cpt :
                 print("ORDEN DE PARADA RECIBIDA PARA CPT")
                 t_cpt.activar = False
                 t_cpt.join()
                 activar_cpt = False 
-              if 'HS' in selecciones and activar_hs == False:
+
+          if selecciones['hs'] and not activar_hs:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA HS")
                 activar_hs = True
                 global t_hs
                 t_hs = threading.Thread(target=tarea_hs, args=("tarea_hs",))
                 print('ARRANCAR '+t_hs.name)
                 t_hs.start()
-              if 'HS' not in selecciones and activar_hs == True:
+
+          if not selecciones['hs']  and activar_hs:
                 print("ORDEN DE PARADA RECIBIDA PARA HS")
                 t_hs.activar = False
                 t_hs.join()
-                activar_hs = False 
-              if 'GES_HS' in selecciones and activar_ges_hs == False:
+                activar_hs = False
+
+          if selecciones['ges_hs'] in selecciones and not activar_ges_hs:
                 print("ORDEN DE ARRANQUE RECIBIDA PARA GES_HS")
                 activar_ges_hs = True
                 global t_ges_hs
                 t_ges_hs = threading.Thread(target=tarea_ges_hs, args=("tarea_ges_hs",))
                 print('ARRANCAR '+t_ges_hs.name)
                 t_ges_hs.start()
-              if 'GES_HS' not in selecciones and activar_ges_hs == True:
+          if not selecciones['ges_hs'] and activar_ges_hs:
                 print("ORDEN DE PARADA RECIBIDA PARA GES_HS")
                 t_ges_hs.activar = False
                 t_ges_hs.join()
-                activar_ges_hs = False 
-              if 'NONE' in selecciones:
+                activar_ges_hs = False
+                
+          if selecciones['non']:
                 if activar_acq:
                     print("ORDEN DE PARADA RECIBIDA PARA ACQ")
                     t_acq.activar = False
@@ -1062,13 +1072,11 @@ class Modulos(View):
                     t_hs.activar = False
                     t_hs.join()
                     activar_hs = False
-
                 if activar_ges_hs:
                     print("ORDEN DE PARADA RECIBIDA PARA GES_HS")
                     t_ges_hs.activar = False
                     t_ges_hs.join()
                     activar_ges_hs = False
-          print(acq_run)
           return render(request, self.template_name, {'form': form,'ACQ_RUN':acq_run })
       else:
         print('no hay ninguna seleccion')
