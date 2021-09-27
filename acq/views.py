@@ -1056,7 +1056,7 @@ class Modulos(View):
                 t_ges_hs.join()
                 activar_ges_hs = False
                 
-          if selecciones['non']:
+          if selecciones['none']:
                 if activar_acq:
                     print("ORDEN DE PARADA RECIBIDA PARA ACQ")
                     t_acq.activar = False

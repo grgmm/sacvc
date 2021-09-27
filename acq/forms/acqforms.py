@@ -58,7 +58,7 @@ class ModulosForm(forms.Form):
     hs=forms.BooleanField(required=False,initial=False,label='Históricos')
     ges_hs=forms.BooleanField(required=False,initial=False,label='Gestion de Históricos')
     all=forms.BooleanField(required=False,initial=False,label='Seleccionar Todos')
-    non=forms.BooleanField(required=False,initial=False,label='Deseleccionar Todos')
+    none=forms.BooleanField(required=False,initial=False,label='Deseleccionar Todos')
                                           
                                           
 
