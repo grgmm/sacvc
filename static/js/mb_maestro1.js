@@ -86,7 +86,7 @@ function show() {
         e_puerto.options[e_puerto.selectedIndex].style.display = "inline";
 
         //Retiro visibilidad a select paridad y velocidad
-        e_velocidad.style.display = 'inline';
+        e_velocidad.style.display = 'none';
         e_paridad.style.display = 'inline';
         
     }
