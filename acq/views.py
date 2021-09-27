@@ -1499,12 +1499,13 @@ class Detalle_Analogico(LoginRequiredMixin, DetailView):
         tag = self.object
         dict_temp={}
         for f in tag._meta.get_fields():
-            campo=f.name
-            lolo= f
+            campo = f.name
+            print(campo)
+            verbosename = f.verbose_name
             valor=getattr(tag, campo)
-            campovalor={campo:valor}
+            campovalor={verbosename:valor}
             dict_temp.update(campovalor)
             
         context['FIELDS']=dict_temp
-        print(context)
+        #print(context)
         return context

@@ -24,7 +24,6 @@ class PatioTanque(models.Model):
     class Meta:
         ordering = ['Nombre']
 
-
     def __str__(self):
 
        return '%s' % (self.Nombre,)
@@ -177,7 +176,6 @@ class MbEsclavo(models.Model):
 
 class Tag(models.Model): #Características comunes para Analógicos y Digitales
 
-
   TIPOVARIABLE_CHOICES= [
   ('O', 'Origen'),
   ('B', 'Basica'),
@@ -196,32 +194,26 @@ class Tag(models.Model): #Características comunes para Analógicos y Digitales
    ]
   Nombre = models.CharField(max_length=42)
   Descriptor = models.CharField(max_length=120, default='')
-  id_Tk= models.ForeignKey(Tk, on_delete=models.CASCADE)
-  Habilitar= models.BooleanField(default = True)
+  id_Tk= models.ForeignKey(Tk, on_delete=models.CASCADE, verbose_name= _('ID del Tanque'))
+  Habilitar= models.BooleanField(default = True, verbose_name= _('Habilitar '))
   TipoVariable = models.CharField(verbose_name= _('Tipo de Variable'),choices =  TIPOVARIABLE_CHOICES, max_length=1, default = 'B')
-  direccion = models.CharField(max_length=5, default= '4:0')
-  direccion_campo = models.CharField(max_length=5, default= '4:0')
+  direccion = models.CharField(max_length=5, default= '4:0', verbose_name= _('Direccion'))
+  direccion_campo = models.CharField(max_length=5, default= '4:0', verbose_name= _('Direccion de Campo'))
 
-
-  etiqueta1 = models.CharField(choices = PARAMETRO_TK_CHOICES,max_length=4, default = 'NA')
-
+  etiqueta1 = models.CharField(choices = PARAMETRO_TK_CHOICES,max_length=4, default = '')
   etiqueta2 = models.CharField(max_length=32, blank=True, null =True, default = '',verbose_name= _('Tag del instrumento en campo o P&ID'), )
-
-  etiqueta3 = models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
-  etiqueta4 = models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
-  etiqueta5=  models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
-  etiqueta6=  models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('ETIQUETA PARA USUARIOS'),)
-
+  etiqueta3 = models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('AREA 1 Informacion Customizada'),)
+  etiqueta4 = models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('AREA 2 Informacion Customizada'),)
+  etiqueta5=  models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('AREA 3 Informacion Customizada'),)
+  etiqueta6=  models.CharField(max_length=32,blank=True, null =True, default = '', verbose_name= _('AREA 4 Informacion Customizada'),)
 
   def __str__(self):
 
        return '%d' % (self.id,)
 
-
 class Meta: #Extiende del modelo Tag con Características no comunes para Analógicos y Digitales
 
   abstract = True
-
 
 class Digital(Tag):
   EstadoInicial= models.BooleanField(default = True)
@@ -230,34 +222,32 @@ class Digital(Tag):
   S0A = models.BooleanField(default = True)
   S1A= models.BooleanField(default = True)
 
-
   def __str__(self):
 
       return '%s' % (self.Nombre)
 
   abstract = True
 
-
 class Analogico(Tag):
   ValorMinimo = models.FloatField(default= 0.0, verbose_name= _('Valor Minimo'))
-  ValorMaximo = models.FloatField(default= 20.0)
+  ValorMaximo = models.FloatField(default= 20.0, verbose_name= _('Valor Maximo'))
   Unidad = models.CharField(max_length= 5)
 
-  HH_Habilitar= models.BooleanField(default = True)
-  H_Habilitar= models.BooleanField(default = True)
-  LL_Habilitar= models.BooleanField(default = True)
-  L_Habilitar= models.BooleanField(default = True)
-  HisteresisHabilitar = models.BooleanField(default = True)
-  ROC_Habiltar = models.BooleanField(default = True)
+  HH_Habilitar= models.BooleanField(default = True, verbose_name= _('Habilitar Alarma ALTO ALTO'))
+  H_Habilitar= models.BooleanField(default = True, verbose_name= _('Habilitar Alarma ALTO'))
+  LL_Habilitar= models.BooleanField(default = True, verbose_name= _('Habilitar Alarma BAJO BAJO'))
+  L_Habilitar= models.BooleanField(default = True, verbose_name= _('Habilitar Alarma BAJO'))
+  HisteresisHabilitar = models.BooleanField(default = True, verbose_name= _('Habilitar Alarma HISTERESIS'))
+  ROC_Habiltar = models.BooleanField(default = True, verbose_name= _('Habilitar Alarma RATA DEL CAMBIO'))
 
-  ValorInicial = models.FloatField(default=1.0)
+  ValorInicial = models.FloatField(default=1.0, verbose_name= _('Valor Inicial'))
 
-  HH = models.FloatField(default=18.0)
-  H = models.FloatField(default=16.0)
-  LL= models.FloatField(default=4.0)
-  L = models.FloatField(default=6.0)
-  Histeresis= models.FloatField(default=1.0)
-  ROC= models.FloatField(default=1.0)
+  HH = models.FloatField(default=18.0, verbose_name= _('ALTO ALTO')) 
+  H = models.FloatField(default=16.0, verbose_name= _('ALTO'))
+  LL= models.FloatField(default=4.0 , verbose_name= _('BAJO BAJO'))
+  L = models.FloatField(default=6.0, verbose_name= _('BAJO'))
+  Histeresis= models.FloatField(default=1.0, verbose_name= _('HISTERESIS'))
+  ROC = models.FloatField(default=1.0, verbose_name= _('RATA EL CAMBIO'))
 
 
   def __str__(self):
