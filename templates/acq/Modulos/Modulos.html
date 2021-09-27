@@ -8,86 +8,22 @@
 
 <div id="ventana">
 <form method='post'>
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
+  {% csrf_token %}
+    <table onclick="myFunction(this.id)" >
+        <caption>ARRANQUE Y PARADA DE MODULOS</caption>
+        <!-- {{ form.as_table }}--> 
+        {% for field in form.visible_fields %}
+      		<tr>
+        		<td class="etiqueta" id="etiqueta">{{ field.label_tag }}</td>
+        		<td class="dato" id="dato">{{ field }}</td>
+        		<td class="estado" id="estado">{{ACQ_RUN}}</td>
+    	{% endfor %}
     </table>
 
-
-    <!-- CODIGO ANTIGUO COMENTADO
-    <div >  
-        <table onclick="myFunction(this.id)" id="tabla">
-        <caption>Arranque/Parada de Modulos</caption>
-        <tr>
-            <td>
-                <input type="checkbox" id="id_acq" class="r_boton" name="acq" value="acq" unchecked>
-            </td>
-            <td>
-                <label for="acq">Adquisición</label> 
-            </td>{{ACQ_RUN}}
-            <td>
-                <label id="e_acq"></label> 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" id="id_cpt" class="r_boton" name="cpt" value="cpt" unchecked>
-            </td>
-            <td>
-                <label for="cpt">Volúmenes</label>
-            </td>
-            <td>
-                <label">Estado</label> 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" id="id_hs" class="r_boton" name="hs" value="hs" unchecked>
-            </td>
-            <td>
-                <label for="hs">Históricos</label>
-            </td>
-            <td>
-                <label">Estado</label> 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" id="id_ges_hs" class="r_boton" name="ges_hs" value="ges_hs" unchecked>
-            </td>
-            <td>
-                <label for="ges_hs">Gestion de Históricos</label>
-            </td>
-            <td>
-                <label">Estado</label> 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" id="id_all" class="r_boton" name="all" value="all" unchecked>
-            </td>
-            <td>
-                <label for="all">Seleccionar Todos</label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" id="none" class="r_boton" name="none" value="none" unchecked>
-            </td>
-            <td>
-                <label for="none">Deseleccionar Todos</label>
-            </td>
-        </tr>
-    </table>
-
-    </div>
-    -->
     <input id="btn_aceptar"   type='submit' value="Aceptar" class="btn_control"></input>
 </form>
 <input id="btn_cancelar" type="button" value="Cancelar" class="btn_control"></input>
 </div>
-<!--
 <script src={% static 'js/jquery-3.6.0.min.js' %}></script>
 <script src={% static 'js/modulos.js' %}></script>
--->
 {% endblock %}

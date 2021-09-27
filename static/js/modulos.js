@@ -4,32 +4,37 @@ var flag_all = 0
 var flag_none = 0
 
 var rbotones = document.getElementsByClassName('r_boton');
+var rbotones = document.getElementsByTagName('input');
+console.log(rbotones)
 var len = rbotones.length;
+for (var i = 1; i < len-2; i++) {
+    console.log(rbotones[i])
+}
 var acq, cpt, hs, ges_hs, none, all
 /*
 if (flag_all == 0 && flag_none == 0) {
     //Condicion de inicio del script
-    for (var i = 0; i < len; i++) {
+    for (var i = 1; i < len-2; i++) {
         //botones de modulos seleccionados
         rbotones[i].checked = true
         console.log(rbotones[i].id)
         switch (i) {
-            case 0:
+            case 1:
                 acq = i
                console.log( rbotones[i].id)
-            case 1:
+            case 2:
                 cpt = i
                console.log( rbotones[i].id)
-            case 2:
+            case 3:
                 hs = i
                console.log( rbotones[i].id)
-            case 3:
+            case 4:
                 ges_hs = i
                console.log( rbotones[i].id)
-            case 4:
+            case 5:
                 all = i
                console.log( rbotones[i].id)
-            case 5:
+            case 6:
                 none = i
                console.log( rbotones[i].id)
         }
@@ -39,15 +44,17 @@ if (flag_all == 0 && flag_none == 0) {
     }
 }
 */
+
+
 function myFunction(clicked_id) {
-    var rbotones = document.getElementsByClassName('r_boton');
+    var rbotones = document.getElementsByTagName('input');
     var len = rbotones.length;
-    const acq = 0
-    const cpt = 1
-    const hs = 2
-    const ges_hs = 3
-    const all = 4
-    const none = 5;
+    const acq = 1
+    const cpt = 2
+    const hs = 3
+    const ges_hs = 4
+    const all = 5
+    const none = 6;
 
     //NOTA:Se debe conservar el orden de los if
 

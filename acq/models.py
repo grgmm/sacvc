@@ -142,7 +142,7 @@ class MbMaestro(models.Model):
   SercvicePort= models.IntegerField(default=5002,verbose_name= _('Puerto de Servicio'),)
   Velocidad = models.IntegerField(choices = VEL_CHOICES, default= 1, verbose_name= _('Tasa de baudios'),) #NO APLICA PARA TCP
   Paridad = models.CharField(max_length=5, choices = PARIDAD_CHOICES, default= 'PAR', verbose_name= _('Paridad'),) #NO APLICA PARA TCP
-  Reintentos = models.IntegerField(default=3)
+  Reintentos = models.IntegerField(default=3, verbose_name= _('Nro de Intentos'),)
   IdDevice = models.IntegerField(default=1, verbose_name= _('Id del Esclavo'),)
 
   def __str__(self):

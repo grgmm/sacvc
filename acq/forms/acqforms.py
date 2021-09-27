@@ -37,15 +37,15 @@ class mbmaestro(forms.Form):
     # Se retiro el label="Puerto de Servicio" de SercvicePort para pruebas
     # Se retiro el label="Id del Dispositivo" de IdDevice para pruebas
 
-    IpDevice = forms.CharField(max_length=100,)  # DISPONIBLE SOLO SI EL TIPO ES TCP
-    SercvicePort = forms.IntegerField()  # DISPONIBLE SOLO SI EL TIPO ES TCP
+    IpDevice = forms.CharField(max_length=100, label='IP del Dispositivo')  # DISPONIBLE SOLO SI EL TIPO ES TCP
+    SercvicePort = forms.IntegerField(label='Puerto de Servicio')  # DISPONIBLE SOLO SI EL TIPO ES TCP
 
-    Velocidad = forms.ChoiceField(choices=VEL_CHOICES)  # DISPONIBLE SI EL TIPO ES RTU
+    Velocidad = forms.ChoiceField(choices=VEL_CHOICES )  # DISPONIBLE SI EL TIPO ES RTU
 
     Paridad = forms.ChoiceField(choices=PARIDAD_CHOICES, )  # DISPONIBLE SI EL TIPO ES RTU
 
     Reintentos = forms.IntegerField()
-    IdDevice = forms.IntegerField()
+    IdDevice = forms.IntegerField(label='ID del Dispositivo')
 
 
 class guardar_configuracion_mbm(forms.Form):
@@ -58,7 +58,7 @@ class ModulosForm(forms.Form):
     hs=forms.BooleanField(required=False,initial=False,label='Históricos')
     ges_hs=forms.BooleanField(required=False,initial=False,label='Gestion de Históricos')
     all=forms.BooleanField(required=False,initial=False,label='Seleccionar Todos')
-    non=forms.BooleanField(required=False,initial=False,label='Deseleccionar Todos')
+    none=forms.BooleanField(required=False,initial=False,label='Deseleccionar Todos')
                                           
                                           
 

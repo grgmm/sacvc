@@ -10,7 +10,7 @@
 	top: 20%; 
 	height: auto;
 	overflow-x: hidden;
-	width: 30%;
+	width: 40%;
 	left: 30%; /*(100%-(width:24%))/2*/
 	background: #fff;
 	border-radius: 10px;
@@ -45,6 +45,7 @@ table, th,tr, td{
 	border: solid 1px;
 	border-color:white;
 	vertical-align: middle;
+	border: 1px solid;
 }
 
 .r_boton{
@@ -59,12 +60,13 @@ label {
 	font-size: 14px;
 }
 
+
 .etiqueta {
 	padding-top: .5rem;
 	padding-bottom: .5rem;
 	background-color: #117a8b;
 	margin-bottom: 0.4rem;
-	width: 10rem;
+	width: 45%;
 	color: white;
 	padding-left: 0.5rem;
 }
@@ -72,10 +74,16 @@ label {
 .dato {
 	padding-top: .5rem;
 	padding-bottom: .5rem;
-	width: 10rem;
+	width: 20%;
 	color: black;
 	padding-left: 2rem;
 	border-radius: 0.4rem;
+}
+
+.estado{
+	background-color: red;
+	width: 35%;
+	text-align: center;
 }
 
 #btn_aceptar {
