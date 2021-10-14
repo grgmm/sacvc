@@ -255,7 +255,7 @@ class TkAdd(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Intercambio_Aplicacion')
         ruta_Data = fs.location
         try:
             with fs.open(ruta_Data + '/tk_iniciales.json', mode='r') as data_file:
@@ -279,7 +279,7 @@ class TkAdd(CreateView):
                 return redirect('/sacvc/logout')
             else:
 
-                fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+                fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Intercambio_Aplicacion')
                 ruta_Data = fs.location
 
                 try:
@@ -526,7 +526,7 @@ class TkDelete(DeleteView):
     def get_success_url(self):
         from django.db.models import Max, Min
         direccionamiento = {'dir_disponibles': []}
-        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Intercambio_Aplicacion')
         ruta_Data = fs.location
 
         try:
@@ -659,7 +659,7 @@ class Validar_Tct(UpdateView):
     def get(self, request, *args, **kwargs):
         data_temp = {'REGISTRO_ACTUAL': '', 'PORCENTAJE_SUBIDA': '', 'REGISTROS_TOTALES': ''}
         if request.user.is_authenticated:
-            fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Intercambio_Aplicacion')
             ruta_Data = fs.location
             filtro_usuario = Group.objects.filter(user=request.user)
             for g in filtro_usuario:
@@ -756,7 +756,7 @@ class Validar_Tct(UpdateView):
             return redirect('/sacvc/logout')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+        fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Intercambio_Aplicacion')
         ruta_Data = fs.location
         try:
             with fs.open(ruta_Data + '/porcentaje_subida.json', mode='r') as data_file:
@@ -883,7 +883,7 @@ class MbMaestro(View):
             else:
                 file_form = guardar_configuracion_mbm
                 form = self.form_class(initial=self.initial)
-                fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Data')
+                fs = FileSystemStorage(location=settings.MEDIA_ROOT + '/Intercambio_Aplicacion')
                 ruta_Data = fs.location
 
                 if request.GET.get("guardar_en_disco    ", ""): #GUARDAR CONFIGURACION DEL FORMULARIO AL DISO
