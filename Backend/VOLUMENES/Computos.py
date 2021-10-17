@@ -72,6 +72,7 @@ class cpt():
        print('MÓDULO DE CALCULO DE VOLUMENES ACTIVO, REVISAR SALIDA EN: /Data/Buffer_Datos_Calculados.json' )
        if a==True:
 #OBTENIENDO DATOS DEL BUFFER DATA CRUDA
+               
                try:
                     with fs.open(ruta_Data+'/Buffer_Data_Cruda.json', mode = 'r') as data_file_r:
                             data_fr = json.loads(data_file_r.read())
@@ -91,7 +92,11 @@ class cpt():
                                 pt_alarma=Alarmas(Presion_tk, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
                                 Data_tanques_temp['IDPT'] = idtag_pt
                                 Data_tanques_temp['PT'] = str(Presion_tk)
-                                Data_tanques_temp['PT_ALARMA']= pt_alarma
+
+                                Data_tanques_temp['PT_ALARMA']= pt_alarma['status'] #U=URGENTE,N=NORMAL, C=CRITICA
+                                Data_tanques_temp['PT_CRITERIO_ALARMA']= pt_alarma['criterio_alarma'] #L=BAJA PRESIÓN DE PRODUCTO, LL=MUY BAJA PRESIÓN DE PRODUCTO,
+                                #H=ALTA PRESIÓN DE PRODUCTO, HH= MUY ALTA PRESIÓN DE PRODUCTO
+
                                 Data_tanques_temp['TIMESTAMP_pt'] =  timestamp_pt
                         if (tag_ins.etiqueta1=='tt'):
                                 temperatura_producto=vb_PV
@@ -101,8 +106,12 @@ class cpt():
                                 Data_tanques_temp['IDTT'] = idtag_tt
                                 #Data_tanques_temp['TT_UNIDAD'] = tt_unidad
                                 Data_tanques_temp['TT'] = str(temperatura_producto)
-                                Data_tanques_temp['TT_ALARMA']= tt_alarma
+
+                                Data_tanques_temp['TT_ALARMA']= tt_alarma['status'] #U=URGENTE,N=NORMAL, C=CRITICA
+                                Data_tanques_temp['TT_CRITERIO_ALARMA']= tt_alarma['criterio_alarma'] #L=BAJA TEMPERATURA DE PRODUCTO, LL=MUY BAJA TEMPERATURA DE PRODUCTO,
+                                #H=ALTA TEMPERATURA DE PRODUCTO, HH= MUY ALTA BAJA TEMPERATURA DE PRODUCTO
                                 Data_tanques_temp['TIMESTAMP_tt'] =  timestamp_tt
+
                         if (tag_ins.etiqueta1=='lta'):
                                 nivel_agua_libre=vb_PV
                                 idtag_lta = tag_ins.pk
@@ -110,7 +119,12 @@ class cpt():
                                 lta_alarma=Alarmas(nivel_agua_libre, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
                                 Data_tanques_temp['IDLTA'] = idtag_lta
                                 Data_tanques_temp['LTA'] =  str(nivel_agua_libre)
-                                Data_tanques_temp['LTA_ALARMA']= lta_alarma
+
+                                Data_tanques_temp['LTA_ALARMA']= lta_alarma['status'] #U=URGENTE,N=NORMAL, C=CRITICA
+                                Data_tanques_temp['LTA_CRITERIO_ALARMA']= lta_alarma['criterio_alarma'] #L=BAJO NIVEL DE AGUA LIBRE, LL=MUY BAJO NIVEL DE AGUA LIBRE,
+                                #H=ALTA NIVEL DE AGUA LIBRE, HH= MUY ALTO NIVEL DE AGUA LIBRE
+
+
                                 Data_tanques_temp['TIMESTAMP_lta'] =  timestamp_lta
                         if (tag_ins.etiqueta1=='ays'):
                                 ays=vb_PV
@@ -119,7 +133,15 @@ class cpt():
                                 ays_alarma=Alarmas(ays, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
                                 Data_tanques_temp['IDAYS'] = idtag_ays
                                 Data_tanques_temp['AYS'] =  str(ays)
-                                Data_tanques_temp['AYS_ALARMA']= ays_alarma
+
+                                Data_tanques_temp['AYS_ALARMA']= ays_alarma['status'] #U=URGENTE,N=NORMAL, C=CRITICA
+                                Data_tanques_temp['AYS_CRITERIO_ALARMA']= ays_alarma['criterio_alarma'] #L=BAJO NIVEL DE AGUA Y SEDIMENTO, LL=MUY BAJO NIVEL DE AGUA Y SEDIMENTO,
+                                #H=ALTA NIVEL DE AGUA Y SEDIMENTO, HH= MUY ALTO NIVEL DE AGUA Y SEDIMENTO
+
+
+                                print(Data_tanques_temp['AYS_ALARMA'])
+                                print(Data_tanques_temp['AYS_CRITERIO_ALARMA'])
+
                                 Data_tanques_temp['TIMESTAMP_ays'] =  timestamp_ays
                         if (tag_ins.etiqueta1=='lt'):
                                 nivel_producto=vb_PV
@@ -156,10 +178,26 @@ class cpt():
                                     Data_tanques_temp['NSV'] =   str(nsv)
                                     Data_tanques_temp['VALORMAXIMO']=  tag_ins.ValorMaximo
                                     Data_tanques_temp['VALORMINIMO'] =  tag_ins.ValorMinimo
-                                    Data_tanques_temp['LT_ALARMA']=     lt_alarma
-                                    Data_tanques_temp['TOV_ALARMA']=  tov_alarma
-                                    Data_tanques_temp['NSV_ALARMA']=  nsv_alarma
-                                    Data_tanques_temp['GSV_ALARMA'] =    gsv_alarma
+
+                                    Data_tanques_temp['LT_ALARMA']=  lt_alarma['status'] #U=URGENTE,N=NORMAL, C=CRITICA
+                                    Data_tanques_temp['LT_CRITERIO_ALARMA']=  lt_alarma['criterio_alarma'] #L=BAJO NIVEL DE PRODUCTO, LL=MUY BAJO NIVEL DE PRODUCTO,
+                                   #H=ALTO NIVEL DE PRODUCTO, HH= MUY ALTO NIVEL DE PRODUCTO
+
+                                    Data_tanques_temp['TOV_ALARMA']=  tov_alarma['status'] #U=URGENTE,N=NORMAL, C=CRITICA
+                                    Data_tanques_temp['TOV_CRITERIO_ALARMA']=  tov_alarma['criterio_alarma'] #L=BAJO VOLUMEN TOTAL OBSERVADO DE PRODUCTO, LL=MUY BAJO VOLUMEN NETO ESTANDAR DE PRODUCTO,
+                                   #H=ALTO VOLUMEN TOTAL OBSERVADO DE PRODUCTO, HH= MUY ALTO VOLUMEN TOTAL OBSERVADO DE PRODUCTO
+
+
+
+                                    Data_tanques_temp['NSV_ALARMA']=  nsv_alarma['status'] #U=URGENTE,N=NORMAL, C=CRITICA
+                                    Data_tanques_temp['NSV_CRITERIO_ALARMA']=  nsv_alarma['criterio_alarma']#L=BAJO VOLUMEN NETO ESTANDAR DE PRODUCTO, LL=MUY BAJO VOLUMEN NETO ESTANDAR DE PRODUCTO,
+                                   #H=ALTO VOLUMEN NETO ESTANDAR DE PRODUCTO, HH= MUY ALTO VOLUMEN NETO ESTANDAR DE PRODUCTO
+
+                                    Data_tanques_temp['GSV_ALARMA'] =    gsv_alarma['status'] #U=URGENTE,N=NORMAL, C=CRITICA
+                                    Data_tanques_temp['GSV_CRITERIO_ALARMA'] =    gsv_alarma['criterio_alarma'] #L=BAJO VOLUMEN BRUTO ESTANDAR DE PRODUCTO, LL=MUY BAJO VOLUMEN BRUTO ESTANDAR DE PRODUCTO,
+                                   #H=ALTO VOLUMEN BRUTO ESTANDAR DE PRODUCTO, HH= MUY ALTO VOLUMEN BRUTO ESTANDAR DE PRODUCTO
+
+
                                     Data_tanques_temp['TIMESTAMP_lt']=   timestamp_lt
                                     Data_tanques_temp['TIMESTAMP_TOV']= timestamp_tov
                                     Data_tanques_temp['TIMESTAMP_GSV']= timestamp_gsv
@@ -169,7 +207,7 @@ class cpt():
                                     else:
                                         print('NIVEL DE PRODUCTO FUERA DE RANGOS EN TANQUE:', tk_ins.Nombre)
                                 except:
-                                    print("Error de parseo", sys.exc_info()[0], "occurred.")
+                                    print("Error de parseo ", sys.exc_info()[0], "occurred.")
                     Data_tanques[tk_ins.pk] ={'TANQUE': tk_ins.Nombre}
                     Data_tanques[tk_ins.pk].update(Data_tanques_temp)
                     try:

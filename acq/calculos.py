@@ -9,12 +9,21 @@ def Alarmas(vp,ll,l,h,hh):
     status=''
     if (l < vp and vp < h):
         status='N'
+        cirterio_alarma= ''
     else:
-        if (vp  > hh or vp  < ll):
-            status='C'
+        status='C'
+        if (vp  > hh):
+            cirterio_alarma= 'hh'
+        if (vp < ll):
+            cirterio_alarma= 'll'
         else:
             status='U'
-    return status
+            if (vp  > h and vp <= hh):
+                cirterio_alarma= 'h'
+            if (vp < l and vp >= ll):
+                cirterio_alarma= 'l'
+
+    return {'status':status, 'criterio_alarma': cirterio_alarma }
 
 def Escalamiento(valormedido, minimo, maximo):
     if (maximo-minimo) != 0:

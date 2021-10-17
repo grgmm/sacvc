@@ -86,8 +86,13 @@ DATABASES = {
         'NAME': 'sacvc_db',
         'USER': 'morenomx',
         'PASSWORD': 'mm262517',
-        'HOST': '127.0.0.1',
         'PORT': '5432',
+        'HOST': '127.0.0.1' #default
+        #'HOST': '192.168.164.128'
+
+    # 'HOST': '192.168.164.128', para colocar una IP para el servidor de Bd distinto al localhost (127.0.0.1), es necesario para postgres modificar pg_hba.conf
+    #  y el postgresql.conf modificando agregando la IP, así como el nombre del usuario y la Based e datos, también hay que cambiar el parámetros listen_address a '*' . '''
+        
         }
     }
 
