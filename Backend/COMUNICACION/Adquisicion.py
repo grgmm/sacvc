@@ -21,6 +21,7 @@ class acq():
 
         # declara la conexión
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #print(serviceport,id_esclavo,slave_ip_address)
 
       
         try:
@@ -47,8 +48,8 @@ class acq():
                             'NO HAY DATOS PARA ENCUESTAR SALIENDO DEL ADQUISIDOR ###################')
                         exit()  # SALIR DEL PROGRAMA SI NO HAY TANQUES QUE ENCUESTAR
                 else:
-
-                        for tk in Tk.objects.iterator():  # ITERNDO EN TANQUES EXISTENTES.
+                        
+                        for tk in Tk.objects.iterator():  # ITERANDO EN TANQUES EXISTENTES.
                             Data_Cruda = {'Data_Cruda': []}
                             # RECORRIENDO LOS TAGS DE CADA TANQUE
                             for tag in Tag.objects.filter(id_Tk=tk.pk).iterator():

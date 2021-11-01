@@ -87,7 +87,8 @@ DATABASES = {
         'USER': 'morenomx',
         'PASSWORD': 'mm262517',
         'PORT': '5432',
-        'HOST': '127.0.0.1' #default
+        'HOST': '127.0.0.1' 
+
         #'HOST': '192.168.164.128'
 
     # 'HOST': '192.168.164.128', para colocar una IP para el servidor de Bd distinto al localhost (127.0.0.1), es necesario para postgres modificar pg_hba.conf
