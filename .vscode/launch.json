@@ -8,7 +8,7 @@
             "name": "RUNSERVER",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\manage.py",
+            "program": "${workspaceFolder}/manage.py",
             "args": [
                 "runserver"
             ],
@@ -18,7 +18,7 @@
             "name": "ACQ",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\manage.py",
+            "program": "${workspaceFolder}/manage.py",
             "args": [
                 "acq"
             ],
@@ -28,7 +28,7 @@
             "name": "CPT",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\manage.py",
+            "program": "${workspaceFolder}/manage.py",
             "args": [
                 "cpt"
             ],
@@ -38,7 +38,7 @@
             "name": "MAKEMIGRATIONS",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\manage.py",
+            "program": "${workspaceFolder}/manage.py",
             "args": [
                 "makemigrations"
             ],
@@ -48,7 +48,7 @@
             "name": "MIGRATE",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\manage.py",
+            "program": "${workspaceFolder}/manage.py",
             "args": [
                 "migrate"
             ],

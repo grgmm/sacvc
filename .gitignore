@@ -19,3 +19,4 @@ sacvc/__pycache__/settings.cpython-39.pyc
 sacvc/__pycache__/urls.cpython-39.pyc
 sacvc/__pycache__/wsgi.cpython-39.pyc
 .vscode/settings.json
+.vscode/launch.json
