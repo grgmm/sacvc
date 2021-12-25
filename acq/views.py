@@ -237,11 +237,16 @@ class tklist(ListView):  # LISTADO TANQUES DE UN TERMINAL
                 return redirect('/sacvc/Menu')
             else:
                 return super(tklist, self).get(request, *args, **kwargs)
-
         else:
             return redirect('/sacvc/logout')
-
-
+'''
+        if request.method == 'POST':
+            form = ActivateForm( request.POST )
+            if form.is_valid():
+                actkey = form.cleaned_data['actkey']#access cleaned_data instead of raw post
+                activate( '', actkey )
+                    return HttpResponseRedirect('/')
+'''
 class TkAdd(CreateView):
     model = Tk
     fields = ['Nombre', 'Descriptor', 'id_patioTanque', 'id_aor', ]

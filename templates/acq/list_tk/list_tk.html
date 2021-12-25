@@ -1,58 +1,168 @@
 {% extends 'acq/base.html' %}
- {% load static %}
-
-{% block title %}Lista de tanques{% endblock %} 
-
+{% load static %}
 {% block content %}
- 
-<link rel="stylesheet" href="{% static 'css/list.css' %}">
+<!-- jquery-ui -->
+<!-- css-->
+<link rel="stylesheet" href="{% static 'jquery/jquery-ui.css' %}">
+<link rel="stylesheet" href="{% static 'jquery/jquery-ui.structure.css' %}">
+<!--
+<link rel="stylesheet" href="{% static 'jquery/jquery-ui.theme.css' %}">
+-->
+<link rel="stylesheet" href="{% static 'jquery/datatables.css' %}">
+<link rel="stylesheet" href="{% static 'jquery/buttons.jqueryui.css' %}">
+<link rel="stylesheet" href="{% static 'jquery/dataTables.jqueryui.css' %}">
+
+<!-- js -->
+<script src="{% static 'jquery/jquery-3.6.0.js' %}"></script>
+<script src="{% static 'jquery/jquery-ui.js' %}"></script>
+<script src="{% static 'jquery/datepicker-es.js' %}"></script>
+<script src="{% static 'jquery/datatables.js' %}"></script>
+<script src="{% static 'jquery/dataTables.jqueryui.js' %}"></script>
+<script src="{% static 'jquery/dataTables.buttons.js' %}"></script>
+<script src="{% static 'jquery/buttons.jqueryui.js' %}"></script>
+<script src="{% static 'jquery/jszip.js' %}"></script>
+<script src="{% static 'jquery/pdfmake.js' %}"></script>
+<script src="{% static 'jquery/vfs_fonts.js' %}"></script>
+<script src="{% static 'jquery/buttons.html5.js' %}"></script>
+<script src="{% static 'jquery/buttons.print.js' %}"></script>
+<script src="{% static 'jquery/buttons.colVis.js' %}"></script>
+
+<!--Resources para la tabla-->
+<link rel="stylesheet" href="{% static 'css/list_tk.css' %}">
+<script src="{% static 'js/list_tk.js' %}"></script>
+
+<!--Resources para la nuevo tanque-->
+<link rel="stylesheet" href="{% static 'css/dialogo_nuevo.css' %}">
+<script src="{% static 'js/dialogo_nuevo.js' %}"></script>
 
 <div id="cuerpo">
-	<h2 class="titulo">Tanques de Almacenamiento de la instalación {{object_list.first.id_patioTanque.Nombre}}</h2>
+	<h2 id="titulo">Tanques de Almacenamiento de la instalación {{object_list.first.id_patioTanque.Nombre}}</h2>
 	<div>
-		<a href="{% url 'uacq:list_tf' %}" id="regresar" type="button" class="btn_control" >
-		<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}"/>REGRESAR</a>
-    		<a href="{%url 'uacq:add_tk'%}" id="agregar" type="button" class="btn_control">
-    		<img class="imagen" src="{% static "recursos/iconos/add24x24.png" %}"/>AGREGAR TK </a>
-	</div>
+		<a href="{% url 'uacq:list_tf' %}" id="regresar" type="button" class="btn_control">
+			<img class="imagen" src="{% static "recursos/iconos/atras24x24.png" %}" />REGRESAR</a>
+
+        <!--Boton agregar por urlo-->
+		<a href="{%url 'uacq:add_tk'%}" id="agregar" type="button" class="btn_control">
+			<img class="imagen" src="{% static "recursos/iconos/add24x24.png" %}" />AGREGAR TK </a>
 		
+		<!--Boton que abre el dialogo-->
+		<button id="agregar1" class="btn_control">
+			<img class="imagen" src="{% static "recursos/iconos/add24x24.png" %}"/>Agregar</button>
+
+
+
+	</div>
+	<!--Aqui empieza la tabla-->
 	<div id="principal">
-		<table>
-			<!-- Encabezado de la tabla con tres columnas-->
+
+		<table id="tabla">
+			<caption id="caption" style="text-align:center;">LISTADO DE TANQUES</caption>
 			<thead>
 				<tr>
 					<th>TANQUE</th>
 					<th>ACCIÓN</th>
 					<th>TABLA TCT</th>
-					</tr>
+				</tr>
 			</thead>
 			<tbody>
 				{% for tk in object_list %}
-					<tr>
-					<!-- Columna1=Nombre del TANQUE -->
-						<td>{{ tk.Nombre }}</td>
+				<tr>
+					<td>{{ tk.Nombre }}</td>
+					<td>
+						<a href="{% url 'uacq:detail_tk' tk.pk  %}" class="btn_tabla"
+							title="Click para detalle del tanque">
+							<img class="img_interna" src="{% static "recursos/iconos/consultar18X18.png"%}" />Detalle</a>
+						<a href="{% url 'uacq:edit_tk' tk.pk  %}" class="btn_tabla"
+							title="Click para editar datos del tanque">
+							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}" />Editar</a>
+						<a href="{% url 'uacq:del_tk' tk.pk  %}" class="btn_tabla" title="Click para retirar el tanque">
+							<img class="img_interna" src="{% static "recursos/iconos/cancel18x18.png" %}" />Borrar</a>
+					</td>
 
-						<!-- Columna2=links -->
-						<td>
-							<a href="{% url 'uacq:detail_tk' tk.pk  %}" class="btn_tabla">
-							<img class="img_interna" src="{% static "recursos/iconos/consultar18X18.png" %}"/>Detalle</a>
-							<a href="{% url 'uacq:edit_tk' tk.pk  %}" class="btn_tabla">
-							<img class="img_interna" src="{% static "recursos/iconos/editar18x18.png" %}"/>Editar</a>
-							<a href="{% url 'uacq:del_tk' tk.pk  %}" class="btn_tabla">
-								<img class="img_interna" src="{% static "recursos/iconos/cancel18x18.png" %}"/>Borrar</a>
-						</td>
-
-						<!-- Columna3-->
-						<td>
-							{% if tk.tct_archivo %}
-								<a href="{{tk.tct_archivo.url}}" class="btn_tabla">ver</a>
-							{% endif %}
-						</td>
-					</tr>
+					<td>
+						{% if tk.tct_archivo %}
+						<a href="{{tk.tct_archivo.url}}" class="btn_tabla" title="Click para ver archivo TCT"/>
+						<img class="img_interna" src="{% static "recursos/iconos/ver_18x18.png" %}" />ver</a>
+						{% endif %}
+					</td>
+				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 	</div>
+	<!--Aqui termina la tabla-->
+
+	<!--Aqui empieza el dialogo modal nuevotanque-->
+
+	<div id="ventana">
+
+		<form id="my_form" method="post" >
+			{% csrf_token %}
+			<div id="panel">
+				<table class="panel">
+					
+				{% for field in form.visible_fields %}
+      				<tr>
+        				<td class="columna1">{{ field.label_tag }}</td>
+        				<td class="columna2">{{ field }}</td>
+      				</tr>
+    			{% endfor %}
+
+
+					<tbody>
+						<tr>
+							<td class="columna1"><label for="nombre">Nombre :</label></td>
+							<td class=" columna2"><input id="nombre" type="text" name="nombre" /></td>
+						</tr>
+						<tr>
+							<td class="columna1"><label for="descriptor">Descriptor
+									:</label></td>
+							<td class=" columna2"><input id="descriptor" type="text" name="descriptor" /></td>
+						</tr>
+						<tr>
+							<td class="columna1"><label for="fechaSubidaTct">Fecha
+									de subida TCT :</label></td>
+							<td class=" columna2"><input id="fechaSubidaTct" type="text" name="fechaSubidaTct"
+									value="22 dic. 2021" class="fechaSubidaTct hasDatepicker" /></td>
+						</tr>
+						<tr>
+							<td class="columna1"><label for="listaAcqPatiotanques">Patio
+									de Procesos :</label></td>
+							<td class=" columna2"><select id="listaAcqPatiotanques" name="listaAcqPatiotanques"
+									size="1">
+									<option value="2">Patio1</option>
+								</select></td>
+						</tr>
+						<tr>
+							<td class="columna1"><label for="listaAcqAor">Area
+									del Patio :</label></td>
+							<td class=" columna2"><select id="listaAcqAor" name="listaAcqAor" size="1">
+									<option value="3">Area2</option>
+									<option value="2">Area1</option>
+								</select></td>
+						</tr>
+						<tr>
+							<td class="columna1"><label for="ctsh">Valor de CTSH
+									:</label></td>
+							<td class=" columna2"><input id="ctsh" type="text" name="ctsh" value="1.0"/></td>
+						</tr>
+						<tr>
+							<td class="columna1"><label for="fra">Valor de FRA :</label></td>
+							<td class=" columna2"><input id="fra" type="text" name="fra" value="1.0" /></td>
+						</tr>
+						<tr>
+							<td class="columna1"><label for="ctpl">Valor de CTPL :</label></td>
+							<td class=" columna2"><input id="ctpl" type="text" name="ctpl" value="1.0"/></td>
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+			<button id="tk_modificar"  type="submit" class="enviar"></button>
+		</form>
+	</div>
+	<!--Aqui termina el dialogo modal nuevotanque-->
+
 </div>
 
 {% endblock %}

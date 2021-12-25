@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'acq.apps.AcqConfig',
     'crispy_forms',
-
+    'jquery_ui',
+    'django_static_jquery_ui',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -60,7 +61,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-        os.path.join(BASE_DIR, 'templates')
+            os.path.join(BASE_DIR, 'templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -87,15 +88,15 @@ DATABASES = {
         'USER': 'morenomx',
         'PASSWORD': 'mm262517',
         'PORT': '5432',
-        'HOST': '127.0.0.1' 
+        'HOST': '127.0.0.1'
 
-        #'HOST': '192.168.164.128'
+        # 'HOST': '192.168.164.128'
 
-    # 'HOST': '192.168.164.128', para colocar una IP para el servidor de Bd distinto al localhost (127.0.0.1), es necesario para postgres modificar pg_hba.conf
-    #  y el postgresql.conf modificando agregando la IP, así como el nombre del usuario y la Based e datos, también hay que cambiar el parámetros listen_address a '*' . '''
-        
-        }
+        # 'HOST': '192.168.164.128', para colocar una IP para el servidor de Bd distinto al localhost (127.0.0.1), es necesario para postgres modificar pg_hba.conf
+        #  y el postgresql.conf modificando agregando la IP, así como el nombre del usuario y la Based e datos, también hay que cambiar el parámetros listen_address a '*' . '''
+
     }
+}
 
 
 # Password validation
@@ -139,7 +140,7 @@ THOUSAND_SEPARATOR = '.'
 NUMBER_GROUPING = (3, 2, 0)
 
 
-#Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
@@ -149,8 +150,8 @@ STATICFILES_DIRS = (
 )
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_DATA = os.path.join(BASE_DIR, 'media/Data')
-MEDIA_URL= '/configuraciones/'
-COMMANDS= os.path.join(BASE_DIR,)
+MEDIA_URL = '/configuraciones/'
+COMMANDS = os.path.join(BASE_DIR,)
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

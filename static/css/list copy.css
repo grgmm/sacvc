@@ -20,7 +20,7 @@
   	align-items: center;
 	width: 70%;
 	margin:auto;
-	margin-top:1%; /*posiciona verticalmente*/
+	margin-top:1%; 
    	overflow: auto;
    	height: 31.2rem; /*para que la ultima fila se vea completa*/
 }
@@ -34,7 +34,7 @@ table {
 }
 
 th {
-	background-color: #338599;
+	background-color: #338599 !important;
 	color: white;
 	font-size:16px;
 	font-weight: bold;
