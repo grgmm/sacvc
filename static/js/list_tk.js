@@ -11,6 +11,8 @@ $(".odd").css("background-color", "#ffffff");
 		],
 		deferRender: true,
 		scrollCollapse: true,
+		"sPaginationType": "full_numbers", /*Agregado */
+		select: 'single', /*Agregado */
 		/*
 		scrollCollapse: true,
 		scroller: true,*/
@@ -41,10 +43,10 @@ $(".odd").css("background-color", "#ffffff");
 			"search": "Buscar:",
 			"zeroRecords": "No se encontraron registros coincidentes",
 			"paginate": {
-				"first": "Primero",
-				"last": "Ultimo",
-				"next": "Proximo",
-				"previous": "Previo",
+				"first": "",
+				"last": "",
+				"next": "",
+				"previous": "",
 			},
 			"buttons": {
 				"colvis": "",
@@ -69,5 +71,7 @@ $(".odd").css("background-color", "#ffffff");
 	$('.buttons-pdf').prop('title', '...a PDF');
 	$('.buttons-copy').prop('title', 'Copiar');
 	$('.buttons-print').prop('title', 'Imprimir');
+    $('.dataTables_filter input').attr('title', 'Escriba aquì para buscar en la tabla');
+    $('.dataTables_length select').attr('title', 'Seleccione el Nro de filas visibles');
 	table.buttons().container().insertBefore('#tabla_filter');
 });

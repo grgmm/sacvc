@@ -26,7 +26,10 @@ $(document).ready(function() {
 		document.getElementById('ventana').title = 'AGREGAR NUEVO TANQUE';
 		$("#ventana").dialog({
 			autoOpen: false,
+			opacity: .2,
 			modal: true,
+			resizable:false,
+			draggable:true,
 			width: anchoCE,/*ancho del div */
 			show: { effect: efectos() },
 			hide: { effect: efectos() },

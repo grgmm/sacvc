@@ -28,7 +28,6 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	position: absolute;
 }
 
 /*Titulo de la tabla*/
@@ -80,6 +79,33 @@
     background-image: url(../recursos/iconos/print_36x36.png) !important;
 	
 }
+
+.first, .previous,.next,.last{
+	border: 1px !important;
+	height: 34px;
+	width: 34px;
+    background-image:none !important;
+	background-color: white !important;
+	background-repeat: no-repeat !important;
+	
+}
+
+.first{	
+    background-image: url(../recursos/iconos/primero_36x36.png) !important;	
+}
+
+.previous{
+    background-image: url(../recursos/iconos/anterior_36x36.png) !important;
+}
+
+.next{	
+    background-image: url(../recursos/iconos/siguiente_36x36.png) !important;	
+}
+
+.last{
+    background-image: url(../recursos/iconos/último_36x36.png) !important;	
+}
+
 
 
 
