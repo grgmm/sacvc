@@ -19,7 +19,7 @@
 #principal {
 	/*div contenedor del dialogo*/
 	background-color: white;
-	padding: 2% 2%;
+	padding: 1% 1%;
 	width: 60%;
 	text-align: center !important;
 	border: 4px outset rgb(0, 0, 0) !important;
@@ -43,19 +43,25 @@
 
 /*Botones de encabezado de tabla*/
 .dt-button{
-	/*background-color: #117a8b !important;*/
 	color: white !important;
 	border-radius: 0.5rem!important;
 }
 
+.dataTables_length{
+	/*select Nro de filas*/
+	position: relative;
+	transform: translate(0%, 5%);
+	border-radius: 1rem;	
+}
+
 .buttons-pdf, .buttons-csv, .buttons-colvis, .buttons-excel,.buttons-copy,.buttons-print{
-	bottom: 6px;
-	height: 36px;
-	width: 36px;
+	height: 40px;
+	width: 40px;
 	background-repeat: no-repeat!important;
 }
 
-.buttons-colvis{	
+.buttons-colvis{
+	margin-left:  2rem !important;	
     background-image: url(../recursos/iconos/visibility_36x36.jpg) !important;
 }
 
@@ -80,14 +86,65 @@
 	
 }
 
-.first, .previous,.next,.last{
-	border: 1px !important;
-	height: 34px;
-	width: 34px;
-    background-image:none !important;
-	background-color: white !important;
+.ver, .agregar, .editar, .retirar, .vertct{
+	border-width:2px !important;
+	border-color:#c0c0c0!important;
+	background-color: none !important;
 	background-repeat: no-repeat !important;
+	border-radius: 0.5rem!important;
+	height: 40px;
+	width: 40px;
+}
+
+
+.ver{
+	margin-left:2rem!important;
+	background-image: url(../recursos/iconos/view_36x36.png) !important;
+}
+
+.agregar {
+	background-image: url(../recursos/iconos/add_36x36.png) !important;
 	
+}
+
+.editar {
+	background-image: url(../recursos/iconos/edit_36x36.png) !important;
+		!important;
+}
+
+.retirar {
+	background-image: url(../recursos/iconos/delete_36x36.png) !important;
+		!important;
+}
+
+.vertct {
+	border-width:2px!important;
+	margin-left:2rem!important;
+	background-image: url(../recursos/iconos/vertct_36x36.png) !important;
+}
+
+
+#tabla_length{
+	/*Contenedor de select de # de filas*/
+	margin-left:  2rem !important;
+	margin-top: 0.3em;
+}
+
+.dataTables_filter{
+	/*filtro de filas*/
+	margin-right:  1rem !important;
+	border-radius: 1rem;
+}
+
+
+.first, .previous,.next,.last{
+	border-width:2px !important;
+	border-color:#c0c0c0!important;
+	background-color: none !important;
+	background-repeat: no-repeat !important;
+	border-radius: 0.5rem!important;
+	height: 36px;
+	width: 36px;
 }
 
 .first{	
@@ -104,15 +161,6 @@
 
 .last{
     background-image: url(../recursos/iconos/último_36x36.png) !important;	
-}
-
-
-
-
-#tabla_length{
-	/*Contenedor de select de # de filas*/
-	margin-right: 0.5em !important;
-	margin-top: 0.3em;
 }
 
 .DataTables_sort_wrapper{

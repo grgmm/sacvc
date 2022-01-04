@@ -1,13 +1,14 @@
 /*https://datatables.net/extensions/scroller/tablas/styling/jqueryui.html */
-$(document).ready(function() {
+$(document).ready(function () {
+	var equipo = "Tanque";
 	$(".even").css("background-color", "#eeeeee");
-$(".odd").css("background-color", "#ffffff");
+	$(".odd").css("background-color", "#ffffff");
 	var table = $('#tabla').DataTable({
 		/*ajax: "./resources/data/2500.json",*/
 		dom: 'Blfrtip',
 		lengthMenu: [
 			[10, 8, 6, 4, 2],
-			['10 filas','8 filas','6 filas', '4 filas', '2 filas']
+			['10 filas', '8 filas', '6 filas', '4 filas', '2 filas']
 		],
 		deferRender: true,
 		scrollCollapse: true,
@@ -17,17 +18,42 @@ $(".odd").css("background-color", "#ffffff");
 		scrollCollapse: true,
 		scroller: true,*/
 		/*buttons: ['colvis', 'excel', 'pdf', 'copiar'],*/
-		buttons: ['colvis',"csv", 'excel','pdf','copy',"print",
-		
-		/*boton personalizados aqui 
-		{
-                text: 'My button',
-                action: function ( e, dt, node, config ) {
-                    alert( 'Button activated' );
-                }
-            }
-         */
- 
+		buttons: ['colvis', "csv", 'excel', 'pdf', 'copy', "print",
+			{
+				extend: 'selected', // Bind to Selected row
+				text: '',
+				name: 'ver',
+				className: 'ver'
+			},
+			{
+				className: 'agregar',
+				text: '',
+				name: 'agregar',        // do not change name
+				action: function (e, dt, node, config) {
+					$(".agregar").trigger("click");
+					alert('Button activated');
+				}
+
+			},
+			{
+				className: 'editar',
+				extend: 'selected', // Bind to Selected row
+				text: '',
+				name: 'editar'        // do not change name
+			},
+			{
+				className: 'retirar',
+				extend: 'selected', // Bind to Selected row
+				text: '',
+				name: 'retirar'      // do not change name
+			},
+			{
+				className: 'vertct',
+				extend: 'selected', // Bind to Selected row
+				text: '',
+				name: 'vertct'      // do not change name
+			}
+
 		],
 		"language": {
 			"decimal": ",",
@@ -37,7 +63,7 @@ $(".odd").css("background-color", "#ffffff");
 			"infoFiltered": "(filtrado de un total de _MAX_ entradas)",
 			"infoPostFix": "",
 			"thousands": ",",
-			"lengthMenu": "Muestra _MENU_",
+			"lengthMenu": "Muestra:  _MENU_",
 			"loadingRecords": "Cargando...",
 			"processing": "Procesando...",
 			"search": "Buscar:",
@@ -54,10 +80,7 @@ $(".odd").css("background-color", "#ffffff");
 				"excel": "",
 				"pdf": "",
 				"copy": "",
-				"print": "",
-				"create": "Nuevo",
-				"edit": "Cambiar", /*no funciona */
-				"remove": "Borrar",/*no funciona */
+				"print": ""
 			},
 			"aria": {
 				"sortAscending": ": activar para ordenar la columna ascendente",
@@ -65,13 +88,25 @@ $(".odd").css("background-color", "#ffffff");
 			}
 		}
 	});
+	$(".even").css("background-color", "#117a8b");
+	$(".odd").css("background-color", "#ffffff");
 	$('.buttons-colvis').prop('title', 'Visivilidad de columnas');
 	$('.buttons-csv').prop('title', '...a CSV');
 	$('.buttons-excel').prop('title', '...a Excel');
 	$('.buttons-pdf').prop('title', '...a PDF');
 	$('.buttons-copy').prop('title', 'Copiar');
 	$('.buttons-print').prop('title', 'Imprimir');
-    $('.dataTables_filter input').attr('title', 'Escriba aquì para buscar en la tabla');
-    $('.dataTables_length select').attr('title', 'Seleccione el Nro de filas visibles');
+	$('.dataTables_filter input').attr('title', 'Escriba aquì para buscar en la tabla');
+	$('.dataTables_length select').attr('title', 'Seleccione el Nro de filas visibles');
+	$('.ver').attr('title', 'Ver '+equipo);
+	$('.agregar').attr('title', 'Agregar '+equipo);
+	$('.editar').attr('title', 'Editar '+equipo);
+	$('.retirar').attr('title', 'Retirar '+equipo);
+	$('.vertct').attr('title', 'Ver TCT');
+	$('.first').attr('title', 'Primero');
+	$('.previous').attr('title', 'Anterior');
+	$('.next').attr('title', 'Proximo');
+	$('.last').attr('title', 'Ultimo');
+
 	table.buttons().container().insertBefore('#tabla_filter');
 });
