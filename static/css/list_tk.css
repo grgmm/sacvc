@@ -1,0 +1,250 @@
+@charset "UTF-8";
+
+#titulo {
+	/*Encabezado de pagina*/
+	text-align: center;
+	font-size: 28px;
+	font-weight: bold;
+	color: #338599;
+	margin:auto;
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+	padding: 1rem;
+	border: solid 0.2rem #338599;
+	border-radius: 1rem;
+	width: 60%;
+	height: 40%;
+}
+
+#principal {
+	/*div contenedor del dialogo*/
+	background-color: white;
+	padding: 1% 1%;
+	width: 60%;
+	text-align: center !important;
+	border: 4px outset rgb(0, 0, 0) !important;
+	border-radius: 1rem; 
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/*Titulo de la tabla*/
+#caption{
+	border-radius: 1rem;
+	background-color: #117a8b !important;
+	color: white;
+	padding: 1% 0%;
+	font: 2rem bold;
+	margin-bottom: 2px;
+
+}
+
+/*Botones de encabezado de tabla*/
+.dt-button{
+	color: white !important;
+	border-radius: 0.5rem!important;
+}
+
+.dataTables_length{
+	/*select Nro de filas*/
+	position: relative;
+	transform: translate(0%, 5%);
+	border-radius: 1rem;	
+}
+
+.buttons-pdf, .buttons-csv, .buttons-colvis, .buttons-excel,.buttons-copy,.buttons-print{
+	height: 40px;
+	width: 40px;
+	background-repeat: no-repeat!important;
+}
+
+.buttons-colvis{
+	margin-left:  2rem !important;	
+    background-image: url(../recursos/iconos/visibility_36x36.jpg) !important;
+}
+
+.buttons-csv{	
+    background-image: url(../recursos/iconos/csv_36x36.png) !important;
+}
+
+.buttons-excel{	
+    background-image: url(../recursos/iconos/excel_36x36.png) !important;
+}
+
+.buttons-pdf{	
+    background-image: url(../recursos/iconos/pdf_36x36.png) !important;
+}
+
+.buttons-copy{	
+    background-image: url(../recursos/iconos/copy_36x36.jpg) !important;
+}
+
+.buttons-print{	
+    background-image: url(../recursos/iconos/print_36x36.png) !important;
+	
+}
+
+.ver, .agregar, .editar, .retirar, .vertct{
+	border-width:2px !important;
+	border-color:#c0c0c0!important;
+	background-color: none !important;
+	background-repeat: no-repeat !important;
+	border-radius: 0.5rem!important;
+	height: 40px;
+	width: 40px;
+}
+
+
+.ver{
+	margin-left:2rem!important;
+	background-image: url(../recursos/iconos/view_36x36.png) !important;
+}
+
+.agregar {
+	background-image: url(../recursos/iconos/add_36x36.png) !important;
+	
+}
+
+.editar {
+	background-image: url(../recursos/iconos/edit_36x36.png) !important;
+		!important;
+}
+
+.retirar {
+	background-image: url(../recursos/iconos/delete_36x36.png) !important;
+		!important;
+}
+
+.vertct {
+	border-width:2px!important;
+	margin-left:2rem!important;
+	background-image: url(../recursos/iconos/vertct_36x36.png) !important;
+}
+
+
+#tabla_length{
+	/*Contenedor de select de # de filas*/
+	margin-left:  2rem !important;
+	margin-top: 0.3em;
+}
+
+.dataTables_filter{
+	/*filtro de filas*/
+	margin-right:  1rem !important;
+	border-radius: 1rem;
+}
+
+
+.first, .previous,.next,.last{
+	border-width:2px !important;
+	border-color:#c0c0c0!important;
+	background-color: none !important;
+	background-repeat: no-repeat !important;
+	border-radius: 0.5rem!important;
+	height: 36px;
+	width: 36px;
+}
+
+.first{	
+    background-image: url(../recursos/iconos/primero_36x36.png) !important;	
+}
+
+.previous{
+    background-image: url(../recursos/iconos/anterior_36x36.png) !important;
+}
+
+.next{	
+    background-image: url(../recursos/iconos/siguiente_36x36.png) !important;	
+}
+
+.last{
+    background-image: url(../recursos/iconos/último_36x36.png) !important;	
+}
+
+.DataTables_sort_wrapper{
+	/*ordenar asc/desc*/
+	background-color: #117a8b;
+	color: white;
+	margin-top: 0%;
+	margin-bottom: 0%;
+	padding: 0.8em 0%;
+	border-radius: 0.5rem;
+}
+
+td {
+	border: #338599 1px solid;
+}
+
+/*Estilos para los link*/
+.btn_tabla{
+	border-radius: 0.4rem;
+	width: auto;
+	height: 50px; /*depende del alto del icono*/
+	padding-left: 4px; /*Ancho del icono+ 2 px*/
+	padding: 4px 2px;	
+}
+
+.img_interna{
+	/*imagen a la izquierda y en el centro*/
+	position: relative;
+	left: 0.1rem;
+	top: 0.2rem;
+	padding-right: 4px;
+}
+
+.btn_control{
+	/*dimensiones del boton*/
+	border-radius: 0.4rem;
+	width: auto;
+	height: 34px; /*depende del alto del icono*/
+	padding-left: 4px; /*Ancho del icono+ 2 px*/
+	padding-right: 4px;
+	
+	/*alinacion flex del contenido*/
+	display: flex;
+   	align-items: center; /*alineacion vertical*/
+   	justify-content:center; /*alineacion horizontal*/
+	
+}
+
+.imagen{
+	padding-right: 4px;
+	float:left;	
+}
+
+#regresar{
+	/*boton regresar*/
+	position: absolute;
+	left: 1.5rem; 
+	top:45%;
+	
+}
+
+#agregar{
+	/*boton agregar*/
+	position: absolute;
+	left: 85%;
+	top:33%;
+}
+
+.btn_tabla:hover, .btn_control:hover{
+	text-decoration: none;
+	background-color:#1cc1d9; /*fondo del link*/
+	font-size:1.1rem;
+	border-color: #000000;
+}
+
+.btn_tabla:focus {
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+	background-color: #138496;
+	border-color: #117a8b;
+}
+
+a {
+	background-color: #138496; 
+	color: white; 
+	margin-left: 1rem;
+}

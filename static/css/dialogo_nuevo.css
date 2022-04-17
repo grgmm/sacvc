@@ -1,0 +1,136 @@
+@charset "UTF-8";
+/*Boton de llamada del dialogo*/
+#divAbrirDialogo {
+	background-color: white;
+	width: 250px;
+	height: 150px;
+	border-radius: 0.5rem;
+	border: 1px solid rgb(0, 0, 0);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#abrirDialogo {
+	/*boton quw llama al dialogo*/
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-left: 60px;
+	margin-top: 50px;
+	text-align: center;
+	font-weight: bold;
+	font-size: medium;
+	background-color: #117a8b;
+	border-radius: 0.5rem;
+}
+/*Fin Boton de llamada del dialogo*/
+
+/*DIALOGO*/
+.ui-button-icon-only {
+	/*boton de cerrar en titulo*/
+	display: none !important;
+}
+
+.ui-dialog {
+	/*Contenedor principal*/
+	background-image: none;
+	background-color: white;
+	border: 1px solid rgb(0, 0, 0) !important;
+	border-radius: 0.5rem !important;
+	padding-top: 1%;
+}
+
+#ventana {
+	/*div contenedor del dialogo*/
+	padding: 1% 1%;
+	/*display: inline-block; */
+	text-align: center !important;
+}
+
+.panel {
+	/*Panel grid*/
+	margin: 0 auto;
+	/*text-align: left !important;*/
+	border: 1px solid rgb(0, 0, 0) !important;
+}
+
+.ui-dialog-titlebar {
+	/*barra contenedora de titulo*/
+	background-image: none;
+	background-color: #117a8b;
+	color: white !important;
+	padding: 2rem 0%!important;
+	text-align: center !important;
+	border: 1px solid rgb(0, 0, 0);
+	margin: 1% 2% !important;
+}
+
+.ui-dialog-title{
+	/*titulo*/
+	font-size: 1.5rem !important;
+	/*centrado*/
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.columna1 {
+	color: white;
+	background-color: #117a8b;
+}
+
+.columna2, .columna1 {
+	text-align: left;
+	padding-left: 2%;
+	height: 50px;
+	/*centramos vertical*/
+	display: table-cell;
+	vertical-align: middle;
+	/*fuente*/
+	font-weight: bold;
+	font-size: 1rem;
+	border: solid 0.5px;
+	border-color: #c0c0c0;
+}
+
+.etiqueta, .dato{
+	width: 90% ;
+}
+
+.ui-dialog-buttonset {
+	/*Contenedor de botones inferiores*/
+	text-align: center !important; 
+	width: 100% !important;
+	border-radius: 0.5rem !important;
+	border: solid 0.5px !important;
+	background-color: white !important;
+}
+
+
+.ui-button {
+	background-image: none;
+	background-color: #117a8b !important;
+	color: white !important;
+	
+}
+
+/*opacidad de la vista primero este*/
+.ui-front {
+   background: white;
+   opacity: .9;
+   filter: Alpha(Opacity=100);
+}
+
+/*opacidad de la vista luego este*/
+.ui-widget-overlay {
+	
+	background: white;
+	opacity: .2;
+	filter: Alpha(Opacity=100);
+ }
+
+.ui-widget {
+	font-style: italic;
+}

@@ -1,21 +1,51 @@
 {% extends 'acq/base.html' %}
 {% load static %}
-{% block title %}
-
-{% endblock %}
+{% block title %}{% endblock %}
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/list.css' %}">
+<!-- jquery-ui -->
+<!-- css-->
+<link rel="stylesheet" href="{% static 'jquery/jquery-ui.css' %}">
+<link rel="stylesheet" href="{% static 'jquery/jquery-ui.structure.css' %}">
+<!--
+<link rel="stylesheet" href="{% static 'jquery/jquery-ui.theme.css' %}">
+-->
+<link rel="stylesheet" href="{% static 'jquery/datatables.css' %}">
+<link rel="stylesheet" href="{% static 'jquery/buttons.jqueryui.css' %}">
+<link rel="stylesheet" href="{% static 'jquery/dataTables.jqueryui.css' %}">
 
-<div>
- <h2 class="titulo">Listado de Usuarios</h2>
+<!-- js -->
+<script src="{% static 'jquery/jquery-3.6.0.js' %}"></script>
+<script src="{% static 'jquery/jquery-ui.js' %}"></script>
+<script src="{% static 'jquery/datepicker-es.js' %}"></script>
+<script src="{% static 'jquery/datatables.js' %}"></script>
+<script src="{% static 'jquery/dataTables.jqueryui.js' %}"></script>
+<script src="{% static 'jquery/dataTables.buttons.js' %}"></script>
+<script src="{% static 'jquery/buttons.jqueryui.js' %}"></script>
+<script src="{% static 'jquery/jszip.js' %}"></script>
+<script src="{% static 'jquery/pdfmake.js' %}"></script>
+<script src="{% static 'jquery/vfs_fonts.js' %}"></script>
+<script src="{% static 'jquery/buttons.html5.js' %}"></script>
+<script src="{% static 'jquery/buttons.print.js' %}"></script>
+<script src="{% static 'jquery/buttons.colVis.js' %}"></script>
+
+<!--Resources para la tabla-->
+<link rel="stylesheet" href="{% static 'css/list_tk.css' %}">
+<script src="{% static 'js/list_tk.js' %}"></script>
+
+<!--Resources para la nuevo tanque-->
+<link rel="stylesheet" href="{% static 'css/dialogo_nuevo.css' %}">
+<script src="{% static 'js/dialogo_nuevo.js' %}"></script>
+
+<div id="cuerpo">
+ <h2 id="titulo">Listado de Usuarios</h2>
    <div>
      <a href="{%url 'uacq:add_user'%}" id="agregar" type="button" class="btn_control">
 				<img class="imagen" src="{% static "recursos/iconos/add24x24.png" %}"/>AGREGAR USUARIO</a>
    </div>
 	<div id="principal">
-		<table >
+		<table  id="tabla">
        		<!-- Encabezado de la tabla con tres columnas-->
 			<thead>
 				<tr>
