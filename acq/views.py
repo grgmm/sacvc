@@ -312,7 +312,7 @@ class TkAdd(CreateView):
             try:
                 with fs.open(ruta_Data + '/direccionamiento.json', mode='r') as data_file:
                     direccionamiento = json.loads(data_file.read())
-                    print(direccionamiento['dir_disponibles'])
+                    #print(direccionamiento['dir_disponibles'])
 
             except:
                 print("Error inesperado: ", sys.exc_info()[0])
@@ -348,7 +348,7 @@ class TkAdd(CreateView):
             NSV_minimo = 0.0
             NSV_maximo = 650000.0
             NSV_alarmas = Settings_Alarmas(NSV_maximo, NSV_minimo)
-            print(qtk)
+            #print(qtk)
             if qtk == 1:
                 dir_disponible = 1
 
@@ -548,10 +548,9 @@ class TkDelete(DeleteView):
 
         try:
             with fs.open(ruta_Data + '/direccionamiento.json', mode='w') as file:
-                # print('probando lolo1', direccionamiento['dir_disponibles'], set(direccionamiento['dir_disponibles']))
                 direccionamiento['dir_disponibles'] = list(set(direccionamiento['dir_disponibles']))
                 file.write(json.dumps(direccionamiento))  # Data en cache)
-                print(direccionamiento['dir_disponibles'])
+                #print(direccionamiento['dir_disponibles'])
         except:
 
             print("Error inesperado:", sys.exc_info()[0])
@@ -669,14 +668,14 @@ class Validar_Tct(UpdateView):
                 return redirect('/sacvc/Menu')
             else:
                 obj_tk = self.get_object()
-                print(obj_tk)
+                #print(obj_tk)
                 q = Tct.objects.filter(id_tk=obj_tk.pk)
                 if q.exists():
-                    print(q.exists())
+                    #print(q.exists())
                     data_temp['PORCENTAJE_SUBIDA'] = 100
                     print('EXISTE DATA TCT DE ESTE TK EN BD ')
                 else:
-                    print(q.exists())
+                    #print(q.exists())
                     data_temp['PORCENTAJE_SUBIDA'] = 0
                     print('NO EXISTE DATA TCT DE ESTE TK EN BD ')
                 try:
@@ -761,7 +760,7 @@ class Validar_Tct(UpdateView):
         try:
             with fs.open(ruta_Data + '/porcentaje_subida.json', mode='r') as data_file:
                 dataf = json.loads(data_file.read())
-                print(dataf)
+                #print(dataf)
         except:
             print("Error inesperado:", sys.exc_info()[0])
         return context
@@ -890,7 +889,7 @@ class MbMaestro(View):
                     print('GUARDAR CONFIGURACION DEL FORMULARIO AL DISCO')
                     response = request.GET
                     data=response.dict()
-                    print(data)
+                    #print(data)
 
                     tofile={'Tipo':data['Tipo'], 'Puerto':data['Puerto'],'IpDevice': data['IpDevice'], 'SercvicePort':data['SercvicePort'],
                             'Velocidad':data['Velocidad'], 'Paridad':data['Paridad'],'Reintentos':data['Reintentos'], 'IdDevice':data['IdDevice']}
@@ -979,7 +978,7 @@ class Modulos(View):
 #lOGICA DE CONTROL PARA ARRANQUE Y PARADA DE HILOS
       if form.is_valid(): 
           #PARAMETROS REQUERIDOS PARA INICIAR EL HILO ACQ
-          MbSrv = mbmaster_model.objects.first() #OBTIENE LOS DATOS CONFIGURADOS POR EL USUARIO PARA LA CMUNICACION CON EL ECLAVO MOBUS
+          MbSrv = mbmaster_model.objects.first() #OBTIENE LOS DATOS CONFIGURADOS POR EL USUARIO PARA LA CMUNICACION CON EL ESCLAVO MOBUS
           puertoip =  MbSrv.SercvicePort
           id_device = MbSrv.IdDevice
           ip_device = MbSrv.IpDevice
@@ -1441,7 +1440,7 @@ class grupo_tk(LoginRequiredMixin, ListView):
 
             context['UNIDADES'].update(temp_unidades)
 
-        print(context['UNIDADES'])
+        #print(context['UNIDADES'])
         return context
 
 class detalle_tk(LoginRequiredMixin, DetailView):

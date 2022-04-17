@@ -69,7 +69,6 @@ class cpt():
        Data_tanques_pt, Data_tanques_tt,Data_tanques_lta, Data_tanques_ays, Data_tanque_lt = {},{},{},{},{}
        Data_tanques={}
        a=True
-       print('MÓDULO DE CALCULO DE VOLUMENES ACTIVO, REVISAR SALIDA EN: /Data/Buffer_Datos_Calculados.json' )
        if a==True:
 #OBTENIENDO DATOS DEL BUFFER DATA CRUDA
                
@@ -139,8 +138,7 @@ class cpt():
                                 #H=ALTA NIVEL DE AGUA Y SEDIMENTO, HH= MUY ALTO NIVEL DE AGUA Y SEDIMENTO
 
 
-                                print(Data_tanques_temp['AYS_ALARMA'])
-                                print(Data_tanques_temp['AYS_CRITERIO_ALARMA'])
+                               
 
                                 Data_tanques_temp['TIMESTAMP_ays'] =  timestamp_ays
                         if (tag_ins.etiqueta1=='lt'):
@@ -148,8 +146,8 @@ class cpt():
                                 idtag_lt = tag_ins.pk
                                 timestamp_lt = vb_timestamp_DC
                                 lt_alarma=Alarmas(nivel_producto, tag_ins.LL, tag_ins.L, tag_ins.H, tag_ins.HH)
-                                volumenesll = VOLUMENES(nivel_producto, ays)
-                                print(volumenesll)
+                                Data_tanques_temp['LT']=  str(nivel_producto)
+
                                 try:
                                     time.sleep(1)
                                     volumenes=VOLUMENES(nivel_producto,ays)
@@ -167,7 +165,7 @@ class cpt():
                                     instance_nsv = Analogico.objects.get(id_Tk= tag_ins.id_Tk.pk, etiqueta1='NSV')
                                     timestamp_nsv = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-7]
                                     nsv_alarma=Alarmas(nsv, instance_nsv.LL, instance_nsv.L, instance_nsv.H, instance_nsv.HH)
-                                    Data_tanques_temp['LT']=  str(nivel_producto)
+                                    #Data_tanques_temp['LT']=  str(nivel_producto)
                                     Data_tanques_temp['LT_PORCENTAJE']= str(porcentaje)
                                     Data_tanques_temp['IDTOV']= instance_tov.pk
                                     Data_tanques_temp['IDNSV']=  instance_nsv.pk
@@ -210,6 +208,7 @@ class cpt():
                                     print("Error de parseo ", sys.exc_info()[0], "occurred.")
                     Data_tanques[tk_ins.pk] ={'TANQUE': tk_ins.Nombre}
                     Data_tanques[tk_ins.pk].update(Data_tanques_temp)
+                    print(Data_tanques)
                     try:
                         with fs.open(ruta_Data+'/Buffer_Datos_Calculados.json', mode= 'w') as file2:
 

@@ -16,15 +16,16 @@ class acq():
     help = 'help'
 
     def mbtcpserver(serviceport, id_esclavo, slave_ip_address):
+        comm_succes = False
         conf.SIGNED_VALUES = True
         # puertos validos por encima de 1024 en sistemas Linux Android Unix.
 
         # declara la conexión
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #print(serviceport,id_esclavo,slave_ip_address)
-
-      
+     
         try:
+            
             sock.connect((slave_ip_address, serviceport))             
             #print('Adquisción de Data Modbus Activa (Running)')
             #n = 2  # 100 iteraciones
@@ -102,9 +103,13 @@ class acq():
 
 
             sock.close() # cierra la conexión
+            comm_succes = True
+            
 
             #while i <= n:
                 
         except:
+            comm_succes = False
             print("Sin conexión...reintentando", sys.exc_info()[0])
-            pass
+            #pass
+        return(comm_succes)
