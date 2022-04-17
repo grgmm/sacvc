@@ -102,7 +102,7 @@ def VOLUMENES(nivel_medido, ays):
                                      "GSV": round(gsv, 3), }
                 return volumenes
 
-            if nivel_medido < first_reg.Lt0 :
+            if nivel_medido <= first_reg.Lt0 :
                 volumenes = {"TOV": first_reg.Tov0,
                              "NSV": round(nsv, 3),
                              "GSV": round(gsv, 3), }
